@@ -1,0 +1,121 @@
+<button class="button" mat-flat-button color="primary" (click)="new()">
+  新增
+</button>
+<!-- <button class="button" mat-flat-button color="warn" (click)="delete(null)">
+  删除
+</button> -->
+<div class="tree">
+  <div class="tree-left">
+    <mat-tree
+      [dataSource]="dataSource"
+      [treeControl]="treeControl"
+      class="mat-tree"
+    >
+      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+        <button mat-icon-button disabled></button>
+        <img
+          src="/assets/role.svg"
+          *ngIf="node.item.type === 'ROLE'"
+          width="12px"
+          height="12px"
+        />
+        <!-- <img
+          src="/assets/unit.svg"
+          *ngIf="node.item.type === 'UNIT'"
+          width="20px"
+          height="10px"
+        /> -->
+        <span
+          [class]="
+            node.item.type === 'ROLE'
+              ? node.item.id === selectedItem?.id
+                ? 'tree-node-name-selected'
+                : 'tree-node-name'
+              : ''
+          "
+          [style]="node.item.type != 'ROLE' ? 'color:grey;' : ''"
+          (click)="onItemClick(node.item)"
+          >[{{ node.item.code }}]{{ node.item.name }}</span
+        >
+      </mat-tree-node>
+      <mat-tree-node
+        *matTreeNodeDef="let node; when: hasChild"
+        matTreeNodePadding
+      >
+        <button
+          mat-icon-button
+          [attr.aria-label]="'Toggle ' + node.item"
+          matTreeNodeToggle
+        >
+          <mat-icon class="mat-icon-rtl-mirror">
+            {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
+          </mat-icon>
+        </button>
+
+        <!-- <img
+          src="/assets/org.svg"
+          *ngIf="node.item.type === 'ORGANIZATION'"
+          width="20px"
+          height="10px"
+        /> -->
+        <span
+          [class]="
+            node.item.type === 'ROLE'
+              ? node.item.id === selectedItem?.id
+                ? 'tree-node-name-selected'
+                : 'tree-node-name'
+              : ''
+          "
+          [style]="node.item.type != 'ROLE' ? 'color:grey;' : ''"
+          (click)="onItemClick(node.item)"
+          >[{{ node.item.code }}]{{ node.item.name }}({{
+            node.item.childCount
+          }})</span
+        >
+        <mat-progress-bar
+          *ngIf="node.isLoading"
+          mode="indeterminate"
+          class="example-tree-progress-bar"
+        ></mat-progress-bar>
+      </mat-tree-node>
+    </mat-tree>
+  </div>
+
+  <div class="tree-right">
+    <div style="margin: 0px 0px 0px 10px">
+      岗位：{{ selectedItem?.name }}({{ selectedItem?.code }})<button
+        [disabled]="!selectedItem"
+        type="button"
+        mat-icon-button
+        color="primary"
+        (click)="edit(selectedItem)"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button
+        [disabled]="!selectedItem"
+        type="button"
+        mat-icon-button
+        color="warn"
+        (click)="delete(selectedItem)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+    <!-- <mat-divider></mat-divider> -->
+    <div class="detail">
+      <span
+        >组织:
+        <ng-container *ngFor="let item of selectedItem?.organizations"
+          >{{ item.name }},</ng-container
+        ></span
+      >
+      <span
+        >上级:
+        <ng-container *ngFor="let item of selectedItem?.parents"
+          >{{ item.name }},</ng-container
+        ></span
+      >
+    </div>
+  </div>
+</div>

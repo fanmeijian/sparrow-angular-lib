@@ -1,0 +1,327 @@
+<!-- <div class="editor-container" #editorContainer>
+  触发条件
+</div> -->
+<div class="example-table-container">
+  <mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="seq">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element; let index = index">
+        {{ index + 1 }}.
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>名称</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="code">
+      <mat-header-cell *matHeaderCellDef>模型权限</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <div style="display: flex; flex-direction: column">
+          <div style="white-space: unset; word-break: break-all">
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="openPermission(element)"
+            >
+              <mat-icon>manage_accounts</mat-icon>
+            </button>
+            {{ element.id }}
+          </div>
+
+          <mat-accordion
+            *ngIf="
+              element.sysroles.length > 0 ||
+              element.users.length > 0 ||
+              element.rules.length > 0
+            "
+          >
+            <mat-expansion-panel *ngIf="element.sysroles.length > 0">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  授权角色 ({{ element.sysroles.length }})</mat-panel-title
+                >
+              </mat-expansion-panel-header>
+              <div>
+                <div
+                  *ngFor="let sysrole of element.sysroles"
+                  style="
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                  "
+                >
+                  <span
+                    class="material-icons"
+                    style="color: red; cursor: pointer"
+                    (click)="remove(sysrole, element)"
+                  >
+                    close </span
+                  ><span
+                    >{{ sysrole.sysrole.name }}
+                    {{ sysrole.id.permission }} </span
+                  ><span
+                    [style]="
+                      sysrole.id.permissionType === 'DENY'
+                        ? 'color:red'
+                        : 'color:green'
+                    "
+                    >{{ sysrole.id.permissionType }}</span
+                  >
+                </div>
+              </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel *ngIf="element.users.length">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  授权用户 ({{ element.users.length }})</mat-panel-title
+                >
+                <!-- <mat-panel-description>
+              Currently I am {{ panelOpenState ? "open" : "closed" }}
+            </mat-panel-description> -->
+              </mat-expansion-panel-header>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel
+              (opened)="panelOpenState = true"
+              (closed)="panelOpenState = false"
+              *ngIf="element.rules?.length > 0"
+            >
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  授权规则 ({{ element.rules?.length }})</mat-panel-title
+                >
+              </mat-expansion-panel-header>
+              <div
+                *ngFor="let rule of element.rules"
+                style="display: flex; flex-direction: row; align-items: center"
+              >
+                <span
+                  class="material-icons"
+                  style="color: red; cursor: pointer"
+                  (click)="removeRule(rule, element)"
+                >
+                  close </span
+                ><span
+                  >{{ rule.rule.name }} {{ rule.rule.condition }}
+                  {{ rule.id.permission }} </span
+                ><span
+                  [style]="
+                    rule.id.permissionType === 'DENY'
+                      ? 'color:red'
+                      : 'color:green'
+                  "
+                  >{{ rule.id.permissionType }}</span
+                >
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="users">
+      <mat-header-cell *matHeaderCellDef>属性权限</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <!-- <div style="height: 10px; display: flex;align-items: center;background-color: red;">
+            <span class="material-icons"> manage_accounts </span
+              >
+          </div> -->
+        <div style="display: flex; flex-direction: column">
+          <ng-container *ngFor="let item of element.modelAttributes">
+            <!-- <div style="display: flex; flex-direction: row;align-items: center;">
+              <span class="material-icons">
+                manage_accounts
+                </span><span class="att-permission" (click)="openAttrPermission(item)">
+                {{ item.id.attributeId }}</span
+              >
+            </div> -->
+            <div>
+              <button
+                mat-icon-button
+                color="primary"
+                (click)="openAttrPermission(item)"
+              >
+                <mat-icon>manage_accounts</mat-icon>
+              </button>
+              {{ item.id.attributeId }}
+            </div>
+
+            <mat-accordion
+              *ngIf="
+                item.sysroles.length > 0 ||
+                item.users.length > 0 ||
+                item.rules.length > 0
+              "
+            >
+              <mat-expansion-panel *ngIf="item.sysroles.length > 0">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    授权角色 ({{ item.sysroles.length }})</mat-panel-title
+                  >
+                </mat-expansion-panel-header>
+                <div style="display: flex; flex-direction: column">
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: row;
+                      align-items: center;
+                    "
+                    *ngFor="let sysrole of item.sysroles"
+                  >
+                    <span
+                      class="material-icons"
+                      style="color: red; cursor: pointer"
+                      (click)="removeAttrSysrole(sysrole, sysrole)"
+                    >
+                      close </span
+                    ><span
+                      >{{ sysrole.sysrole.name }}
+                      {{ sysrole.id.permission }} </span
+                    ><span
+                      [style]="
+                        sysrole.id.permissionType === 'DENY'
+                          ? 'color:red'
+                          : 'color:green'
+                      "
+                      >{{ sysrole.id.permissionType }}</span
+                    >
+                  </div>
+                </div>
+              </mat-expansion-panel>
+              <mat-expansion-panel
+                (opened)="panelOpenState = true"
+                (closed)="panelOpenState = false"
+                *ngIf="item.users.length"
+              >
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    授权用户 ({{ item.users.length }})</mat-panel-title
+                  >
+                </mat-expansion-panel-header>
+                <p>I'm visible because I am open</p>
+              </mat-expansion-panel>
+              <mat-expansion-panel
+                (opened)="panelOpenState = true"
+                (closed)="panelOpenState = false"
+                *ngIf="item.rules?.length > 0"
+              >
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    授权规则 ({{ item.rules?.length }})</mat-panel-title
+                  >
+                </mat-expansion-panel-header>
+                <div
+                  *ngFor="let rule of item.rules"
+                  style="
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                  "
+                >
+                  <span
+                    class="material-icons"
+                    style="color: red; cursor: pointer"
+                    (click)="removeAttrRule(rule, element)"
+                  >
+                    close </span
+                  ><span
+                    >{{ rule.rule.name }} {{ rule.rule.condition }}
+                    {{ rule.id.permission }} </span
+                  ><span
+                    [style]="
+                      rule.id.permissionType === 'DENY'
+                        ? 'color:red'
+                        : 'color:green'
+                    "
+                    >{{ rule.id.permissionType }}</span
+                  >
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+            <mat-divider></mat-divider>
+          </ng-container>
+        </div>
+
+        <!-- <div style="display: flex; flex-direction: column">
+            <div>
+              <button
+                mat-icon-button
+                color="primary"
+                (click)="openAttrPermission(item)"
+              >
+                <mat-icon>manage_accounts</mat-icon>
+              </button>
+              {{ item.id.attributeId }}
+            </div>
+
+          </div> -->
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="sysroles">
+      <mat-header-cell *matHeaderCellDef>授权角色</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <div>
+          <div
+            *ngFor="let user of element.sysroles"
+            style="display: flex; flex-direction: row; align-items: center"
+          >
+            <span
+              class="material-icons"
+              style="color: red; cursor: pointer"
+              (click)="remove(user, element)"
+            >
+              close
+            </span>
+            {{ user.sysrole.name }}({{ user.sysrole.code }})
+            {{ user.id.permission }}
+            <span
+              [style]="
+                'color: ' +
+                (user.id.permissionType === 'ALLOW' ? 'green' : 'red')
+              "
+              >{{ user.id.permissionType }}</span
+            >
+          </div>
+        </div>
+        <!-- <mat-chip-list #chipList>
+          <mat-chip
+            *ngFor="let user of element.sysroles"
+            (removed)="remove(user, element)"
+          >
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+        </mat-chip-list> -->
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-icon-button color="primary" (click)="edit(element)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="delete(element)">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+</div>
+
+<mat-paginator
+  [pageSizeOptions]="[5, 10, 20]"
+  [pageSize]="pageable.pageSize"
+  showFirstLastButtons
+  [length]="pageable.length"
+  (page)="onPageChange($event)"
+  aria-label="Select page of periodic elements"
+>
+</mat-paginator>

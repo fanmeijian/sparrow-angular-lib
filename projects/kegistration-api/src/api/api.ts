@@ -1,0 +1,11 @@
+export * from './competition.service';
+import { CompetitionService } from './competition.service';
+export * from './dict.service';
+import { DictService } from './dict.service';
+export * from './kegistration.service';
+import { KegistrationService } from './kegistration.service';
+export * from './member.service';
+import { MemberService } from './member.service';
+export * from './objectStorage.service';
+import { ObjectStorageService } from './objectStorage.service';
+export const APIS = [CompetitionService, DictService, KegistrationService, MemberService, ObjectStorageService];

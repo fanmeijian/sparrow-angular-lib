@@ -1,0 +1,13 @@
+.node{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.button{
+  margin: 0px 10px 10px 0px;
+}
+
+.detail>span{
+  padding: 10px;
+}

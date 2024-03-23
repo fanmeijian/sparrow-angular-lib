@@ -1,0 +1,20 @@
+{
+  "name": "@sparrowmini/sparrow-org",
+  "version": "0.0.3",
+  "peerDependencies": {
+    "@angular/animations": "^13.4.0",
+    "@angular/common": "^13.4.0",
+    "@angular/compiler": "^13.4.0",
+    "@angular/core": "^13.4.0",
+    "@angular/elements": "^13.4.0",
+    "@angular/forms": "^13.4.0",
+    "@angular/material": "^13.3.9",
+    "@angular/cdk": "^13.3.9",
+    "rxjs": "^7.8.1",
+    "@angular/platform-browser":"^13.0.0",
+    "@sparrowmini/org-api": "^0.0.8"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  }
+}

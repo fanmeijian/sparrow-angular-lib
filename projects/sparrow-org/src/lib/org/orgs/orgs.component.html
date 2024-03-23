@@ -1,0 +1,123 @@
+<div class="menu-bar">
+  <button class="button" mat-flat-button color="primary" (click)="new()">
+    新增
+  </button>
+  <button
+    class="button"
+    mat-flat-button
+    color="warn"
+    (click)="delete()"
+    [disabled]="checklistSelection.selected.length === 0"
+  >
+    删除
+  </button>
+  <!-- <button
+    class="button"
+    mat-flat-button
+    color="primary"
+    (click)="permission()"
+    [disabled]="checklistSelection.selected.length === 0"
+  >
+    授权
+  </button> -->
+</div>
+<div class="tree">
+  <mat-tree
+    [dataSource]="dataSource"
+    [treeControl]="treeControl"
+    class="mat-tree"
+  >
+    <mat-tree-node
+      *matTreeNodeDef="let node"
+      matTreeNodeToggle
+      matTreeNodePadding
+    >
+      <button mat-icon-button disabled></button>
+      <div>
+        <mat-checkbox
+          class="checklist-leaf-node"
+          [checked]="checklistSelection.isSelected(node)"
+          (change)="todoLeafItemSelectionToggle(node)"
+        ></mat-checkbox>
+        <img
+          src="/assets/org.svg"
+          *ngIf="node.me.type !== 'UNIT'"
+          width="12px"
+          height="12px"
+        />
+        <span
+          [class]="
+            node.me.id === selectedMenu?.me?.id
+              ? 'tree-node-name-selected'
+              : 'tree-node-name'
+          "
+          (click)="onMenuClick(node)"
+          >[{{ node.me.code }}]{{ node.me.name }}</span
+        >
+      </div>
+    </mat-tree-node>
+
+    <mat-tree-node
+      *matTreeNodeDef="let node; when: hasNoContent"
+      matTreeNodePadding
+    >
+      <button mat-icon-button disabled></button>
+    </mat-tree-node>
+
+    <mat-tree-node
+      *matTreeNodeDef="let node; when: hasChild"
+      matTreeNodePadding
+    >
+      <button
+        mat-icon-button
+        matTreeNodeToggle
+        [attr.aria-label]="'Toggle ' + node.me.name"
+      >
+        <mat-icon class="mat-icon-rtl-mirror">
+          {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
+        </mat-icon>
+      </button>
+      <div (click)="onMenuClick(node)">
+        <mat-checkbox
+          [checked]="descendantsAllSelected(node)"
+          [indeterminate]="descendantsPartiallySelected(node)"
+          (change)="todoItemSelectionToggle(node)"
+        ></mat-checkbox>
+        <span
+          [class]="
+            node.me.id === selectedMenu?.me?.id
+              ? 'tree-node-name-selected'
+              : 'tree-node-name'
+          "
+          (click)="onMenuClick(node)"
+          >[{{ node.me.code }}]{{ node.me.name }}({{ node.childCount }})</span
+        >
+      </div>
+    </mat-tree-node>
+  </mat-tree>
+
+  <div class="tree-right">
+    <div style="padding: 10px">
+      {{ selectedMenu?.me?.name }}({{ selectedMenu?.me?.code }})<button
+        type="button"
+        mat-icon-button
+        color="primary"
+        (click)="edit(selectedMenu)"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
+    <!-- <mat-divider></mat-divider> -->
+    <div class="detail">
+      <span>名称:{{ selectedMenu?.me?.name }}</span>
+      <span>代码:{{ selectedMenu?.me?.code }}</span>
+      <span>类型:{{ selectedMenu?.me?.type }}</span>
+      <span
+        >上级:
+        <ng-container *ngFor="let item of selectedMenu?.parents"
+          >{{ item.name }},</ng-container
+        >
+      </span>
+    </div>
+  </div>
+</div>

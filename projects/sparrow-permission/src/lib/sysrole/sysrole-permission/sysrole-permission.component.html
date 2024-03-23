@@ -1,0 +1,16 @@
+<h3 mat-dialog-title>角色授权</h3>
+
+<mat-dialog-content>
+  <div>{{ data.name }}</div>
+  <mat-form-field appearance="fill">
+    <mat-label>用户名</mat-label>
+    <input matInput [(ngModel)]="users" />
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="submit()" cdkFocusInitial color="primary">
+    确定
+  </button>
+  <button mat-button mat-dialog-close color="warn">取消</button>
+</mat-dialog-actions>

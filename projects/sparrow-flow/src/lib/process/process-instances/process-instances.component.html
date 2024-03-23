@@ -1,0 +1,100 @@
+<!-- <mat-table [dataSource]="datasource">
+  <ng-container matColumnDef="seq">
+    <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      {{ element["process-instance-id"] }}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <mat-header-cell *matHeaderCellDef> 状态 </mat-header-cell>
+    <mat-cell *matCellDef="let element"
+      ><span
+        [style]="
+          flowService.getFlowStatusName(element['process-instance-state']).style
+        "
+      >
+        {{
+          flowService.getFlowStatusName(element["process-instance-state"]).name
+        }}</span
+      >
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef> 当前任务 </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <div
+        *ngFor="let item of element['task-summary']"
+
+      >
+        <div class="s-button">{{ item["task-name"] }}</div>
+        <div style="color: grey; font-size: 10px">
+          {{ item["task-actual-owner-info"].friendlyName }}
+        </div>
+      </div>
+      <div
+        class="s-button"
+        *ngIf="element['process-instance-state'] === 2"
+
+      >
+        审批记录
+      </div>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="proc1">
+    <mat-header-cell *matHeaderCellDef> 流程 </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <div>
+        <span
+          class="s-button"
+
+          >{{ element["process-instance-id"] }} -
+          {{ element["process-name"] }}</span
+        >
+
+        <div style="color: grey; font-size: 10px">
+          {{ element.initiatorInfo.friendlyName }}
+        </div>
+      </div>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="activatedDate">
+    <mat-header-cell *matHeaderCellDef> 提交时间 </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      </mat-cell
+    >
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef> 操作 </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <button
+        color="primary"
+        *ngIf="
+          flowService.getFlowStatusName(element['task-status']).name ===
+          '待处理'
+        "
+        mat-button
+
+      >
+        处理
+      </button>
+      <button color="primary" mat-button >
+        查看
+      </button>
+      <button
+        color="primary"
+        mat-button
+
+      >
+        流程
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table> -->

@@ -1,0 +1,70 @@
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+  <mat-tree-node
+    *matTreeNodeDef="let node"
+    [matTreeNodePaddingIndent]="5"
+    matTreeNodePadding
+  >
+    <button mat-icon-button disabled></button>
+    <!-- <button color="primary" mat-button [routerLink]="node.url">
+      {{ node.name }}
+    </button> -->
+    <span
+      [class]="selectedNode===node.url?'norml-tree-node selected-norml-tree-node':'norml-tree-node'"
+      [routerLink]="node.url"
+      (click)="selectedNode = node.url"
+      >{{ node.name }}</span
+    >
+
+  </mat-tree-node>
+  <mat-tree-node
+    *matTreeNodeDef="let node; when: hasChild"
+    [matTreeNodePaddingIndent]="5"
+    matTreeNodePadding
+  >
+    <!-- <button
+      mat-button
+      matTreeNodeToggle
+      style="width: 100%; text-align: left"
+      [attr.aria-label]="'Toggle ' + node.name"
+    >
+      {{ node.name }}
+      <mat-icon class="mat-icon-rtl-mirror">
+        {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
+      </mat-icon>
+    </button> -->
+    <div class="mat-tree-node expandable-tree-node">
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          width: 100%;
+          align-items: center;
+        "
+        matTreeNodeToggle
+      >
+        <div style="width: 100%">{{ node.name }}</div>
+        <div style="width: 60px">
+          <button
+            mat-icon-button
+            matTreeNodeToggle
+            [attr.aria-label]="'Toggle ' + node.name"
+          >
+            <mat-icon class="mat-icon-rtl-mirror">
+              {{
+                treeControl.isExpanded(node) ? "expand_more" : "chevron_right"
+              }}
+            </mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- There is inline padding applied to this div using styles.
+          This padding value depends on the mat-icon-button width.  -->
+    <div
+      [class.example-tree-invisible]="!treeControl.isExpanded(node)"
+      role="group"
+    >
+      <ng-container matTreeNodeOutlet></ng-container>
+    </div>
+  </mat-tree-node>
+</mat-tree>

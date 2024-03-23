@@ -1,0 +1,110 @@
+<button class="button" mat-flat-button color="primary" (click)="new()">新增</button>
+<button class="button" mat-flat-button color="warn" (click)="delete(null)">删除</button>
+
+<div class="tree">
+  <div class="tree-left">
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="20px">
+        <button mat-icon-button disabled></button>
+        <span
+          [class]="
+            node.item.type === 'EMPLOYEE'
+              ? node.item.id === selectedItem?.id
+                ? 'tree-node-name-selected'
+                : 'tree-node-name'
+              : ''
+          "
+          [style]="node.item.type != 'EMPLOYEE' ? 'color:grey;' : ''"
+          (click)="onItemClick(node.item)"
+          >{{ node.item.name }}</span
+        >
+      </mat-tree-node>
+      <mat-tree-node
+        *matTreeNodeDef="let node; when: hasChild"
+        matTreeNodePadding
+        matTreeNodePaddingIndent="20px"
+      >
+        <button
+          mat-icon-button
+          [attr.aria-label]="'Toggle ' + node.item"
+          matTreeNodeToggle
+        >
+          <mat-icon class="mat-icon-rtl-mirror">
+            {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
+          </mat-icon>
+        </button>
+        <span
+          [class]="
+            node.item.type === 'EMPLOYEE'
+              ? node.item.id === selectedItem?.id
+                ? 'tree-node-name-selected'
+                : 'tree-node-name'
+              : ''
+          "
+          [style]="node.item.type != 'EMPLOYEE' ? 'color:grey;' : ''"
+          (click)="onItemClick(node.item)"
+          >{{ node.item.name }} ({{node.item.childCount}})</span
+        >
+        <mat-progress-bar
+          *ngIf="node.isLoading"
+          mode="indeterminate"
+          class="example-tree-progress-bar"
+        ></mat-progress-bar>
+      </mat-tree-node>
+    </mat-tree>
+  </div>
+
+  <div class="tree-right">
+    <div style="margin: 0px 0px 0px 10px">
+      {{ selectedItem?.name }}({{ selectedItem?.code }})<button
+        type="button"
+        mat-icon-button
+        color="primary"
+        (click)="edit(selectedItem)"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button
+        type="button"
+        mat-icon-button
+        color="primary"
+        (click)="delete(selectedItem)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+
+    <!-- <mat-divider></mat-divider> -->
+    <div class="detail">
+      <span>组织: {{ selectedItem?.organization.name }}</span>
+      <span
+        >角色:
+        <ng-container *ngFor="let item of selectedItem?.roles"
+          >{{ item.organization.name }}->{{ item.role.name }},</ng-container
+        > </span
+      ><button mat-icon-button color="primary" (click)="openRole(selectedItem)">
+        <mat-icon>edit</mat-icon>
+      </button>
+
+      <span
+        >级别:
+        <ng-container *ngFor="let item of selectedItem?.levels"
+          >{{ item.organization.name }}->{{ item.level.name }},</ng-container
+        > </span
+      ><button
+        mat-icon-button
+        color="primary"
+        (click)="openLevel(selectedItem)"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+
+      <span
+        >群组:
+        <ng-container *ngFor="let item of selectedItem?.groups"
+          >{{ item.organization.name }}->{{ item.level.name }},</ng-container
+        >
+      </span>
+    </div>
+  </div>
+</div>

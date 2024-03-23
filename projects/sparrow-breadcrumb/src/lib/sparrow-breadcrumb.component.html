@@ -1,0 +1,21 @@
+<div style="display: flex; flex-direction: row; align-items: center">
+  <div class="material-icons" style="font-size: 15px">home</div>
+  <div><span class="home" routerLink="" color="primary">首页</span></div>
+
+  <ng-container *ngFor="let item of breadCrump; let i = index">
+    <span *ngIf="item.label">/</span>
+    <a
+      mat-button
+      *ngIf="i != breadCrump.length - 1"
+      color="primary"
+      routerLink="{{ item.url }}"
+      >{{ item.label }}</a
+    >
+    <span
+      mat-button
+      *ngIf="i == breadCrump.length - 1"
+      style="font-weight: bold; padding-left: 10px"
+      >{{ item.label }}</span
+    >
+  </ng-container>
+</div>

@@ -1,0 +1,23 @@
+{
+  "name": "@sparrowmini/sparrow-form",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/cdk": "^13.3.9",
+    "@angular/common": "^13.3.0",
+    "@angular/core": "^13.3.0",
+    "@angular/material": "^13.3.9",
+    "@angular/platform-browser-dynamic": "^13.4.0",
+    "@formio/angular": "^5.3.0",
+    "@sparrowmini/form-api": "^0.0.1",
+    "@sparrowmini/sparrow-keycloak-admin-api": "^0.0.2",
+    "formiojs": "^4.19.0",
+    "prismjs": "^1.29.0",
+    "rxjs": "^7.8.1"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/prismjs": "^1.26.3"
+  }
+}

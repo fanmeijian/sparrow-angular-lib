@@ -1,0 +1,127 @@
+<div>
+  <mat-form-field appearance="fill">
+    <label>应用</label>
+    <mat-select (valueChange)="onContainerChange($event)">
+      <mat-option
+        *ngFor="let item of containers"
+        [value]="item['container-id']"
+        >{{ item["container-id"] }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<section class="example-section">
+  <mat-checkbox
+    [disabled]="!container"
+    class="example-margin"
+    [checked]="true"
+    (change)="onStatusChange($event, ProcessState.ACTIVE)"
+    >进行中</mat-checkbox
+  >
+  <mat-checkbox
+    [disabled]="!container"
+    class="example-margin"
+    (change)="onStatusChange($event, ProcessState.COMPLETED)"
+    >已完成</mat-checkbox
+  >
+  <mat-checkbox
+    [disabled]="!container"
+    class="example-margin"
+    (change)="onStatusChange($event, ProcessState.ABORTED)"
+    >已终止</mat-checkbox
+  >
+</section>
+
+<table mat-table [dataSource]="dataSource">
+  <!-- Position Column -->
+  <ng-container matColumnDef="position">
+    <th mat-header-cell *matHeaderCellDef>ID</th>
+    <td mat-cell *matCellDef="let element">
+      <a class="link" (click)="viewProcess(element)">{{
+        element["process-instance-id"]
+      }}</a>
+    </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>名称</th>
+    <td mat-cell *matCellDef="let element">{{ element["process-name"] }}</td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="weight">
+    <th mat-header-cell *matHeaderCellDef>发起人</th>
+    <td mat-cell *matCellDef="let element">{{ element["initiator"] }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="startdate">
+    <th mat-header-cell *matHeaderCellDef>启动时间</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element["start-date"] | date : "short" }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef>状态</th>
+    <td mat-cell *matCellDef="let element">
+      <span class="task">
+        {{ ProcessState[element["process-instance-state"]] }}
+      </span>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="task">
+    <th mat-header-cell *matHeaderCellDef>任务</th>
+    <td mat-cell *matCellDef="let element">
+      <button
+        mat-button
+        color="primary"
+        *ngFor="let item of element.tasks"
+        (click)="openTask(item)"
+      >
+        {{ item["node-name"] }}
+      </button>
+    </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="symbol">
+    <th mat-header-cell *matHeaderCellDef>操作</th>
+    <td mat-cell *matCellDef="let element">
+      <button
+        mat-icon-button
+        color="primary"
+        (click)="abort(element)"
+        matTooltip="终止流程"
+      >
+        <span class="material-icons"> stop_circle </span>
+      </button>
+
+      <button
+        mat-icon-button
+        color="primary"
+        (click)="viewImage(element)"
+        matTooltip="查看流程"
+      >
+        <span class="material-icons"> search </span>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<mat-paginator
+  [pageSizeOptions]="[5, 10, 20]"
+  [pageSize]="10"
+  showFirstLastButtons
+  [length]="total"
+  [pageIndex]="pageable.page"
+  [pageSize]="pageable.pageSize"
+  (page)="onPage($event)"
+  aria-label="Select page of periodic elements"
+>
+</mat-paginator>

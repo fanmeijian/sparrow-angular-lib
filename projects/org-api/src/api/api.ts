@@ -1,0 +1,11 @@
+export * from './employee.service';
+import { EmployeeService } from './employee.service';
+export * from './group.service';
+import { GroupService } from './group.service';
+export * from './joblevel.service';
+import { JoblevelService } from './joblevel.service';
+export * from './organization.service';
+import { OrganizationService } from './organization.service';
+export * from './role.service';
+import { RoleService } from './role.service';
+export const APIS = [EmployeeService, GroupService, JoblevelService, OrganizationService, RoleService];

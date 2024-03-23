@@ -1,0 +1,11 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/upload-file",
+  "lib": {
+    "entryFile": "src/projects.ts"
+  },
+  "allowedNonPeerDependencies": [
+    "cos-js-sdk-v5",
+    "ts-md5"
+]
+}

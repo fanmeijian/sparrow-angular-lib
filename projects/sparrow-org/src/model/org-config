@@ -1,0 +1,4 @@
+export interface OrgConfig{
+  basePath: string,
+
+}

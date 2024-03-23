@@ -1,0 +1,121 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "paths": {
+      "form-api": [
+        "dist/form-api/form-api",
+        "dist/form-api"
+      ],
+      "jbpm-api": [
+        "dist/jbpm-api/jbpm-api",
+        "dist/jbpm-api",
+        "dist/jbpm-api/jbpm-api",
+        "dist/jbpm-api"
+      ],
+      "kegistration-api": [
+        "dist/kegistration-api/kegistration-api",
+        "dist/kegistration-api"
+      ],
+      "keycloak-admin-api": [
+        "dist/keycloak-admin-api/keycloak-admin-api",
+        "dist/keycloak-admin-api"
+      ],
+      "org-api": [
+        "dist/org-api/org-api",
+        "dist/org-api"
+      ],
+      "pemission-lib": [
+        "dist/pemission-lib/pemission-lib",
+        "dist/pemission-lib"
+      ],
+      "permission-api": [
+        "dist/permission-api/permission-api",
+        "dist/permission-api"
+      ],
+      "portal-api": [
+        "dist/portal-api/portal-api",
+        "dist/portal-api"
+      ],
+      "purchase-api": [
+        "dist/purchase-api/purchase-api",
+        "dist/purchase-api"
+      ],
+      "rule-api": [
+        "dist/rule-api/rule-api",
+        "dist/rule-api"
+      ],
+      "sparrow-bpm": [
+        "dist/sparrow-bpm/sparrow-bpm",
+        "dist/sparrow-bpm"
+      ],
+      "sparrow-breadcrumb": [
+        "dist/sparrow-breadcrumb/sparrow-breadcrumb",
+        "dist/sparrow-breadcrumb"
+      ],
+      "sparrow-flow": [
+        "dist/sparrow-flow/sparrow-flow",
+        "dist/sparrow-flow"
+      ],
+      "sparrow-form": [
+        "dist/sparrow-form/sparrow-form",
+        "dist/sparrow-form"
+      ],
+      "sparrow-keycloak-admin-api": [
+        "dist/sparrow-keycloak-admin-api/sparrow-keycloak-admin-api",
+        "dist/sparrow-keycloak-admin-api"
+      ],
+      "sparrow-org": [
+        "dist/sparrow-org/sparrow-org",
+        "dist/sparrow-org"
+      ],
+      "sparrow-permission": [
+        "dist/sparrow-permission/sparrow-permission",
+        "dist/sparrow-permission"
+      ],
+      "sparrow-rule": [
+        "dist/sparrow-rule/sparrow-rule",
+        "dist/sparrow-rule"
+      ],
+      "sparrow-test-lib": [
+        "dist/sparrow-test-lib/sparrow-test-lib",
+        "dist/sparrow-test-lib"
+      ],
+      "test-lib": [
+        "dist/test-lib/test-lib",
+        "dist/test-lib"
+      ],
+      "upload-file": [
+        "dist/upload-file/upload-file",
+        "dist/upload-file"
+      ]
+    },
+    "target": "es2017",
+    "module": "es2020",
+    "lib": [
+      "es2020",
+      "dom"
+    ],
+    "allowSyntheticDefaultImports": true,
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}
