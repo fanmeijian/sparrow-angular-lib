@@ -63,3 +63,10 @@
 .editor-container{
   height: 100px;
 }
+
+.example-table-container {
+  position: relative;
+  min-height: 200px;
+  height: calc(100vh - 250px);
+  overflow: auto;
+}

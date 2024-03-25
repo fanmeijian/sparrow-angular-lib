@@ -1,7 +1,7 @@
-import { NestedTreeControl } from "@angular/cdk/tree";
-import { Component, Input, OnInit } from "@angular/core";
-import { MatTreeNestedDataSource } from "@angular/material/tree";
-import { BehaviorSubject } from "rxjs";
+import { NestedTreeControl } from '@angular/cdk/tree';
+import { Component, Input, OnInit } from '@angular/core';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
+import { BehaviorSubject } from 'rxjs';
 
 export interface SparrowJpaFilter {
   filterTreeBean?: FilterTreeBean;
@@ -16,44 +16,43 @@ export interface FilterTreeBean {
 }
 
 @Component({
-  selector: "lib-search-filter",
-  templateUrl: "./search-filter.component.html",
-  styleUrls: ["./search-filter.component.css"],
+  selector: 'lib-search-filter',
+  templateUrl: './search-filter.component.html',
+  styleUrls: ['./search-filter.component.css'],
 })
 export class SearchFilterComponent implements OnInit {
-
   @Input() filters: SparrowJpaFilter[] = [];
+  @Input() fields?: any[] = [];
 
   propertyNames = [
     {
-      name: "创建日期",
-      value: "createdDate",
+      name: '创建日期',
+      value: 'createdDate',
     },
     {
-      name: "创建人",
-      value: "createdBy",
+      name: '创建人',
+      value: 'createdBy',
     },
     {
-      name: "代码",
-      value: "code",
+      name: '代码',
+      value: 'code',
     },
-  ];
+  ]
   operators = [
     {
-      name: "等于",
-      value: "=",
+      name: '等于',
+      value: '=',
     },
     {
-      name: "大于等于",
-      value: ">=",
+      name: '大于等于',
+      value: '>=',
     },
   ];
 
-
   filterBean: FilterTreeBean = {
-    type: "",
-    name: "",
-    op: "",
+    type: '',
+    name: '',
+    op: '',
     value: undefined,
   };
 
@@ -92,7 +91,7 @@ export class SearchFilterComponent implements OnInit {
       });
     }
 
-    this.filterBean = {}
+    this.filterBean = {};
     this.dataChange.next(this.filters);
   }
 }

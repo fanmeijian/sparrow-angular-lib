@@ -7,7 +7,7 @@ import {
   MenuService,
   RuleService,
   SysroleService,
-} from "@sparrowmini/permission-api";
+} from "@sparrowmini/org-api";
 
 import { PermissionEnum } from "../../../model/constant";
 import { FormGroup, Validators, FormBuilder, FormArray } from "@angular/forms";

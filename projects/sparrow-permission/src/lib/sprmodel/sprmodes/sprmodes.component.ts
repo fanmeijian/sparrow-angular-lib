@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { DatamodelService, SysroleService } from "@sparrowmini/permission-api";
+import { DatamodelService, SysroleService } from "@sparrowmini/org-api";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatDialog } from "@angular/material/dialog";
 import { SprmodelPermisssionComponent } from "../sprmodel-permisssion/sprmodel-permisssion.component";

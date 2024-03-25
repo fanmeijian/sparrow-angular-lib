@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { SysroleService } from "@sparrowmini/permission-api";
+import { SysroleService } from "@sparrowmini/org-api";
 
 @Component({
   selector: "lib-sysrole-create",

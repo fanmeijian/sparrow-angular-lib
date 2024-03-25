@@ -4,7 +4,7 @@ import {
   MatTreeFlattener,
   MatTreeFlatDataSource,
 } from "@angular/material/tree";
-import { MenuService } from "@sparrowmini/permission-api";
+import { MenuService } from "@sparrowmini/org-api";
 
 /** Flat node with expandable and level information */
 interface ExampleFlatNode {

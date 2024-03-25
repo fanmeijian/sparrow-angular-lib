@@ -4,7 +4,7 @@ import { MenuComponent } from "./components/menu/menu.component";
 import {
   ApiModule as PermissionApiModule,
   BASE_PATH as PermissionApi_BASE_PATH,
-} from "@sparrowmini/permission-api";
+} from "@sparrowmini/org-api";
 import { CdkTreeModule } from "@angular/cdk/tree";
 import { MatTreeModule } from "@angular/material/tree";
 import { MatIconModule } from "@angular/material/icon";

@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatTableDataSource } from "@angular/material/table";
-import { ScopeService, SysroleService } from "@sparrowmini/permission-api";
+import { ScopeService, SysroleService } from "@sparrowmini/org-api";
 import { combineLatest, map, of, switchMap, tap, zip } from "rxjs";
 import { SysroleCreateComponent } from "../../sysrole/sysrole-create/sysrole-create.component";
 import { SysrolePermissionComponent } from "../../sysrole/sysrole-permission/sysrole-permission.component";
@@ -22,6 +22,8 @@ export class ScopesComponent implements OnInit {
 
   total: number = 0;
   displayedColumns = ["id", "name", "code", "users", "sysroles", "actions"];
+
+  filters: any[] = [];
 
   constructor(
     private scopeService: ScopeService,

@@ -3,22 +3,42 @@ import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
 
+import { AuditlogService } from './api/auditlog.service';
+import { DataPermissionService } from './api/dataPermission.service';
+import { DatamodelService } from './api/datamodel.service';
 import { EmployeeService } from './api/employee.service';
+import { FileService } from './api/file.service';
 import { GroupService } from './api/group.service';
 import { JoblevelService } from './api/joblevel.service';
+import { MenuService } from './api/menu.service';
 import { OrganizationService } from './api/organization.service';
+import { PemgroupService } from './api/pemgroup.service';
 import { RoleService } from './api/role.service';
+import { RuleService } from './api/rule.service';
+import { ScopeService } from './api/scope.service';
+import { SysroleService } from './api/sysrole.service';
+import { UserService } from './api/user.service';
 
 @NgModule({
   imports:      [],
   declarations: [],
   exports:      [],
   providers: [
+    AuditlogService,
+    DataPermissionService,
+    DatamodelService,
     EmployeeService,
+    FileService,
     GroupService,
     JoblevelService,
+    MenuService,
     OrganizationService,
-    RoleService ]
+    PemgroupService,
+    RoleService,
+    RuleService,
+    ScopeService,
+    SysroleService,
+    UserService ]
 })
 export class ApiModule {
     public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders<ApiModule> {

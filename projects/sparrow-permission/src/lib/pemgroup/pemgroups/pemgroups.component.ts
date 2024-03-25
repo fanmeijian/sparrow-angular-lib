@@ -7,7 +7,7 @@ import {
   PemgroupService,
   ScopeService,
   SysroleService,
-} from "@sparrowmini/permission-api";
+} from "@sparrowmini/org-api";
 import { tap, map, switchMap, zip, of, combineLatest } from "rxjs";
 import { ScopeCreateComponent } from "../../scope/scope-create/scope-create.component";
 import { ScopePermissionComponent } from "../../scope/scope-permission/scope-permission.component";

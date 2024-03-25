@@ -50,7 +50,7 @@ export class OrggroupsComponent implements OnInit {
   }
 
   delete(item: any) {
-    this.levelService.deleteGroup([item.id]).subscribe(() => {
+    this.levelService.deleteOrgGroup([item.id]).subscribe(() => {
       // this.snack.open("删除成功！", "关闭");
     });
   }

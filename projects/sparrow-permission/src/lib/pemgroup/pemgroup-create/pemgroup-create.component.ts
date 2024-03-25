@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PemgroupService, ScopeService } from '@sparrowmini/permission-api';
+import { PemgroupService, ScopeService } from '@sparrowmini/org-api';
 import { SysroleCreateComponent } from '../../sysrole/sysrole-create/sysrole-create.component';
 
 @Component({

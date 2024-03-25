@@ -2,7 +2,7 @@ import { Component, Injectable, OnInit } from "@angular/core";
 import {
   MenuService,
   SparrowTreeMenuString,
-} from "@sparrowmini/permission-api";
+} from "@sparrowmini/org-api";
 import {
   MatTreeFlattener,
   MatTreeFlatDataSource,

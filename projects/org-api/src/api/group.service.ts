@@ -30,7 +30,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class GroupService {
 
-    protected basePath = 'http://localhost:4300/org-service';
+    protected basePath = 'http://localhost:8080';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -179,13 +179,13 @@ export class GroupService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteGroup(body: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteGroup(body: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteGroup(body: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteGroup(body: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteOrgGroup(body: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteOrgGroup(body: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteOrgGroup(body: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteOrgGroup(body: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling deleteGroup.');
+            throw new Error('Required parameter body was null or undefined when calling deleteOrgGroup.');
         }
 
         let headers = this.defaultHeaders;
@@ -210,116 +210,6 @@ export class GroupService {
         return this.httpClient.request<any>('put',`${this.basePath}/groups/delete`,
             {
                 body: body,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 群组详情
-     * 
-     * @param groupId 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public group(groupId: string, observe?: 'body', reportProgress?: boolean): Observable<Group>;
-    public group(groupId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Group>>;
-    public group(groupId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Group>>;
-    public group(groupId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (groupId === null || groupId === undefined) {
-            throw new Error('Required parameter groupId was null or undefined when calling group.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<Group>('get',`${this.basePath}/groups/${encodeURIComponent(String(groupId))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 组成员列表
-     * 
-     * @param groupId 
-     * @param type 
-     * @param page Zero-based page index (0..N)
-     * @param size The size of the page to be returned
-     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public groupMembers(groupId: string, type: string, page?: number, size?: number, sort?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<PageObject>;
-    public groupMembers(groupId: string, type: string, page?: number, size?: number, sort?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageObject>>;
-    public groupMembers(groupId: string, type: string, page?: number, size?: number, sort?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageObject>>;
-    public groupMembers(groupId: string, type: string, page?: number, size?: number, sort?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (groupId === null || groupId === undefined) {
-            throw new Error('Required parameter groupId was null or undefined when calling groupMembers.');
-        }
-
-        if (type === null || type === undefined) {
-            throw new Error('Required parameter type was null or undefined when calling groupMembers.');
-        }
-
-
-
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (type !== undefined && type !== null) {
-            queryParameters = queryParameters.set('type', <any>type);
-        }
-        if (page !== undefined && page !== null) {
-            queryParameters = queryParameters.set('page', <any>page);
-        }
-        if (size !== undefined && size !== null) {
-            queryParameters = queryParameters.set('size', <any>size);
-        }
-        if (sort) {
-            sort.forEach((element) => {
-                queryParameters = queryParameters.append('sort', <any>element);
-            })
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<PageObject>('get',`${this.basePath}/groups/${encodeURIComponent(String(groupId))}/members`,
-            {
-                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -390,19 +280,176 @@ export class GroupService {
     }
 
     /**
+     * 新增群组
+     * 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public newOrgGroup(body: Group, observe?: 'body', reportProgress?: boolean): Observable<Group>;
+    public newOrgGroup(body: Group, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Group>>;
+    public newOrgGroup(body: Group, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Group>>;
+    public newOrgGroup(body: Group, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling newOrgGroup.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<Group>('post',`${this.basePath}/groups`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 群组详情
+     * 
+     * @param groupId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public orgGroup(groupId: string, observe?: 'body', reportProgress?: boolean): Observable<Group>;
+    public orgGroup(groupId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Group>>;
+    public orgGroup(groupId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Group>>;
+    public orgGroup(groupId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (groupId === null || groupId === undefined) {
+            throw new Error('Required parameter groupId was null or undefined when calling orgGroup.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Group>('get',`${this.basePath}/groups/${encodeURIComponent(String(groupId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 组成员列表
+     * 
+     * @param groupId 
+     * @param type 
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public orgGroupMembers(groupId: string, type: string, page?: number, size?: number, sort?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<PageObject>;
+    public orgGroupMembers(groupId: string, type: string, page?: number, size?: number, sort?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageObject>>;
+    public orgGroupMembers(groupId: string, type: string, page?: number, size?: number, sort?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageObject>>;
+    public orgGroupMembers(groupId: string, type: string, page?: number, size?: number, sort?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (groupId === null || groupId === undefined) {
+            throw new Error('Required parameter groupId was null or undefined when calling orgGroupMembers.');
+        }
+
+        if (type === null || type === undefined) {
+            throw new Error('Required parameter type was null or undefined when calling orgGroupMembers.');
+        }
+
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (type !== undefined && type !== null) {
+            queryParameters = queryParameters.set('type', <any>type);
+        }
+        if (page !== undefined && page !== null) {
+            queryParameters = queryParameters.set('page', <any>page);
+        }
+        if (size !== undefined && size !== null) {
+            queryParameters = queryParameters.set('size', <any>size);
+        }
+        if (sort) {
+            sort.forEach((element) => {
+                queryParameters = queryParameters.append('sort', <any>element);
+            })
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<PageObject>('get',`${this.basePath}/groups/${encodeURIComponent(String(groupId))}/members`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * 群组树
      * 
      * @param parentId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public groupTree(parentId: string, observe?: 'body', reportProgress?: boolean): Observable<SparrowTreeGroupString>;
-    public groupTree(parentId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<SparrowTreeGroupString>>;
-    public groupTree(parentId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<SparrowTreeGroupString>>;
-    public groupTree(parentId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public orgGroupTree(parentId: string, observe?: 'body', reportProgress?: boolean): Observable<SparrowTreeGroupString>;
+    public orgGroupTree(parentId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<SparrowTreeGroupString>>;
+    public orgGroupTree(parentId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<SparrowTreeGroupString>>;
+    public orgGroupTree(parentId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (parentId === null || parentId === undefined) {
-            throw new Error('Required parameter parentId was null or undefined when calling groupTree.');
+            throw new Error('Required parameter parentId was null or undefined when calling orgGroupTree.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -452,10 +499,10 @@ export class GroupService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public groups(page?: number, size?: number, sort?: Array<string>, name?: string, code?: string, createdDate?: Date, createdBy?: string, modifiedDate?: Date, modifitedBy?: string, status?: string, observe?: 'body', reportProgress?: boolean): Observable<PageGroup>;
-    public groups(page?: number, size?: number, sort?: Array<string>, name?: string, code?: string, createdDate?: Date, createdBy?: string, modifiedDate?: Date, modifitedBy?: string, status?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageGroup>>;
-    public groups(page?: number, size?: number, sort?: Array<string>, name?: string, code?: string, createdDate?: Date, createdBy?: string, modifiedDate?: Date, modifitedBy?: string, status?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageGroup>>;
-    public groups(page?: number, size?: number, sort?: Array<string>, name?: string, code?: string, createdDate?: Date, createdBy?: string, modifiedDate?: Date, modifitedBy?: string, status?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public orgGroups(page?: number, size?: number, sort?: Array<string>, name?: string, code?: string, createdDate?: Date, createdBy?: string, modifiedDate?: Date, modifitedBy?: string, status?: string, observe?: 'body', reportProgress?: boolean): Observable<PageGroup>;
+    public orgGroups(page?: number, size?: number, sort?: Array<string>, name?: string, code?: string, createdDate?: Date, createdBy?: string, modifiedDate?: Date, modifitedBy?: string, status?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageGroup>>;
+    public orgGroups(page?: number, size?: number, sort?: Array<string>, name?: string, code?: string, createdDate?: Date, createdBy?: string, modifiedDate?: Date, modifitedBy?: string, status?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageGroup>>;
+    public orgGroups(page?: number, size?: number, sort?: Array<string>, name?: string, code?: string, createdDate?: Date, createdBy?: string, modifiedDate?: Date, modifitedBy?: string, status?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
 
@@ -519,53 +566,6 @@ export class GroupService {
         return this.httpClient.request<PageGroup>('get',`${this.basePath}/groups`,
             {
                 params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 新增群组
-     * 
-     * @param body 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public newGroup(body: Group, observe?: 'body', reportProgress?: boolean): Observable<Group>;
-    public newGroup(body: Group, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Group>>;
-    public newGroup(body: Group, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Group>>;
-    public newGroup(body: Group, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling newGroup.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.request<Group>('post',`${this.basePath}/groups`,
-            {
-                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -695,17 +695,17 @@ export class GroupService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateGroup(body: Group, groupId: string, observe?: 'body', reportProgress?: boolean): Observable<Group>;
-    public updateGroup(body: Group, groupId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Group>>;
-    public updateGroup(body: Group, groupId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Group>>;
-    public updateGroup(body: Group, groupId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateOrgGroup(body: Group, groupId: string, observe?: 'body', reportProgress?: boolean): Observable<Group>;
+    public updateOrgGroup(body: Group, groupId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Group>>;
+    public updateOrgGroup(body: Group, groupId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Group>>;
+    public updateOrgGroup(body: Group, groupId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling updateGroup.');
+            throw new Error('Required parameter body was null or undefined when calling updateOrgGroup.');
         }
 
         if (groupId === null || groupId === undefined) {
-            throw new Error('Required parameter groupId was null or undefined when calling updateGroup.');
+            throw new Error('Required parameter groupId was null or undefined when calling updateOrgGroup.');
         }
 
         let headers = this.defaultHeaders;

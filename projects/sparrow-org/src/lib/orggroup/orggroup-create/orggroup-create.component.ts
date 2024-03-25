@@ -22,7 +22,7 @@ export class OrggroupCreateComponent implements OnInit {
       }
       if (this.formGroup.value.id) {
         this.groupService
-          .updateGroup(this.formGroup.value, this.formGroup.value.id)
+          .updateOrgGroup(this.formGroup.value, this.formGroup.value.id)
           .pipe(
             switchMap((m) =>
               this.groupService.addGroupParentOrg(
@@ -37,7 +37,7 @@ export class OrggroupCreateComponent implements OnInit {
           });
       } else {
         this.groupService
-          .newGroup(this.formGroup.value)
+          .newOrgGroup(this.formGroup.value)
           .pipe(
             switchMap((m) =>
               this.groupService.addGroupParentOrg(

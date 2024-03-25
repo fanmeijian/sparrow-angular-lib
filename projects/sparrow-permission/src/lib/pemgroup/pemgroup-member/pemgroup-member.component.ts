@@ -2,7 +2,7 @@ import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { PemgroupService } from '@sparrowmini/permission-api';
+import { PemgroupService } from '@sparrowmini/org-api';
 
 @Component({
   selector: 'lib-pemgroup-member',

@@ -1,4 +1,7 @@
 <button mat-flat-button (click)="new()" color="primary">新增</button>
+
+<!-- <lib-search-filter [filters]="filters"></lib-search-filter> -->
+
 <div class="example-container">
   <div class="example-table-container">
     <mat-table [dataSource]="dataSource">
@@ -72,7 +75,9 @@
         </mat-cell>
       </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></mat-header-row>
+      <mat-header-row
+        *matHeaderRowDef="displayedColumns; sticky: true"
+      ></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
     </mat-table>
   </div>

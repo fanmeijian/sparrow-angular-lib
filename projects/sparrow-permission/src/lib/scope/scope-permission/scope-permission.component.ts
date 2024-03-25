@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ScopeService, SysroleService } from '@sparrowmini/permission-api';
+import { ScopeService, SysroleService } from '@sparrowmini/org-api';
 
 @Component({
   selector: 'lib-scope-permission',

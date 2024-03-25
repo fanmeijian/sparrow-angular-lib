@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatTableDataSource } from "@angular/material/table";
-import { SysroleService } from "@sparrowmini/permission-api";
+import { SysroleService } from "@sparrowmini/org-api";
 import { map, switchMap, tap, zip } from "rxjs";
 import { SysroleCreateComponent } from "../sysrole-create/sysrole-create.component";
 import { SysrolePermissionComponent } from "../sysrole-permission/sysrole-permission.component";
@@ -49,7 +49,7 @@ export class SysrolesComponent implements OnInit {
     this.pageable.pageIndex = event.pageIndex;
     this.pageable.pageSize = event.pageSize;
     this.sysroleService
-      .sysroles(this.pageable.pageIndex, this.pageable.pageSize)
+      .sysroles([],this.pageable.pageIndex, this.pageable.pageSize)
       .pipe(
         tap((res) => (this.pageable.length = res.totalElements!)),
         map((res: any) => res.content),

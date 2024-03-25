@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatTableDataSource } from "@angular/material/table";
-import { DataPermissionService } from "@sparrowmini/permission-api";
+import { DataPermissionService } from "@sparrowmini/org-api";
 
 @Component({
   selector: "lib-data-permissions",
@@ -28,7 +28,7 @@ export class DataPermissionsComponent implements OnInit {
   onPageChange(event: any) {
     this.dataPermissionService
       .dataPermissions(event.page, event.size)
-      .subscribe((res) => {
+      .subscribe((res:any) => {
         this.pageable.length = res.totalElements!
         this.dataSource = new MatTableDataSource<any>(res.content);
       });

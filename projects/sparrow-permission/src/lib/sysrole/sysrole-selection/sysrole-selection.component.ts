@@ -12,7 +12,7 @@ import { MatChipInputEvent } from "@angular/material/chips";
 import { Observable, startWith, map } from "rxjs";
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
 import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
-import { SysroleService } from "@sparrowmini/permission-api";
+import { SysroleService } from "@sparrowmini/org-api";
 
 @Component({
   selector: "lib-sysrole-selection",
@@ -32,7 +32,7 @@ export class SysroleSelectionComponent implements OnInit {
 
   constructor(private sysroleService: SysroleService) {}
   ngOnInit(): void {
-    this.sysroleService.sysroles(0, 100000).subscribe((res) => {
+    this.sysroleService.sysroles([],0, 100000).subscribe((res) => {
       this.sysroles = res.content!;
     });
   }

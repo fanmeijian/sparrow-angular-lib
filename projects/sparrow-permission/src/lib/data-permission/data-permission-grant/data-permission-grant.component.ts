@@ -6,7 +6,7 @@ import {
   DataPermissionService,
   DatamodelService,
   RuleService,
-} from "@sparrowmini/permission-api";
+} from "@sparrowmini/org-api";
 import { PermissionEnum } from "../../../model/constant";
 
 @Component({

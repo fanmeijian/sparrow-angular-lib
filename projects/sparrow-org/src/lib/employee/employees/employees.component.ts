@@ -120,7 +120,7 @@ export class EmployeesComponent implements OnInit {
         map((res) => res.map((a) => a.id)),
         switchMap((s) =>
           s.length > 0
-            ? zip(...s.map((m) => this.groupService.group(m?.groupId!)))
+            ? zip(...s.map((m) => this.groupService.orgGroup(m?.groupId!)))
             : of([])
         )
       );

@@ -41,7 +41,7 @@ export class GroupDynamicDatabase implements DynamicDatabase {
       map((res) => res.content!),
       switchMap((roles: any[]) =>
         roles.length===0?of([]):
-        zip(...roles?.map((m) => this.groupService.group(m.id.groupId)))
+        zip(...roles?.map((m) => this.groupService.orgGroup(m.id.groupId)))
       ),
       map((res: any) => res.map((a: any) => new DynamicFlatNode(Object.assign({},a ,{type: 'GROUP'}), 0, true)))
     );

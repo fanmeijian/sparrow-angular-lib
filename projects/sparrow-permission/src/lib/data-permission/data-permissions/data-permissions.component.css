@@ -1,0 +1,11 @@
+/* Structure */
+.example-container {
+  position: relative;
+}
+
+.example-table-container {
+  position: relative;
+  /* min-height: 200px; */
+  height: calc(100vh - 250px);
+  overflow: auto;
+}
