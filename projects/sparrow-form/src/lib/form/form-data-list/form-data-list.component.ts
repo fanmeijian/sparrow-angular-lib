@@ -18,7 +18,7 @@ export class FormDataListComponent implements OnInit {
 
   ngOnInit(): void {
     this.formService
-      .formDatas(this.formId, this.pageable.page, this.pageable.size)
+      .allFormDatas(this.pageable.page, this.pageable.size)
       .subscribe((res) => {
         this.dataSource = new MatTableDataSource<any>(res.content);
       });

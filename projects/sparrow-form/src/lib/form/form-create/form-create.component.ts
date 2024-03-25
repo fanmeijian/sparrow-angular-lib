@@ -2,8 +2,7 @@ import { Component, ElementRef, EventEmitter, OnInit, TemplateRef, ViewChild } f
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormsService } from 'dist/form-api/projects';
-import { ProcessAndTaskDefinitionsService } from 'dist/jbpm-api/projects';
+import { FormsService } from '@sparrowmini/form-api';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Prism from 'prismjs';
 import { FormioRefreshValue } from '@formio/angular';
@@ -54,7 +53,6 @@ export class FormCreateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
     private router: Router,
-    private processAndTaskDefinitionsService: ProcessAndTaskDefinitionsService
   ) {
     this.form = { components: [] };
   }
