@@ -1,19 +1,19 @@
-import { Component, OnInit } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { MatTableDataSource } from "@angular/material/table";
-import { ScopeService, SysroleService } from "@sparrowmini/org-api";
-import { combineLatest, map, of, switchMap, tap, zip } from "rxjs";
-import { SysroleCreateComponent } from "../../sysrole/sysrole-create/sysrole-create.component";
-import { SysrolePermissionComponent } from "../../sysrole/sysrole-permission/sysrole-permission.component";
-import { PageEvent } from "@angular/material/paginator";
-import { ScopeCreateComponent } from "../scope-create/scope-create.component";
-import { ScopePermissionComponent } from "../scope-permission/scope-permission.component";
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTableDataSource } from '@angular/material/table';
+import { ScopeService, SysroleService } from '@sparrowmini/org-api';
+import { combineLatest, map, of, switchMap, tap, zip } from 'rxjs';
+import { SysroleCreateComponent } from '../../sysrole/sysrole-create/sysrole-create.component';
+import { SysrolePermissionComponent } from '../../sysrole/sysrole-permission/sysrole-permission.component';
+import { PageEvent } from '@angular/material/paginator';
+import { ScopeCreateComponent } from '../scope-create/scope-create.component';
+import { ScopePermissionComponent } from '../scope-permission/scope-permission.component';
 
 @Component({
-  selector: "lib-scopes",
-  templateUrl: "./scopes.component.html",
-  styleUrls: ["./scopes.component.css"],
+  selector: 'lib-scopes',
+  templateUrl: './scopes.component.html',
+  styleUrls: ['./scopes.component.css'],
 })
 export class ScopesComponent implements OnInit {
   users: any[] = [];
@@ -21,9 +21,10 @@ export class ScopesComponent implements OnInit {
   // pageable = { page: 0, size: 10 };
 
   total: number = 0;
-  displayedColumns = ["id", "name", "code", "users", "sysroles", "actions"];
+  displayedColumns = ['id', 'name', 'code', 'users', 'sysroles', 'actions'];
 
   filters: any[] = [];
+  pageable = { pageIndex: 0, pageSize: 10, length: 0 };
 
   constructor(
     private scopeService: ScopeService,
@@ -33,7 +34,7 @@ export class ScopesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.onPage({pageIndex:0, pageSize:10,length:0});
+    this.onPage({ pageIndex: 0, pageSize: 10, length: 0 });
   }
 
   new() {
@@ -42,7 +43,7 @@ export class ScopesComponent implements OnInit {
 
   delete(sysrole: any) {
     this.scopeService.deleteScopes([sysrole.id]).subscribe(() => {
-      this.snack.open("删除成功！", "关闭");
+      this.snack.open('删除成功！', '关闭');
     });
   }
 
@@ -55,9 +56,9 @@ export class ScopesComponent implements OnInit {
 
   remove(user: any, sysrole: any) {
     this.scopeService
-      .removeScopePermissions([user], "", sysrole.id)
+      .removeScopePermissions([user], '', sysrole.id)
       .subscribe(() => {
-        this.snack.open("移除成功！", "关闭");
+        this.snack.open('移除成功！', '关闭');
         this.ngOnInit();
       });
   }
@@ -77,7 +78,7 @@ export class ScopesComponent implements OnInit {
           zip(
             ...sysroles.map((sysrole) => {
               const $users = this.scopeService
-                .scopePermissions(sysrole.id, "USER")
+                .scopePermissions(sysrole.id, 'USER')
                 .pipe(
                   map((m) =>
                     m.content && m.content.length > 0
@@ -86,16 +87,17 @@ export class ScopesComponent implements OnInit {
                   )
                 );
               const $sysroles = this.scopeService
-                .scopePermissions(sysrole.id, "SYSROLE")
+                .scopePermissions(sysrole.id, 'SYSROLE')
                 .pipe(
                   map((m) => m.content),
                   switchMap((res: any) =>
-                  res.length>0?
-                    zip(
-                      ...res.map((m: any) =>
-                        this.sysroleService.sysrole(m.id.sysroleId)
-                      )
-                    ):of([])
+                    res.length > 0
+                      ? zip(
+                          ...res.map((m: any) =>
+                            this.sysroleService.sysrole(m.id.sysroleId)
+                          )
+                        )
+                      : of([])
                   )
                 );
 
@@ -115,5 +117,13 @@ export class ScopesComponent implements OnInit {
         console.log(res);
         this.dataSource = new MatTableDataSource<any>(res);
       });
+  }
+
+  applyFilter() {
+    this.onPage({
+      pageIndex: 0,
+      pageSize: this.pageable.pageSize,
+      length: this.pageable.length,
+    });
   }
 }

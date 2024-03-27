@@ -13,15 +13,15 @@ import { PageableObject } from './pageableObject';
 import { SortObject } from './sortObject';
 
 export interface PageObject { 
-    totalPages?: number;
     totalElements?: number;
-    sort?: SortObject;
-    first?: boolean;
-    last?: boolean;
-    number?: number;
+    totalPages?: number;
     size?: number;
     content?: Array<any>;
-    numberOfElements?: number;
+    sort?: SortObject;
+    number?: number;
+    first?: boolean;
+    last?: boolean;
     pageable?: PageableObject;
+    numberOfElements?: number;
     empty?: boolean;
 }

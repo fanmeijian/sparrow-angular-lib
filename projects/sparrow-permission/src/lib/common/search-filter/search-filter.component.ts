@@ -1,5 +1,6 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { BehaviorSubject } from 'rxjs';
 
@@ -23,6 +24,7 @@ export interface FilterTreeBean {
 export class SearchFilterComponent implements OnInit {
   @Input() filters: SparrowJpaFilter[] = [];
   @Input() fields?: any[] = [];
+  @Output() applyFilter = new EventEmitter<SparrowJpaFilter[]>();
 
   propertyNames = [
     {
@@ -30,22 +32,47 @@ export class SearchFilterComponent implements OnInit {
       value: 'createdDate',
     },
     {
+      name: '最后更新日期',
+      value: 'modifiedDate',
+    },
+    {
       name: '创建人',
       value: 'createdBy',
     },
     {
-      name: '代码',
-      value: 'code',
+      name: '最后更新人',
+      value: 'modifiedBy',
     },
-  ]
+
+  ];
   operators = [
     {
       name: '等于',
       value: '=',
     },
     {
+      name: '大于',
+      value: '>',
+    },
+    {
       name: '大于等于',
       value: '>=',
+    },
+    {
+      name: '小于',
+      value: '<',
+    },
+    {
+      name: '小于等于',
+      value: '=',
+    },
+    {
+      name: 'LIKE',
+      value: 'like',
+    },
+    {
+      name: 'IN',
+      value: 'in',
     },
   ];
 
@@ -58,7 +85,7 @@ export class SearchFilterComponent implements OnInit {
 
   dataChange = new BehaviorSubject<SparrowJpaFilter[]>([]);
 
-  constructor() {
+  constructor(private snack: MatSnackBar) {
     // this.dataSource.data = [];
     this.dataSource = new MatTreeNestedDataSource<SparrowJpaFilter>();
     this.dataChange.subscribe((data) => {
@@ -68,7 +95,9 @@ export class SearchFilterComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.propertyNames.unshift(...this.fields!)
+  }
 
   treeControl = new NestedTreeControl<SparrowJpaFilter>(
     (node) => node.children
@@ -93,5 +122,31 @@ export class SearchFilterComponent implements OnInit {
 
     this.filterBean = {};
     this.dataChange.next(this.filters);
+  }
+
+  removeFilter(node: any) {
+    this.findNode(node, this.filters);
+    this.filterBean = {};
+    this.dataChange.next(this.filters);
+  }
+
+  findNode(node: any, nodes: any[]) {
+    if (nodes.indexOf(node) >= 0) {
+      nodes.splice(nodes.indexOf(node), 1);
+    } else {
+      nodes.forEach((f) => {
+        if (f.children && f.children?.length > 0) {
+          this.findNode(node, f.children);
+        }
+      });
+    }
+  }
+
+  apply() {
+    if (this.filters && this.filters.length > 0) {
+      this.applyFilter.emit(this.filters);
+    } else {
+      this.snack.open('请先添加至少一个条件', '关闭');
+    }
   }
 }

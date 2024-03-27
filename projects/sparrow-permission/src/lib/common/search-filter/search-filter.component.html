@@ -42,6 +42,7 @@
     <!-- There is inline padding applied to this node using styles.
     This padding value depends on the mat-icon-button width. -->
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+      <button mat-button color="warn" (click)="removeFilter(node)">移除</button>
       <button mat-button color="primary" (click)="addFilter(node)">添加</button>
       {{ node.filterTreeBean.type }} {{ node.filterTreeBean.name }}
       {{ node.filterTreeBean.op }} {{ node.filterTreeBean.value }}
@@ -58,6 +59,7 @@
             {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
           </mat-icon>
         </button>
+        <button mat-button color="warn" (click)="removeFilter(node)">移除</button>
         <button mat-button color="primary" (click)="addFilter(node)">添加</button>
         {{ node.filterTreeBean.type }} {{ node.filterTreeBean.name }}
         {{ node.filterTreeBean.op }} {{ node.filterTreeBean.value }}
@@ -72,4 +74,6 @@
       </div>
     </mat-nested-tree-node>
   </mat-tree>
+
+  <button mat-button color="primary" (click)="apply()">应用filter</button>
 </div>

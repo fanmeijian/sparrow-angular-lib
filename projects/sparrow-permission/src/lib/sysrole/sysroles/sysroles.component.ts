@@ -1,25 +1,25 @@
-import { Component, OnInit } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
-import { MatTableDataSource } from "@angular/material/table";
-import { SysroleService } from "@sparrowmini/org-api";
-import { map, switchMap, tap, zip } from "rxjs";
-import { SysroleCreateComponent } from "../sysrole-create/sysrole-create.component";
-import { SysrolePermissionComponent } from "../sysrole-permission/sysrole-permission.component";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { DataPermissionGrantComponent } from "../../data-permission/data-permission-grant/data-permission-grant.component";
-import { HttpClient } from "@angular/common/http";
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { SysroleService } from '@sparrowmini/org-api';
+import { map, switchMap, tap, zip } from 'rxjs';
+import { SysroleCreateComponent } from '../sysrole-create/sysrole-create.component';
+import { SysrolePermissionComponent } from '../sysrole-permission/sysrole-permission.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DataPermissionGrantComponent } from '../../data-permission/data-permission-grant/data-permission-grant.component';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: "lib-sysroles",
-  templateUrl: "./sysroles.component.html",
-  styleUrls: ["./sysroles.component.css"],
+  selector: 'lib-sysroles',
+  templateUrl: './sysroles.component.html',
+  styleUrls: ['./sysroles.component.css'],
 })
 export class SysrolesComponent implements OnInit {
   users: any[] = [];
   dataSource = new MatTableDataSource<any>();
   pageable = { pageIndex: 0, pageSize: 10, length: 0 };
 
-  displayedColumns = ["seq", "name", "code", "users", "actions"];
+  displayedColumns = ['seq', 'name', 'code', 'users', 'actions'];
 
   constructor(
     private sysroleService: SysroleService,
@@ -30,26 +30,20 @@ export class SysrolesComponent implements OnInit {
 
   filters: any[] = [];
   ngOnInit(): void {
-    // this.onPageChange(this.pageable);
+    this.onPageChange(this.pageable);
   }
 
   applyFilter() {
-    this.http
-      .post(
-        "http://localhost:8080/sysroles/filter?page=0&size=20",
-        this.filters
-      )
-      .subscribe((res) => {
-        console.log(res);
-      });
+    this.onPageChange({ pageIndex: 0, pageSize: this.pageable.pageSize });
   }
 
   onPageChange(event: any) {
     console.log(event);
+    this.dataSource = new MatTableDataSource<any>();
     this.pageable.pageIndex = event.pageIndex;
     this.pageable.pageSize = event.pageSize;
     this.sysroleService
-      .sysroles([],this.pageable.pageIndex, this.pageable.pageSize)
+      .sysroles(this.filters, this.pageable.pageIndex, this.pageable.pageSize)
       .pipe(
         tap((res) => (this.pageable.length = res.totalElements!)),
         map((res: any) => res.content),
@@ -78,7 +72,7 @@ export class SysrolesComponent implements OnInit {
 
   delete(sysrole: any) {
     this.sysroleService.deleteSysroles([sysrole.id]).subscribe(() => {
-      this.snack.open("删除成功！", "关闭");
+      this.snack.open('删除成功！', '关闭');
     });
   }
 
@@ -91,7 +85,7 @@ export class SysrolesComponent implements OnInit {
 
   remove(user: any, sysrole: any) {
     this.sysroleService.removeSysroleUsers([user], sysrole.id).subscribe(() => {
-      this.snack.open("移除成功！", "关闭");
+      this.snack.open('移除成功！', '关闭');
       this.ngOnInit();
     });
   }
@@ -103,7 +97,7 @@ export class SysrolesComponent implements OnInit {
   openDataPermission(sysrole: any) {
     this.dialog.open(DataPermissionGrantComponent, {
       data: sysrole,
-      width: "80%",
+      width: '80%',
     });
   }
 }

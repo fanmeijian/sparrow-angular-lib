@@ -1,20 +1,17 @@
 <button mat-flat-button (click)="new()" color="primary">新增</button>
-
-<lib-search-filter [filters]="filters"></lib-search-filter>
-
-<button mat-button color="primary" (click)="applyFilter()">应用filter</button>
+<lib-search-filter
+  [filters]="filters"
+  [fields]="[{
+    name: '代码',
+    value: 'code'
+  }]"
+  (applyFilter)="applyFilter()"
+></lib-search-filter>
 <div class="example-table-container">
   <mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="seq">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let element; let index = index">
-        <!-- <span class="s-button"
-          mat-button
-          color="primary"
-          routerLink="/sparrow-form-create"
-          [queryParams]="{ id: element.id }"
-          >{{ index + 1 }}.</span
-        > -->
         {{ index + 1 }}.
       </mat-cell>
     </ng-container>

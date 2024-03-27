@@ -1,7 +1,12 @@
 <button mat-flat-button (click)="new()" color="primary">新增</button>
-
-<!-- <lib-search-filter [filters]="filters"></lib-search-filter> -->
-
+<lib-search-filter
+  [filters]="filters"
+  [fields]="[{
+    name: '代码',
+    value: 'code'
+  }]"
+  (applyFilter)="applyFilter()"
+></lib-search-filter>
 <div class="example-container">
   <div class="example-table-container">
     <mat-table [dataSource]="dataSource">

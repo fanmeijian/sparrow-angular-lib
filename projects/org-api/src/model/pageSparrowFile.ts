@@ -14,15 +14,15 @@ import { SortObject } from './sortObject';
 import { SparrowFile } from './sparrowFile';
 
 export interface PageSparrowFile { 
-    totalPages?: number;
     totalElements?: number;
-    sort?: SortObject;
-    first?: boolean;
-    last?: boolean;
-    number?: number;
+    totalPages?: number;
     size?: number;
     content?: Array<SparrowFile>;
-    numberOfElements?: number;
+    sort?: SortObject;
+    number?: number;
+    first?: boolean;
+    last?: boolean;
     pageable?: PageableObject;
+    numberOfElements?: number;
     empty?: boolean;
 }

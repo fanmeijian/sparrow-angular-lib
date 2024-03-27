@@ -3,9 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'lib-sparrow-bpm',
   template: `
-    <p>
-      sparrow-bpm works!
-    </p>
+    <router-outlet></router-outlet>
   `,
   styles: [
   ]

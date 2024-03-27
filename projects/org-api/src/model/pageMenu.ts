@@ -14,15 +14,15 @@ import { PageableObject } from './pageableObject';
 import { SortObject } from './sortObject';
 
 export interface PageMenu { 
-    totalPages?: number;
     totalElements?: number;
-    sort?: SortObject;
-    first?: boolean;
-    last?: boolean;
-    number?: number;
+    totalPages?: number;
     size?: number;
     content?: Array<Menu>;
-    numberOfElements?: number;
+    sort?: SortObject;
+    number?: number;
+    first?: boolean;
+    last?: boolean;
     pageable?: PageableObject;
+    numberOfElements?: number;
     empty?: boolean;
 }
