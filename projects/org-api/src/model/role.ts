@@ -11,15 +11,16 @@
  */
 
 export interface Role { 
-    readonly modelName?: string;
     readonly createdDate?: Date;
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
+    stat?: string;
+    readonly enabled?: boolean;
+    readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
     readonly id?: string;
     code?: string;
     name?: string;
     isRoot?: boolean;
-    stat?: string;
 }

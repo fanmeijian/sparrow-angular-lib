@@ -218,7 +218,7 @@ export class SprmodesComponent implements OnInit {
   }
 
   openAttrPermission(sysrole: any) {
-    this.dialog.open(AttributePermisssionComponent, { data: sysrole });
+    this.dialog.open(AttributePermisssionComponent, {width: "100%", data: sysrole });
   }
 
   public _editor: any;

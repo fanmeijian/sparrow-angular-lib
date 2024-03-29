@@ -14,14 +14,14 @@ import { SortObject } from './sortObject';
 import { Sysrole } from './sysrole';
 
 export interface PageSysrole { 
-    totalElements?: number;
     totalPages?: number;
+    totalElements?: number;
     size?: number;
     content?: Array<Sysrole>;
-    sort?: SortObject;
     number?: number;
     first?: boolean;
     last?: boolean;
+    sort?: SortObject;
     pageable?: PageableObject;
     numberOfElements?: number;
     empty?: boolean;

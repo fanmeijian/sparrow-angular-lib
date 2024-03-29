@@ -9,6 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { DataPermission } from './dataPermission';
 import { ScopeCatalog } from './scopeCatalog';
 
 export interface Scope { 
@@ -16,9 +17,13 @@ export interface Scope {
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
+    readonly stat?: string;
+    readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
     readonly id?: string;
+    dataPermissionId?: string;
+    dataPermission?: DataPermission;
     name?: string;
     code?: string;
     type?: ScopeCatalog;

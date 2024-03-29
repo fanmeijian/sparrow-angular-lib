@@ -12,12 +12,13 @@
 import { EmployeeOrganizationRolePK } from './employeeOrganizationRolePK';
 
 export interface EmployeeOrganizationRole { 
-    readonly modelName?: string;
     readonly createdDate?: Date;
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
+    stat?: string;
+    readonly enabled?: boolean;
+    readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
     id?: EmployeeOrganizationRolePK;
-    stat?: string;
 }

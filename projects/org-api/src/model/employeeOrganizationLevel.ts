@@ -12,12 +12,13 @@
 import { EmployeeOrganizationLevelPK } from './employeeOrganizationLevelPK';
 
 export interface EmployeeOrganizationLevel { 
-    readonly modelName?: string;
     readonly createdDate?: Date;
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
+    stat?: string;
+    readonly enabled?: boolean;
+    readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
     id?: EmployeeOrganizationLevelPK;
-    stat?: string;
 }

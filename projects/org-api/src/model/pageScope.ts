@@ -14,14 +14,14 @@ import { Scope } from './scope';
 import { SortObject } from './sortObject';
 
 export interface PageScope { 
-    totalElements?: number;
     totalPages?: number;
+    totalElements?: number;
     size?: number;
     content?: Array<Scope>;
-    sort?: SortObject;
     number?: number;
     first?: boolean;
     last?: boolean;
+    sort?: SortObject;
     pageable?: PageableObject;
     numberOfElements?: number;
     empty?: boolean;

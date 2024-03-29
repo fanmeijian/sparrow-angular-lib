@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 
 import { AuditlogService } from './api/auditlog.service';
+import { DataOrganizationService } from './api/dataOrganization.service';
 import { DataPermissionService } from './api/dataPermission.service';
 import { DatamodelService } from './api/datamodel.service';
 import { EmployeeService } from './api/employee.service';
@@ -13,6 +14,7 @@ import { JoblevelService } from './api/joblevel.service';
 import { MenuService } from './api/menu.service';
 import { OrganizationService } from './api/organization.service';
 import { PemgroupService } from './api/pemgroup.service';
+import { RestApiServiceService } from './api/restApiService.service';
 import { RoleService } from './api/role.service';
 import { RuleService } from './api/rule.service';
 import { ScopeService } from './api/scope.service';
@@ -25,6 +27,7 @@ import { UserService } from './api/user.service';
   exports:      [],
   providers: [
     AuditlogService,
+    DataOrganizationService,
     DataPermissionService,
     DatamodelService,
     EmployeeService,
@@ -34,6 +37,7 @@ import { UserService } from './api/user.service';
     MenuService,
     OrganizationService,
     PemgroupService,
+    RestApiServiceService,
     RoleService,
     RuleService,
     ScopeService,

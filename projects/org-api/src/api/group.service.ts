@@ -30,7 +30,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class GroupService {
 
-    protected basePath = 'http://localhost:8080';
+    protected basePath = 'http://localhost:4421/org-service';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 

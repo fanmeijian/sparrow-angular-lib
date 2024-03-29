@@ -9,15 +9,15 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { OrganizationGroup } from './organizationGroup';
+import { DataOrganization } from './dataOrganization';
 import { PageableObject } from './pageableObject';
 import { SortObject } from './sortObject';
 
-export interface PageOrganizationGroup { 
+export interface PageDataOrganization { 
     totalPages?: number;
     totalElements?: number;
     size?: number;
-    content?: Array<OrganizationGroup>;
+    content?: Array<DataOrganization>;
     number?: number;
     first?: boolean;
     last?: boolean;

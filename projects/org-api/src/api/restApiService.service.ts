@@ -17,17 +17,16 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
-import { PageSysrole } from '../model/pageSysrole';
-import { PageUserSysrole } from '../model/pageUserSysrole';
+import { ApiResponseListObject } from '../model/apiResponseListObject';
+import { PageObject } from '../model/pageObject';
 import { SparrowJpaFilter } from '../model/sparrowJpaFilter';
-import { Sysrole } from '../model/sysrole';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
 
 @Injectable()
-export class SysroleService {
+export class RestApiServiceService {
 
     protected basePath = 'http://localhost:4421/org-service';
     public defaultHeaders = new HttpHeaders();
@@ -59,24 +58,24 @@ export class SysroleService {
 
 
     /**
-     * 授权用户
+     * 删除
      * 
      * @param body 
-     * @param sysroleId 
+     * @param modelName 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addSysroleUsers(body: Array<string>, sysroleId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public addSysroleUsers(body: Array<string>, sysroleId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public addSysroleUsers(body: Array<string>, sysroleId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public addSysroleUsers(body: Array<string>, sysroleId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public _delete(body: Array<string>, modelName: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public _delete(body: Array<string>, modelName: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public _delete(body: Array<string>, modelName: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public _delete(body: Array<string>, modelName: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling addSysroleUsers.');
+            throw new Error('Required parameter body was null or undefined when calling _delete.');
         }
 
-        if (sysroleId === null || sysroleId === undefined) {
-            throw new Error('Required parameter sysroleId was null or undefined when calling addSysroleUsers.');
+        if (modelName === null || modelName === undefined) {
+            throw new Error('Required parameter modelName was null or undefined when calling _delete.');
         }
 
         let headers = this.defaultHeaders;
@@ -98,7 +97,7 @@ export class SysroleService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('post',`${this.basePath}/sysroles/${encodeURIComponent(String(sysroleId))}/users`,
+        return this.httpClient.request<any>('post',`${this.basePath}/rest-apis/${encodeURIComponent(String(modelName))}/delete`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -110,65 +109,24 @@ export class SysroleService {
     }
 
     /**
-     * 删除角色
+     * 创建
      * 
      * @param body 
+     * @param modelName 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteSysroles(body: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteSysroles(body: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteSysroles(body: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteSysroles(body: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public create(body: string, modelName: string, observe?: 'body', reportProgress?: boolean): Observable<ApiResponseListObject>;
+    public create(body: string, modelName: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApiResponseListObject>>;
+    public create(body: string, modelName: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApiResponseListObject>>;
+    public create(body: string, modelName: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling deleteSysroles.');
+            throw new Error('Required parameter body was null or undefined when calling create.');
         }
 
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.request<any>('post',`${this.basePath}/sysroles/delete`,
-            {
-                body: body,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 新增角色
-     * 
-     * @param body 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public newSysrole(body: Sysrole, observe?: 'body', reportProgress?: boolean): Observable<Sysrole>;
-    public newSysrole(body: Sysrole, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Sysrole>>;
-    public newSysrole(body: Sysrole, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Sysrole>>;
-    public newSysrole(body: Sysrole, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling newSysrole.');
+        if (modelName === null || modelName === undefined) {
+            throw new Error('Required parameter modelName was null or undefined when calling create.');
         }
 
         let headers = this.defaultHeaders;
@@ -191,7 +149,7 @@ export class SysroleService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<Sysrole>('post',`${this.basePath}/sysroles`,
+        return this.httpClient.request<ApiResponseListObject>('post',`${this.basePath}/rest-apis/${encodeURIComponent(String(modelName))}`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -203,24 +161,24 @@ export class SysroleService {
     }
 
     /**
-     * 取消用户授权
+     * 是否启用
      * 
      * @param body 
-     * @param sysroleId 
+     * @param modelName 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public removeSysroleUsers(body: Array<string>, sysroleId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public removeSysroleUsers(body: Array<string>, sysroleId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public removeSysroleUsers(body: Array<string>, sysroleId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public removeSysroleUsers(body: Array<string>, sysroleId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public enable(body: { [key: string]: boolean; }, modelName: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public enable(body: { [key: string]: boolean; }, modelName: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public enable(body: { [key: string]: boolean; }, modelName: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public enable(body: { [key: string]: boolean; }, modelName: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling removeSysroleUsers.');
+            throw new Error('Required parameter body was null or undefined when calling enable.');
         }
 
-        if (sysroleId === null || sysroleId === undefined) {
-            throw new Error('Required parameter sysroleId was null or undefined when calling removeSysroleUsers.');
+        if (modelName === null || modelName === undefined) {
+            throw new Error('Required parameter modelName was null or undefined when calling enable.');
         }
 
         let headers = this.defaultHeaders;
@@ -242,7 +200,7 @@ export class SysroleService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('post',`${this.basePath}/sysroles/${encodeURIComponent(String(sysroleId))}/users/remove`,
+        return this.httpClient.request<any>('patch',`${this.basePath}/rest-apis/${encodeURIComponent(String(modelName))}/enable`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -254,19 +212,24 @@ export class SysroleService {
     }
 
     /**
-     * 角色详情
+     * 详情
      * 
-     * @param sysroleId 
+     * @param modelName 
+     * @param id 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public sysrole(sysroleId: string, observe?: 'body', reportProgress?: boolean): Observable<Sysrole>;
-    public sysrole(sysroleId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Sysrole>>;
-    public sysrole(sysroleId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Sysrole>>;
-    public sysrole(sysroleId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public get(modelName: string, id: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public get(modelName: string, id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public get(modelName: string, id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public get(modelName: string, id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (sysroleId === null || sysroleId === undefined) {
-            throw new Error('Required parameter sysroleId was null or undefined when calling sysrole.');
+        if (modelName === null || modelName === undefined) {
+            throw new Error('Required parameter modelName was null or undefined when calling get.');
+        }
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling get.');
         }
 
         let headers = this.defaultHeaders;
@@ -284,7 +247,7 @@ export class SysroleService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Sysrole>('get',`${this.basePath}/sysroles/${encodeURIComponent(String(sysroleId))}`,
+        return this.httpClient.request<any>('get',`${this.basePath}/rest-apis/${encodeURIComponent(String(modelName))}/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -295,83 +258,27 @@ export class SysroleService {
     }
 
     /**
-     * 角色用户列表
+     * 列表
      * 
-     * @param sysroleId 
+     * @param body 
+     * @param modelName 
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
      * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public sysroleUsers(sysroleId: string, page?: number, size?: number, sort?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<PageUserSysrole>;
-    public sysroleUsers(sysroleId: string, page?: number, size?: number, sort?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageUserSysrole>>;
-    public sysroleUsers(sysroleId: string, page?: number, size?: number, sort?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageUserSysrole>>;
-    public sysroleUsers(sysroleId: string, page?: number, size?: number, sort?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (sysroleId === null || sysroleId === undefined) {
-            throw new Error('Required parameter sysroleId was null or undefined when calling sysroleUsers.');
-        }
-
-
-
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (page !== undefined && page !== null) {
-            queryParameters = queryParameters.set('page', <any>page);
-        }
-        if (size !== undefined && size !== null) {
-            queryParameters = queryParameters.set('size', <any>size);
-        }
-        if (sort) {
-            sort.forEach((element) => {
-                queryParameters = queryParameters.append('sort', <any>element);
-            })
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<PageUserSysrole>('get',`${this.basePath}/sysroles/${encodeURIComponent(String(sysroleId))}/users`,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 角色列表
-     * 
-     * @param body 
-     * @param page Zero-based page index (0..N)
-     * @param size The size of the page to be returned
-     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public sysroles(body: Array<SparrowJpaFilter>, page?: number, size?: number, sort?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<PageSysrole>;
-    public sysroles(body: Array<SparrowJpaFilter>, page?: number, size?: number, sort?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageSysrole>>;
-    public sysroles(body: Array<SparrowJpaFilter>, page?: number, size?: number, sort?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageSysrole>>;
-    public sysroles(body: Array<SparrowJpaFilter>, page?: number, size?: number, sort?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public list(body: Array<SparrowJpaFilter>, modelName: string, page?: number, size?: number, sort?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<PageObject>;
+    public list(body: Array<SparrowJpaFilter>, modelName: string, page?: number, size?: number, sort?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageObject>>;
+    public list(body: Array<SparrowJpaFilter>, modelName: string, page?: number, size?: number, sort?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageObject>>;
+    public list(body: Array<SparrowJpaFilter>, modelName: string, page?: number, size?: number, sort?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling sysroles.');
+            throw new Error('Required parameter body was null or undefined when calling list.');
+        }
+
+        if (modelName === null || modelName === undefined) {
+            throw new Error('Required parameter modelName was null or undefined when calling list.');
         }
 
 
@@ -410,7 +317,7 @@ export class SysroleService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<PageSysrole>('post',`${this.basePath}/sysroles/filter`,
+        return this.httpClient.request<PageObject>('post',`${this.basePath}/rest-apis/${encodeURIComponent(String(modelName))}/filter`,
             {
                 body: body,
                 params: queryParameters,
@@ -423,24 +330,24 @@ export class SysroleService {
     }
 
     /**
-     * 更新角色
+     * 创建并提交
      * 
      * @param body 
-     * @param sysroleId 
+     * @param modelName 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateSysrole(body: Sysrole, sysroleId: string, observe?: 'body', reportProgress?: boolean): Observable<Sysrole>;
-    public updateSysrole(body: Sysrole, sysroleId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Sysrole>>;
-    public updateSysrole(body: Sysrole, sysroleId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Sysrole>>;
-    public updateSysrole(body: Sysrole, sysroleId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public submit(body: string, modelName: string, observe?: 'body', reportProgress?: boolean): Observable<ApiResponseListObject>;
+    public submit(body: string, modelName: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApiResponseListObject>>;
+    public submit(body: string, modelName: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApiResponseListObject>>;
+    public submit(body: string, modelName: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling updateSysrole.');
+            throw new Error('Required parameter body was null or undefined when calling submit.');
         }
 
-        if (sysroleId === null || sysroleId === undefined) {
-            throw new Error('Required parameter sysroleId was null or undefined when calling updateSysrole.');
+        if (modelName === null || modelName === undefined) {
+            throw new Error('Required parameter modelName was null or undefined when calling submit.');
         }
 
         let headers = this.defaultHeaders;
@@ -463,7 +370,109 @@ export class SysroleService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<Sysrole>('patch',`${this.basePath}/sysroles/${encodeURIComponent(String(sysroleId))}`,
+        return this.httpClient.request<ApiResponseListObject>('post',`${this.basePath}/rest-apis/${encodeURIComponent(String(modelName))}/submit`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 更新
+     * 
+     * @param body 
+     * @param modelName 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public update(body: string, modelName: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public update(body: string, modelName: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public update(body: string, modelName: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public update(body: string, modelName: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling update.');
+        }
+
+        if (modelName === null || modelName === undefined) {
+            throw new Error('Required parameter modelName was null or undefined when calling update.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<any>('patch',`${this.basePath}/rest-apis/${encodeURIComponent(String(modelName))}`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 更新状态
+     * 
+     * @param body 
+     * @param modelName 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updateStatus(body: { [key: string]: string; }, modelName: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public updateStatus(body: { [key: string]: string; }, modelName: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public updateStatus(body: { [key: string]: string; }, modelName: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public updateStatus(body: { [key: string]: string; }, modelName: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling updateStatus.');
+        }
+
+        if (modelName === null || modelName === undefined) {
+            throw new Error('Required parameter modelName was null or undefined when calling updateStatus.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<any>('patch',`${this.basePath}/rest-apis/${encodeURIComponent(String(modelName))}/status`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,

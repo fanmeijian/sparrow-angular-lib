@@ -34,7 +34,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class EmployeeService {
 
-    protected basePath = 'http://localhost:8080';
+    protected basePath = 'http://localhost:4421/org-service';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -295,6 +295,53 @@ export class EmployeeService {
 
         return this.httpClient.request<Employee>('get',`${this.basePath}/employees/${encodeURIComponent(String(employeeId))}`,
             {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 员工详情
+     * 
+     * @param username 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public employeeByUsername(username: string, observe?: 'body', reportProgress?: boolean): Observable<Employee>;
+    public employeeByUsername(username: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Employee>>;
+    public employeeByUsername(username: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Employee>>;
+    public employeeByUsername(username: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (username === null || username === undefined) {
+            throw new Error('Required parameter username was null or undefined when calling employeeByUsername.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (username !== undefined && username !== null) {
+            queryParameters = queryParameters.set('username', <any>username);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Employee>('get',`${this.basePath}/employees/by-username`,
+            {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

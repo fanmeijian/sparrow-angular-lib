@@ -9,16 +9,12 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { OrganizationPositionLevelPK } from './organizationPositionLevelPK';
 
-export interface OrganizationPositionLevel { 
+export interface DataOrganization { 
     readonly createdDate?: Date;
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
-    stat?: string;
-    readonly enabled?: boolean;
-    readonly modelName?: string;
-    readonly dataPermissionTokenId?: string;
-    id?: OrganizationPositionLevelPK;
+    readonly id?: string;
+    orgIds?: Array<string>;
 }

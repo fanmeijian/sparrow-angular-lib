@@ -12,12 +12,13 @@
 import { OrganizationGroupPK } from './organizationGroupPK';
 
 export interface OrganizationGroup { 
-    readonly modelName?: string;
     readonly createdDate?: Date;
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
+    stat?: string;
+    readonly enabled?: boolean;
+    readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
     id?: OrganizationGroupPK;
-    stat?: string;
 }

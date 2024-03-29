@@ -17,15 +17,16 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
-import { DataPermissionBean } from '../model/dataPermissionBean';
-import { PageDataPermission } from '../model/pageDataPermission';
+import { DataOrganization } from '../model/dataOrganization';
+import { PageDataOrganization } from '../model/pageDataOrganization';
+import { Pageable } from '../model/pageable';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
 
 @Injectable()
-export class DataPermissionService {
+export class DataOrganizationService {
 
     protected basePath = 'http://localhost:4421/org-service';
     public defaultHeaders = new HttpHeaders();
@@ -57,187 +58,24 @@ export class DataPermissionService {
 
 
     /**
-     * 数据权限详情
-     * 
-     * @param id 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public dataPermission(id: string, observe?: 'body', reportProgress?: boolean): Observable<DataPermissionBean>;
-    public dataPermission(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<DataPermissionBean>>;
-    public dataPermission(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<DataPermissionBean>>;
-    public dataPermission(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling dataPermission.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<DataPermissionBean>('get',`${this.basePath}/data-permissions/${encodeURIComponent(String(id))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 浏览数据权限
-     * 
-     * @param page Zero-based page index (0..N)
-     * @param size The size of the page to be returned
-     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public dataPermissions(page?: number, size?: number, sort?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<PageDataPermission>;
-    public dataPermissions(page?: number, size?: number, sort?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageDataPermission>>;
-    public dataPermissions(page?: number, size?: number, sort?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageDataPermission>>;
-    public dataPermissions(page?: number, size?: number, sort?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-
-
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (page !== undefined && page !== null) {
-            queryParameters = queryParameters.set('page', <any>page);
-        }
-        if (size !== undefined && size !== null) {
-            queryParameters = queryParameters.set('size', <any>size);
-        }
-        if (sort) {
-            sort.forEach((element) => {
-                queryParameters = queryParameters.append('sort', <any>element);
-            })
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<PageDataPermission>('get',`${this.basePath}/data-permissions`,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 新增数据权限
-     * 
-     * @param body 
-     * @param modelId 
-     * @param dataId 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public newDataPermission(body: DataPermissionBean, modelId: string, dataId: string, observe?: 'body', reportProgress?: boolean): Observable<string>;
-    public newDataPermission(body: DataPermissionBean, modelId: string, dataId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
-    public newDataPermission(body: DataPermissionBean, modelId: string, dataId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
-    public newDataPermission(body: DataPermissionBean, modelId: string, dataId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling newDataPermission.');
-        }
-
-        if (modelId === null || modelId === undefined) {
-            throw new Error('Required parameter modelId was null or undefined when calling newDataPermission.');
-        }
-
-        if (dataId === null || dataId === undefined) {
-            throw new Error('Required parameter dataId was null or undefined when calling newDataPermission.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (modelId !== undefined && modelId !== null) {
-            queryParameters = queryParameters.set('modelId', <any>modelId);
-        }
-        if (dataId !== undefined && dataId !== null) {
-            queryParameters = queryParameters.set('dataId', <any>dataId);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.request<string>('post',`${this.basePath}/data-permissions`,
-            {
-                body: body,
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 更新数据权限
+     * 添加归属组织
      * 
      * @param body 
      * @param id 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public removeDataPermission(body: DataPermissionBean, id: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public removeDataPermission(body: DataPermissionBean, id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public removeDataPermission(body: DataPermissionBean, id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public removeDataPermission(body: DataPermissionBean, id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public addDataOrg(body: Array<string>, id: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public addDataOrg(body: Array<string>, id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public addDataOrg(body: Array<string>, id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public addDataOrg(body: Array<string>, id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling removeDataPermission.');
+            throw new Error('Required parameter body was null or undefined when calling addDataOrg.');
         }
 
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling removeDataPermission.');
+            throw new Error('Required parameter id was null or undefined when calling addDataOrg.');
         }
 
         let headers = this.defaultHeaders;
@@ -259,7 +97,7 @@ export class DataPermissionService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('post',`${this.basePath}/data-permissions/${encodeURIComponent(String(id))}/remove`,
+        return this.httpClient.request<any>('post',`${this.basePath}/data-organizations/${encodeURIComponent(String(id))}/add`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -271,24 +109,159 @@ export class DataPermissionService {
     }
 
     /**
-     * 更新数据权限
+     * 归属组织详情
+     * 
+     * @param id 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public dataOrg(id: string, observe?: 'body', reportProgress?: boolean): Observable<DataOrganization>;
+    public dataOrg(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<DataOrganization>>;
+    public dataOrg(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<DataOrganization>>;
+    public dataOrg(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling dataOrg.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<DataOrganization>('get',`${this.basePath}/data-organizations/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 创建归属组织
+     * 
+     * @param pageable 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public dataOrgs(pageable: Pageable, observe?: 'body', reportProgress?: boolean): Observable<PageDataOrganization>;
+    public dataOrgs(pageable: Pageable, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageDataOrganization>>;
+    public dataOrgs(pageable: Pageable, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageDataOrganization>>;
+    public dataOrgs(pageable: Pageable, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (pageable === null || pageable === undefined) {
+            throw new Error('Required parameter pageable was null or undefined when calling dataOrgs.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (pageable !== undefined && pageable !== null) {
+            queryParameters = queryParameters.set('pageable', <any>pageable);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<PageDataOrganization>('get',`${this.basePath}/data-organizations`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 创建归属组织
+     * 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public newDataOrg(body: DataOrganization, observe?: 'body', reportProgress?: boolean): Observable<string>;
+    public newDataOrg(body: DataOrganization, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
+    public newDataOrg(body: DataOrganization, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
+    public newDataOrg(body: DataOrganization, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling newDataOrg.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<string>('post',`${this.basePath}/data-organizations`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 移除归属组织
      * 
      * @param body 
      * @param id 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateDataPermission(body: DataPermissionBean, id: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public updateDataPermission(body: DataPermissionBean, id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public updateDataPermission(body: DataPermissionBean, id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public updateDataPermission(body: DataPermissionBean, id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public removeDataOrg(body: Array<string>, id: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public removeDataOrg(body: Array<string>, id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public removeDataOrg(body: Array<string>, id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public removeDataOrg(body: Array<string>, id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling updateDataPermission.');
+            throw new Error('Required parameter body was null or undefined when calling removeDataOrg.');
         }
 
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling updateDataPermission.');
+            throw new Error('Required parameter id was null or undefined when calling removeDataOrg.');
         }
 
         let headers = this.defaultHeaders;
@@ -310,7 +283,7 @@ export class DataPermissionService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('patch',`${this.basePath}/data-permissions/${encodeURIComponent(String(id))}`,
+        return this.httpClient.request<any>('post',`${this.basePath}/data-organizations/${encodeURIComponent(String(id))}/remove`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,

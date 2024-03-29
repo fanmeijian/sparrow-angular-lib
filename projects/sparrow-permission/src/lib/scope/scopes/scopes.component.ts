@@ -70,7 +70,7 @@ export class ScopesComponent implements OnInit {
   onPage(page: PageEvent) {
     this.dataSource = new MatTableDataSource<any>();
     this.scopeService
-      .scopes(page.pageIndex, page.pageSize)
+      .scopeFilter(this.filters, page.pageIndex, page.pageSize)
       .pipe(
         tap((t) => (this.total = t.totalElements!)),
         map((res: any) => res.content),
@@ -119,7 +119,8 @@ export class ScopesComponent implements OnInit {
       });
   }
 
-  applyFilter() {
+  applyFilter(event: any) {
+    this.filters = event;
     this.onPage({
       pageIndex: 0,
       pageSize: this.pageable.pageSize,

@@ -16,6 +16,8 @@ export interface UserSysrole {
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
+    readonly stat?: string;
+    readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
     id?: UserSysrolePK;

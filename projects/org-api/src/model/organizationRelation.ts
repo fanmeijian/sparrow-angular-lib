@@ -12,11 +12,13 @@
 import { OrganizationRelationPK } from './organizationRelationPK';
 
 export interface OrganizationRelation { 
-    readonly modelName?: string;
     readonly createdDate?: Date;
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
+    readonly stat?: string;
+    readonly enabled?: boolean;
+    readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
     id?: OrganizationRelationPK;
 }

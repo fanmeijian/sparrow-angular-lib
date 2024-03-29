@@ -9,19 +9,23 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { DataOrganization } from './dataOrganization';
 
 export interface Group { 
-    readonly modelName?: string;
     readonly createdDate?: Date;
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
+    stat?: string;
+    readonly enabled?: boolean;
+    readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
     readonly id?: string;
+    readonly organizationId?: string;
+    dataOrganization?: DataOrganization;
     code?: string;
     name?: string;
     owner?: string;
-    stat?: string;
     isRoot?: boolean;
     type?: Group.TypeEnum;
 }
