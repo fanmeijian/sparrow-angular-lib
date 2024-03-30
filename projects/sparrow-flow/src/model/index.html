@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        #stage {
+            position: absolute;
+            width: 800px;
+            height: 700px;
+            border: 1px red solid;
+            top: 100px;
+            left: 100px;
+        }
+        /* .person-run {
+            position: absolute;
+            width: 92px;
+            height: 163px;
+            background-image: url("./run.png");
+            animation: run 1s steps(8) infinite;
+            border: 1px red solid;
+        }
+        @keyframes run {
+            from {
+              background-position: 0 0;
+            }
+            to {
+              background-position: -736px 0;
+            }
+        } */
+        .render-dom {
+            position: absolute;
+            width: 200px;
+            height: 60px;
+            background: pink;
+            left: 10px;
+            top: 10px;
+        }
+        .render-dom p {
+            font-size: 14px;
+            color: blue;
+            line-height: 14px;
+            font-family: cursive;
+        }
+        .render-dom .icon {
+            width: 20px;
+            height: 20px; 
+        }
+        .render-dom .btn {
+            color: #fff;
+            border: 0;
+            font-size: 14px;
+            font-family: cursive;
+            background: green;
+        }
+    </style>
+  </head>
+  <body>
+    <!-- <div class="person-run"></div> -->
+    <canvas id="stage"></canvas>
+    <!-- <div class="render-dom" id="rdom">
+        <p>我是一行文本，有点长</p>
+        <img src="./close.png" class="icon"/>
+        <button class="btn">确认按钮</button>
+    </div> -->
+  </body>
+</html>

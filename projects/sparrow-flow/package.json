@@ -12,7 +12,8 @@
     "@angular/platform-browser": "^13.4.0"
   },
   "dependencies": {
-    "@sparrowmini/sparrow-flow": "^0.0.1",
+    "@logicflow/core": "^1.2.23",
+    "@logicflow/extension": "^1.2.23",
     "tslib": "^2.3.0"
   }
 }

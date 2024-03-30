@@ -1,0 +1,8 @@
+#stage {
+  position: absolute;
+  width: 800px;
+  height: 700px;
+  border: 1px red solid;
+  top: 100px;
+  left: 100px;
+}

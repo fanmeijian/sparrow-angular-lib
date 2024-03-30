@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProcessInstancesComponent } from './process-instances.component';
+import { FlowDesignComponent } from './flow-design.component';
 
-describe('ProcessInstancesComponent', () => {
-  let component: ProcessInstancesComponent;
-  let fixture: ComponentFixture<ProcessInstancesComponent>;
+describe('FlowDesignComponent', () => {
+  let component: FlowDesignComponent;
+  let fixture: ComponentFixture<FlowDesignComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProcessInstancesComponent ]
+      declarations: [ FlowDesignComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProcessInstancesComponent);
+    fixture = TestBed.createComponent(FlowDesignComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

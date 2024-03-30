@@ -3,9 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'lib-sparrow-flow',
   template: `
-    <p>
-      sparrow-flow works!
-    </p>
+   <router-outlet></router-outlet>
   `,
   styles: [
   ]
