@@ -8,37 +8,6 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "pemission-lib": {
-      "projectType": "library",
-      "root": "projects/pemission-lib",
-      "sourceRoot": "projects/pemission-lib/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/pemission-lib/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/pemission-lib/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/pemission-lib/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/pemission-lib/src/test.ts",
-            "tsConfig": "projects/pemission-lib/tsconfig.spec.json",
-            "karmaConfig": "projects/pemission-lib/karma.conf.js"
-          }
-        }
-      }
-    },
     "jbpm-api": {
       "projectType": "library",
       "root": "projects/jbpm-api",
@@ -659,6 +628,5 @@
         }
       }
     }
-  },
-  "defaultProject": "pemission-lib"
+  }
 }
