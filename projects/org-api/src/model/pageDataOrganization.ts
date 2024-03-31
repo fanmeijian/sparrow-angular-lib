@@ -18,11 +18,11 @@ export interface PageDataOrganization {
     totalElements?: number;
     size?: number;
     content?: Array<DataOrganization>;
-    number?: number;
     first?: boolean;
     last?: boolean;
+    number?: number;
     sort?: SortObject;
-    pageable?: PageableObject;
     numberOfElements?: number;
+    pageable?: PageableObject;
     empty?: boolean;
 }

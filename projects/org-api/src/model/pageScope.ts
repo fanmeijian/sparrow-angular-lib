@@ -18,11 +18,11 @@ export interface PageScope {
     totalElements?: number;
     size?: number;
     content?: Array<Scope>;
-    number?: number;
     first?: boolean;
     last?: boolean;
+    number?: number;
     sort?: SortObject;
-    pageable?: PageableObject;
     numberOfElements?: number;
+    pageable?: PageableObject;
     empty?: boolean;
 }

@@ -1,109 +1,64 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import Connect from '../../model/Connect';
-import Stage from '../../model/Stage';
-import TextElm from '../../model/TextElm';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { LogicFlow } from '@logicflow/core';
-
+import {
+  BpmnElement,
+  BpmnXmlAdapter,
+  Snapshot,
+  Control,
+  Menu,
+  SelectionSelect,
+} from '@logicflow/extension';
+import { Router } from '@angular/router';
 @Component({
   selector: 'lib-flow-design',
   templateUrl: './flow-design.component.html',
   styleUrls: ['./flow-design.component.css'],
 })
-export class FlowDesignComponent implements OnInit, AfterViewInit {
-  // @ViewChild('stage') stage!: ElementRef<any>;
-  @ViewChild('container') stage!: ElementRef<any>;
-  constructor() {}
-  ngAfterViewInit(): void {
+export class FlowDesignComponent implements OnInit {
+  lf: any = null;
+  drawer: Boolean = false;
+  currentNode: any = null;
 
-    // console.log(this.stage);
-    // // 初始化一个800 * 700的舞台
-    // let s2 = new Stage(this.stage.nativeElement);
-    // // 在 (50, 50)的位置初始化一个200 * 50的文字板
-    // let t1 = new TextElm({
-    //   text: 'hello 解决1',
-    //   x: 50,
-    //   y: 50,
-    //   w: 200,
-    //   h: 50,
-    //   color: 'blue',
-    //   parent: s2,
-    // });
-    // s2.add(t1);
-    // // 在 (300, 300)的位置初始化一个200 * 50的文字板
-    // let t2 = new TextElm({
-    //   text: 'world 哈哈2',
-    //   x: 300,
-    //   y: 400,
-    //   w: 200,
-    //   h: 50,
-    //   color: 'blue',
-    //   parent: s2,
-    // });
-    // s2.add(t2);
-    // let t3 = new TextElm({
-    //   text: '多连线3',
-    //   x: 300,
-    //   y: 100,
-    //   w: 200,
-    //   h: 50,
-    //   color: 'blue',
-    //   parent: s2,
-    // });
-    // s2.add(t3);
-    // // 在(10, 20)和(50， 20)的位置初始化一个连线箭头**这个连线方式要优化**，自行将箭头两端拖拽到需要连接的元素上，之后元素移动会自动更新连线
-    // let connect = new Connect({ x: 10, y: 150 }, { x: 150, y: 150 });
-    // s2.add(connect);
-    // let connect2 = new Connect({ x: 10, y: 250 }, { x: 150, y: 250 });
-    // s2.add(connect2);
-    // let connect3 = new Connect({ x: 10, y: 350 }, { x: 150, y: 350 });
-    // s2.add(connect3);
+  @ViewChild('bpmn', { static: true }) bpmnDom: any;
 
-    // prepare data
-
-  }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-    const data = {
-      // node data
-      nodes: [
-        {
-          id: '21',
-          type: 'rect',
-          x: 100,
-          y: 200,
-          text: 'rect node',
-        },
-        {
-          id: '50',
-          type: 'circle',
-          x: 300,
-          y: 400,
-          text: 'circle node',
-        },
-      ],
-      // edge data
-      edges: [
-        {
-          type: 'polyline',
-          sourceNodeId: '50',
-          targetNodeId: '21',
-        },
-      ],
-    };
-    // render instance
-    const lf = new LogicFlow({
-      container: this.stage.nativeElement,
-      width: 700,
+    LogicFlow.use(BpmnElement);
+    LogicFlow.use(BpmnXmlAdapter);
+    LogicFlow.use(Snapshot);
+    LogicFlow.use(Control);
+    LogicFlow.use(Menu);
+    LogicFlow.use(SelectionSelect);
+    this.lf = new LogicFlow({
+      container: this.bpmnDom.nativeElement,
+      grid: true,
+      width: 1000,
       height: 600,
     });
+    this.lf.render();
+    //绑定事件
+    const { eventCenter } = this.lf.graphModel;
+    this.bindEvent(eventCenter);
+  }
 
-    lf.render(data);
-    console.log('=======');
+  bindEvent(eventCenter: any) {
+    eventCenter.on('node:click', (args: Node) => {
+      console.log('节点单击', args);
+      this.drawer = true;
+      this.currentNode = args;
+    });
+  }
+
+  gotoDemo() {
+    this.router.navigateByUrl('/demo');
+  }
+
+  gotoBpmn() {
+    this.router.navigateByUrl('/bpmn');
+  }
+
+  gotoCustom() {
+    this.router.navigateByUrl('/custom');
   }
 }

@@ -2,18 +2,20 @@
   "name": "@sparrowmini/sparrow-flow",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/animations": "^13.3.12",
-    "@angular/common": "^13.3.0",
-    "@angular/compiler": "~13.3.0",
+    "@angular/animations": "^13.4.0",
+    "@angular/cdk": "^13.3.9",
+    "@angular/common": "^13.4.0",
+    "@angular/compiler": "^13.4.0",
     "@angular/core": "^13.4.0",
-    "@angular/elements": "^13.3.12",
+    "@angular/elements": "^13.4.0",
     "@angular/forms": "^13.4.0",
     "@angular/material": "^13.3.9",
-    "@angular/platform-browser": "^13.4.0"
+    "@angular/platform-browser": "^13.0.0",
+    "@logicflow/core": "1.1.31",
+    "@logicflow/extension": "1.1.31",
+    "preact": "10.11.3"
   },
   "dependencies": {
-    "@logicflow/core": "^1.2.23",
-    "@logicflow/extension": "^1.2.23",
     "tslib": "^2.3.0"
   }
 }
