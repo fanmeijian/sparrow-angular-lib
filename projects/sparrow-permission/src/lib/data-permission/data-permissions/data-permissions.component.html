@@ -1,6 +1,6 @@
 <div class="example-table-container">
   <mat-table [dataSource]="dataSource">
-    <ng-container matColumnDef="seq">
+    <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let element; let index = index">
         {{ index + 1 }}.
@@ -17,7 +17,22 @@
     <ng-container matColumnDef="remark">
       <mat-header-cell *matHeaderCellDef>备注</mat-header-cell>
       <mat-cell *matCellDef="let element; let index = index">
-        {{ element.remark }}
+        <div style="display: flex; flex-direction: column;word-break: break-all;">
+          <div *ngFor="let item of element.sysroleIds">
+            {{ item.sysroleId }} - {{ item.permission }} -
+            {{ item.permissionType }}
+          </div>
+
+          <div *ngFor="let item of element.groups">
+            {{ item.groupId }} - {{ item.permission }} -
+            {{ item.permissionType }}
+          </div>
+
+          <div *ngFor="let item of element.usernames">
+            {{ item.username }} - {{ item.permission }} -
+            {{ item.permissionType }}
+          </div>
+        </div>
       </mat-cell>
     </ng-container>
 

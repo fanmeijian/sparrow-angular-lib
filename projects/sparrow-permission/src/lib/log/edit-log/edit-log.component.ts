@@ -8,7 +8,7 @@ import { AuditlogService } from '@sparrowmini/org-api';
 })
 export class EditLogComponent implements OnInit {
   logs?: any[] = [];
-  pageable: any = { pageSize: 20, pageIndex: 0, length: 0 };
+  pageable: any = { pageSize: 10, pageIndex: 0, length: 0 };
 
   id: any = '';
   modelId: string = "cn.sparrowmini.pem.model.Sysrole";

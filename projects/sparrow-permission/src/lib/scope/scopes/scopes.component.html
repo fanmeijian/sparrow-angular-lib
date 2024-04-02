@@ -1,10 +1,16 @@
 <button mat-flat-button (click)="new()" color="primary">新增</button>
 <lib-search-filter
   [filters]="filters"
-  [fields]="[{
-    name: '代码',
-    value: 'code'
-  }]"
+  [fields]="[
+    {
+      name: '代码',
+      value: 'code'
+    },
+    {
+      name: '名称',
+      value: 'name'
+    }
+  ]"
   (applyFilter)="applyFilter($event)"
 ></lib-search-filter>
 <div class="example-container">
@@ -87,10 +93,11 @@
     </mat-table>
   </div>
 
-  <mat-paginator
+  <mat-paginator #paginator
     [pageSizeOptions]="[5, 10, 20]"
-    [pageSize]="10"
-    [length]="total"
+    [pageSize]="pageable.pageSize"
+    [length]="pageable.length"
+    [pageIndex]="pageable.pageIndex"
     (page)="onPage($event)"
     showFirstLastButtons
     aria-label="Select page of periodic elements"

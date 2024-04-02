@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
@@ -6,7 +6,7 @@ import { ScopeService, SysroleService } from '@sparrowmini/org-api';
 import { combineLatest, map, of, switchMap, tap, zip } from 'rxjs';
 import { SysroleCreateComponent } from '../../sysrole/sysrole-create/sysrole-create.component';
 import { SysrolePermissionComponent } from '../../sysrole/sysrole-permission/sysrole-permission.component';
-import { PageEvent } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ScopeCreateComponent } from '../scope-create/scope-create.component';
 import { ScopePermissionComponent } from '../scope-permission/scope-permission.component';
 
@@ -24,7 +24,12 @@ export class ScopesComponent implements OnInit {
   displayedColumns = ['id', 'name', 'code', 'users', 'sysroles', 'actions'];
 
   filters: any[] = [];
-  pageable = { pageIndex: 0, pageSize: 10, length: 0 };
+  pageable = {
+    pageIndex: 0,
+    pageSize: 10,
+    length: 0,
+    sort: ['createdDate,desc'],
+  };
 
   constructor(
     private scopeService: ScopeService,
@@ -43,6 +48,7 @@ export class ScopesComponent implements OnInit {
 
   delete(sysrole: any) {
     this.scopeService.deleteScopes([sysrole.id]).subscribe(() => {
+      this.ngOnInit();
       this.snack.open('删除成功！', '关闭');
     });
   }
@@ -70,9 +76,14 @@ export class ScopesComponent implements OnInit {
   onPage(page: PageEvent) {
     this.dataSource = new MatTableDataSource<any>();
     this.scopeService
-      .scopeFilter(this.filters, page.pageIndex, page.pageSize)
+      .scopeFilter(
+        this.filters,
+        page.pageIndex,
+        page.pageSize,
+        this.pageable.sort
+      )
       .pipe(
-        tap((t) => (this.total = t.totalElements!)),
+        tap((t) => (this.pageable.length = t.totalElements!)),
         map((res: any) => res.content),
         switchMap((sysroles: any[]) =>
           zip(
@@ -114,15 +125,18 @@ export class ScopesComponent implements OnInit {
         )
       )
       .subscribe((res) => {
-        console.log(res);
+        // console.log(res);
         this.dataSource = new MatTableDataSource<any>(res);
       });
   }
 
+  @ViewChild('paginator', { static: true }) paginator!: MatPaginator;
   applyFilter(event: any) {
     this.filters = event;
+    this.pageable.pageIndex = 0;
+    this.paginator.pageIndex = this.pageable.pageIndex
     this.onPage({
-      pageIndex: 0,
+      pageIndex: this.pageable.pageIndex,
       pageSize: this.pageable.pageSize,
       length: this.pageable.length,
     });

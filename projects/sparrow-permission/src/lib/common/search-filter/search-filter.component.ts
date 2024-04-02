@@ -67,11 +67,19 @@ export class SearchFilterComponent implements OnInit {
       value: '=',
     },
     {
-      name: 'LIKE',
-      value: 'like',
+      name: '以...开始',
+      value: 'start',
     },
     {
-      name: 'IN',
+      name: '以...结束',
+      value: 'end',
+    },
+    {
+      name: '包含',
+      value: 'contain',
+    },
+    {
+      name: '在列表中',
       value: 'in',
     },
   ];
@@ -122,12 +130,14 @@ export class SearchFilterComponent implements OnInit {
 
     this.filterBean = {};
     this.dataChange.next(this.filters);
+    this.apply()
   }
 
   removeFilter(node: any) {
     this.findNode(node, this.filters);
     this.filterBean = {};
     this.dataChange.next(this.filters);
+    this.apply()
   }
 
   findNode(node: any, nodes: any[]) {
@@ -143,10 +153,11 @@ export class SearchFilterComponent implements OnInit {
   }
 
   apply() {
-    if (this.filters && this.filters.length > 0) {
-      this.applyFilter.emit(this.filters);
-    } else {
-      this.snack.open('请先添加至少一个条件', '关闭');
-    }
+    // if (this.filters && this.filters.length > 0) {
+    //   this.applyFilter.emit(this.filters);
+    // } else {
+    //   this.snack.open('请先添加至少一个条件', '关闭');
+    // }
+    this.applyFilter.emit(this.filters);
   }
 }

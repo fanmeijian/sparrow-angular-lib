@@ -8,7 +8,7 @@ import { AuditlogService } from '@sparrowmini/org-api';
 })
 export class RequestLogComponent implements OnInit {
   logs?: any[] = [];
-  pageable: any = { pageSize: 20, pageIndex: 0, length: 0 };
+  pageable: any = { pageSize: 10, pageIndex: 0, length: 0 };
 
   constructor(private auditLogService: AuditlogService) {}
 
