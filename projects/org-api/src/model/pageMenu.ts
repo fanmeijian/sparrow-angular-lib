@@ -19,10 +19,10 @@ export interface PageMenu {
     size?: number;
     content?: Array<Menu>;
     number?: number;
-    sort?: SortObject;
     first?: boolean;
     last?: boolean;
-    numberOfElements?: number;
+    sort?: SortObject;
     pageable?: PageableObject;
+    numberOfElements?: number;
     empty?: boolean;
 }

@@ -19,10 +19,10 @@ export interface PageDataOrganization {
     size?: number;
     content?: Array<DataOrganization>;
     number?: number;
-    sort?: SortObject;
     first?: boolean;
     last?: boolean;
-    numberOfElements?: number;
+    sort?: SortObject;
     pageable?: PageableObject;
+    numberOfElements?: number;
     empty?: boolean;
 }

@@ -19,10 +19,10 @@ export interface PageRequestAuditLog {
     size?: number;
     content?: Array<RequestAuditLog>;
     number?: number;
-    sort?: SortObject;
     first?: boolean;
     last?: boolean;
-    numberOfElements?: number;
+    sort?: SortObject;
     pageable?: PageableObject;
+    numberOfElements?: number;
     empty?: boolean;
 }

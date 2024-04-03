@@ -19,10 +19,10 @@ export interface PagePositionLevel {
     size?: number;
     content?: Array<PositionLevel>;
     number?: number;
-    sort?: SortObject;
     first?: boolean;
     last?: boolean;
-    numberOfElements?: number;
+    sort?: SortObject;
     pageable?: PageableObject;
+    numberOfElements?: number;
     empty?: boolean;
 }

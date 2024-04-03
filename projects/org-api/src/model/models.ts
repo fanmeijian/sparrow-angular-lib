@@ -83,6 +83,7 @@ export * from './sysrolePermission';
 export * from './user';
 export * from './userModel';
 export * from './userModelAttribute';
+export * from './userModelAttributeId';
 export * from './userModelId';
 export * from './userPermission';
 export * from './userSysrole';

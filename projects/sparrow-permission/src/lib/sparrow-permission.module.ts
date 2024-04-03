@@ -3,7 +3,6 @@ import { SparrowPermissionComponent } from './sparrow-permission.component';
 import { MenuComponent } from './components/menu/menu.component';
 import {
   ApiModule as PermissionApiModule,
-  BASE_PATH as PermissionApi_BASE_PATH,
 } from '@sparrowmini/org-api';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { MatTreeModule } from '@angular/material/tree';

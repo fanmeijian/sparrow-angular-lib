@@ -1,23 +1,23 @@
-import { Component, Inject, OnInit } from "@angular/core";
-import { MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { MatChipInputEvent } from "@angular/material/chips";
-import { COMMA, ENTER } from "@angular/cdk/keycodes";
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import {
   DatamodelService,
   MenuService,
   RuleService,
   SysroleService,
-} from "@sparrowmini/org-api";
+} from '@sparrowmini/org-api';
 
-import { PermissionEnum } from "../../../model/constant";
-import { FormGroup, Validators, FormBuilder, FormArray } from "@angular/forms";
-import { HttpClient } from "@angular/common/http";
-import { MatSnackBar } from "@angular/material/snack-bar";
+import { PermissionEnum } from '../../../model/constant';
+import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: "lib-sprmodel-permisssion",
-  templateUrl: "./sprmodel-permisssion.component.html",
-  styleUrls: ["./sprmodel-permisssion.component.css"],
+  selector: 'lib-sprmodel-permisssion',
+  templateUrl: './sprmodel-permisssion.component.html',
+  styleUrls: ['./sprmodel-permisssion.component.css'],
 })
 export class SprmodelPermisssionComponent implements OnInit {
   formGroup: FormGroup = this.fb.group({
@@ -26,17 +26,18 @@ export class SprmodelPermisssionComponent implements OnInit {
   });
 
   get sysroles() {
-    return this.formGroup.get("sysroles") as FormArray;
+    return this.formGroup.get('sysroles') as FormArray;
   }
 
   get usernames() {
-    return this.formGroup.get("usernames") as FormArray;
+    return this.formGroup.get('usernames') as FormArray;
   }
 
   selectedSysroles: any[] = [];
-  users: string = "";
+  selectedUsernames: any[] = [];
+  users: string = '';
   selectedPermissions: any[] = [];
-  permissionType: string = "";
+  permissionType: string = '';
   rules: any[] = [];
 
   constructor(
@@ -53,20 +54,29 @@ export class SprmodelPermisssionComponent implements OnInit {
   }
 
   submit() {
-
+    // console.log(this.selectedSysroles, this.selectedUsernames)
     if (this.selectedPermissions.length > 0 && this.permissionType) {
       let sysrolePermissions: any[] = [];
-      this.selectedSysroles.forEach((sysrole) => {
-        this.selectedPermissions.forEach((permission) => {
+      let userPermissions: any[] = [];
+      this.selectedPermissions.forEach((permission) => {
+        this.selectedSysroles.forEach((sysrole) => {
           sysrolePermissions.push({
             sysroleId: sysrole.id,
             permissionType: this.permissionType,
             permission: permission,
           });
         });
+
+        this.selectedUsernames.forEach((o) => {
+          userPermissions.push({
+            username: o.username,
+            permissionType: this.permissionType,
+            permission: permission,
+          });
+        });
       });
 
-      console.log(sysrolePermissions);
+      // console.log(sysrolePermissions);
       // this.modelService
       //   .addModelPermissions({ sysroles: sysrolePermissions }, this.data.id)
       //   .subscribe();
@@ -87,13 +97,14 @@ export class SprmodelPermisssionComponent implements OnInit {
             {
               rules: rulePermission,
               sysroles: sysrolePermissions,
+              usernames: userPermissions
             },
             this.data.id
           )
           .subscribe();
       });
     } else {
-      this.snack.open("请选择授予权限和权限类型！", "关闭");
+      this.snack.open('请选择授予权限和权限类型！', '关闭');
     }
   }
 

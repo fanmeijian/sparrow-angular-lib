@@ -12,7 +12,7 @@
 
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef>名称</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
+      <mat-cell *matCellDef="let element">{{ element.name }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="code">
@@ -33,7 +33,7 @@
           <mat-accordion
             *ngIf="
               element.sysroles.length > 0 ||
-              element.users.length > 0 ||
+              element.usernames.length > 0 ||
               element.rules.length > 0
             "
           >
@@ -72,15 +72,33 @@
                 </div>
               </div>
             </mat-expansion-panel>
-            <mat-expansion-panel *ngIf="element.users.length">
+            <mat-expansion-panel *ngIf="element.users?.length > 0">
               <mat-expansion-panel-header>
                 <mat-panel-title>
-                  授权用户 ({{ element.users.length }})</mat-panel-title
-                >
-                <!-- <mat-panel-description>
-              Currently I am {{ panelOpenState ? "open" : "closed" }}
-            </mat-panel-description> -->
+                  授权用户 ({{ element.users?.length }})
+                </mat-panel-title>
               </mat-expansion-panel-header>
+
+              <div
+                *ngFor="let user of element.users"
+                style="display: flex; flex-direction: row; align-items: center"
+              >
+                <span
+                  class="material-icons"
+                  style="color: red; cursor: pointer"
+                  (click)="removeUser(user, element)"
+                >
+                  close </span
+                ><span>{{ user.id.username }} {{ user.id.permission }} </span
+                ><span
+                  [style]="
+                    user.id.permissionType === 'DENY'
+                      ? 'color:red'
+                      : 'color:green'
+                  "
+                  >{{ user.id.permissionType }}</span
+                >
+              </div>
             </mat-expansion-panel>
 
             <mat-expansion-panel
@@ -200,7 +218,34 @@
                     授权用户 ({{ item.users.length }})</mat-panel-title
                   >
                 </mat-expansion-panel-header>
-                <p>I'm visible because I am open</p>
+
+                <div style="display: flex; flex-direction: column">
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: row;
+                      align-items: center;
+                    "
+                    *ngFor="let user of item.users"
+                  >
+                    <span
+                      class="material-icons"
+                      style="color: red; cursor: pointer"
+                      (click)="removeAttrSysrole(user, element)"
+                    >
+                      close </span
+                    ><span
+                      >{{ user.id.username }} {{ user.id.permission }} </span
+                    ><span
+                      [style]="
+                        user.id.permissionType === 'DENY'
+                          ? 'color:red'
+                          : 'color:green'
+                      "
+                      >{{ user.id.permissionType }}</span
+                    >
+                  </div>
+                </div>
               </mat-expansion-panel>
               <mat-expansion-panel
                 (opened)="panelOpenState = true"

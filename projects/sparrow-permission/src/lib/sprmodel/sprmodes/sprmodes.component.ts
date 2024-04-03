@@ -1,31 +1,33 @@
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { DatamodelService, SysroleService } from "@sparrowmini/org-api";
-import { MatTableDataSource } from "@angular/material/table";
-import { MatDialog } from "@angular/material/dialog";
-import { SprmodelPermisssionComponent } from "../sprmodel-permisssion/sprmodel-permisssion.component";
-import { map, tap, switchMap, zip, of, combineLatest, first } from "rxjs";
-import { AttributePermisssionComponent } from "../attribute-permisssion/attribute-permisssion.component";
-import { MonacoEditorService } from "../../../service/monaco-editor.service";
-import * as monaco from "monaco-editor";
-import { HttpClient } from "@angular/common/http";
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { DatamodelService, SysroleService } from '@sparrowmini/org-api';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { SprmodelPermisssionComponent } from '../sprmodel-permisssion/sprmodel-permisssion.component';
+import { map, tap, switchMap, zip, of, combineLatest, first } from 'rxjs';
+import { AttributePermisssionComponent } from '../attribute-permisssion/attribute-permisssion.component';
+import { MonacoEditorService } from '../../../service/monaco-editor.service';
+import * as monaco from 'monaco-editor';
+import { HttpClient } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: "lib-sprmodes",
-  templateUrl: "./sprmodes.component.html",
-  styleUrls: ["./sprmodes.component.css"],
+  selector: 'lib-sprmodes',
+  templateUrl: './sprmodes.component.html',
+  styleUrls: ['./sprmodes.component.css'],
 })
 export class SprmodesComponent implements OnInit {
   panelOpenState = false;
 
   dataSource = new MatTableDataSource<any>();
   pageable = { pageIndex: 0, pageSize: 10, length: 0 };
-  displayedColumns = ["seq", "code", "users"];
+  displayedColumns = ['seq', 'code', 'users'];
 
   constructor(
     private modelService: DatamodelService,
     private dialog: MatDialog,
     private sysroleService: SysroleService,
-    private http: HttpClient // private monacoEditorService: MonacoEditorService
+    private http: HttpClient, // private monacoEditorService: MonacoEditorService
+    private snack: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -63,7 +65,7 @@ export class SprmodesComponent implements OnInit {
                             )
                           )
                         : of([]);
-                    const $users = of([]);
+                    const $users = of(permissions.usernames);
                     const $rules = of(permissions.rules);
                     return combineLatest($sysroles, $users, $rules).pipe(
                       map((m) =>
@@ -87,11 +89,11 @@ export class SprmodesComponent implements OnInit {
                                 attribute.id.attributeId
                               )
                               .pipe(
-                                switchMap((permissions) => {
+                                switchMap((attrPermissions) => {
                                   const $sysroles =
-                                    permissions.sysroles!.length > 0
+                                    attrPermissions.sysroles!.length > 0
                                       ? zip(
-                                          ...permissions.sysroles!.map(
+                                          ...attrPermissions.sysroles!.map(
                                             (sysrole: any) =>
                                               this.sysroleService
                                                 .sysrole(sysrole.id.sysroleId)
@@ -105,8 +107,8 @@ export class SprmodesComponent implements OnInit {
                                           )
                                         )
                                       : of([]);
-                                  const $users = of([]);
-                                  const $rules = of(permissions.rules);
+                                  const $users = of(attrPermissions.usernames);
+                                  const $rules = of(attrPermissions.rules);
                                   return combineLatest(
                                     $sysroles,
                                     $users,
@@ -134,20 +136,12 @@ export class SprmodesComponent implements OnInit {
                 );
 
               return $modelPermissions;
-              // const $attributePermissions =
-              // return $attributePermissions
-              // return combineLatest(
-              //   $modelPermissions,
-              //   $attributePermissions
-              // ).pipe(
-              //   map((m) => Object.assign({}, m[0], { modelAttributes: m[1] }))
-              // );
             })
           )
         )
       )
       .subscribe((res: any) => {
-        console.log(res);
+        // console.log(res);
         this.dataSource = new MatTableDataSource<any>(res);
       });
   }
@@ -163,6 +157,17 @@ export class SprmodesComponent implements OnInit {
     this.modelService
       .removeModelPermissions({ sysroles: [user.id] }, user.id.modelId)
       .subscribe(() => {
+        this.snack.open('移除成功！', '关闭');
+        this.ngOnInit();
+      });
+  }
+
+  removeUser(user: any, modelPermission: any) {
+    // console.log(user, sysrole);
+    this.modelService
+      .removeModelPermissions({ usernames: [user.id] }, user.id.modelId)
+      .subscribe(() => {
+        this.snack.open('移除成功！', '关闭');
         this.ngOnInit();
       });
   }
@@ -172,6 +177,7 @@ export class SprmodesComponent implements OnInit {
     this.modelService
       .removeModelPermissions({ rules: [user.id] }, user.id.modelId)
       .subscribe(() => {
+        this.snack.open('移除成功！', '关闭');
         this.ngOnInit();
       });
   }
@@ -211,17 +217,36 @@ export class SprmodesComponent implements OnInit {
   }
 
   openPermission(sysrole: any) {
-    this.dialog.open(SprmodelPermisssionComponent, {
-      data: sysrole,
-      width: "100%",
-    });
+    this.dialog
+      .open(SprmodelPermisssionComponent, {
+        data: sysrole,
+        width: '100%',
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.snack.open('授权成功！', '关闭');
+          this.ngOnInit();
+        }
+      });
   }
 
   openAttrPermission(sysrole: any) {
-    this.dialog.open(AttributePermisssionComponent, {width: "100%", data: sysrole });
+    this.dialog
+      .open(AttributePermisssionComponent, {
+        width: '100%',
+        data: sysrole,
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.snack.open('授权成功！', '关闭');
+          this.ngOnInit();
+        }
+      });
   }
 
   public _editor: any;
-  @ViewChild("editorContainer", { static: true })
+  @ViewChild('editorContainer', { static: true })
   _editorContainer!: ElementRef<any>;
 }

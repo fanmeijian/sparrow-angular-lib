@@ -19,10 +19,10 @@ export interface PageUserSysrole {
     size?: number;
     content?: Array<UserSysrole>;
     number?: number;
-    sort?: SortObject;
     first?: boolean;
     last?: boolean;
-    numberOfElements?: number;
+    sort?: SortObject;
     pageable?: PageableObject;
+    numberOfElements?: number;
     empty?: boolean;
 }

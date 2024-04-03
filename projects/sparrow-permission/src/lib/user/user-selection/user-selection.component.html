@@ -1,7 +1,11 @@
-<h3>授权角色：</h3>
+<h3>授权用户：</h3>
 <mat-chip-list #chipList aria-label="Fruit selection">
-  <mat-chip *ngFor="let fruit of selected" (removed)="remove(fruit)">
-    {{ fruit.name }}
+  <mat-chip *ngFor="let item of selected" (removed)="remove(item)">
+    {{
+      item.lastName !== undefined && item.lastName !== ""
+        ? item.lastName + item.firstName
+        : item.username
+    }}
     <button matChipRemove>
       <mat-icon>cancel</mat-icon>
     </button>
@@ -9,15 +13,14 @@
 </mat-chip-list>
 
 <div>
-  <h3>角色列表</h3>
+  <h3>用户列表</h3>
   <span
     class="sysrole-item"
-    *ngFor="let item of sysroles"
+    *ngFor="let item of datas"
     (click)="select(item)"
-    >{{ item.name }}({{ item.code }})</span
+    >{{ item.lastName }}{{ item.firstName }} ({{ item.username }})</span
   >
 </div>
-
 
 <mat-paginator
   [pageSizeOptions]="[5, 10, 20]"

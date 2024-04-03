@@ -9,6 +9,8 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { UserModelAttributeId } from './userModelAttributeId';
 
 export interface UserModelAttribute { 
+    id?: UserModelAttributeId;
 }
