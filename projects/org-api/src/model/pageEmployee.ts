@@ -18,10 +18,10 @@ export interface PageEmployee {
     totalElements?: number;
     size?: number;
     content?: Array<Employee>;
-    first?: boolean;
-    last?: boolean;
     number?: number;
     sort?: SortObject;
+    first?: boolean;
+    last?: boolean;
     numberOfElements?: number;
     pageable?: PageableObject;
     empty?: boolean;

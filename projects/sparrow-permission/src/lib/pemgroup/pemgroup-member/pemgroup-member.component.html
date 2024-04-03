@@ -24,7 +24,7 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-button (click)="submit()" cdkFocusInitial color="primary">
+  <button mat-button (click)="submit()" [mat-dialog-close]="true" cdkFocusInitial color="primary">
     确定
   </button>
   <button mat-button mat-dialog-close color="warn">取消</button>

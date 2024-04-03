@@ -17,7 +17,7 @@ import { HttpClient } from '@angular/common/http';
 export class SysrolesComponent implements OnInit {
   users: any[] = [];
   dataSource = new MatTableDataSource<any>();
-  pageable = { pageIndex: 0, pageSize: 10, length: 0 };
+  pageable = { pageIndex: 0, pageSize: 10, length: 0,sort: ['createdDate,desc'] };
 
   displayedColumns = ['seq', 'name', 'code', 'users', 'actions'];
 
@@ -67,7 +67,10 @@ export class SysrolesComponent implements OnInit {
   }
 
   new() {
-    this.dialog.open(SysroleCreateComponent);
+    this.dialog.open(SysroleCreateComponent).afterClosed()
+    .subscribe((result) => {
+      if (result) this.ngOnInit();
+    });;
   }
 
   delete(sysrole: any) {
@@ -80,7 +83,9 @@ export class SysrolesComponent implements OnInit {
     this.dialog
       .open(SysroleCreateComponent, { data: sysrole })
       .afterClosed()
-      .subscribe(() => this.ngOnInit());
+      .subscribe((result) => {
+        if (result) this.onPageChange(this.pageable);
+      });
   }
 
   remove(user: any, sysrole: any) {
@@ -91,7 +96,7 @@ export class SysrolesComponent implements OnInit {
   }
 
   openPermission(sysrole: any) {
-    this.dialog.open(SysrolePermissionComponent, { data: sysrole });
+    this.dialog.open(SysrolePermissionComponent, { data: sysrole , width:'80%'});
   }
 
   openDataPermission(sysrole: any) {

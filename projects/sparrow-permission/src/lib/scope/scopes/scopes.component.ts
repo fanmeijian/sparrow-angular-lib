@@ -60,9 +60,9 @@ export class ScopesComponent implements OnInit {
       .subscribe(() => this.ngOnInit());
   }
 
-  remove(user: any, sysrole: any) {
+  remove(sysrole: any, scope: any) {
     this.scopeService
-      .removeScopePermissions([user], '', sysrole.id)
+      .removeScopePermissions([sysrole.id], 'SYSROLE', scope.id)
       .subscribe(() => {
         this.snack.open('移除成功！', '关闭');
         this.ngOnInit();
@@ -70,7 +70,15 @@ export class ScopesComponent implements OnInit {
   }
 
   openPermission(sysrole: any) {
-    this.dialog.open(ScopePermissionComponent, { data: sysrole });
+    this.dialog
+      .open(ScopePermissionComponent, { data: sysrole })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          this.snack.open('授权成功！','关闭')
+          this.onPage(this.pageable);
+        }
+      });
   }
 
   onPage(page: PageEvent) {
@@ -134,7 +142,7 @@ export class ScopesComponent implements OnInit {
   applyFilter(event: any) {
     this.filters = event;
     this.pageable.pageIndex = 0;
-    this.paginator.pageIndex = this.pageable.pageIndex
+    this.paginator.pageIndex = this.pageable.pageIndex;
     this.onPage({
       pageIndex: this.pageable.pageIndex,
       pageSize: this.pageable.pageSize,

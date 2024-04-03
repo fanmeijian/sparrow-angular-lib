@@ -9,6 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { ErrMsg } from './errMsg';
 import { GroupEmployeePK } from './groupEmployeePK';
 
 export interface GroupEmployee { 
@@ -20,5 +21,6 @@ export interface GroupEmployee {
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
+    errMsgs?: Array<ErrMsg>;
     id?: GroupEmployeePK;
 }

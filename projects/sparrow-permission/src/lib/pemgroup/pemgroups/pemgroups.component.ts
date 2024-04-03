@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { PageEvent } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import {
@@ -20,6 +20,8 @@ import { PemgroupMemberComponent } from '../pemgroup-member/pemgroup-member.comp
   styleUrls: ['./pemgroups.component.css'],
 })
 export class PemgroupsComponent implements OnInit {
+  filters: any[] = [];
+
   users: any[] = [];
   dataSource = new MatTableDataSource<any>();
   pageable = { pageIndex: 0, pageSize: 10, length: 0 };
@@ -44,13 +46,14 @@ export class PemgroupsComponent implements OnInit {
 
   delete(sysrole: any) {
     this.groupService.deleteGroup(sysrole.id).subscribe(() => {
+      this.onPage(this.pageable);
       this.snack.open('删除成功！', '关闭');
     });
   }
 
-  edit(sysrole: any) {
+  edit(group: any) {
     this.dialog
-      .open(PemgroupCreateComponent, { data: sysrole })
+      .open(PemgroupCreateComponent, { data: group })
       .afterClosed()
       .subscribe((res) => {
         if (res) {
@@ -59,15 +62,25 @@ export class PemgroupsComponent implements OnInit {
       });
   }
 
-  remove(user: any, sysrole: any) {
-    this.groupService.addGroupMembers([user], '', sysrole.id).subscribe(() => {
-      this.snack.open('移除成功！', '关闭');
-      this.ngOnInit();
-    });
+  remove(sysrole: any, group: any) {
+    this.groupService
+      .removeGroupMembers([sysrole.id], 'SYSROLE', group.id)
+      .subscribe(() => {
+        this.snack.open('移除成功！', '关闭');
+        this.ngOnInit();
+      });
   }
 
   openPermission(sysrole: any) {
-    this.dialog.open(PemgroupMemberComponent, { data: sysrole });
+    this.dialog
+      .open(PemgroupMemberComponent, { data: sysrole })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.snack.open('添加成功！', '关闭');
+          this.onPage(this.pageable);
+        }
+      });
   }
 
   onPage(page: PageEvent) {
@@ -75,7 +88,11 @@ export class PemgroupsComponent implements OnInit {
     this.pageable.pageSize = page.pageSize;
     this.dataSource = new MatTableDataSource<any>();
     this.groupService
-      .groupFilter([], this.pageable.pageIndex, this.pageable.pageSize)
+      .groupFilter(
+        this.filters,
+        this.pageable.pageIndex,
+        this.pageable.pageSize
+      )
       .pipe(
         tap((t) => (this.pageable.length = t.totalElements!)),
         map((res: any) => res.content),
@@ -121,5 +138,17 @@ export class PemgroupsComponent implements OnInit {
       .subscribe((res) => {
         this.dataSource = new MatTableDataSource<any>(res);
       });
+  }
+
+  @ViewChild('paginator', { static: true }) paginator!: MatPaginator;
+  applyFilter(event: any) {
+    this.filters = event;
+    this.pageable.pageIndex = 0;
+    this.paginator.pageIndex = this.pageable.pageIndex;
+    this.onPage({
+      pageIndex: this.pageable.pageIndex,
+      pageSize: this.pageable.pageSize,
+      length: this.pageable.length,
+    });
   }
 }

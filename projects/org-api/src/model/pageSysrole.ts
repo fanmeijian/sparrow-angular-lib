@@ -18,10 +18,10 @@ export interface PageSysrole {
     totalElements?: number;
     size?: number;
     content?: Array<Sysrole>;
-    first?: boolean;
-    last?: boolean;
     number?: number;
     sort?: SortObject;
+    first?: boolean;
+    last?: boolean;
     numberOfElements?: number;
     pageable?: PageableObject;
     empty?: boolean;

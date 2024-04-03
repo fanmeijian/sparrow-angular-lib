@@ -18,10 +18,10 @@ export interface PageRole {
     totalElements?: number;
     size?: number;
     content?: Array<Role>;
-    first?: boolean;
-    last?: boolean;
     number?: number;
     sort?: SortObject;
+    first?: boolean;
+    last?: boolean;
     numberOfElements?: number;
     pageable?: PageableObject;
     empty?: boolean;

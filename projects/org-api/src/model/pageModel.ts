@@ -18,10 +18,10 @@ export interface PageModel {
     totalElements?: number;
     size?: number;
     content?: Array<Model>;
-    first?: boolean;
-    last?: boolean;
     number?: number;
     sort?: SortObject;
+    first?: boolean;
+    last?: boolean;
     numberOfElements?: number;
     pageable?: PageableObject;
     empty?: boolean;

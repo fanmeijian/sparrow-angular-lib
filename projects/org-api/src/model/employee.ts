@@ -9,6 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { ErrMsg } from './errMsg';
 
 export interface Employee { 
     readonly createdDate?: Date;
@@ -19,6 +20,7 @@ export interface Employee {
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
+    errMsgs?: Array<ErrMsg>;
     readonly id?: string;
     name?: string;
     code?: string;

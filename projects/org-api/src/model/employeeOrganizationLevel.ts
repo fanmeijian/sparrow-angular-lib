@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import { EmployeeOrganizationLevelPK } from './employeeOrganizationLevelPK';
+import { ErrMsg } from './errMsg';
 
 export interface EmployeeOrganizationLevel { 
     readonly createdDate?: Date;
@@ -20,5 +21,6 @@ export interface EmployeeOrganizationLevel {
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
+    errMsgs?: Array<ErrMsg>;
     id?: EmployeeOrganizationLevelPK;
 }

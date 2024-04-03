@@ -9,6 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { ErrMsg } from './errMsg';
 import { OrganizationGroupPK } from './organizationGroupPK';
 
 export interface OrganizationGroup { 
@@ -20,5 +21,6 @@ export interface OrganizationGroup {
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
+    errMsgs?: Array<ErrMsg>;
     id?: OrganizationGroupPK;
 }

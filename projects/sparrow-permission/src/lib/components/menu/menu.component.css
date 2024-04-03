@@ -11,3 +11,55 @@
 .detail>span{
   padding: 10px;
 }
+
+
+.tree-left {
+  height: 100%;
+  overflow-y: scroll;
+  width: 300px;
+  background-color: white;
+  vertical-align: top;
+}
+
+.tree-right{
+  /* flex-grow: 1; */
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+}
+
+.tree {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  /* flex-wrap: wrap-reverse; */
+  height: calc(100vh - 200px);
+}
+
+.mat-tree{
+  height: 100%;
+  overflow: scroll;
+}
+
+.tree-node-name {
+  margin: 0px 0px 0px 5px;
+  /* padding: 10px;
+  border-radius: 5px; */
+  cursor: pointer;
+}
+
+.tree-node-name:hover {
+  /* background-color: #e5e5e5;
+  text-decoration: none; */
+  color: #3f51b5;
+}
+
+.tree-node-name-selected {
+  /* background-color: #e5e5e5;
+  text-decoration: none;
+  margin: 0px 0px 0px 5px;
+  padding: 10px;
+  border-radius: 5px; */
+  color: #3f51b5;
+  margin: 0px 0px 0px 5px;
+}

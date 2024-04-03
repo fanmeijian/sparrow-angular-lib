@@ -52,7 +52,10 @@ import { LoginLogComponent } from './log/login-log/login-log.component';
 import { RequestLogComponent } from './log/request-log/request-log.component';
 import { DeleteLogComponent } from './log/delete-log/delete-log.component';
 import { EditLogComponent } from './log/edit-log/edit-log.component';
-// import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import { UserListComponent } from './user/user-list/user-list.component';
+import { UserCreateComponent } from './user/user-create/user-create.component';
+import { UserSelectionComponent } from './user/user-selection/user-selection.component';
+import { AngularMaterialModule } from "./angular-material.module";
 
 @NgModule({
   declarations: [
@@ -83,31 +86,17 @@ import { EditLogComponent } from './log/edit-log/edit-log.component';
     RequestLogComponent,
     DeleteLogComponent,
     EditLogComponent,
+    UserListComponent,
+    UserCreateComponent,
+    UserSelectionComponent,
   ],
   imports: [
     BrowserModule,
-    PermissionApiModule,
-    CdkTreeModule,
-    MatTreeModule,
-    MatButtonModule,
-    RouterModule,
-    MatCheckboxModule,
-    MatDialogModule,
-    MatInputModule,
-    MatFormFieldModule,
     FormsModule,
-    MatChipsModule,
+    RouterModule,
     ReactiveFormsModule,
-    MatSnackBarModule,
-    MatAutocompleteModule,
-    MatPaginatorModule,
-    MatTableModule,
-    MatDividerModule,
-    MatSelectModule,
-    MatRadioModule,
-    MatExpansionModule,
-    MatTabsModule,
-    MatIconModule,
+    AngularMaterialModule,
+    PermissionApiModule,
   ],
   exports: [
     SparrowPermissionComponent,

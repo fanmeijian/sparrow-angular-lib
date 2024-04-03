@@ -18,10 +18,10 @@ export interface PageDataPermission {
     totalElements?: number;
     size?: number;
     content?: Array<DataPermission>;
-    first?: boolean;
-    last?: boolean;
     number?: number;
     sort?: SortObject;
+    first?: boolean;
+    last?: boolean;
     numberOfElements?: number;
     pageable?: PageableObject;
     empty?: boolean;

@@ -23,9 +23,10 @@
 .example-table-container {
   position: relative;
   min-height: 200px;
-  max-height: calc(100vh - 250px);
+  height: calc(100vh - 450px);
   overflow: auto;
 }
+
 
 table {
   width: 100%;

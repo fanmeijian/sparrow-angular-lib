@@ -1,28 +1,60 @@
 <button class="button" mat-flat-button color="primary" (click)="new()">
   新增
 </button>
-<button class="button" mat-flat-button color="warn" (click)="delete()" [disabled]="checklistSelection.isEmpty()">
+<button
+  class="button"
+  mat-flat-button
+  color="warn"
+  (click)="delete()"
+  [disabled]="checklistSelection.isEmpty()"
+>
   删除
 </button>
-<button class="button" mat-flat-button color="primary" (click)="permission()" [disabled]="checklistSelection.isEmpty()">
+<button
+  class="button"
+  mat-flat-button
+  color="primary"
+  (click)="permission()"
+  [disabled]="checklistSelection.isEmpty()"
+>
   授权
 </button>
-<div style="display: flex; flex-direction: row; width: 100% ;height: calc(100vh - 200px);overflow-y: scroll;">
-  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" style="width: 250px; height: 100%;overflow-y: scroll;">
+<div
+  class="tree"
+  style="
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: calc(100vh - 200px);
+    overflow-y: scroll;
+  "
+>
+  <mat-tree
+    class="mat-tree"
+    [dataSource]="dataSource"
+    [treeControl]="treeControl"
+    style="width: 250px; height: 100%; overflow-y: scroll"
+  >
     <mat-tree-node
       *matTreeNodeDef="let node"
       matTreeNodeToggle
       matTreeNodePadding
     >
       <button mat-icon-button disabled></button>
-      <div (click)="selectedMenu = node">
+      <div>
         <mat-checkbox
           class="checklist-leaf-node"
           [checked]="checklistSelection.isSelected(node)"
           (change)="todoLeafItemSelectionToggle(node)"
-          ><span style="margin: 0px 10px 0px 0px"
-            >[{{ node.me.code }}]{{ node.me.name }}</span
-          ></mat-checkbox
+        ></mat-checkbox
+        ><span
+          (click)="selectedMenu = node"
+          [class]="
+            node.me.id === selectedMenu?.me?.id
+              ? 'tree-node-name-selected'
+              : 'tree-node-name'
+          "
+          >[{{ node.me.code }}]{{ node.me.name }}</span
         >
       </div>
     </mat-tree-node>
@@ -47,21 +79,28 @@
           {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
         </mat-icon>
       </button>
-      <div (click)="selectedMenu = node">
+      <div>
         <mat-checkbox
+          class="checklist-leaf-node"
           [checked]="descendantsAllSelected(node)"
           [indeterminate]="descendantsPartiallySelected(node)"
           (change)="todoItemSelectionToggle(node)"
-          ><span style="margin: 0px 10px 0px 0px"
-            >[{{ node.me.code }}]{{ node.me.name }}</span
-          ></mat-checkbox
+        ></mat-checkbox
+        ><span
+          (click)="selectedMenu = node"
+          [class]="
+            node.me.id === selectedMenu?.me?.id
+              ? 'tree-node-name-selected'
+              : 'tree-node-name'
+          "
+          >[{{ node.me.code }}]{{ node.me.name }}</span
         >
       </div>
     </mat-tree-node>
   </mat-tree>
-  <div>
+  <div class="tree-right">
     <h3>
-      菜单详情1<button
+      菜单详情<button
         type="button"
         mat-icon-button
         color="primary"

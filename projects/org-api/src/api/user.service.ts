@@ -17,6 +17,10 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { ErrMsg } from '../model/errMsg';
+import { PageUser } from '../model/pageUser';
+import { SparrowJpaFilter } from '../model/sparrowJpaFilter';
+import { User } from '../model/user';
 import { UserToken } from '../model/userToken';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -56,24 +60,250 @@ export class UserService {
 
 
     /**
-     * 用户token
+     * 添加用户
+     * 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public createUser(body: Array<User>, observe?: 'body', reportProgress?: boolean): Observable<{ [key: string]: Array<ErrMsg>; }>;
+    public createUser(body: Array<User>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<{ [key: string]: Array<ErrMsg>; }>>;
+    public createUser(body: Array<User>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<{ [key: string]: Array<ErrMsg>; }>>;
+    public createUser(body: Array<User>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling createUser.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<{ [key: string]: Array<ErrMsg>; }>('post',`${this.basePath}/users`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 删除用户
+     * 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deleteUser(body: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteUser(body: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteUser(body: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteUser(body: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling deleteUser.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<any>('post',`${this.basePath}/users/delete`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 启用/禁用用户
+     * 
+     * @param username 
+     * @param enabled 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public enableUser(username: string, enabled: boolean, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public enableUser(username: string, enabled: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public enableUser(username: string, enabled: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public enableUser(username: string, enabled: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (username === null || username === undefined) {
+            throw new Error('Required parameter username was null or undefined when calling enableUser.');
+        }
+
+        if (enabled === null || enabled === undefined) {
+            throw new Error('Required parameter enabled was null or undefined when calling enableUser.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (enabled !== undefined && enabled !== null) {
+            queryParameters = queryParameters.set('enabled', <any>enabled);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('post',`${this.basePath}/users/${encodeURIComponent(String(username))}/enable`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 同步用户
+     * 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public synchronize(observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public synchronize(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public synchronize(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public synchronize(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('get',`${this.basePath}/users/synchronize`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 更新用户
+     * 
+     * @param body 
+     * @param username 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updateUser(body: { [key: string]: any; }, username: string, observe?: 'body', reportProgress?: boolean): Observable<Array<ErrMsg>>;
+    public updateUser(body: { [key: string]: any; }, username: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ErrMsg>>>;
+    public updateUser(body: { [key: string]: any; }, username: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ErrMsg>>>;
+    public updateUser(body: { [key: string]: any; }, username: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling updateUser.');
+        }
+
+        if (username === null || username === undefined) {
+            throw new Error('Required parameter username was null or undefined when calling updateUser.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<Array<ErrMsg>>('patch',`${this.basePath}/users/${encodeURIComponent(String(username))}`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 用户详情
      * 
      * @param username 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public userToken(username: string, observe?: 'body', reportProgress?: boolean): Observable<UserToken>;
-    public userToken(username: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserToken>>;
-    public userToken(username: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserToken>>;
-    public userToken(username: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public user(username: string, observe?: 'body', reportProgress?: boolean): Observable<User>;
+    public user(username: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<User>>;
+    public user(username: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<User>>;
+    public user(username: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (username === null || username === undefined) {
-            throw new Error('Required parameter username was null or undefined when calling userToken.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (username !== undefined && username !== null) {
-            queryParameters = queryParameters.set('username', <any>username);
+            throw new Error('Required parameter username was null or undefined when calling user.');
         }
 
         let headers = this.defaultHeaders;
@@ -91,8 +321,115 @@ export class UserService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<UserToken>('get',`${this.basePath}/users`,
+        return this.httpClient.request<User>('get',`${this.basePath}/users/${encodeURIComponent(String(username))}`,
             {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 用户口令
+     * 
+     * @param username 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public userToken(username: string, observe?: 'body', reportProgress?: boolean): Observable<UserToken>;
+    public userToken(username: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserToken>>;
+    public userToken(username: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserToken>>;
+    public userToken(username: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (username === null || username === undefined) {
+            throw new Error('Required parameter username was null or undefined when calling userToken.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<UserToken>('get',`${this.basePath}/users/${encodeURIComponent(String(username))}/token`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 用户列表
+     * 
+     * @param body 
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public users(body: Array<SparrowJpaFilter>, page?: number, size?: number, sort?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<PageUser>;
+    public users(body: Array<SparrowJpaFilter>, page?: number, size?: number, sort?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageUser>>;
+    public users(body: Array<SparrowJpaFilter>, page?: number, size?: number, sort?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageUser>>;
+    public users(body: Array<SparrowJpaFilter>, page?: number, size?: number, sort?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling users.');
+        }
+
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (page !== undefined && page !== null) {
+            queryParameters = queryParameters.set('page', <any>page);
+        }
+        if (size !== undefined && size !== null) {
+            queryParameters = queryParameters.set('size', <any>size);
+        }
+        if (sort) {
+            sort.forEach((element) => {
+                queryParameters = queryParameters.append('sort', <any>element);
+            })
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<PageUser>('post',`${this.basePath}/users/filter`,
+            {
+                body: body,
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

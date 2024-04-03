@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import { EmployeeOrganizationRolePK } from './employeeOrganizationRolePK';
+import { ErrMsg } from './errMsg';
 
 export interface EmployeeOrganizationRole { 
     readonly createdDate?: Date;
@@ -20,5 +21,6 @@ export interface EmployeeOrganizationRole {
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
+    errMsgs?: Array<ErrMsg>;
     id?: EmployeeOrganizationRolePK;
 }

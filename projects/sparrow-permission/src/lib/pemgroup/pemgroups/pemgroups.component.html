@@ -1,4 +1,19 @@
 <button mat-flat-button (click)="new()" color="primary">新增</button>
+
+<lib-search-filter
+  [filters]="filters"
+  [fields]="[
+    {
+      name: '代码',
+      value: 'code'
+    },
+    {
+      name: '名称',
+      value: 'name'
+    }
+  ]"
+  (applyFilter)="applyFilter($event)"
+></lib-search-filter>
 <div class="example-table-container">
   <mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="seq">
@@ -19,7 +34,7 @@
     </ng-container>
 
     <ng-container matColumnDef="users">
-      <mat-header-cell *matHeaderCellDef>授权用户</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>用户成员</mat-header-cell>
       <mat-cell *matCellDef="let element">
         <mat-chip-list #chipList>
           <mat-chip
@@ -36,7 +51,7 @@
     </ng-container>
 
     <ng-container matColumnDef="sysroles">
-      <mat-header-cell *matHeaderCellDef>授权角色</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>角色成员</mat-header-cell>
       <mat-cell *matCellDef="let element">
         <mat-chip-list #chipList>
           <mat-chip
@@ -76,7 +91,7 @@
   </mat-table>
 </div>
 
-<mat-paginator
+<mat-paginator #paginator
   [pageSizeOptions]="[5, 10, 20]"
   [pageSize]="pageable.pageSize"
   [length]="pageable.length"

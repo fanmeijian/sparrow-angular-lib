@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import { DataOrganization } from './dataOrganization';
+import { ErrMsg } from './errMsg';
 
 export interface Group { 
     readonly createdDate?: Date;
@@ -20,6 +21,7 @@ export interface Group {
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
+    errMsgs?: Array<ErrMsg>;
     readonly id?: string;
     readonly organizationId?: string;
     dataOrganization?: DataOrganization;

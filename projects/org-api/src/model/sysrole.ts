@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import { DataPermission } from './dataPermission';
+import { ErrMsg } from './errMsg';
 
 export interface Sysrole { 
     readonly createdDate?: Date;
@@ -20,6 +21,7 @@ export interface Sysrole {
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
+    errMsgs?: Array<ErrMsg>;
     dataPermissionId?: string;
     dataPermission?: DataPermission;
     name?: string;

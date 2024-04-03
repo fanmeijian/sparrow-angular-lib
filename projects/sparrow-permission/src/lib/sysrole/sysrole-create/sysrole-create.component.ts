@@ -1,13 +1,13 @@
-import { Component, Inject, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { SysroleService } from "@sparrowmini/org-api";
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SysroleService } from '@sparrowmini/org-api';
 
 @Component({
-  selector: "lib-sysrole-create",
-  templateUrl: "./sysrole-create.component.html",
-  styleUrls: ["./sysrole-create.component.css"],
+  selector: 'lib-sysrole-create',
+  templateUrl: './sysrole-create.component.html',
+  styleUrls: ['./sysrole-create.component.css'],
 })
 export class SysroleCreateComponent implements OnInit {
   formGroup: FormGroup = this.formBuilder.group({
@@ -35,14 +35,23 @@ export class SysroleCreateComponent implements OnInit {
       if (this.data) {
         this.sysroleService
           .updateSysrole(this.formGroup.value, this.data.id)
-          .subscribe(() => {
-            this.dialogRef.close();
-            this.snack.open("保存成功！", "关闭");
+          .subscribe((res: any) => {
+            this.dialogRef.close(true);
+            console.log(res)
+            if (res.errMsgs.length > 0) {
+              this.snack.open(
+                '保存成功,但部分字段无权限更新！' +
+                  res.errMsgs.map((m: any) => m.msg),
+                '关闭'
+              );
+            } else {
+              this.snack.open('保存成功！', '关闭');
+            }
           });
       } else {
         this.sysroleService.newSysrole(this.formGroup.value).subscribe(() => {
-          this.dialogRef.close();
-          this.snack.open("保存成功！", "关闭");
+          this.dialogRef.close(true);
+          this.snack.open('保存成功！', '关闭');
         });
       }
     }

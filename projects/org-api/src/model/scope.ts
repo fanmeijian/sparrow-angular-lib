@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import { DataPermission } from './dataPermission';
+import { ErrMsg } from './errMsg';
 import { ScopeCatalog } from './scopeCatalog';
 
 export interface Scope { 
@@ -21,6 +22,7 @@ export interface Scope {
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
+    errMsgs?: Array<ErrMsg>;
     readonly id?: string;
     dataPermissionId?: string;
     dataPermission?: DataPermission;
