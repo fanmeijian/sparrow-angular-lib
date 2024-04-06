@@ -161,7 +161,7 @@ export class MenuComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    this._database.initialize()
+    this._database.initialize();
   }
 
   getLevel = (node: TodoItemFlatNode) => node.level;
@@ -328,7 +328,7 @@ export class MenuComponent implements OnInit {
 
   visibleNodes(): TodoItemNode[] {
     const result: TodoItemNode[] = [];
-
+    console.log('this.expansionModel.selected', this.expansionModel.selected);
     function addExpandedChildren(node: TodoItemNode, expanded: string[]) {
       result.push(node);
       if (expanded.includes(node.id)) {
@@ -346,8 +346,13 @@ export class MenuComponent implements OnInit {
    * then rebuild the tree.
    * */
   drop(event: CdkDragDrop<string[]>) {
-    console.log(event)
-    // console.log('origin/destination', event.previousIndex, event.currentIndex, event.item.data);
+    // console.log(event)
+    console.log(
+      'origin/destination',
+      event.previousIndex,
+      event.currentIndex,
+      event.item.data
+    );
     // ignore drops outside of the tree
     if (!event.isPointerOverContainer) return;
 
@@ -355,6 +360,7 @@ export class MenuComponent implements OnInit {
     // the cdkDragDrop event.currentIndex jives with visible nodes.
     // it calls rememberExpandedTreeNodes to persist expand state
     const visibleNodes = this.visibleNodes();
+    console.log(visibleNodes);
 
     // deep clone the data source so we can mutate it
     const changedData = JSON.parse(JSON.stringify(this.dataSource.data));
@@ -399,46 +405,42 @@ export class MenuComponent implements OnInit {
     }
 
     // insert node
-    console.log(visibleNodes[event.currentIndex-1],visibleNodes[event.currentIndex], visibleNodes[event.currentIndex+1]);
-    let url = 'http://localhost:4421/org-service/menus/' + node.id +'/sort?'
-    if(event.currentIndex===0){
-      url = url +'nextId='+visibleNodes[0].me.id
-    }else if (event.currentIndex === visibleNodes.length){
-      url = url + 'prevId=' + visibleNodes[visibleNodes.length].me.id
-    }else{
-      url = url + 'prevId=' + visibleNodes[event.currentIndex-1].me.id + '&nextId=' + visibleNodes[event.currentIndex].me.id
+    // console.log(
+    //   visibleNodes[event.currentIndex - 1].me.name,
+    //   node.level,
+    //   nodeAtDestFlatNode?.me.name,
+    //   nodeAtDestFlatNode?.level
+    // );
+    let url = 'http://localhost:4421/org-service/menus/' + node.id + '/sort?';
+    if (event.currentIndex === 0) {
+      url = url + 'nextId=' + visibleNodes[0].me.id;
+    } else if (event.currentIndex === visibleNodes.length) {
+      url = url + 'prevId=' + visibleNodes[visibleNodes.length].me.id;
+    } else {
+      if (
+        this.nestedNodeMap.get(visibleNodes[event.currentIndex - 1])?.level !=
+        nodeAtDestFlatNode?.level
+      ) {
+        url = url + 'nextId=' + nodeAtDestFlatNode?.me.id;
+      } else {
+        url =
+          url +
+          'prevId=' +
+          visibleNodes[event.currentIndex - 1].me.id +
+          '&nextId=' +
+          nodeAtDestFlatNode?.me.id;
+      }
     }
-    this.http
-        .patch(
-          url,
-          undefined
-        )
-        .subscribe(() => this.ngOnInit());
-    // if (event.previousIndex > event.currentIndex) {
-    //   // move to target item below
-    //   this.http
-    //     .patch(
-    //       'http://localhost:4421/org-service/menus/' +
-    //         node.id +
-    //         '/sort?prevId=' +
-    //         visibleNodes[],
-    //       undefined
-    //     )
-    //     .subscribe(() => this.ngOnInit());
-    //   // this.menuService.sortMenu(node.id,nodeAtDest.id,nodeAtDest.me.nextNodeId).subscribe()
-    // } else {
-    //   this.http
-    //     .patch(
-    //       'http://localhost:4421/org-service/menus/' +
-    //         node.id +
-    //         '/sort?nextId=' +
-    //         nodeAtDest.id,
-    //       undefined
-    //     )
-    //     .subscribe(() => this.ngOnInit());
 
-      // this.menuService.sortMenu(node.id,nodeAtDest.me.previousNodeId,nodeAtDest.id).subscribe()
-    // }
+    if (node.level !== nodeAtDestFlatNode?.level) {
+      this.menuService
+        .updateMenu({ parentId: nodeAtDestFlatNode?.me.parentId }, node.id)
+        .subscribe(()=>this.http.patch(url, undefined).subscribe(() => this.ngOnInit()));
+    }else{
+      this.http.patch(url, undefined).subscribe(() => this.ngOnInit());
+    }
+
+
     newSiblings.splice(insertIndex, 0, nodeToInsert);
 
     // rebuild tree with mutated data
