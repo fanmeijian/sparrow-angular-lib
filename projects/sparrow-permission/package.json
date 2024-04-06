@@ -11,7 +11,7 @@
     "@angular/forms": "^13.4.0",
     "@angular/material": "^13.3.9",
     "@angular/platform-browser": "^13.0.0",
-    "@sparrowmini/org-api": "^0.6.2",
+    "@sparrowmini/org-api": "^0.7.0",
     "monaco-editor": "^0.47.0"
   },
   "dependencies": {

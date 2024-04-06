@@ -97,7 +97,7 @@ export class SearchFilterComponent implements OnInit {
     // this.dataSource.data = [];
     this.dataSource = new MatTreeNestedDataSource<SparrowJpaFilter>();
     this.dataChange.subscribe((data) => {
-      console.log(data);
+      // console.log(data);
       this.dataSource.data = null;
       this.dataSource.data = data;
     });

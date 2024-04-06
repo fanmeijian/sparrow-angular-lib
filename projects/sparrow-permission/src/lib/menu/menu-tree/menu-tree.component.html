@@ -1,5 +1,11 @@
-<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList (cdkDropListDropped)="drop($event)">
   <mat-tree-node
+    cdkDrag
+    [cdkDragData]="node"
+    (mouseenter)="dragHover(node)"
+    (mouseleave)="dragHoverEnd()"
+    (cdkDragStarted)="dragStart()"
+    (cdkDragReleased)="dragEnd()"
     *matTreeNodeDef="let node"
     [matTreeNodePaddingIndent]="5"
     matTreeNodePadding
@@ -9,14 +15,23 @@
       {{ node.name }}
     </button> -->
     <span
-      [class]="selectedNode===node.url?'norml-tree-node selected-norml-tree-node':'norml-tree-node'"
+      [class]="
+        selectedNode === node.url
+          ? 'norml-tree-node selected-norml-tree-node'
+          : 'norml-tree-node'
+      "
       [routerLink]="node.url"
       (click)="selectedNode = node.url"
       >{{ node.name }}</span
     >
-
   </mat-tree-node>
   <mat-tree-node
+    cdkDrag
+    [cdkDragData]="node"
+    (mouseenter)="dragHover(node)"
+    (mouseleave)="dragHoverEnd()"
+    (cdkDragStarted)="dragStart()"
+    (cdkDragReleased)="dragEnd()"
     *matTreeNodeDef="let node; when: hasChild"
     [matTreeNodePaddingIndent]="5"
     matTreeNodePadding

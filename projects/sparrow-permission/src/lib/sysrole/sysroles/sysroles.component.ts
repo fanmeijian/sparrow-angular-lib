@@ -17,9 +17,14 @@ import { HttpClient } from '@angular/common/http';
 export class SysrolesComponent implements OnInit {
   users: any[] = [];
   dataSource = new MatTableDataSource<any>();
-  pageable = { pageIndex: 0, pageSize: 10, length: 0,sort: ['createdDate,desc'] };
+  pageable = {
+    pageIndex: 0,
+    pageSize: 10,
+    length: 0,
+    sort: ['createdDate,desc'],
+  };
 
-  displayedColumns = ['seq', 'name', 'code', 'users', 'actions'];
+  displayedColumns = ['seq', 'name', 'code', 'users', 'permission', 'actions'];
 
   constructor(
     private sysroleService: SysroleService,
@@ -38,7 +43,7 @@ export class SysrolesComponent implements OnInit {
   }
 
   onPageChange(event: any) {
-    console.log(event);
+    // console.log(event);
     this.dataSource = new MatTableDataSource<any>();
     this.pageable.pageIndex = event.pageIndex;
     this.pageable.pageSize = event.pageSize;
@@ -67,10 +72,12 @@ export class SysrolesComponent implements OnInit {
   }
 
   new() {
-    this.dialog.open(SysroleCreateComponent).afterClosed()
-    .subscribe((result) => {
-      if (result) this.ngOnInit();
-    });;
+    this.dialog
+      .open(SysroleCreateComponent)
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) this.ngOnInit();
+      });
   }
 
   delete(sysrole: any) {
@@ -96,13 +103,25 @@ export class SysrolesComponent implements OnInit {
   }
 
   openPermission(sysrole: any) {
-    this.dialog.open(SysrolePermissionComponent, { data: sysrole , width:'80%'});
+    this.dialog
+      .open(SysrolePermissionComponent, { data: sysrole, width: '80%' })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.ngOnInit();
+        }
+      });
   }
 
   openDataPermission(sysrole: any) {
     this.dialog.open(DataPermissionGrantComponent, {
       data: sysrole,
       width: '80%',
+    }).afterClosed()
+    .subscribe((result) => {
+      if (result) {
+        this.ngOnInit();
+      }
     });
   }
 }

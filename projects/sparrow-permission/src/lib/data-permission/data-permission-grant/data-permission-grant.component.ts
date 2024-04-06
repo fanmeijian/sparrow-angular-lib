@@ -1,18 +1,18 @@
-import { Component, Inject, OnInit } from "@angular/core";
-import { FormGroup, FormArray, FormBuilder } from "@angular/forms";
-import { MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { MatSnackBar } from "@angular/material/snack-bar";
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   DataPermissionService,
   DatamodelService,
   RuleService,
-} from "@sparrowmini/org-api";
-import { PermissionEnum } from "../../../model/constant";
+} from '@sparrowmini/org-api';
+import { PermissionEnum } from '../../../model/constant';
 
 @Component({
-  selector: "lib-data-permission-grant",
-  templateUrl: "./data-permission-grant.component.html",
-  styleUrls: ["./data-permission-grant.component.css"],
+  selector: 'lib-data-permission-grant',
+  templateUrl: './data-permission-grant.component.html',
+  styleUrls: ['./data-permission-grant.component.css'],
 })
 export class DataPermissionGrantComponent implements OnInit {
   formGroup: FormGroup = this.fb.group({
@@ -21,17 +21,18 @@ export class DataPermissionGrantComponent implements OnInit {
   });
 
   get sysroles() {
-    return this.formGroup.get("sysroles") as FormArray;
+    return this.formGroup.get('sysroles') as FormArray;
   }
 
   get usernames() {
-    return this.formGroup.get("usernames") as FormArray;
+    return this.formGroup.get('usernames') as FormArray;
   }
 
   selectedSysroles: any[] = [];
-  users: string = "";
+  selectedUsernames: any[] = [];
+  users: string = '';
   selectedPermissions: any[] = [];
-  permissionType: string = "";
+  permissionType: string = '';
   rules: any[] = [];
 
   constructor(
@@ -50,26 +51,43 @@ export class DataPermissionGrantComponent implements OnInit {
   submit() {
     if (this.selectedPermissions.length > 0 && this.permissionType) {
       let sysrolePermissions: any[] = [];
-      this.selectedSysroles.forEach((sysrole) => {
-        this.selectedPermissions.forEach((permission) => {
+      let userPermissions: any[] = [];
+      this.selectedPermissions.forEach((permission) => {
+        this.selectedSysroles.forEach((sysrole) => {
           sysrolePermissions.push({
             sysroleId: sysrole.id,
             permissionType: this.permissionType,
             permission: permission,
           });
         });
+
+        this.selectedUsernames.forEach((o) => {
+          userPermissions.push({
+            username: o.username,
+            permissionType: this.permissionType,
+            permission: permission,
+          });
+        });
       });
 
-      console.log(sysrolePermissions);
-      this.dataPermissionService
-        .newDataPermission(
-          { sysroleIds: sysrolePermissions },
-          this.data.modelName,
-          this.data.id
-        )
-        .subscribe((res) => {});
+      if (this.data.dataPermissionId) {
+        this.dataPermissionService
+          .updateDataPermission(
+            { sysroleIds: sysrolePermissions, usernames: userPermissions },
+            this.data.id
+          )
+          .subscribe((res) => this.snack.open('授权成功！', '关闭'));
+      } else {
+        this.dataPermissionService
+          .newDataPermission(
+            { sysroleIds: sysrolePermissions, usernames: userPermissions },
+            this.data.modelName,
+            this.data.id
+          )
+          .subscribe((res) => this.snack.open('授权成功！', '关闭'));
+      }
     } else {
-      this.snack.open("请选择授予权限和权限类型！", "关闭");
+      this.snack.open('请选择授予权限和权限类型！', '关闭');
     }
   }
 

@@ -57,12 +57,14 @@ export class ScopesComponent implements OnInit {
     this.dialog
       .open(ScopeCreateComponent, { data: sysrole })
       .afterClosed()
-      .subscribe(() => this.ngOnInit());
+      .subscribe((result) => {
+        if (result) this.ngOnInit();
+      });
   }
 
   remove(sysrole: any, scope: any) {
     this.scopeService
-      .removeScopePermissions([sysrole.id], 'SYSROLE', scope.id)
+      .removeScopePermissions({ sysroles: [sysrole.id] }, scope.id)
       .subscribe(() => {
         this.snack.open('移除成功！', '关闭');
         this.ngOnInit();
@@ -75,7 +77,7 @@ export class ScopesComponent implements OnInit {
       .afterClosed()
       .subscribe((res) => {
         if (res) {
-          this.snack.open('授权成功！','关闭')
+          this.snack.open('授权成功！', '关闭');
           this.onPage(this.pageable);
         }
       });

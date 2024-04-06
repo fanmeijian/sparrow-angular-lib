@@ -9,6 +9,7 @@ import { ScopeService, SysroleService } from '@sparrowmini/org-api';
 })
 export class ScopePermissionComponent implements OnInit {
   selectedSysroles: any[] = [];
+  selectedUsernames: any[] = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -22,8 +23,10 @@ export class ScopePermissionComponent implements OnInit {
   submit() {
     this.sysroleService
       .addScopePermissions(
-        this.selectedSysroles.map((m) => m.id),
-        'SYSROLE',
+        {
+          sysroles: this.selectedSysroles.map((m) => m.id),
+          users: this.selectedUsernames.map((m) => m.username),
+        },
         this.data.id
       )
       .subscribe();

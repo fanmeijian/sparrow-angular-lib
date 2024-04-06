@@ -45,7 +45,7 @@ export class DataPermissionsComponent implements OnInit {
       )
       .subscribe((res: any) => {
         this.dataSource = new MatTableDataSource<any>(res);
-        console.log(res);
+        // console.log(res);
       });
   }
 }

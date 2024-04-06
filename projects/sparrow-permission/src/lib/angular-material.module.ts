@@ -31,6 +31,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTreeModule } from '@angular/material/tree';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { MatRadioModule } from '@angular/material/radio';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   exports: [
@@ -85,6 +86,7 @@ import { MatRadioModule } from '@angular/material/radio';
     MatProgressBarModule,
     MatSelectModule,
     MatRadioModule,
+    DragDropModule,
   ],
 })
 export class AngularMaterialModule {}

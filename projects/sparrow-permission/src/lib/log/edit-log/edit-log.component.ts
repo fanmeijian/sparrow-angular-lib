@@ -11,7 +11,7 @@ export class EditLogComponent implements OnInit {
   pageable: any = { pageSize: 10, pageIndex: 0, length: 0 };
 
   id: any = '';
-  modelId: string = "cn.sparrowmini.pem.model.Sysrole";
+  modelId: string = 'cn.sparrowmini.pem.model.Sysrole';
 
   constructor(private auditLogService: AuditlogService) {}
 
@@ -21,7 +21,7 @@ export class EditLogComponent implements OnInit {
 
   onPageChange(event: any) {
     this.auditLogService
-      .logs(this.id, this.modelId, event.pageIndex, event.pageSize, [
+      .logs(this.modelId, this.id, event.pageIndex, event.pageSize, [
         'createdDate,desc',
       ])
       .subscribe((res) => {

@@ -1,19 +1,20 @@
-import { Component, Injectable, OnInit } from "@angular/core";
-import {
-  MenuService,
-  SparrowTreeMenuString,
-} from "@sparrowmini/org-api";
+import { Component, Injectable, OnInit } from '@angular/core';
+import { MenuService, SparrowTreeMenuString } from '@sparrowmini/org-api';
 import {
   MatTreeFlattener,
   MatTreeFlatDataSource,
-} from "@angular/material/tree";
-import { FlatTreeControl } from "@angular/cdk/tree";
-import { SelectionModel } from "@angular/cdk/collections";
-import { BehaviorSubject } from "rxjs";
-import { MatDialog } from "@angular/material/dialog";
-import { MenuCreateComponent } from "../../menu/menu-create/menu-create.component";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { MenuPermissionComponent } from "../../menu/menu-permission/menu-permission.component";
+} from '@angular/material/tree';
+import { FlatTreeControl } from '@angular/cdk/tree';
+import { SelectionModel } from '@angular/cdk/collections';
+import { BehaviorSubject } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { MenuCreateComponent } from '../../menu/menu-create/menu-create.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MenuPermissionComponent } from '../../menu/menu-permission/menu-permission.component';
+
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { HttpClient } from '@angular/common/http';
+
 /**
  * Node for to-do item
  */
@@ -23,12 +24,21 @@ export class TodoItemNode {
   me: any;
 }
 
+// interface ExampleFlatNode {
+//   id:string;
+//   expandable: boolean;
+//   name: string;
+//   level: number;
+//   children: ExampleFlatNode[];
+// }
+
 /** Flat to-do item node with expandable and level information */
 export class TodoItemFlatNode {
   id!: string;
   me: any;
   level!: number;
   expandable!: boolean;
+  children!: TodoItemFlatNode[];
 }
 
 /**
@@ -51,7 +61,7 @@ export class ChecklistDatabase {
   initialize() {
     // Build the tree nodes from Json object. The result is a list of `TodoItemNode` with nested
     //     file node as children.
-    this.menuService.menuTree("MENU").subscribe((res) => {
+    this.menuService.menuTree('MENU').subscribe((res) => {
       // const data = this.buildFileTree(res.children!, 0);
       const data: any = res.children!;
       // Notify the change.
@@ -70,7 +80,7 @@ export class ChecklistDatabase {
       node.id = key;
 
       if (value != null) {
-        if (typeof value === "object") {
+        if (typeof value === 'object') {
           node.children = this.buildFileTree(value, level + 1);
         } else {
           node.id = value;
@@ -96,9 +106,9 @@ export class ChecklistDatabase {
 }
 
 @Component({
-  selector: "lib-menu",
-  templateUrl: "./menu.component.html",
-  styleUrls: ["./menu.component.css"],
+  selector: 'lib-menu',
+  templateUrl: './menu.component.html',
+  styleUrls: ['./menu.component.css'],
   providers: [ChecklistDatabase],
 })
 export class MenuComponent implements OnInit {
@@ -112,7 +122,7 @@ export class MenuComponent implements OnInit {
   selectedParent: TodoItemFlatNode | null = null;
 
   /** The new item's name */
-  newItemName = "";
+  newItemName = '';
 
   treeControl: FlatTreeControl<TodoItemFlatNode>;
 
@@ -129,7 +139,8 @@ export class MenuComponent implements OnInit {
     private _database: ChecklistDatabase,
     private dialog: MatDialog,
     private menuService: MenuService,
-    private snack: MatSnackBar
+    private snack: MatSnackBar,
+    private http: HttpClient
   ) {
     this.treeFlattener = new MatTreeFlattener(
       this.transformer,
@@ -145,12 +156,13 @@ export class MenuComponent implements OnInit {
       this.treeControl,
       this.treeFlattener
     );
-
     _database.dataChange.subscribe((data) => {
       this.dataSource.data = data;
     });
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._database.initialize()
+  }
 
   getLevel = (node: TodoItemFlatNode) => node.level;
 
@@ -161,7 +173,7 @@ export class MenuComponent implements OnInit {
   hasChild = (_: number, _nodeData: TodoItemFlatNode) => _nodeData.expandable;
 
   hasNoContent = (_: number, _nodeData: TodoItemFlatNode) =>
-    _nodeData.id === "";
+    _nodeData.id === '';
 
   /**
    * Transformer to convert nested node to flat node. Record the nodes in maps for later use.
@@ -268,7 +280,7 @@ export class MenuComponent implements OnInit {
   /** Select the category so we can insert the new item. */
   addNewItem(node: TodoItemFlatNode) {
     const parentNode = this.flatNodeMap.get(node);
-    this._database.insertItem(parentNode!, "");
+    this._database.insertItem(parentNode!, '');
     this.treeControl.expand(node);
   }
 
@@ -279,7 +291,7 @@ export class MenuComponent implements OnInit {
   }
 
   new() {
-    this.dialog.open(MenuCreateComponent, { width: "90%" });
+    this.dialog.open(MenuCreateComponent, { width: '90%' });
   }
 
   delete() {
@@ -287,14 +299,14 @@ export class MenuComponent implements OnInit {
     this.menuService
       .deleteMenus(this.checklistSelection.selected.map((m) => m.id))
       .subscribe(() => {
-        this.snack.open("删除成功！", "关闭");
+        this.snack.open('删除成功！', '关闭');
       });
   }
 
   permission() {
     this.dialog.open(MenuPermissionComponent, {
       data: this.checklistSelection.selected.map((m) => m.me),
-      width: "90%",
+      width: '90%',
     });
   }
 
@@ -305,6 +317,201 @@ export class MenuComponent implements OnInit {
   }
 
   edit(menu: any) {
-    this.dialog.open(MenuCreateComponent, { width: "90%", data: menu.me });
+    this.dialog.open(MenuCreateComponent, { width: '90%', data: menu.me });
   }
+
+  dragging = false;
+  expandTimeout: any;
+  expandDelay = 1000;
+  validateDrop = false;
+  expansionModel = new SelectionModel<string>(true);
+
+  visibleNodes(): TodoItemNode[] {
+    const result: TodoItemNode[] = [];
+
+    function addExpandedChildren(node: TodoItemNode, expanded: string[]) {
+      result.push(node);
+      if (expanded.includes(node.id)) {
+        node.children.map((child) => addExpandedChildren(child, expanded));
+      }
+    }
+    this.dataSource.data.forEach((node) => {
+      addExpandedChildren(node, this.expansionModel.selected);
+    });
+    return result;
+  }
+
+  /**
+   * Handle the drop - here we rearrange the data based on the drop event,
+   * then rebuild the tree.
+   * */
+  drop(event: CdkDragDrop<string[]>) {
+    console.log(event)
+    // console.log('origin/destination', event.previousIndex, event.currentIndex, event.item.data);
+    // ignore drops outside of the tree
+    if (!event.isPointerOverContainer) return;
+
+    // construct a list of visible nodes, this will match the DOM.
+    // the cdkDragDrop event.currentIndex jives with visible nodes.
+    // it calls rememberExpandedTreeNodes to persist expand state
+    const visibleNodes = this.visibleNodes();
+
+    // deep clone the data source so we can mutate it
+    const changedData = JSON.parse(JSON.stringify(this.dataSource.data));
+
+    // recursive find function to find siblings of node
+    function findNodeSiblings(
+      arr: Array<any>,
+      id: string
+    ): Array<any> | undefined {
+      let result, subResult;
+      arr.forEach((item, i) => {
+        if (item.id === id) {
+          result = arr;
+        } else if (item.children) {
+          subResult = findNodeSiblings(item.children, id);
+          if (subResult) result = subResult;
+        }
+      });
+      return result;
+    }
+
+    // determine where to insert the node
+    const nodeAtDest = visibleNodes[event.currentIndex];
+    const newSiblings = findNodeSiblings(changedData, nodeAtDest.id);
+    if (!newSiblings) return;
+    const insertIndex = newSiblings.findIndex((s) => s.id === nodeAtDest.id);
+
+    // remove the node from its old place
+    const node = event.item.data;
+    const siblings = findNodeSiblings(changedData, node.id);
+    const siblingIndex = siblings?.findIndex((n) => n.id === node.id);
+    const nodeToInsert: TodoItemNode = siblings?.splice(siblingIndex!, 1)[0];
+    if (nodeAtDest.id === nodeToInsert.id) return;
+
+    // ensure validity of drop - must be same level
+    const nodeAtDestFlatNode = this.treeControl.dataNodes.find(
+      (n) => nodeAtDest.id === n.id
+    );
+    if (this.validateDrop && nodeAtDestFlatNode?.level !== node.level) {
+      alert('Items can only be moved within the same level.');
+      return;
+    }
+
+    // insert node
+    console.log(visibleNodes[event.currentIndex-1],visibleNodes[event.currentIndex], visibleNodes[event.currentIndex+1]);
+    let url = 'http://localhost:4421/org-service/menus/' + node.id +'/sort?'
+    if(event.currentIndex===0){
+      url = url +'nextId='+visibleNodes[0].me.id
+    }else if (event.currentIndex === visibleNodes.length){
+      url = url + 'prevId=' + visibleNodes[visibleNodes.length].me.id
+    }else{
+      url = url + 'prevId=' + visibleNodes[event.currentIndex-1].me.id + '&nextId=' + visibleNodes[event.currentIndex].me.id
+    }
+    this.http
+        .patch(
+          url,
+          undefined
+        )
+        .subscribe(() => this.ngOnInit());
+    // if (event.previousIndex > event.currentIndex) {
+    //   // move to target item below
+    //   this.http
+    //     .patch(
+    //       'http://localhost:4421/org-service/menus/' +
+    //         node.id +
+    //         '/sort?prevId=' +
+    //         visibleNodes[],
+    //       undefined
+    //     )
+    //     .subscribe(() => this.ngOnInit());
+    //   // this.menuService.sortMenu(node.id,nodeAtDest.id,nodeAtDest.me.nextNodeId).subscribe()
+    // } else {
+    //   this.http
+    //     .patch(
+    //       'http://localhost:4421/org-service/menus/' +
+    //         node.id +
+    //         '/sort?nextId=' +
+    //         nodeAtDest.id,
+    //       undefined
+    //     )
+    //     .subscribe(() => this.ngOnInit());
+
+      // this.menuService.sortMenu(node.id,nodeAtDest.me.previousNodeId,nodeAtDest.id).subscribe()
+    // }
+    newSiblings.splice(insertIndex, 0, nodeToInsert);
+
+    // rebuild tree with mutated data
+    this.rebuildTreeForData(changedData);
+  }
+
+  /**
+   * Experimental - opening tree nodes as you drag over them
+   */
+  dragStart() {
+    this.dragging = true;
+  }
+  dragEnd() {
+    this.dragging = false;
+  }
+  dragHover(node: TodoItemFlatNode) {
+    if (this.dragging) {
+      clearTimeout(this.expandTimeout);
+      this.expandTimeout = setTimeout(() => {
+        this.treeControl.expand(node);
+      }, this.expandDelay);
+    }
+  }
+  dragHoverEnd() {
+    if (this.dragging) {
+      clearTimeout(this.expandTimeout);
+    }
+  }
+
+  /**
+   * The following methods are for persisting the tree expand state
+   * after being rebuilt
+   */
+
+  rebuildTreeForData(data: any) {
+    this.dataSource.data = data;
+    this.expansionModel.selected.forEach((id) => {
+      const node = this.treeControl.dataNodes.find((n) => n.id === id);
+      this.treeControl.expand(node!);
+    });
+  }
+
+  /**
+   * Not used but you might need this to programmatically expand nodes
+   * to reveal a particular node
+   */
+  private expandNodesById(flatNodes: TodoItemFlatNode[], ids: string[]) {
+    if (!flatNodes || flatNodes.length === 0) return;
+    const idSet = new Set(ids);
+    return flatNodes.forEach((node) => {
+      if (idSet.has(node.id)) {
+        this.treeControl.expand(node);
+        let parent = this.getParentNode(node);
+        while (parent) {
+          this.treeControl.expand(parent);
+          parent = this.getParentNode(parent);
+        }
+      }
+    });
+  }
+
+  // private getParentNode(node: ExampleFlatNode): ExampleFlatNode | null {
+  //   const currentLevel = node.level;
+  //   if (currentLevel < 1) {
+  //     return null;
+  //   }
+  //   const startIndex = this.treeControl.dataNodes.indexOf(node) - 1;
+  //   for (let i = startIndex; i >= 0; i--) {
+  //     const currentNode = this.treeControl.dataNodes[i];
+  //     if (currentNode.level < currentLevel) {
+  //       return currentNode;
+  //     }
+  //   }
+  //   return null;
+  // }
 }

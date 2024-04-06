@@ -37,12 +37,12 @@ export class ScopeCreateComponent implements OnInit {
         this.sysroleService
           .updateScope(this.formGroup.value, this.data.id)
           .subscribe(() => {
-            this.dialogRef.close();
+            this.dialogRef.close(true);
             this.snack.open("保存成功！", "关闭");
           });
       } else {
         this.sysroleService.newScope(this.formGroup.value).subscribe(() => {
-          this.dialogRef.close();
+          this.dialogRef.close(true);
           this.snack.open("保存成功！", "关闭");
         });
       }

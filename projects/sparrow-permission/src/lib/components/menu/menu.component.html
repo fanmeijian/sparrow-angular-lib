@@ -30,12 +30,20 @@
   "
 >
   <mat-tree
+    cdkDropList
+    (cdkDropListDropped)="drop($event)"
     class="mat-tree"
     [dataSource]="dataSource"
     [treeControl]="treeControl"
     style="width: 250px; height: 100%; overflow-y: scroll"
   >
     <mat-tree-node
+      cdkDrag
+      [cdkDragData]="node"
+      (mouseenter)="dragHover(node)"
+      (mouseleave)="dragHoverEnd()"
+      (cdkDragStarted)="dragStart()"
+      (cdkDragReleased)="dragEnd()"
       *matTreeNodeDef="let node"
       matTreeNodeToggle
       matTreeNodePadding
@@ -54,7 +62,7 @@
               ? 'tree-node-name-selected'
               : 'tree-node-name'
           "
-          >[{{ node.me.code }}]{{ node.me.name }}</span
+          >{{node.level}}[{{ node.me.code }}]{{ node.me.name }}</span
         >
       </div>
     </mat-tree-node>
@@ -67,6 +75,12 @@
     </mat-tree-node>
 
     <mat-tree-node
+      cdkDrag
+      [cdkDragData]="node"
+      (mouseenter)="dragHover(node)"
+      (mouseleave)="dragHoverEnd()"
+      (cdkDragStarted)="dragStart()"
+      (cdkDragReleased)="dragEnd()"
       *matTreeNodeDef="let node; when: hasChild"
       matTreeNodePadding
     >
@@ -93,7 +107,7 @@
               ? 'tree-node-name-selected'
               : 'tree-node-name'
           "
-          >[{{ node.me.code }}]{{ node.me.name }}</span
+          >{{node.level}}[{{ node.me.code }}]{{ node.me.name }}</span
         >
       </div>
     </mat-tree-node>
