@@ -1,10 +1,12 @@
 <button mat-flat-button (click)="new()" color="primary">新增</button>
 <lib-search-filter
   [filters]="filters"
-  [fields]="[{
-    name: '代码',
-    value: 'code'
-  }]"
+  [fields]="[
+    {
+      name: '代码',
+      value: 'code'
+    }
+  ]"
   (applyFilter)="applyFilter()"
 ></lib-search-filter>
 <div class="example-table-container">
@@ -18,7 +20,9 @@
 
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef>名称</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
+      <mat-cell *matCellDef="let element"
+        ><div style="display: flex;flex-direction: column;"><span>{{ element.name }}</span><lib-base-op-log-column [element]="element"></lib-base-op-log-column></div>
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="code">
@@ -45,7 +49,33 @@
 
     <ng-container matColumnDef="permission">
       <mat-header-cell *matHeaderCellDef>数据权限</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ element.dataPermissionId }}</mat-cell>
+      <mat-cell *matCellDef="let element"
+        >{{ element.dataPermissionId }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="created">
+      <mat-header-cell *matHeaderCellDef>创建人</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.createdBy }} {{ element.createdDate | date : "short" }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="modified">
+      <mat-header-cell *matHeaderCellDef>更新人</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.modifiedBy }} {{ element.modifiedDate | date : "short" }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="auditlog">
+      <mat-header-cell *matHeaderCellDef>审计日志</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <lib-entity-log
+          [id]="element?.id"
+          [modelId]="element?.modelName"
+        ></lib-entity-log>
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="actions">

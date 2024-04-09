@@ -9,6 +9,7 @@ import { SysrolePermissionComponent } from '../../sysrole/sysrole-permission/sys
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ScopeCreateComponent } from '../scope-create/scope-create.component';
 import { ScopePermissionComponent } from '../scope-permission/scope-permission.component';
+import { baseOpLogColumns } from '../../common/base-op-log-column/base-op-log-column.component';
 
 @Component({
   selector: 'lib-scopes',
@@ -21,7 +22,7 @@ export class ScopesComponent implements OnInit {
   // pageable = { page: 0, size: 10 };
 
   total: number = 0;
-  displayedColumns = ['id', 'name', 'code', 'users', 'sysroles', 'actions'];
+  displayedColumns = ['id', 'name', 'code', 'users', 'sysroles','auditlog', 'actions'];
 
   filters: any[] = [];
   pageable = {
@@ -39,7 +40,7 @@ export class ScopesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.onPage({ pageIndex: 0, pageSize: 10, length: 0 });
+    this.onPage(this.pageable);
   }
 
   new() {

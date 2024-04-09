@@ -38,12 +38,6 @@
   vertical-align: top;
 }
 
-.tree-right{
-  /* flex-grow: 1; */
-  display: flex;
-  flex-direction: column;
-  width: 500px;
-}
 
 .tree {
   display: flex;

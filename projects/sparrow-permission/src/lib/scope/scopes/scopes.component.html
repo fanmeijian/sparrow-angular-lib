@@ -25,7 +25,13 @@
 
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef>名称</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
+        <mat-cell *matCellDef="let element">
+          <div style="display: flex; flex-direction: column">
+            <span>{{ element.name }}</span
+            ><lib-base-op-log-column
+              [element]="element"
+            ></lib-base-op-log-column></div
+        ></mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="code">
@@ -67,6 +73,16 @@
         </mat-cell>
       </ng-container>
 
+      <ng-container matColumnDef="auditlog">
+        <mat-header-cell *matHeaderCellDef>审计日志</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <lib-entity-log
+            [id]="element?.id"
+            [modelId]="element?.modelName"
+          ></lib-entity-log>
+        </mat-cell>
+      </ng-container>
+
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let element">
@@ -93,7 +109,8 @@
     </mat-table>
   </div>
 
-  <mat-paginator #paginator
+  <mat-paginator
+    #paginator
     [pageSizeOptions]="[5, 10, 20]"
     [pageSize]="pageable.pageSize"
     [length]="pageable.length"

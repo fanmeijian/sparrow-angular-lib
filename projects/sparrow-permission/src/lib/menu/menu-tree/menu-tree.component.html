@@ -7,7 +7,7 @@
     (cdkDragStarted)="dragStart()"
     (cdkDragReleased)="dragEnd()"
     *matTreeNodeDef="let node"
-    [matTreeNodePaddingIndent]="5"
+    [matTreeNodePaddingIndent]="5*node.level"
     matTreeNodePadding
   >
     <button mat-icon-button disabled></button>
@@ -33,7 +33,7 @@
     (cdkDragStarted)="dragStart()"
     (cdkDragReleased)="dragEnd()"
     *matTreeNodeDef="let node; when: hasChild"
-    [matTreeNodePaddingIndent]="5"
+    [matTreeNodePaddingIndent]="5*node.level"
     matTreeNodePadding
   >
     <!-- <button

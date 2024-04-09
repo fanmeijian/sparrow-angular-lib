@@ -322,4 +322,8 @@ export class OrgsComponent implements OnInit {
   edit(menu: any) {
     this.dialog.open(OrgCreateComponent, { width: "90%", data: menu });
   }
+
+  deleteMenu(selectedMenu:any){
+
+  }
 }

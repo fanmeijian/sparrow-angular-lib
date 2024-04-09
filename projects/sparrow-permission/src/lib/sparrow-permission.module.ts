@@ -55,6 +55,8 @@ import { UserListComponent } from './user/user-list/user-list.component';
 import { UserCreateComponent } from './user/user-create/user-create.component';
 import { UserSelectionComponent } from './user/user-selection/user-selection.component';
 import { AngularMaterialModule } from "./angular-material.module";
+import { EntityLogComponent } from './common/entity-log/entity-log.component';
+import { BaseOpLogColumnComponent } from './common/base-op-log-column/base-op-log-column.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +90,8 @@ import { AngularMaterialModule } from "./angular-material.module";
     UserListComponent,
     UserCreateComponent,
     UserSelectionComponent,
+    EntityLogComponent,
+    BaseOpLogColumnComponent,
   ],
   imports: [
     BrowserModule,

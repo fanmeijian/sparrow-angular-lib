@@ -4,3 +4,20 @@
   height: calc(100vh - 450px);
   overflow: auto;
 }
+
+
+.mat-column-auditlog {
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 200px !important;
+  /* width: 5% !important; */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  padding: 2px;
+  word-break: break-word;
+
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}

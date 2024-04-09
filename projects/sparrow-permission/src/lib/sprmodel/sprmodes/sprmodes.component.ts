@@ -1,5 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { DatamodelService, SysroleService } from '@sparrowmini/org-api';
+import {
+  DatamodelService,
+  ModelAttributePermissionResponseBody,
+  PermissionRequestBody,
+  SysroleService,
+} from '@sparrowmini/org-api';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { SprmodelPermisssionComponent } from '../sprmodel-permisssion/sprmodel-permisssion.component';
@@ -20,7 +25,7 @@ export class SprmodesComponent implements OnInit {
 
   dataSource = new MatTableDataSource<any>();
   pageable = { pageIndex: 0, pageSize: 10, length: 0 };
-  displayedColumns = ['seq', 'code', 'users'];
+  displayedColumns = ['seq', 'code', 'users','auditlog'];
 
   constructor(
     private modelService: DatamodelService,
@@ -195,21 +200,13 @@ export class SprmodesComponent implements OnInit {
       });
   }
 
-  removeAttrSysrole(user: any, sysrole: any) {
-    console.log(user, sysrole);
+  removeAttrPermission(attr: any, body: PermissionRequestBody) {
+    console.log(attr, body);
     this.modelService
       .removeAttrPermissions(
-        {
-          sysroles: [
-            {
-              sysroleId: sysrole.id.sysroleId,
-              permissionType: sysrole.id.permissionType,
-              permission: sysrole.id.permission,
-            },
-          ],
-        },
-        sysrole.id.attributeId.modelId,
-        sysrole.id.attributeId.attributeId
+        body,
+        attr.id.modelId,
+        attr.id.attributeId
       )
       .subscribe(() => {
         this.ngOnInit();

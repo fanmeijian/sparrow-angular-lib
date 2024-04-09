@@ -60,7 +60,7 @@
           "
           [style]="node.item.type != 'GROUP' ? 'color:grey;' : ''"
           (click)="onItemClick(node.item)"
-          >{{ node.item.name }} ({{node.item.childCount}})</span
+          >{{ node.item.name }} ({{ node.item.childCount }})</span
         >
         <mat-progress-bar
           *ngIf="node.isLoading"
@@ -71,42 +71,89 @@
     </mat-tree>
   </div>
 
-  <div>
-    <div>
-      群组：{{ selectedItem?.name }}({{ selectedItem?.code }})<button
-        type="button"
-        mat-icon-button
-        color="primary"
-        (click)="edit(selectedItem)"
-        [disabled]="!selectedItem"
+  <div class="tree-right">
+    <mat-card>
+      <mat-card-title
+        >{{ selectedItem?.name }} ({{ selectedItem?.code }})</mat-card-title
       >
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button
-        type="button"
-        mat-icon-button
-        color="warn"
-        (click)="delete(selectedItem)"
-        [disabled]="!selectedItem"
-      >
-        <mat-icon>delete</mat-icon>
-      </button>
-    </div>
-    <button mat-button (click)="openMember(selectedItem)">成员</button>
-    <!-- <mat-divider></mat-divider> -->
-    <div class="detail">
-      <span
-        >组织:
-        <ng-container *ngFor="let item of selectedItem?.organizations"
-          >{{ item.name }},</ng-container
-        ></span
-      >
-      <span
-        >上级:
-        <ng-container *ngFor="let item of selectedItem?.parents"
-          >{{ item.name }},</ng-container
-        ></span
-      >
-    </div>
+      <mat-card-content>
+        <div>
+          <mat-tab-group>
+            <mat-tab label="基本信息">
+              <div class="twocolumn-box">
+                <span>名称:</span><span>{{ selectedItem?.name }}</span>
+                <span>代码:</span><span>{{ selectedItem?.code }}</span>
+                <span>类型:</span><span>{{ selectedItem?.type }}</span>
+                <span>组织: </span>
+                <span>
+                  <ng-container *ngFor="let item of selectedItem?.organizations"
+                    >{{ item.name }},</ng-container
+                  ></span
+                >
+                <span>上级: </span>
+                <span>
+                  <ng-container *ngFor="let item of selectedItem?.parents"
+                    >{{ item.name }},</ng-container
+                  ></span
+                >
+              </div>
+              <!-- <lib-base-op-log-column
+                [element]="selectedMenu?.me"
+              ></lib-base-op-log-column> -->
+            </mat-tab>
+            <!-- <mat-tab label="授权用户（{{ permissions?.users?.length }}）">
+              <mat-chip
+                *ngFor="let chipItem of permissions.users"
+                (removed)="removePermission(chipItem)"
+              >
+                {{ chipItem.name }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip>
+            </mat-tab> -->
+            <!-- <mat-tab label="授权角色（{{ permissions?.sysroles?.length }}）">
+              <mat-chip-list #chipList>
+                <mat-chip
+                  *ngFor="let chipItem of permissions.sysroles"
+                  (removed)="removePermission(chipItem)"
+                >
+                  {{ chipItem.name }}
+                  <button matChipRemove>
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </mat-chip>
+              </mat-chip-list>
+            </mat-tab> -->
+            <mat-tab label="审计日志">
+              <!-- <lib-entity-log
+                [id]="selectedMenu?.id"
+                [modelId]="selectedMenu?.me.modelName"
+              ></lib-entity-log> -->
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" (click)="edit(selectedItem)">
+          编辑
+        </button>
+        <!-- <button
+          mat-button
+          color="primary"
+          (click)="openPermissionDialog(selectedMenu)"
+        >
+          授权
+        </button> -->
+        <button
+          mat-button
+          color="warn"
+          (click)="delete(selectedItem)"
+          [disabled]="selectedItem?.childCount > 0"
+        >
+          删除
+        </button>
+      </mat-card-actions>
+    </mat-card>
   </div>
 </div>

@@ -1,6 +1,6 @@
 {
   "name": "@sparrowmini/sparrow-permission",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "peerDependencies": {
     "@angular/animations": "^13.4.0",
     "@angular/cdk": "^13.3.9",
@@ -11,12 +11,13 @@
     "@angular/forms": "^13.4.0",
     "@angular/material": "^13.3.9",
     "@angular/platform-browser": "^13.0.0",
-    "@sparrowmini/org-api": "^0.7.0",
-    "monaco-editor": "^0.47.0"
+    "@sparrowmini/org-api": "^0.7.1",
+    "i": "^0.3.7",
+    "monaco-editor": "^0.47.0",
+    "npm": "^10.5.0"
   },
   "dependencies": {
-    "i": "^0.3.7",
-    "npm": "^10.5.0",
+    "json-diff-ts": "^2.2.1",
     "tslib": "^2.3.0"
   }
 }

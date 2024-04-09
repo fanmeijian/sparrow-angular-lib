@@ -89,6 +89,15 @@ export class RolesComponent implements OnInit {
     });
   }
 
+  deleteMenu(selectedItem: any) {
+    this.roleService.deleteRole([selectedItem.id]).subscribe(() => {
+      this.snack.open("操作成功！", "关闭");
+      this.database.initialData().subscribe((res) => {
+        this.dataSource.data = res;
+      });
+    });
+  }
+
   edit(menu: any) {
     this.dialog
       .open(RoleCreateComponent, { width: "90%", data: menu })

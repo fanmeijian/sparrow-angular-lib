@@ -38,6 +38,7 @@ export class TodoItemFlatNode {
   me: any;
   level!: number;
   expandable!: boolean;
+  childCount:any;
   children!: TodoItemFlatNode[];
 }
 
@@ -188,6 +189,7 @@ export class MenuComponent implements OnInit {
     flatNode.me = node.me;
     flatNode.level = level;
     flatNode.expandable = !!node.children?.length;
+    flatNode.childCount = node.children?.length;
     this.flatNodeMap.set(flatNode, node);
     this.nestedNodeMap.set(node, flatNode);
     return flatNode;
@@ -303,6 +305,12 @@ export class MenuComponent implements OnInit {
       });
   }
 
+  deleteMenu(menu: any){
+    this.menuService.deleteMenus([menu.id]).subscribe(()=>{
+      this.snack.open('删除成功！', '关闭');
+    })
+  }
+
   permission() {
     this.dialog.open(MenuPermissionComponent, {
       data: this.checklistSelection.selected.map((m) => m.me),
@@ -310,10 +318,37 @@ export class MenuComponent implements OnInit {
     });
   }
 
+  openPermissionDialog(menu:any){
+    this.dialog.open(MenuPermissionComponent, {
+      data: [menu.me],
+      width: '90%',
+    });
+  }
+
+  permissions: any = {};
   selectedMenu: any;
   onMenuClick(menu: any) {
     // console.log(menu);
     this.selectedMenu = menu;
+    this.menuService.menuPermissions(menu.id, 'USER').subscribe((res) => {
+      this.permissions.users = res;
+    });
+
+    this.menuService.menuPermissions(menu.id, 'SYSROLE').subscribe((res) => {
+      this.permissions.sysroles = res;
+    });
+  }
+
+  removePermission(a: any) {
+    this.menuService
+      .removeMenuPermissions([a.id], 'SYSROLE', this.selectedMenu.id)
+      .subscribe(() => {
+        const index = this.permissions.sysroles.indexOf(a);
+        if (index >= 0) {
+          this.permissions.sysroles.splice(index, 1);
+        }
+        this.snack.open('删除成功!', '关闭');
+      });
   }
 
   edit(menu: any) {
@@ -411,35 +446,48 @@ export class MenuComponent implements OnInit {
     //   nodeAtDestFlatNode?.me.name,
     //   nodeAtDestFlatNode?.level
     // );
-    let url = 'http://localhost:4421/org-service/menus/' + node.id + '/sort?';
+    let prevId: any = undefined;
+    let nextId: any = undefined;
+    // let url = 'http://localhost:4421/org-service/menus/' + node.id + '/sort?';
     if (event.currentIndex === 0) {
-      url = url + 'nextId=' + visibleNodes[0].me.id;
+      // url = url + 'nextId=' + visibleNodes[0].me.id;
+      nextId = visibleNodes[0].me.id;
     } else if (event.currentIndex === visibleNodes.length) {
-      url = url + 'prevId=' + visibleNodes[visibleNodes.length].me.id;
+      // url = url + 'prevId=' + visibleNodes[visibleNodes.length].me.id;
+      prevId = visibleNodes[visibleNodes.length].me.id;
     } else {
       if (
         this.nestedNodeMap.get(visibleNodes[event.currentIndex - 1])?.level !=
         nodeAtDestFlatNode?.level
       ) {
-        url = url + 'nextId=' + nodeAtDestFlatNode?.me.id;
+        // url = url + 'nextId=' + nodeAtDestFlatNode?.me.id;
+        nextId = nodeAtDestFlatNode?.me.id;
       } else {
-        url =
-          url +
-          'prevId=' +
-          visibleNodes[event.currentIndex - 1].me.id +
-          '&nextId=' +
-          nodeAtDestFlatNode?.me.id;
+        // url =
+        //   url +
+        //   'prevId=' +
+        //   visibleNodes[event.currentIndex - 1].me.id +
+        //   '&nextId=' +
+        //   nodeAtDestFlatNode?.me.id;
+        prevId = visibleNodes[event.currentIndex - 1].me.id;
+        nextId = nodeAtDestFlatNode?.me.id;
       }
     }
 
     if (node.level !== nodeAtDestFlatNode?.level) {
       this.menuService
         .updateMenu({ parentId: nodeAtDestFlatNode?.me.parentId }, node.id)
-        .subscribe(()=>this.http.patch(url, undefined).subscribe(() => this.ngOnInit()));
-    }else{
-      this.http.patch(url, undefined).subscribe(() => this.ngOnInit());
+        .subscribe(() =>
+          this.menuService
+            .sortMenu(node.id, prevId, nextId)
+            .subscribe(() => this.ngOnInit())
+        );
+    } else {
+      // this.http.patch(url, undefined).subscribe(() => this.ngOnInit());
+      this.menuService
+        .sortMenu(node.id, prevId, nextId)
+        .subscribe(() => this.ngOnInit());
     }
-
 
     newSiblings.splice(insertIndex, 0, nodeToInsert);
 

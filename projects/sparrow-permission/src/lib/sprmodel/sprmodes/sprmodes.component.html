@@ -12,7 +12,12 @@
 
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef>名称</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ element.name }} </mat-cell>
+      <mat-cell *matCellDef="let element"
+        ><div style="display: flex; flex-direction: column">
+          <span>{{ element.name }}</span
+          ><lib-base-op-log-column [element]="element"></lib-base-op-log-column>
+        </div>
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="code">
@@ -32,12 +37,12 @@
 
           <mat-accordion
             *ngIf="
-              element.sysroles.length > 0 ||
-              element.usernames.length > 0 ||
-              element.rules.length > 0
+              element.sysroles?.length > 0 ||
+              element.usernames?.length > 0 ||
+              element.rules?.length > 0
             "
           >
-            <mat-expansion-panel *ngIf="element.sysroles.length > 0">
+            <mat-expansion-panel *ngIf="element.sysroles?.length > 0">
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   授权角色 ({{ element.sysroles.length }})</mat-panel-title
@@ -173,10 +178,10 @@
                 item.rules.length > 0
               "
             >
-              <mat-expansion-panel *ngIf="item.sysroles.length > 0">
+              <mat-expansion-panel *ngIf="item.sysroles?.length > 0">
                 <mat-expansion-panel-header>
                   <mat-panel-title>
-                    授权角色 ({{ item.sysroles.length }})</mat-panel-title
+                    授权角色 ({{ item.sysroles?.length }})</mat-panel-title
                   >
                 </mat-expansion-panel-header>
                 <div style="display: flex; flex-direction: column">
@@ -191,7 +196,9 @@
                     <span
                       class="material-icons"
                       style="color: red; cursor: pointer"
-                      (click)="removeAttrSysrole(sysrole, sysrole)"
+                      (click)="
+                        removeAttrPermission(item, { sysroles: [sysrole.id] })
+                      "
                     >
                       close </span
                     ><span
@@ -211,11 +218,11 @@
               <mat-expansion-panel
                 (opened)="panelOpenState = true"
                 (closed)="panelOpenState = false"
-                *ngIf="item.users.length"
+                *ngIf="item.users?.length"
               >
                 <mat-expansion-panel-header>
                   <mat-panel-title>
-                    授权用户 ({{ item.users.length }})</mat-panel-title
+                    授权用户 ({{ item.users?.length }})</mat-panel-title
                   >
                 </mat-expansion-panel-header>
 
@@ -231,7 +238,9 @@
                     <span
                       class="material-icons"
                       style="color: red; cursor: pointer"
-                      (click)="removeAttrSysrole(user, element)"
+                      (click)="
+                        removeAttrPermission(item, { usernames: [user.id] })
+                      "
                     >
                       close </span
                     ><span
@@ -268,7 +277,7 @@
                   <span
                     class="material-icons"
                     style="color: red; cursor: pointer"
-                    (click)="removeAttrRule(rule, element)"
+                    (click)="removeAttrPermission(item, { rules: [rule.id] })"
                   >
                     close </span
                   ><span
@@ -341,6 +350,16 @@
             </button>
           </mat-chip>
         </mat-chip-list> -->
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="auditlog">
+      <mat-header-cell *matHeaderCellDef>审计日志</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <lib-entity-log
+          [id]="element?.id"
+          [modelId]="element?.modelName"
+        ></lib-entity-log>
       </mat-cell>
     </ng-container>
 
