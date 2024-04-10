@@ -1,6 +1,6 @@
 {
   "name": "@sparrowmini/sparrow-org",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "peerDependencies": {
     "@angular/animations": "^13.4.0",
     "@angular/cdk": "^13.3.9",

@@ -1,16 +1,17 @@
-import { FlatTreeControl } from "@angular/cdk/tree";
-import { Component, OnInit } from "@angular/core";
+import { FlatTreeControl } from '@angular/cdk/tree';
+import { Component, OnInit } from '@angular/core';
 import {
   MatTreeFlattener,
   MatTreeFlatDataSource,
-} from "@angular/material/tree";
-import { MenuService } from "@sparrowmini/org-api";
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
-import { SelectionModel } from "@angular/cdk/collections";
+} from '@angular/material/tree';
+import { MenuService } from '@sparrowmini/org-api';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { SelectionModel } from '@angular/cdk/collections';
+import { HttpClient } from '@angular/common/http';
 
 /** Flat node with expandable and level information */
 interface ExampleFlatNode {
-  id:string;
+  id: string;
   expandable: boolean;
   name: string;
   level: number;
@@ -18,13 +19,12 @@ interface ExampleFlatNode {
 }
 
 @Component({
-  selector: "lib-menu-tree",
-  templateUrl: "./menu-tree.component.html",
-  styleUrls: ["./menu-tree.component.css"],
+  selector: 'lib-menu-tree',
+  templateUrl: './menu-tree.component.html',
+  styleUrls: ['./menu-tree.component.css'],
 })
 export class MenuTreeComponent implements OnInit {
-
-  selectedNode = ''
+  selectedNode = '';
 
   dragging = false;
   expandTimeout: any;
@@ -55,15 +55,28 @@ export class MenuTreeComponent implements OnInit {
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  constructor(private menuService: MenuService) {}
+  isInit: boolean = false;
+  constructor(private menuService: MenuService, private http: HttpClient) {}
   ngOnInit(): void {
     this.menuService.myMenu().subscribe((res) => {
       this.dataSource.data = res.children!;
     });
+    this.http
+      .get('http://localhost:4421/org-service/sysconfigs/init?page=0&size=20')
+      .subscribe((res: any) => {
+        if (res.totalElements > 0) {
+          this.isInit = true;
+        }
+      });
+  }
+
+  init() {
+    this.http
+      .post('http://localhost:4421/org-service/sysconfigs/init', {})
+      .subscribe();
   }
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
-
 
   visibleNodes(): ExampleFlatNode[] {
     const result: ExampleFlatNode[] = [];
@@ -80,12 +93,11 @@ export class MenuTreeComponent implements OnInit {
     return result;
   }
 
-
   /**
    * Handle the drop - here we rearrange the data based on the drop event,
    * then rebuild the tree.
    * */
-  drop(event: CdkDragDrop<string[]>)  {
+  drop(event: CdkDragDrop<string[]>) {
     // console.log('origin/destination', event.previousIndex, event.currentIndex);
 
     // ignore drops outside of the tree
@@ -100,7 +112,10 @@ export class MenuTreeComponent implements OnInit {
     const changedData = JSON.parse(JSON.stringify(this.dataSource.data));
 
     // recursive find function to find siblings of node
-    function findNodeSiblings(arr: Array<any>, id: string): Array<any>|undefined {
+    function findNodeSiblings(
+      arr: Array<any>,
+      id: string
+    ): Array<any> | undefined {
       let result, subResult;
       arr.forEach((item, i) => {
         if (item.id === id) {
@@ -111,24 +126,25 @@ export class MenuTreeComponent implements OnInit {
         }
       });
       return result;
-
     }
 
     // determine where to insert the node
     const nodeAtDest = visibleNodes[event.currentIndex];
     const newSiblings = findNodeSiblings(changedData, nodeAtDest.id);
     if (!newSiblings) return;
-    const insertIndex = newSiblings.findIndex(s => s.id === nodeAtDest.id);
+    const insertIndex = newSiblings.findIndex((s) => s.id === nodeAtDest.id);
 
     // remove the node from its old place
     const node = event.item.data;
     const siblings = findNodeSiblings(changedData, node.id);
-    const siblingIndex  = siblings?.findIndex(n => n.id === node.id);
+    const siblingIndex = siblings?.findIndex((n) => n.id === node.id);
     const nodeToInsert: ExampleFlatNode = siblings?.splice(siblingIndex!, 1)[0];
     if (nodeAtDest.id === nodeToInsert.id) return;
 
     // ensure validity of drop - must be same level
-    const nodeAtDestFlatNode = this.treeControl.dataNodes.find((n) => nodeAtDest.id === n.id);
+    const nodeAtDestFlatNode = this.treeControl.dataNodes.find(
+      (n) => nodeAtDest.id === n.id
+    );
     if (this.validateDrop && nodeAtDestFlatNode.level !== node.level) {
       alert('Items can only be moved within the same level.');
       return;
@@ -172,9 +188,9 @@ export class MenuTreeComponent implements OnInit {
   rebuildTreeForData(data: any) {
     this.dataSource.data = data;
     this.expansionModel.selected.forEach((id) => {
-        const node = this.treeControl.dataNodes.find((n) => n.id === id);
-        this.treeControl.expand(node);
-      });
+      const node = this.treeControl.dataNodes.find((n) => n.id === id);
+      this.treeControl.expand(node);
+    });
   }
 
   /**

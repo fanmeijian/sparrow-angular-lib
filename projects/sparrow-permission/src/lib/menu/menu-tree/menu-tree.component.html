@@ -1,3 +1,5 @@
+<button mat-button (click)="init()" color="primary" *ngIf="!isInit">系统初始化</button>
+
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList (cdkDropListDropped)="drop($event)">
   <mat-tree-node
     cdkDrag
