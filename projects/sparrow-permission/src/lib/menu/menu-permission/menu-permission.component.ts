@@ -10,7 +10,7 @@ import { MenuService } from '@sparrowmini/org-api';
 export class MenuPermissionComponent implements OnInit {
 
   selectedSysroles: any[] = []
-
+  selectedUsernames: any[] = [];
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private menuService: MenuService,
@@ -23,9 +23,10 @@ export class MenuPermissionComponent implements OnInit {
 
   submit(){
     let menus=this.data.map((m:any)=>m.id)
-    console.log(this.selectedSysroles)
+    // console.log(this.selectedSysroles)
     menus.forEach((menuId: string)=>{
       this.menuService.addMenuPermissions(this.selectedSysroles.map(m=>m.id),'SYSROLE',menuId).subscribe()
+      this.menuService.addMenuPermissions(this.selectedUsernames.map(m=>m.username),'USER',menuId).subscribe()
     })
   }
 
