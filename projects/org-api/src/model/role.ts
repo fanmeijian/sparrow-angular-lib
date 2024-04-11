@@ -16,7 +16,8 @@ export interface Role {
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
-    stat?: string;
+    readonly bstat?: string;
+    stat?: Role.StatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
@@ -24,5 +25,14 @@ export interface Role {
     readonly id?: string;
     code?: string;
     name?: string;
-    isRoot?: boolean;
+    root?: boolean;
+}
+export namespace Role {
+    export type StatEnum = 'Draft' | 'Submitted' | 'Failed' | 'Completed';
+    export const StatEnum = {
+        Draft: 'Draft' as StatEnum,
+        Submitted: 'Submitted' as StatEnum,
+        Failed: 'Failed' as StatEnum,
+        Completed: 'Completed' as StatEnum
+    };
 }

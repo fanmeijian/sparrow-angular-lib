@@ -17,10 +17,20 @@ export interface EmployeeRelation {
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
-    readonly stat?: string;
+    readonly bstat?: string;
+    stat?: EmployeeRelation.StatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
     errMsgs?: Array<ErrMsg>;
     id?: EmployeeRelationPK;
+}
+export namespace EmployeeRelation {
+    export type StatEnum = 'Draft' | 'Submitted' | 'Failed' | 'Completed';
+    export const StatEnum = {
+        Draft: 'Draft' as StatEnum,
+        Submitted: 'Submitted' as StatEnum,
+        Failed: 'Failed' as StatEnum,
+        Completed: 'Completed' as StatEnum
+    };
 }

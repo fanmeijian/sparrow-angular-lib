@@ -14,14 +14,14 @@ import { RequestAuditLog } from './requestAuditLog';
 import { SortObject } from './sortObject';
 
 export interface PageRequestAuditLog { 
-    totalElements?: number;
     totalPages?: number;
-    first?: boolean;
-    last?: boolean;
+    totalElements?: number;
     size?: number;
     content?: Array<RequestAuditLog>;
     number?: number;
     sort?: SortObject;
+    first?: boolean;
+    last?: boolean;
     pageable?: PageableObject;
     numberOfElements?: number;
     empty?: boolean;

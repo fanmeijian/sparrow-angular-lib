@@ -17,10 +17,20 @@ export interface OrganizationRoleRelation {
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
-    readonly stat?: string;
+    readonly bstat?: string;
+    stat?: OrganizationRoleRelation.StatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
     errMsgs?: Array<ErrMsg>;
     id?: OrganizationRoleRelationPK;
+}
+export namespace OrganizationRoleRelation {
+    export type StatEnum = 'Draft' | 'Submitted' | 'Failed' | 'Completed';
+    export const StatEnum = {
+        Draft: 'Draft' as StatEnum,
+        Submitted: 'Submitted' as StatEnum,
+        Failed: 'Failed' as StatEnum,
+        Completed: 'Completed' as StatEnum
+    };
 }

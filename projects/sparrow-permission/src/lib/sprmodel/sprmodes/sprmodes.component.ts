@@ -25,7 +25,7 @@ export class SprmodesComponent implements OnInit {
 
   dataSource = new MatTableDataSource<any>();
   pageable = { pageIndex: 0, pageSize: 10, length: 0 };
-  displayedColumns = ['seq', 'code', 'users','auditlog'];
+  displayedColumns = ['seq', 'code', 'users'];
 
   constructor(
     private modelService: DatamodelService,

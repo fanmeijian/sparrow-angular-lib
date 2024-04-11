@@ -10,8 +10,15 @@
  * Do not edit the class manually.
  */
 
-export interface ScopePermissionRequestBean { 
-    users?: Array<string>;
-    sysroles?: Array<string>;
-    groups?: Array<string>;
+export interface Sysconfig { 
+    readonly createdDate?: Date;
+    readonly modifiedDate?: Date;
+    readonly createdBy?: string;
+    readonly modifiedBy?: string;
+    readonly id?: string;
+    init?: boolean;
+    name?: string;
+    code?: string;
+    remark?: string;
+    configJson?: string;
 }

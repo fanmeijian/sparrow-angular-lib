@@ -17,10 +17,20 @@ export interface OrganizationPositionLevel {
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
-    stat?: string;
+    readonly bstat?: string;
+    stat?: OrganizationPositionLevel.StatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
     errMsgs?: Array<ErrMsg>;
     id?: OrganizationPositionLevelPK;
+}
+export namespace OrganizationPositionLevel {
+    export type StatEnum = 'Draft' | 'Submitted' | 'Failed' | 'Completed';
+    export const StatEnum = {
+        Draft: 'Draft' as StatEnum,
+        Submitted: 'Submitted' as StatEnum,
+        Failed: 'Failed' as StatEnum,
+        Completed: 'Completed' as StatEnum
+    };
 }

@@ -17,7 +17,8 @@ export interface Sysrole {
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
-    readonly stat?: string;
+    readonly bstat?: string;
+    stat?: Sysrole.StatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
@@ -26,5 +27,14 @@ export interface Sysrole {
     dataPermission?: DataPermission;
     name?: string;
     code?: string;
-    isSystem?: boolean;
+    system?: boolean;
+}
+export namespace Sysrole {
+    export type StatEnum = 'Draft' | 'Submitted' | 'Failed' | 'Completed';
+    export const StatEnum = {
+        Draft: 'Draft' as StatEnum,
+        Submitted: 'Submitted' as StatEnum,
+        Failed: 'Failed' as StatEnum,
+        Completed: 'Completed' as StatEnum
+    };
 }

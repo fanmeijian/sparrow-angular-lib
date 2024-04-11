@@ -18,6 +18,7 @@ import { RestApiServiceService } from './api/restApiService.service';
 import { RoleService } from './api/role.service';
 import { RuleService } from './api/rule.service';
 import { ScopeService } from './api/scope.service';
+import { SysconfigService } from './api/sysconfig.service';
 import { SysroleService } from './api/sysrole.service';
 import { UserService } from './api/user.service';
 
@@ -41,6 +42,7 @@ import { UserService } from './api/user.service';
     RoleService,
     RuleService,
     ScopeService,
+    SysconfigService,
     SysroleService,
     UserService ]
 })

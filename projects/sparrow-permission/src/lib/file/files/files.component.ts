@@ -1,20 +1,21 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
-import { SysroleService } from '@sparrowmini/org-api';
-import { map, switchMap, tap, zip } from 'rxjs';
-import { SysroleCreateComponent } from '../sysrole-create/sysrole-create.component';
-import { SysrolePermissionComponent } from '../sysrole-permission/sysrole-permission.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTableDataSource } from '@angular/material/table';
+import { FileService, SysroleService } from '@sparrowmini/org-api';
+import { tap, map, switchMap, zip } from 'rxjs';
 import { DataPermissionGrantComponent } from '../../data-permission/data-permission-grant/data-permission-grant.component';
-import { HttpClient } from '@angular/common/http';
+import { SysroleCreateComponent } from '../../sysrole/sysrole-create/sysrole-create.component';
+import { SysrolePermissionComponent } from '../../sysrole/sysrole-permission/sysrole-permission.component';
+import { FileUploadComponent } from '../file-upload/file-upload.component';
 
 @Component({
-  selector: 'lib-sysroles',
-  templateUrl: './sysroles.component.html',
-  styleUrls: ['./sysroles.component.css'],
+  selector: 'lib-files',
+  templateUrl: './files.component.html',
+  styleUrls: ['./files.component.css'],
 })
-export class SysrolesComponent implements OnInit {
+export class FilesComponent implements OnInit {
   users: any[] = [];
   dataSource = new MatTableDataSource<any>();
   pageable = {
@@ -24,10 +25,17 @@ export class SysrolesComponent implements OnInit {
     sort: ['createdDate,desc'],
   };
 
-  displayedColumns = ['seq', 'name', 'code', 'users', 'permission', 'actions'];
+  displayedColumns = [
+    'seq',
+    'name',
+    'code',
+    'users',
+    'permission',
+    'actions',
+  ];
 
   constructor(
-    private sysroleService: SysroleService,
+    private fileService: FileService,
     private dialog: MatDialog,
     private snack: MatSnackBar,
     private http: HttpClient
@@ -47,24 +55,11 @@ export class SysrolesComponent implements OnInit {
     this.dataSource = new MatTableDataSource<any>();
     this.pageable.pageIndex = event.pageIndex;
     this.pageable.pageSize = event.pageSize;
-    this.sysroleService
-      .sysroles(this.filters, this.pageable.pageIndex, this.pageable.pageSize)
+    this.fileService
+      .files(this.filters,this.pageable.pageIndex, this.pageable.pageSize)
       .pipe(
         tap((res) => (this.pageable.length = res.totalElements!)),
-        map((res: any) => res.content),
-        switchMap((sysroles: any[]) =>
-          zip(
-            ...sysroles.map((sysrole) =>
-              this.sysroleService.sysroleUsers(sysrole.id).pipe(
-                map((m) =>
-                  Object.assign({}, sysrole, {
-                    users: m.content?.map((u) => u.id?.username),
-                  })
-                )
-              )
-            )
-          )
-        )
+        map((res: any) => res.content)
       )
       .subscribe((res) => {
         this.dataSource = new MatTableDataSource<any>(res);
@@ -73,7 +68,7 @@ export class SysrolesComponent implements OnInit {
 
   new() {
     this.dialog
-      .open(SysroleCreateComponent)
+      .open(FileUploadComponent)
       .afterClosed()
       .subscribe((result) => {
         if (result) this.ngOnInit();
@@ -81,7 +76,7 @@ export class SysrolesComponent implements OnInit {
   }
 
   delete(sysrole: any) {
-    this.sysroleService.deleteSysroles([sysrole.id]).subscribe(() => {
+    this.fileService.deleteFiles([sysrole.id]).subscribe(() => {
       this.snack.open('删除成功！', '关闭');
     });
   }
@@ -96,10 +91,12 @@ export class SysrolesComponent implements OnInit {
   }
 
   remove(user: any, sysrole: any) {
-    this.sysroleService.removeSysroleUsers([user], sysrole.id).subscribe(() => {
-      this.snack.open('移除成功！', '关闭');
-      this.ngOnInit();
-    });
+    this.fileService
+      .removeFilePermissions({ users: [user.id] }, sysrole.id)
+      .subscribe(() => {
+        this.snack.open('移除成功！', '关闭');
+        this.ngOnInit();
+      });
   }
 
   openPermission(sysrole: any) {
@@ -114,14 +111,16 @@ export class SysrolesComponent implements OnInit {
   }
 
   openDataPermission(sysrole: any) {
-    this.dialog.open(DataPermissionGrantComponent, {
-      data: sysrole,
-      width: '80%',
-    }).afterClosed()
-    .subscribe((result) => {
-      if (result) {
-        this.ngOnInit();
-      }
-    });
+    this.dialog
+      .open(DataPermissionGrantComponent, {
+        data: sysrole,
+        width: '80%',
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.ngOnInit();
+        }
+      });
   }
 }

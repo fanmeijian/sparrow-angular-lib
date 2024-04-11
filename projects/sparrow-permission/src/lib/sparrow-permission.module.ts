@@ -57,6 +57,8 @@ import { UserSelectionComponent } from './user/user-selection/user-selection.com
 import { AngularMaterialModule } from "./angular-material.module";
 import { EntityLogComponent } from './common/entity-log/entity-log.component';
 import { BaseOpLogColumnComponent } from './common/base-op-log-column/base-op-log-column.component';
+import { FilesComponent } from './file/files/files.component';
+import { FileUploadComponent } from './file/file-upload/file-upload.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +94,8 @@ import { BaseOpLogColumnComponent } from './common/base-op-log-column/base-op-lo
     UserSelectionComponent,
     EntityLogComponent,
     BaseOpLogColumnComponent,
+    FilesComponent,
+    FileUploadComponent,
   ],
   imports: [
     BrowserModule,

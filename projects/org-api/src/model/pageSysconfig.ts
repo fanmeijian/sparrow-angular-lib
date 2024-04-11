@@ -10,14 +10,14 @@
  * Do not edit the class manually.
  */
 import { PageableObject } from './pageableObject';
-import { Role } from './role';
 import { SortObject } from './sortObject';
+import { Sysconfig } from './sysconfig';
 
-export interface PageRole { 
+export interface PageSysconfig { 
     totalPages?: number;
     totalElements?: number;
     size?: number;
-    content?: Array<Role>;
+    content?: Array<Sysconfig>;
     number?: number;
     sort?: SortObject;
     first?: boolean;

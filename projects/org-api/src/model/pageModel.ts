@@ -14,14 +14,14 @@ import { PageableObject } from './pageableObject';
 import { SortObject } from './sortObject';
 
 export interface PageModel { 
-    totalElements?: number;
     totalPages?: number;
-    first?: boolean;
-    last?: boolean;
+    totalElements?: number;
     size?: number;
     content?: Array<Model>;
     number?: number;
     sort?: SortObject;
+    first?: boolean;
+    last?: boolean;
     pageable?: PageableObject;
     numberOfElements?: number;
     empty?: boolean;

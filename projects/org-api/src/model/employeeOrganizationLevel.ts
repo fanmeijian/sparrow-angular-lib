@@ -9,7 +9,6 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { EmployeeOrganizationLevelPK } from './employeeOrganizationLevelPK';
 import { ErrMsg } from './errMsg';
 
 export interface EmployeeOrganizationLevel { 
@@ -17,10 +16,19 @@ export interface EmployeeOrganizationLevel {
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
-    stat?: string;
+    readonly bstat?: string;
+    stat?: EmployeeOrganizationLevel.StatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
     errMsgs?: Array<ErrMsg>;
-    id?: EmployeeOrganizationLevelPK;
+}
+export namespace EmployeeOrganizationLevel {
+    export type StatEnum = 'Draft' | 'Submitted' | 'Failed' | 'Completed';
+    export const StatEnum = {
+        Draft: 'Draft' as StatEnum,
+        Submitted: 'Submitted' as StatEnum,
+        Failed: 'Failed' as StatEnum,
+        Completed: 'Completed' as StatEnum
+    };
 }

@@ -16,7 +16,8 @@ export interface ScopeCatalog {
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
-    readonly stat?: string;
+    readonly bstat?: string;
+    stat?: ScopeCatalog.StatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
@@ -26,4 +27,13 @@ export interface ScopeCatalog {
     code?: string;
     parentId?: string;
     parentCode?: string;
+}
+export namespace ScopeCatalog {
+    export type StatEnum = 'Draft' | 'Submitted' | 'Failed' | 'Completed';
+    export const StatEnum = {
+        Draft: 'Draft' as StatEnum,
+        Submitted: 'Submitted' as StatEnum,
+        Failed: 'Failed' as StatEnum,
+        Completed: 'Completed' as StatEnum
+    };
 }

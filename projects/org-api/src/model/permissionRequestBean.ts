@@ -9,11 +9,9 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { ModelAttribute } from './modelAttribute';
 
-export interface Model { 
-    id?: string;
-    name?: string;
-    remark?: string;
-    modelAttributes?: Array<ModelAttribute>;
+export interface PermissionRequestBean { 
+    users?: Array<string>;
+    sysroles?: Array<string>;
+    groups?: Array<string>;
 }

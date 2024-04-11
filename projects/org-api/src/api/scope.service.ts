@@ -19,8 +19,8 @@ import { Observable }                                        from 'rxjs';
 
 import { PageObject } from '../model/pageObject';
 import { PageScope } from '../model/pageScope';
+import { PermissionRequestBean } from '../model/permissionRequestBean';
 import { Scope } from '../model/scope';
-import { ScopePermissionRequestBean } from '../model/scopePermissionRequestBean';
 import { SparrowJpaFilter } from '../model/sparrowJpaFilter';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -67,10 +67,10 @@ export class ScopeService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addScopePermissions(body: ScopePermissionRequestBean, scopeId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public addScopePermissions(body: ScopePermissionRequestBean, scopeId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public addScopePermissions(body: ScopePermissionRequestBean, scopeId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public addScopePermissions(body: ScopePermissionRequestBean, scopeId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public addScopePermissions(body: PermissionRequestBean, scopeId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public addScopePermissions(body: PermissionRequestBean, scopeId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public addScopePermissions(body: PermissionRequestBean, scopeId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public addScopePermissions(body: PermissionRequestBean, scopeId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling addScopePermissions.');
@@ -247,10 +247,10 @@ export class ScopeService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public removeScopePermissions(body: ScopePermissionRequestBean, scopeId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public removeScopePermissions(body: ScopePermissionRequestBean, scopeId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public removeScopePermissions(body: ScopePermissionRequestBean, scopeId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public removeScopePermissions(body: ScopePermissionRequestBean, scopeId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public removeScopePermissions(body: PermissionRequestBean, scopeId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public removeScopePermissions(body: PermissionRequestBean, scopeId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public removeScopePermissions(body: PermissionRequestBean, scopeId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public removeScopePermissions(body: PermissionRequestBean, scopeId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling removeScopePermissions.');

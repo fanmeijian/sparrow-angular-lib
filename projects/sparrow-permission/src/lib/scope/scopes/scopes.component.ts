@@ -22,7 +22,7 @@ export class ScopesComponent implements OnInit {
   // pageable = { page: 0, size: 10 };
 
   total: number = 0;
-  displayedColumns = ['id', 'name', 'code', 'users', 'sysroles','auditlog', 'actions'];
+  displayedColumns = ['id', 'name', 'code', 'users', 'sysroles', 'actions'];
 
   filters: any[] = [];
   pageable = {

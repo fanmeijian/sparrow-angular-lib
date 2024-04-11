@@ -17,7 +17,8 @@ export interface Group {
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
-    stat?: string;
+    readonly bstat?: string;
+    stat?: Group.StatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
@@ -28,10 +29,17 @@ export interface Group {
     code?: string;
     name?: string;
     owner?: string;
-    isRoot?: boolean;
     type?: Group.TypeEnum;
+    root?: boolean;
 }
 export namespace Group {
+    export type StatEnum = 'Draft' | 'Submitted' | 'Failed' | 'Completed';
+    export const StatEnum = {
+        Draft: 'Draft' as StatEnum,
+        Submitted: 'Submitted' as StatEnum,
+        Failed: 'Failed' as StatEnum,
+        Completed: 'Completed' as StatEnum
+    };
     export type TypeEnum = 'USER' | 'ROLE' | 'SYSROLE' | 'EMPLOYEE' | 'LEVEL' | 'ORGANIZATION' | 'GROUP';
     export const TypeEnum = {
         USER: 'USER' as TypeEnum,

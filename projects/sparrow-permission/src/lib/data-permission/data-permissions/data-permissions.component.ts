@@ -14,7 +14,7 @@ export class DataPermissionsComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
   pageable = { pageIndex: 0, pageSize: 10, length: 0 };
 
-  displayedColumns = ['seq','name', 'remark','auditlog'];
+  displayedColumns = ['seq','name', 'remark'];
 
   constructor(
     private dataPermissionService: DataPermissionService,

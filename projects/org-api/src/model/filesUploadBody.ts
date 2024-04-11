@@ -9,9 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { OrganizationPositionLevelPK } from './organizationPositionLevelPK';
 
-export interface EmployeeOrganizationLevelPK { 
-    organizationLevelId?: OrganizationPositionLevelPK;
-    employeeId?: string;
+export interface FilesUploadBody { 
+    file: Blob;
 }

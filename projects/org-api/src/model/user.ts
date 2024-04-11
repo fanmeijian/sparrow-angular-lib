@@ -16,7 +16,8 @@ export interface User {
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
-    readonly stat?: string;
+    readonly bstat?: string;
+    stat?: User.StatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
@@ -27,4 +28,13 @@ export interface User {
     keycloakId?: string;
     firstName?: string;
     lastName?: string;
+}
+export namespace User {
+    export type StatEnum = 'Draft' | 'Submitted' | 'Failed' | 'Completed';
+    export const StatEnum = {
+        Draft: 'Draft' as StatEnum,
+        Submitted: 'Submitted' as StatEnum,
+        Failed: 'Failed' as StatEnum,
+        Completed: 'Completed' as StatEnum
+    };
 }
