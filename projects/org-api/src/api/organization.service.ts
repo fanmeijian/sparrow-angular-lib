@@ -159,16 +159,25 @@ export class OrganizationService {
      * 新增组织
      * 
      * @param body 
+     * @param parentId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public newOrg(body: Organization, observe?: 'body', reportProgress?: boolean): Observable<Organization>;
-    public newOrg(body: Organization, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Organization>>;
-    public newOrg(body: Organization, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Organization>>;
-    public newOrg(body: Organization, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public newOrg(body: Organization, parentId?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<Organization>;
+    public newOrg(body: Organization, parentId?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Organization>>;
+    public newOrg(body: Organization, parentId?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Organization>>;
+    public newOrg(body: Organization, parentId?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling newOrg.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (parentId) {
+            parentId.forEach((element) => {
+                queryParameters = queryParameters.append('parentId', <any>element);
+            })
         }
 
         let headers = this.defaultHeaders;
@@ -194,6 +203,7 @@ export class OrganizationService {
         return this.httpClient.request<Organization>('post',`${this.basePath}/organizations`,
             {
                 body: body,
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

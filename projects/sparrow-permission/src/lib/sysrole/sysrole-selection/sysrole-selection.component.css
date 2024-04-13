@@ -10,3 +10,8 @@ mat-form-field {
 .sysrole-item:hover {
   color: #3f51b5;
 }
+
+mat-selection-list{
+  height: 200px;
+  overflow: scroll;
+}

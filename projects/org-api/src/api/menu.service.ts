@@ -18,6 +18,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { Menu } from '../model/menu';
+import { MenuPermissionBean } from '../model/menuPermissionBean';
 import { PageMenu } from '../model/pageMenu';
 import { SparrowTreeMenuString } from '../model/sparrowTreeMenuString';
 
@@ -61,31 +62,16 @@ export class MenuService {
      * 设置菜单权限
      * 
      * @param body 
-     * @param type 
-     * @param menuId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addMenuPermissions(body: Array<string>, type: string, menuId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public addMenuPermissions(body: Array<string>, type: string, menuId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public addMenuPermissions(body: Array<string>, type: string, menuId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public addMenuPermissions(body: Array<string>, type: string, menuId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public addMenuPermissions(body: MenuPermissionBean, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public addMenuPermissions(body: MenuPermissionBean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public addMenuPermissions(body: MenuPermissionBean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public addMenuPermissions(body: MenuPermissionBean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling addMenuPermissions.');
-        }
-
-        if (type === null || type === undefined) {
-            throw new Error('Required parameter type was null or undefined when calling addMenuPermissions.');
-        }
-
-        if (menuId === null || menuId === undefined) {
-            throw new Error('Required parameter menuId was null or undefined when calling addMenuPermissions.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (type !== undefined && type !== null) {
-            queryParameters = queryParameters.set('type', <any>type);
         }
 
         let headers = this.defaultHeaders;
@@ -107,10 +93,9 @@ export class MenuService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('post',`${this.basePath}/menus/${encodeURIComponent(String(menuId))}/permissions`,
+        return this.httpClient.request<any>('post',`${this.basePath}/menus/permissions/add`,
             {
                 body: body,
-                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -468,31 +453,16 @@ export class MenuService {
      * 取消菜单权限
      * 
      * @param body 
-     * @param type 
-     * @param menuId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public removeMenuPermissions(body: Array<string>, type: string, menuId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public removeMenuPermissions(body: Array<string>, type: string, menuId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public removeMenuPermissions(body: Array<string>, type: string, menuId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public removeMenuPermissions(body: Array<string>, type: string, menuId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public removeMenuPermissions(body: MenuPermissionBean, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public removeMenuPermissions(body: MenuPermissionBean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public removeMenuPermissions(body: MenuPermissionBean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public removeMenuPermissions(body: MenuPermissionBean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling removeMenuPermissions.');
-        }
-
-        if (type === null || type === undefined) {
-            throw new Error('Required parameter type was null or undefined when calling removeMenuPermissions.');
-        }
-
-        if (menuId === null || menuId === undefined) {
-            throw new Error('Required parameter menuId was null or undefined when calling removeMenuPermissions.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (type !== undefined && type !== null) {
-            queryParameters = queryParameters.set('type', <any>type);
         }
 
         let headers = this.defaultHeaders;
@@ -514,10 +484,9 @@ export class MenuService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('post',`${this.basePath}/menus/${encodeURIComponent(String(menuId))}/permissions/remove`,
+        return this.httpClient.request<any>('post',`${this.basePath}/menus/permissions/remove`,
             {
                 body: body,
-                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

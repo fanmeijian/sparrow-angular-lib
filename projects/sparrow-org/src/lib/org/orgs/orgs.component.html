@@ -21,82 +21,95 @@
     授权
   </button> -->
 </div>
-<div class="tree">
-  <mat-tree
-    [dataSource]="dataSource"
-    [treeControl]="treeControl"
-    class="mat-tree"
-  >
-    <mat-tree-node
-      *matTreeNodeDef="let node"
-      matTreeNodeToggle
-      matTreeNodePadding
-    >
-      <button mat-icon-button disabled></button>
-      <div>
-        <mat-checkbox
-          class="checklist-leaf-node"
-          [checked]="checklistSelection.isSelected(node)"
-          (change)="todoLeafItemSelectionToggle(node)"
-        ></mat-checkbox>
-        <img
-          src="/assets/org.svg"
-          *ngIf="node.me.type !== 'UNIT'"
-          width="12px"
-          height="12px"
-        />
-        <span
-          [class]="
-            node.me.id === selectedMenu?.me?.id
-              ? 'tree-node-name-selected'
-              : 'tree-node-name'
-          "
-          (click)="onMenuClick(node)"
-          >[{{ node.me.code }}]{{ node.me.name }}</span
-        >
-      </div>
-    </mat-tree-node>
 
-    <mat-tree-node
-      *matTreeNodeDef="let node; when: hasNoContent"
-      matTreeNodePadding
+<mat-grid-list cols="4" rowHeight="100%">
+  <mat-grid-tile>
+    <mat-tree
+      [dataSource]="dataSource"
+      [treeControl]="treeControl"
+      class="mat-tree"
     >
-      <button mat-icon-button disabled></button>
-    </mat-tree-node>
-
-    <mat-tree-node
-      *matTreeNodeDef="let node; when: hasChild"
-      matTreeNodePadding
-    >
-      <button
-        mat-icon-button
+      <mat-tree-node
+        *matTreeNodeDef="let node"
         matTreeNodeToggle
-        [attr.aria-label]="'Toggle ' + node.me.name"
+        matTreeNodePadding
       >
-        <mat-icon class="mat-icon-rtl-mirror">
-          {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
-        </mat-icon>
-      </button>
-      <div (click)="onMenuClick(node)">
-        <mat-checkbox
-          [checked]="descendantsAllSelected(node)"
-          [indeterminate]="descendantsPartiallySelected(node)"
-          (change)="todoItemSelectionToggle(node)"
-        ></mat-checkbox>
-        <span
-          [class]="
-            node.me.id === selectedMenu?.me?.id
-              ? 'tree-node-name-selected'
-              : 'tree-node-name'
-          "
-          (click)="onMenuClick(node)"
-          >[{{ node.me.code }}]{{ node.me.name }}({{ node.childCount }})</span
+        <button mat-icon-button disabled></button>
+        <div
+          style="display: flex; flex-direction: row; justify-content: center"
         >
-      </div>
-    </mat-tree-node>
-  </mat-tree>
+          <mat-checkbox
+            class="checklist-leaf-node"
+            [checked]="checklistSelection.isSelected(node)"
+            (change)="todoLeafItemSelectionToggle(node)"
+          ></mat-checkbox>
+          <img
+            src="/assets/org.svg"
+            *ngIf="node.me.type !== 'UNIT'"
+            width="12px"
+            height="12px"
+          />
+          <span
+            [class]="
+              node.me.id === selectedMenu?.me?.id
+                ? 'tree-node-name-selected'
+                : 'tree-node-name'
+            "
+            (click)="onMenuClick(node)"
+            >[{{ node.me.code }}]{{ node.me.name }}</span
+          >
+        </div>
+      </mat-tree-node>
 
-  <div class="tree-right">
+      <mat-tree-node
+        *matTreeNodeDef="let node; when: hasNoContent"
+        matTreeNodePadding
+      >
+        <button mat-icon-button disabled></button>
+      </mat-tree-node>
+
+      <mat-tree-node
+        *matTreeNodeDef="let node; when: hasChild"
+        matTreeNodePadding
+      >
+        <div
+          style="
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+          "
+        >
+          <button
+            mat-icon-button
+            matTreeNodeToggle
+            [attr.aria-label]="'Toggle ' + node.me.name"
+          >
+            <mat-icon class="mat-icon-rtl-mirror">
+              {{
+                treeControl.isExpanded(node) ? "expand_more" : "chevron_right"
+              }}
+            </mat-icon>
+          </button>
+          <mat-checkbox
+            [checked]="descendantsAllSelected(node)"
+            [indeterminate]="descendantsPartiallySelected(node)"
+            (change)="todoItemSelectionToggle(node)"
+          ></mat-checkbox>
+          <span
+            [class]="
+              node.me.id === selectedMenu?.me?.id
+                ? 'tree-node-name-selected'
+                : 'tree-node-name'
+            "
+            (click)="onMenuClick(node)"
+            >[{{ node.me.code }}]{{ node.me.name }}({{ node.childCount }})</span
+          >
+        </div>
+      </mat-tree-node>
+    </mat-tree>
+  </mat-grid-tile>
+
+  <mat-grid-tile colspan="3">
     <mat-card>
       <mat-card-title
         >{{ selectedMenu?.me?.name }} ({{
@@ -176,5 +189,5 @@
         </button>
       </mat-card-actions>
     </mat-card>
-  </div>
-</div>
+  </mat-grid-tile>
+</mat-grid-list>

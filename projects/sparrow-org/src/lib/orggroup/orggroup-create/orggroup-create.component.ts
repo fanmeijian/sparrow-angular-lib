@@ -23,29 +23,13 @@ export class OrggroupCreateComponent implements OnInit {
       if (this.formGroup.value.id) {
         this.groupService
           .updateOrgGroup(this.formGroup.value, this.formGroup.value.id)
-          .pipe(
-            switchMap((m) =>
-              this.groupService.addGroupParentOrg(
-                this.parentId.map((a) => a.id),
-                m.id!
-              )
-            )
-          )
           .subscribe(() => {
             this.dialogRef.close();
             this.snack.open("保存成功！", "关闭");
           });
       } else {
         this.groupService
-          .newOrgGroup(this.formGroup.value)
-          .pipe(
-            switchMap((m) =>
-              this.groupService.addGroupParentOrg(
-                this.parentId.map((a) => a.id),
-                m.id!
-              )
-            )
-          )
+          .newOrgGroup(this.formGroup.value,this.parentId.map((a) => a.id))
           .subscribe(() => {
             this.dialogRef.close();
             this.snack.open("保存成功！", "关闭");

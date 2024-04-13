@@ -28,13 +28,18 @@ export class SysroleSelectionComponent implements OnInit {
   sysroles: any[] = [];
   // selectedSysroles: any[] = []
 
+  pageable = {
+    pageIndex: 0,
+    pageSize: 10,
+    length: 0,
+    sort: ['createdDate,desc'],
+  };
+
   @ViewChild("fruitInput") fruitInput!: ElementRef<HTMLInputElement>;
 
   constructor(private sysroleService: SysroleService) {}
   ngOnInit(): void {
-    this.sysroleService.sysroles([],0, 100000).subscribe((res) => {
-      this.sysroles = res.content!;
-    });
+    this.onPageChange(this.pageable)
   }
 
   remove(fruit: any): void {
@@ -54,5 +59,15 @@ export class SysroleSelectionComponent implements OnInit {
       this.selectedSysroles.push(seletedItem);
       this.onSelected.emit(seletedItem.id);
     }
+  }
+
+  onPageChange(event: any) {
+    // console.log(event);
+    this.pageable.pageIndex = event.pageIndex;
+    this.pageable.pageSize = event.pageSize;
+    this.sysroleService.sysroles([],this.pageable.pageIndex, this.pageable.pageSize).subscribe((res) => {
+      this.sysroles = res.content!;
+      this.pageable.length = res.totalElements!
+    });
   }
 }

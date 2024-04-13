@@ -220,16 +220,28 @@ export class RoleService {
      * 新增岗位
      * 
      * @param body 
+     * @param parentOrg 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public newRole(body: Role, observe?: 'body', reportProgress?: boolean): Observable<Role>;
-    public newRole(body: Role, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Role>>;
-    public newRole(body: Role, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Role>>;
-    public newRole(body: Role, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public newRole(body: Role, parentOrg: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<Role>;
+    public newRole(body: Role, parentOrg: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Role>>;
+    public newRole(body: Role, parentOrg: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Role>>;
+    public newRole(body: Role, parentOrg: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling newRole.');
+        }
+
+        if (parentOrg === null || parentOrg === undefined) {
+            throw new Error('Required parameter parentOrg was null or undefined when calling newRole.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (parentOrg) {
+            parentOrg.forEach((element) => {
+                queryParameters = queryParameters.append('parentOrg', <any>element);
+            })
         }
 
         let headers = this.defaultHeaders;
@@ -255,6 +267,7 @@ export class RoleService {
         return this.httpClient.request<Role>('post',`${this.basePath}/roles`,
             {
                 body: body,
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

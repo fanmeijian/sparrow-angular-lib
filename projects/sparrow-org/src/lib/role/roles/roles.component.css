@@ -48,7 +48,8 @@
 
 .mat-tree{
   height: 100%;
-  overflow: scroll;
+  /* overflow: scroll; */
+  width: 100%;
 }
 
 .tree-node-name {
@@ -72,4 +73,16 @@
   border-radius: 5px; */
   color: #3f51b5;
   /* margin: 0px 0px 0px 5px; */
+}
+
+
+mat-card{
+  width: 100%;
+  margin: 0px 0px 0px 10px;
+}
+
+::ng-deep .mat-grid-tile-content{
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  overflow: scroll !important;
 }

@@ -540,16 +540,28 @@ export class JoblevelService {
      * 创建职级
      * 
      * @param body 
+     * @param parentOrg 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public newLevel(body: PositionLevel, observe?: 'body', reportProgress?: boolean): Observable<PositionLevel>;
-    public newLevel(body: PositionLevel, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PositionLevel>>;
-    public newLevel(body: PositionLevel, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PositionLevel>>;
-    public newLevel(body: PositionLevel, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public newLevel(body: PositionLevel, parentOrg: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<PositionLevel>;
+    public newLevel(body: PositionLevel, parentOrg: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PositionLevel>>;
+    public newLevel(body: PositionLevel, parentOrg: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PositionLevel>>;
+    public newLevel(body: PositionLevel, parentOrg: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling newLevel.');
+        }
+
+        if (parentOrg === null || parentOrg === undefined) {
+            throw new Error('Required parameter parentOrg was null or undefined when calling newLevel.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (parentOrg) {
+            parentOrg.forEach((element) => {
+                queryParameters = queryParameters.append('parentOrg', <any>element);
+            })
         }
 
         let headers = this.defaultHeaders;
@@ -575,6 +587,7 @@ export class JoblevelService {
         return this.httpClient.request<PositionLevel>('post',`${this.basePath}/jobLevels`,
             {
                 body: body,
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

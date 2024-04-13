@@ -24,29 +24,13 @@ export class LevelCreateComponent implements OnInit {
       if (this.formGroup.value.id) {
         this.levelService
           .updateLevel(this.formGroup.value, this.formGroup.value.id)
-          .pipe(
-            switchMap((m) =>
-              this.levelService.addLevelParentOrg(
-                this.parentId.map((a) => a.id),
-                m.id!
-              )
-            )
-          )
           .subscribe(() => {
             this.dialogRef.close();
             this.snack.open("保存成功！", "关闭");
           });
       } else {
         this.levelService
-          .newLevel(this.formGroup.value)
-          .pipe(
-            switchMap((m) =>
-              this.levelService.addLevelParentOrg(
-                this.parentId.map((a) => a.id),
-                m.id!
-              )
-            )
-          )
+          .newLevel(this.formGroup.value,this.parentId.map((a) => a.id))
           .subscribe(() => {
             this.dialogRef.close(true);
             this.snack.open("保存成功！", "关闭");

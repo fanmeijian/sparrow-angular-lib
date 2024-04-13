@@ -4,8 +4,8 @@
 <!-- <button class="button" mat-flat-button color="warn" (click)="delete(null)">
   删除
 </button> -->
-<div class="tree">
-  <div class="tree-left">
+<mat-grid-list cols="4" rowHeight="100%">
+  <mat-grid-tile>
     <mat-tree
       [dataSource]="dataSource"
       [treeControl]="treeControl"
@@ -20,11 +20,11 @@
           height="12px"
         />
         <!-- <img
-          src="/assets/unit.svg"
-          *ngIf="node.item.type === 'UNIT'"
-          width="20px"
-          height="10px"
-        /> -->
+        src="/assets/unit.svg"
+        *ngIf="node.item.type === 'UNIT'"
+        width="20px"
+        height="10px"
+      /> -->
         <span
           [class]="
             node.item.type === 'ROLE'
@@ -52,11 +52,11 @@
           </mat-icon>
         </button>
         <!-- <img
-          src="/assets/org.svg"
-          *ngIf="node.item.type === 'ORGANIZATION'"
-          width="20px"
-          height="10px"
-        /> -->
+        src="/assets/org.svg"
+        *ngIf="node.item.type === 'ORGANIZATION'"
+        width="20px"
+        height="10px"
+      /> -->
         <span
           [class]="
             node.item.type === 'ROLE'
@@ -78,9 +78,9 @@
         ></mat-progress-bar>
       </mat-tree-node>
     </mat-tree>
-  </div>
+  </mat-grid-tile>
 
-  <div class="tree-right">
+  <mat-grid-tile colspan="3">
     <mat-card>
       <mat-card-title
         >{{ selectedItem?.name }} ({{ selectedItem?.code }})</mat-card-title
@@ -164,5 +164,5 @@
         </button>
       </mat-card-actions>
     </mat-card>
-  </div>
-</div>
+  </mat-grid-tile>
+</mat-grid-list>

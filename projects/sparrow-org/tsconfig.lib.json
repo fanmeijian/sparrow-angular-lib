@@ -7,7 +7,16 @@
     "declarationMap": true,
     "inlineSources": true,
     "types": [],
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "@shared/*": ["app/shared/*"],
+      "rxjs": [
+        "node_modules/rxjs"
+      ],
+      "rxjs/*": [
+        "node_modules/rxjs/*"
+      ]
+    },
   },
   "exclude": [
     "src/test.ts",

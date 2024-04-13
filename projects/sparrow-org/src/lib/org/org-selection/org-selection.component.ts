@@ -48,9 +48,9 @@ export class OrgSelectionComponent implements OnInit {
     this.dataSource = new DynamicDataSource(this.treeControl, database);
 
     database.initialData().subscribe((res) => {
-      res.unshift(
-        new DynamicFlatNode({ id: "root", name: "根组织" }, 0, false)
-      );
+      // res.unshift(
+      //   new DynamicFlatNode({ id: "root", name: "根组织" }, 0, false)
+      // );
       this.dataSource.data = res
     });
   }

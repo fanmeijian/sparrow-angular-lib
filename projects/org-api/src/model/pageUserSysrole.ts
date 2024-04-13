@@ -22,7 +22,7 @@ export interface PageUserSysrole {
     sort?: SortObject;
     first?: boolean;
     last?: boolean;
-    pageable?: PageableObject;
     numberOfElements?: number;
+    pageable?: PageableObject;
     empty?: boolean;
 }

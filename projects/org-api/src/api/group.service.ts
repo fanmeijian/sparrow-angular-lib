@@ -283,16 +283,28 @@ export class GroupService {
      * 新增群组
      * 
      * @param body 
+     * @param parentOrg 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public newOrgGroup(body: Group, observe?: 'body', reportProgress?: boolean): Observable<Group>;
-    public newOrgGroup(body: Group, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Group>>;
-    public newOrgGroup(body: Group, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Group>>;
-    public newOrgGroup(body: Group, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public newOrgGroup(body: Group, parentOrg: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<Group>;
+    public newOrgGroup(body: Group, parentOrg: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Group>>;
+    public newOrgGroup(body: Group, parentOrg: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Group>>;
+    public newOrgGroup(body: Group, parentOrg: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling newOrgGroup.');
+        }
+
+        if (parentOrg === null || parentOrg === undefined) {
+            throw new Error('Required parameter parentOrg was null or undefined when calling newOrgGroup.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (parentOrg) {
+            parentOrg.forEach((element) => {
+                queryParameters = queryParameters.append('parentOrg', <any>element);
+            })
         }
 
         let headers = this.defaultHeaders;
@@ -318,6 +330,7 @@ export class GroupService {
         return this.httpClient.request<Group>('post',`${this.basePath}/groups`,
             {
                 body: body,
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

@@ -32,14 +32,15 @@
 .tree {
   display: flex;
   flex-direction: row;
-  width: 100%;
+  /* width: 100%; */
   /* flex-wrap: wrap-reverse; */
   height: calc(100vh - 200px);
 }
 
 .mat-tree {
   height: 100%;
-  overflow: scroll;
+  /* overflow: scroll; */
+  width: 100%;
 }
 
 .tree-node-name {
@@ -102,5 +103,20 @@
 
 .twocolumn-box>span:nth-child(even) {
   background-color: #e5e5e5;
+}
+
+mat-card{
+  width: 100%;
+  margin: 0px 0px 0px 10px;
+}
+
+::ng-deep .mat-grid-tile-content{
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  overflow: scroll !important;
+}
+
+::ng-deep label{
+  margin-bottom: 0px !important;
 }
 

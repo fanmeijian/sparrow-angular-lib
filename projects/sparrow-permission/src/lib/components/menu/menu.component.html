@@ -19,23 +19,15 @@
 >
   授权
 </button>
-<div
-  class="tree"
-  style="
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: calc(100vh - 200px);
-    overflow-y: scroll;
-  "
->
-  <mat-tree
+
+<mat-grid-list cols="4" rowHeight="100%">
+  <mat-grid-tile>
+    <mat-tree
     cdkDropList
     (cdkDropListDropped)="drop($event)"
     class="mat-tree"
     [dataSource]="dataSource"
     [treeControl]="treeControl"
-    style="width: 250px; height: 100%; overflow-y: scroll"
   >
     <mat-tree-node
       cdkDrag
@@ -113,7 +105,8 @@
       </div>
     </mat-tree-node>
   </mat-tree>
-  <div class="tree-right">
+  </mat-grid-tile>
+  <mat-grid-tile colspan="3">
     <mat-card>
       <mat-card-title
         >{{ selectedMenu?.me.name }} ({{
@@ -134,9 +127,9 @@
             <mat-tab label="授权用户（{{ permissions?.users?.length }}）">
               <mat-chip
                 *ngFor="let chipItem of permissions.users"
-                (removed)="removePermission(chipItem)"
+                (removed)="removePermission([chipItem],[])"
               >
-                {{ chipItem.name }}
+                {{ chipItem }}
                 <button matChipRemove>
                   <mat-icon>cancel</mat-icon>
                 </button>
@@ -146,7 +139,7 @@
               <mat-chip-list #chipList>
                 <mat-chip
                   *ngFor="let chipItem of permissions.sysroles"
-                  (removed)="removePermission(chipItem)"
+                  (removed)="removePermission([],[chipItem])"
                 >
                   {{ chipItem.name }}
                   <button matChipRemove>
@@ -185,5 +178,21 @@
         </button>
       </mat-card-actions>
     </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<!-- <div
+  class="tree"
+  style="
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: calc(100vh - 200px);
+    overflow-y: scroll;
+  "
+>
+
+  <div class="tree-right">
+
   </div>
-</div>
+</div> -->

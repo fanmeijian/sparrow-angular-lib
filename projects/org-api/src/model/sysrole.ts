@@ -25,6 +25,7 @@ export interface Sysrole {
     errMsgs?: Array<ErrMsg>;
     dataPermissionId?: string;
     dataPermission?: DataPermission;
+    readonly id?: string;
     name?: string;
     code?: string;
     system?: boolean;

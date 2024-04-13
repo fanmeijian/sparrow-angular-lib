@@ -5,8 +5,8 @@
   删除
 </button>
 
-<div class="tree">
-  <div class="tree-left">
+<mat-grid-list cols="4" rowHeight="100%">
+  <mat-grid-tile>
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
       <mat-tree-node
         *matTreeNodeDef="let node"
@@ -60,9 +60,9 @@
         ></mat-progress-bar>
       </mat-tree-node>
     </mat-tree>
-  </div>
+  </mat-grid-tile>
 
-  <div class="tree-right">
+  <mat-grid-tile colspan="3">
     <mat-card>
       <mat-card-title
         >{{ selectedItem?.name }} ({{ selectedItem?.code }})</mat-card-title
@@ -174,5 +174,5 @@
         </button>
       </mat-card-actions>
     </mat-card>
-  </div>
-</div>
+  </mat-grid-tile>
+</mat-grid-list>

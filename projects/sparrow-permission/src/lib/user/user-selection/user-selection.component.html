@@ -14,12 +14,15 @@
 
 <div>
   <h3>用户列表</h3>
-  <span
-    class="sysrole-item"
-    *ngFor="let item of datas"
-    (click)="select(item)"
-    >{{ item.lastName }}{{ item.firstName }} ({{ item.username }})</span
-  >
+  <mat-selection-list #shoes [multiple]="false">
+    <mat-list-option
+      *ngFor="let item of datas; let i = index"
+      [value]="item"
+      (click)="select(item)"
+    >
+      {{ i + 1 }}. {{ item.lastName }}{{ item.firstName }} ({{ item.username }})
+    </mat-list-option>
+  </mat-selection-list>
 </div>
 
 <mat-paginator

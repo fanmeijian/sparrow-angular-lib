@@ -35,6 +35,10 @@
         "dist/keycloak-admin-api/keycloak-admin-api",
         "dist/keycloak-admin-api"
       ],
+      "my-lib": [
+        "dist/my-lib/my-lib",
+        "dist/my-lib"
+      ],
       "org-api": [
         "dist/org-api/org-api",
         "dist/org-api"

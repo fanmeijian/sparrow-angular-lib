@@ -1,33 +1,55 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MenuService } from '@sparrowmini/org-api';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {
+  Menu,
+  MenuService,
+  Sysrole,
+  SysroleMenuPK,
+  User,
+  UserMenuPK,
+} from '@sparrowmini/org-api';
 
 @Component({
   selector: 'lib-menu-permission',
   templateUrl: './menu-permission.component.html',
-  styleUrls: ['./menu-permission.component.css']
+  styleUrls: ['./menu-permission.component.css'],
 })
 export class MenuPermissionComponent implements OnInit {
-
-  selectedSysroles: any[] = []
+  selectedSysroles: any[] = [];
   selectedUsernames: any[] = [];
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private menuService: MenuService,
-  ) { }
+    private dialogRef: MatDialogRef<MenuPermissionComponent>,
+  ) {}
 
   ngOnInit(): void {
-    console.log(this.data)
-
+    console.log(this.data);
   }
 
-  submit(){
-    let menus=this.data.map((m:any)=>m.id)
-    // console.log(this.selectedSysroles)
-    menus.forEach((menuId: string)=>{
-      this.menuService.addMenuPermissions(this.selectedSysroles.map(m=>m.id),'SYSROLE',menuId).subscribe()
-      this.menuService.addMenuPermissions(this.selectedUsernames.map(m=>m.username),'USER',menuId).subscribe()
-    })
-  }
+  submit() {
+    let userMenus: UserMenuPK[] = [];
+    let sysroleMenus: SysroleMenuPK[] = [];
+    let menus = this.data.forEach((m: Menu) => {
+      userMenus.push(
+        ...this.selectedUsernames.map((user: User) =>
+          Object.assign({}, { username: user.username, menuId: m.id })
+        )
+      );
 
+      sysroleMenus.push(
+        ...this.selectedSysroles.map((sysrole: Sysrole) =>
+          Object.assign({}, { sysroleId: sysrole.id, menuId: m.id })
+        )
+      );
+    });
+    this.menuService
+      .addMenuPermissions({
+        userMenuPKs: userMenus,
+        sysroleMenuPKs: sysroleMenus,
+      })
+      .subscribe(() => {
+        this.dialogRef.close(true)
+      });
+  }
 }

@@ -38,7 +38,7 @@ export class TodoItemFlatNode {
   me: any;
   level!: number;
   expandable!: boolean;
-  childCount:any;
+  childCount: any;
   children!: TodoItemFlatNode[];
 }
 
@@ -305,10 +305,10 @@ export class MenuComponent implements OnInit {
       });
   }
 
-  deleteMenu(menu: any){
-    this.menuService.deleteMenus([menu.id]).subscribe(()=>{
+  deleteMenu(menu: any) {
+    this.menuService.deleteMenus([menu.id]).subscribe(() => {
       this.snack.open('删除成功！', '关闭');
-    })
+    });
   }
 
   permission() {
@@ -318,11 +318,18 @@ export class MenuComponent implements OnInit {
     });
   }
 
-  openPermissionDialog(menu:any){
-    this.dialog.open(MenuPermissionComponent, {
-      data: [menu.me],
-      width: '90%',
-    });
+  openPermissionDialog(menu: any) {
+    this.dialog
+      .open(MenuPermissionComponent, {
+        data: [menu.me],
+        width: '90%',
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          this.snack.open('授权成功！', '关闭');
+        }
+      });
   }
 
   permissions: any = {};
@@ -339,14 +346,31 @@ export class MenuComponent implements OnInit {
     });
   }
 
-  removePermission(a: any) {
+  removePermission(users: any[], sysroles: any[]) {
     this.menuService
-      .removeMenuPermissions([a.id], 'SYSROLE', this.selectedMenu.id)
+      .removeMenuPermissions({
+        sysroleMenuPKs: sysroles.map((m) =>
+          Object.assign({}, { sysroleId: m.id, menuId: this.selectedMenu.id })
+        ),
+        userMenuPKs: users.map((m) =>
+          Object.assign({}, { username: m, menuId: this.selectedMenu.id })
+        ),
+      })
       .subscribe(() => {
-        const index = this.permissions.sysroles.indexOf(a);
-        if (index >= 0) {
-          this.permissions.sysroles.splice(index, 1);
-        }
+        sysroles.forEach(f=>{
+          const index = this.permissions.sysroles.indexOf(f);
+          if (index >= 0) {
+            this.permissions.sysroles.splice(index, 1);
+          }
+        })
+
+        users.forEach(f=>{
+          const index = this.permissions.sysroles.indexOf(f);
+          if (index >= 0) {
+            this.permissions.users.splice(index, 1);
+          }
+        })
+
         this.snack.open('删除成功!', '关闭');
       });
   }

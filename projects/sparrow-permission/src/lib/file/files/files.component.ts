@@ -57,12 +57,9 @@ export class FilesComponent implements OnInit {
     this.pageable.pageSize = event.pageSize;
     this.fileService
       .files(this.filters,this.pageable.pageIndex, this.pageable.pageSize)
-      .pipe(
-        tap((res) => (this.pageable.length = res.totalElements!)),
-        map((res: any) => res.content)
-      )
-      .subscribe((res) => {
-        this.dataSource = new MatTableDataSource<any>(res);
+      .subscribe((res:any) => {
+        this.dataSource = new MatTableDataSource<any>(res.content);
+        this.pageable.length = res.totalElements!
       });
   }
 
