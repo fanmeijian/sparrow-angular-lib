@@ -1,6 +1,6 @@
 {
   "name": "@sparrowmini/org-api",
-  "version": "0.8.2",
+  "version": "0.9.0",
   "peerDependencies": {
     "@angular/common": "^13.3.0",
     "@angular/core": "^13.3.0"
