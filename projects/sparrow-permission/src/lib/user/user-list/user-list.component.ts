@@ -39,7 +39,6 @@ export class UserListComponent implements OnInit {
   }
 
   onPageChange(event: any) {
-    console.log(event);
     this.dataSource = new MatTableDataSource<any>();
     this.pageable.pageIndex = event.pageIndex;
     this.pageable.pageSize = event.pageSize;

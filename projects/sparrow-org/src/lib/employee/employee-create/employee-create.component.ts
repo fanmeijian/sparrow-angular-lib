@@ -72,7 +72,6 @@ export class EmployeeCreateComponent implements OnInit {
   }
 
   onSelected($event: any) {
-    console.log($event);
     this.formGroup.patchValue({ organizationId: $event });
   }
 

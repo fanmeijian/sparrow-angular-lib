@@ -20,8 +20,8 @@ export class OrgCreateComponent implements OnInit {
         this.snack.open('当类型为部门时，必须选择上级组织！', '关闭');
         return;
       }
-      if (this.parentId.length === 0) {
-        this.formGroup.patchValue({ isRoot: true });
+      if (this.parentId.length > 0) {
+        this.formGroup.patchValue({ root: false });
       }
       if (this.formGroup.value.id) {
         this.menuService

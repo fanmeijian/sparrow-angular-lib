@@ -159,8 +159,25 @@ export class MenuComponent implements OnInit {
     );
     _database.dataChange.subscribe((data) => {
       this.dataSource.data = data;
+      //cache to storage for route guard permission check
+      // let menus = data.flat().map(m=>Object.assign({},{id:m.id,path: m.me.url, parentId: m.me.parentId}))
+      this.toSessionCache(data);
+      sessionStorage.setItem('menus', JSON.stringify(this.menus));
     });
   }
+
+  menus: any[] = [];
+  toSessionCache(data: any[]) {
+    if (data) {
+      data.forEach((f) => {
+        this.menus.push({ id: f.id, path: f.me.url, parentId: f.me.parentId });
+        if (f.children.length > 0) {
+          this.toSessionCache(f.children);
+        }
+      });
+    }
+  }
+
   ngOnInit(): void {
     this._database.initialize();
   }
@@ -357,19 +374,19 @@ export class MenuComponent implements OnInit {
         ),
       })
       .subscribe(() => {
-        sysroles.forEach(f=>{
+        sysroles.forEach((f) => {
           const index = this.permissions.sysroles.indexOf(f);
           if (index >= 0) {
             this.permissions.sysroles.splice(index, 1);
           }
-        })
+        });
 
-        users.forEach(f=>{
+        users.forEach((f) => {
           const index = this.permissions.sysroles.indexOf(f);
           if (index >= 0) {
             this.permissions.users.splice(index, 1);
           }
-        })
+        });
 
         this.snack.open('删除成功!', '关闭');
       });
