@@ -42,12 +42,12 @@ export class FileUploadComponent implements OnInit {
       this.fileService
         .uploadFileForm(file, 'events', true)
         .pipe(
-          // tap((event: any) => {
-          //   if (event.type === HttpEventType.UploadProgress) {
-          //     this.loaded = Math.round((100 * event.loaded) / event.total);
-          //     fileDetails.progress = this.loaded;
-          //   }
-          // })
+          tap((event: any) => {
+            if (event.type === HttpEventType.UploadProgress) {
+              this.loaded = Math.round((100 * event.loaded) / event.total);
+              fileDetails.progress = this.loaded;
+            }
+          })
           // tap((message) => this.showProgress(message)),
           // last(), // return last (completed) message to caller
           // catchError(this.handleError(file))

@@ -24,7 +24,7 @@ export class SysrolesComponent implements OnInit {
     sort: ['createdDate,desc'],
   };
 
-  displayedColumns = ['seq', 'name', 'code', 'users', 'permission', 'actions'];
+  displayedColumns = ['seq', 'name', 'code', 'users', 'actions'];
 
   constructor(
     private sysroleService: SysroleService,

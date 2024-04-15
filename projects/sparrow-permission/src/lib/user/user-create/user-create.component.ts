@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { UserService } from '@sparrowmini/org-api';
 
 @Component({
   selector: 'lib-user-create',
@@ -7,9 +10,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserCreateComponent implements OnInit {
 
-  constructor() { }
+  formGroup: FormGroup = this.fb.group({
+    firstName: [null, Validators.required],
+    lastName: [null, Validators.required],
+    username: [null, Validators.required]
+  })
+
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    @Inject(MAT_DIALOG_DATA) public data:any
+  ) {
+    if(this.data){
+      this.formGroup.patchValue(this.data)
+      this.formGroup.get("username")?.disable()
+    }
+  }
 
   ngOnInit(): void {
+  }
+
+  submit(){
+    if(this.data){
+      this.userService.updateUser(this.formGroup.value,this.data.username).subscribe(()=>{
+
+      })
+    }else{
+      this.userService.createUser([this.formGroup.value]).subscribe(()=>{
+
+      })
+    }
+
   }
 
 }

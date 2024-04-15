@@ -1,15 +1,20 @@
-<h3 mat-dialog-title>功能授权-{{ data.name }}</h3>
+<h1 mat-dialog-title>功能授权-{{ data.name }} ({{data.code}})</h1>
 
 <mat-dialog-content>
-  <lib-user-selection
-    [multiple]="true"
-    [selected]="selectedUsernames"
-  ></lib-user-selection>
-
-  <lib-sysrole-selection
-    [multiple]="true"
-    [selectedSysroles]="selectedSysroles"
-  ></lib-sysrole-selection>
+  <mat-tab-group>
+    <mat-tab label="用户授权（{{ selectedUsernames.length }}）">
+      <lib-user-selection
+        [multiple]="true"
+        [selected]="selectedUsernames"
+      ></lib-user-selection>
+    </mat-tab>
+    <mat-tab label="角色授权（{{ selectedSysroles.length }}）">
+      <lib-sysrole-selection
+        [multiple]="true"
+        [selectedSysroles]="selectedSysroles"
+      ></lib-sysrole-selection>
+    </mat-tab>
+  </mat-tab-group>
 </mat-dialog-content>
 
 <mat-dialog-actions>

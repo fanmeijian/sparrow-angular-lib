@@ -11,6 +11,7 @@ import { PemgroupService } from '@sparrowmini/org-api';
 })
 export class PemgroupMemberComponent implements OnInit {
   selectedSysroles: any[] = [];
+  selectedUsernames: any[] = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -22,8 +23,11 @@ export class PemgroupMemberComponent implements OnInit {
   }
 
   submit() {
-    this.sysroleService.addGroupMembers(this.selectedSysroles.map(m=>m.id),'SYSROLE', this.data.id).subscribe();
-    this.sysroleService.addGroupMembers(this.fruits.map(m=>m.name),'USER', this.data.id).subscribe();
+    this.sysroleService.addGroupMembers({
+      sysroleIds:this.selectedSysroles.map(m=>Object.assign({},{groupId: this.data.id,sysroleId:m.id})),
+      usernames: this.selectedUsernames.map(m=>Object.assign({},{username: m.username, groupId:this.data.id}))
+    }).subscribe()
+
   }
 
 

@@ -4,6 +4,8 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
+  TemplateRef,
+  ViewChild,
 } from '@angular/core';
 import {
   AuditlogService,
@@ -13,6 +15,7 @@ import {
 import { timeStamp } from 'console';
 import { map, switchMap, zip } from 'rxjs';
 import { diff } from 'json-diff-ts';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'lib-entity-log',
@@ -27,7 +30,8 @@ export class EntityLogComponent implements OnInit, OnChanges {
 
   constructor(
     private auditLogService: AuditlogService,
-    private employeeService: EmployeeService
+    private employeeService: EmployeeService,
+    private dialog: MatDialog,
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
     if(this.modelId){
@@ -61,5 +65,11 @@ export class EntityLogComponent implements OnInit, OnChanges {
   diffEntity(oldData:any|undefined, newData:any|undefined){
     const diffs = diff(oldData, newData);
     return diffs
+  }
+
+
+  @ViewChild("dialogTempl") dialogTempl!: TemplateRef<any>
+  openDialog(){
+    this.dialog.open(this.dialogTempl,{width:'80%'})
   }
 }

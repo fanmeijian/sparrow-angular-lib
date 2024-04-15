@@ -21,7 +21,10 @@
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef>名称</mat-header-cell>
       <mat-cell *matCellDef="let element"
-        ><div style="display: flex;flex-direction: column;"><span>{{ element.name }}</span><lib-base-op-log-column [element]="element"></lib-base-op-log-column></div>
+        ><div style="display: flex; flex-direction: column">
+          <span>{{ element.name }}</span
+          ><lib-base-op-log-column [element]="element"></lib-base-op-log-column>
+        </div>
       </mat-cell>
     </ng-container>
 
@@ -49,8 +52,8 @@
 
     <ng-container matColumnDef="permission">
       <mat-header-cell *matHeaderCellDef>数据权限</mat-header-cell>
-      <mat-cell *matCellDef="let element"
-        >{{ element.dataPermissionId }}
+      <mat-cell *matCellDef="let element">
+        {{ element.dataPermissionId }}
       </mat-cell>
     </ng-container>
 
@@ -81,30 +84,40 @@
     <ng-container matColumnDef="actions" stickyEnd>
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <button mat-icon-button color="primary" (click)="edit(element)">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button color="warn" (click)="delete(element)">
-          <mat-icon>delete_outline</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          color="primary"
-          (click)="openPermission(element)"
-        >
-          <mat-icon>manage_accounts</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          color="primary"
-          (click)="openDataPermission(element)"
-        >
-          <span class="material-icons"> visibility </span>
-        </button>
+        <!-- <lib-data-permission-view [data]="element.dataPermissionId"></lib-data-permission-view> -->
+        <div class="actions">
+          <button mat-stroked-button color="primary" (click)="edit(element)">
+            编辑
+          </button>
+          <button mat-stroked-button color="warn" (click)="delete(element)">
+            删除
+          </button>
+          <button
+            mat-stroked-button
+            color="primary"
+            (click)="openPermission(element)"
+          >
+            授权
+          </button>
+          <lib-entity-log
+            [id]="element?.id"
+            [modelId]="element?.modelName"
+          ></lib-entity-log>
+          <!-- <button
+            mat-stroked-button
+            color="primary"
+            (click)="openDataPermission(element)"
+          >
+            <span class="material-icons"> visibility </span>
+          </button> -->
+        </div>
+
       </mat-cell>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns;sticky:true"></mat-header-row>
+    <mat-header-row
+      *matHeaderRowDef="displayedColumns; sticky: true"
+    ></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
   </mat-table>
 </div>

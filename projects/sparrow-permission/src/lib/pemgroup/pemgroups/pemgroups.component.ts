@@ -4,6 +4,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import {
+  GroupMemberBean,
   PemgroupService,
   ScopeService,
   SysroleService,
@@ -62,9 +63,9 @@ export class PemgroupsComponent implements OnInit {
       });
   }
 
-  remove(sysrole: any, group: any) {
+  remove(members: GroupMemberBean) {
     this.groupService
-      .removeGroupMembers([sysrole.id], 'SYSROLE', group.id)
+      .removeGroupMembers(members)
       .subscribe(() => {
         this.snack.open('移除成功！', '关闭');
         this.ngOnInit();

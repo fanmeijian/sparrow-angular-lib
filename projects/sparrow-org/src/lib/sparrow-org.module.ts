@@ -21,6 +21,7 @@ import { LevelSelectionComponent } from "./level/level-selection/level-selection
 import { OrggroupMemberAddComponent } from "./orggroup/orggroup-member-add/orggroup-member-add.component";
 import { EmployeeSelectionComponent } from "./employee/employee-selection/employee-selection.component";
 import { AngularMaterialModule } from "./angular-material.module";
+import { EmployeeUserAddComponent } from './employee/employee-user-add/employee-user-add.component';
 // import { EmployeeRouteComponent } from './employee/employee-route/employee-route.component';
 
 @NgModule({
@@ -43,6 +44,7 @@ import { AngularMaterialModule } from "./angular-material.module";
     LevelSelectionComponent,
     OrggroupMemberAddComponent,
     EmployeeSelectionComponent,
+    EmployeeUserAddComponent,
     // EmployeeRouteComponent
   ],
   imports: [BrowserModule, RouterModule, AngularMaterialModule],

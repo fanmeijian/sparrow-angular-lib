@@ -77,11 +77,26 @@
                 <span>类型:</span><span>{{ selectedItem?.type }}</span>
                 <span>组织: </span>
                 <span> {{ selectedItem?.organization.name }}</span>
+                <span>用户名: </span>
+                <span>
+                  <ng-container *ngFor="let item of selectedItem?.users"
+                    >{{ item }},</ng-container
+                  >
+                  <button
+                  mat-icon-button
+                  color="primary"
+                  (click)="openUsername(selectedItem)"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                  </span
+                >
                 <span>上级: </span>
                 <span>
                   <ng-container *ngFor="let item of selectedItem?.parents"
                     >{{ item.name }},</ng-container
-                  ></span
+                  >
+                  </span
                 >
                 <span>角色: </span>
                 <span>

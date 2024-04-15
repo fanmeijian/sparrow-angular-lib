@@ -8,6 +8,7 @@ import { tap, map, switchMap, zip } from 'rxjs';
 import { DataPermissionGrantComponent } from '../../data-permission/data-permission-grant/data-permission-grant.component';
 import { SysroleCreateComponent } from '../../sysrole/sysrole-create/sysrole-create.component';
 import { SysrolePermissionComponent } from '../../sysrole/sysrole-permission/sysrole-permission.component';
+import { UserCreateComponent } from '../user-create/user-create.component';
 
 @Component({
   selector: 'lib-user-list',
@@ -22,7 +23,7 @@ export class UserListComponent implements OnInit {
   displayedColumns = ['seq', 'name', 'code', 'users', 'actions'];
 
   constructor(
-    private sysroleService: UserService,
+    private userService: UserService,
     private dialog: MatDialog,
     private snack: MatSnackBar,
     private http: HttpClient
@@ -42,7 +43,7 @@ export class UserListComponent implements OnInit {
     this.dataSource = new MatTableDataSource<any>();
     this.pageable.pageIndex = event.pageIndex;
     this.pageable.pageSize = event.pageSize;
-    this.sysroleService
+    this.userService
       .users(this.filters, this.pageable.pageIndex, this.pageable.pageSize)
       .subscribe((res) => {
         this.dataSource = new MatTableDataSource<any>(res.content);
@@ -51,21 +52,21 @@ export class UserListComponent implements OnInit {
   }
 
   new() {
-    this.dialog.open(SysroleCreateComponent).afterClosed()
+    this.dialog.open(UserCreateComponent).afterClosed()
     .subscribe((result) => {
       if (result) this.ngOnInit();
     });;
   }
 
   delete(sysrole: any) {
-    this.sysroleService.deleteUser([sysrole.id]).subscribe(() => {
+    this.userService.deleteUser([sysrole.id]).subscribe(() => {
       this.snack.open('删除成功！', '关闭');
     });
   }
 
   edit(sysrole: any) {
     this.dialog
-      .open(SysroleCreateComponent, { data: sysrole })
+      .open(UserCreateComponent, { data: sysrole })
       .afterClosed()
       .subscribe((result) => {
         if (result) this.onPageChange(this.pageable);
@@ -73,7 +74,7 @@ export class UserListComponent implements OnInit {
   }
 
   remove(user: any, sysrole: any) {
-    this.sysroleService.deleteUser([user], sysrole.id).subscribe(() => {
+    this.userService.deleteUser([user], sysrole.id).subscribe(() => {
       this.snack.open('移除成功！', '关闭');
       this.ngOnInit();
     });
@@ -88,5 +89,12 @@ export class UserListComponent implements OnInit {
       data: sysrole,
       width: '80%',
     });
+  }
+  enableUser(u:string,a:boolean){
+    this.userService.enableUser(u,a).subscribe(()=>{
+      this.ngOnInit()
+      this.snack.open('启用/禁用成功','关闭')
+
+    })
   }
 }

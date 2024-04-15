@@ -18,6 +18,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { Group } from '../model/group';
+import { GroupMemberBean } from '../model/groupMemberBean';
 import { PageGroup } from '../model/pageGroup';
 import { PageObject } from '../model/pageObject';
 import { SparrowJpaFilter } from '../model/sparrowJpaFilter';
@@ -63,31 +64,16 @@ export class PemgroupService {
      * 添加群组成员
      * 
      * @param body 
-     * @param type 
-     * @param groupId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addGroupMembers(body: Array<string>, type: string, groupId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public addGroupMembers(body: Array<string>, type: string, groupId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public addGroupMembers(body: Array<string>, type: string, groupId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public addGroupMembers(body: Array<string>, type: string, groupId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public addGroupMembers(body: GroupMemberBean, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public addGroupMembers(body: GroupMemberBean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public addGroupMembers(body: GroupMemberBean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public addGroupMembers(body: GroupMemberBean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling addGroupMembers.');
-        }
-
-        if (type === null || type === undefined) {
-            throw new Error('Required parameter type was null or undefined when calling addGroupMembers.');
-        }
-
-        if (groupId === null || groupId === undefined) {
-            throw new Error('Required parameter groupId was null or undefined when calling addGroupMembers.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (type !== undefined && type !== null) {
-            queryParameters = queryParameters.set('type', <any>type);
         }
 
         let headers = this.defaultHeaders;
@@ -109,10 +95,9 @@ export class PemgroupService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('post',`${this.basePath}/pemgroups/${encodeURIComponent(String(groupId))}/members`,
+        return this.httpClient.request<any>('post',`${this.basePath}/pemgroups/members/add`,
             {
                 body: body,
-                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -543,31 +528,16 @@ export class PemgroupService {
      * 删除群组成员
      * 
      * @param body 
-     * @param type 
-     * @param groupId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public removeGroupMembers(body: Array<string>, type: string, groupId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public removeGroupMembers(body: Array<string>, type: string, groupId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public removeGroupMembers(body: Array<string>, type: string, groupId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public removeGroupMembers(body: Array<string>, type: string, groupId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public removeGroupMembers(body: GroupMemberBean, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public removeGroupMembers(body: GroupMemberBean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public removeGroupMembers(body: GroupMemberBean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public removeGroupMembers(body: GroupMemberBean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling removeGroupMembers.');
-        }
-
-        if (type === null || type === undefined) {
-            throw new Error('Required parameter type was null or undefined when calling removeGroupMembers.');
-        }
-
-        if (groupId === null || groupId === undefined) {
-            throw new Error('Required parameter groupId was null or undefined when calling removeGroupMembers.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (type !== undefined && type !== null) {
-            queryParameters = queryParameters.set('type', <any>type);
         }
 
         let headers = this.defaultHeaders;
@@ -589,10 +559,9 @@ export class PemgroupService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('post',`${this.basePath}/pemgroups/${encodeURIComponent(String(groupId))}/members/remove`,
+        return this.httpClient.request<any>('post',`${this.basePath}/pemgroups/members/remove`,
             {
                 body: body,
-                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

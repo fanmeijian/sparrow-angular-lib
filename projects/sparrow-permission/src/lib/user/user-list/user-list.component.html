@@ -17,55 +17,33 @@
     </ng-container>
 
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef>名称</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>登录名</mat-header-cell>
       <mat-cell *matCellDef="let element">{{ element.username }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="code">
-      <mat-header-cell *matHeaderCellDef>代码</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>姓名</mat-header-cell>
       <mat-cell *matCellDef="let element">{{ element.lastName }} {{ element.firstName }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="users">
-      <mat-header-cell *matHeaderCellDef>授权用户</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>状态</mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <mat-chip-list #chipList>
-          <mat-chip
-            *ngFor="let user of element.users"
-            (removed)="remove(user, element)"
-          >
-            {{ user.substring(0, 8) }}
-            <button matChipRemove>
-              <mat-icon>cancel</mat-icon>
-            </button>
-          </mat-chip>
-        </mat-chip-list>
+        <button mat-stroked-button color="warn" *ngIf="element.enabled" (click)="enableUser(element.username,false)">禁用</button>
+        <button mat-stroked-button color="primary" *ngIf="!element.enabled" (click)="enableUser(element.username,true)">启用</button>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <button mat-icon-button color="primary" (click)="edit(element)">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button color="warn" (click)="delete(element)">
-          <mat-icon>delete_outline</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          color="primary"
-          (click)="openPermission(element)"
-        >
-          <mat-icon>manage_accounts</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          color="primary"
-          (click)="openDataPermission(element)"
-        >
-          <span class="material-icons"> visibility </span>
-        </button>
+        <div class="actions">
+          <button mat-stroked-button color="primary" (click)="edit(element)">
+            编辑
+          </button>
+          <lib-user-password-reset [user]="element"></lib-user-password-reset>
+        </div>
+
       </mat-cell>
     </ng-container>
 

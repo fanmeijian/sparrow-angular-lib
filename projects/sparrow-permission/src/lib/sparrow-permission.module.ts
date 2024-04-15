@@ -59,6 +59,9 @@ import { EntityLogComponent } from './common/entity-log/entity-log.component';
 import { BaseOpLogColumnComponent } from './common/base-op-log-column/base-op-log-column.component';
 import { FilesComponent } from './file/files/files.component';
 import { FileUploadComponent } from './file/file-upload/file-upload.component';
+import { DataPermissionViewComponent } from './data-permission/data-permission-view/data-permission-view.component';
+import { ModelPermissionViewComponent } from './sprmodel/model-permission-view/model-permission-view.component';
+import { UserPasswordResetComponent } from './user/user-password-reset/user-password-reset.component';
 
 @NgModule({
   declarations: [
@@ -96,6 +99,9 @@ import { FileUploadComponent } from './file/file-upload/file-upload.component';
     BaseOpLogColumnComponent,
     FilesComponent,
     FileUploadComponent,
+    DataPermissionViewComponent,
+    ModelPermissionViewComponent,
+    UserPasswordResetComponent,
   ],
   imports: [
     BrowserModule,

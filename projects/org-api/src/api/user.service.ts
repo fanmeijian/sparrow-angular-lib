@@ -204,6 +204,57 @@ export class UserService {
     }
 
     /**
+     * 重置用户密码
+     * 
+     * @param body 
+     * @param username 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public resetPassword(body: string, username: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public resetPassword(body: string, username: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public resetPassword(body: string, username: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public resetPassword(body: string, username: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling resetPassword.');
+        }
+
+        if (username === null || username === undefined) {
+            throw new Error('Required parameter username was null or undefined when calling resetPassword.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<any>('post',`${this.basePath}/users/${encodeURIComponent(String(username))}/reset-password`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * 同步用户
      * 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.

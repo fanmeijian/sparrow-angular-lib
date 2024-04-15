@@ -1,8 +1,8 @@
-<mat-accordion>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title> 审计日志（{{ opLogs?.length }}） </mat-panel-title>
-    </mat-expansion-panel-header>
+<button mat-stroked-button (click)="openDialog()">日志</button>
+
+<ng-template #dialogTempl>
+  <h1 mat-dialog-title> 审计日志（{{ opLogs?.length }}）</h1>
+  <mat-dialog-content>
     <div style="overflow-y: scroll; max-height: 200px">
       <div
         style="background-color: #e5e5e5; padding: 10px; margin: 10px"
@@ -24,5 +24,8 @@
         </div>
       </div>
     </div>
-  </mat-expansion-panel>
-</mat-accordion>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button color="primary" mat-dialog-close>关闭</button>
+  </mat-dialog-actions>
+</ng-template>

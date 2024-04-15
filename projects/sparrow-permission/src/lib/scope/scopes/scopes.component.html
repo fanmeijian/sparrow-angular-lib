@@ -86,19 +86,26 @@
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button mat-icon-button color="primary" (click)="edit(element)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" (click)="delete(element)">
-            <mat-icon>delete_outline</mat-icon>
-          </button>
-          <button
-            mat-icon-button
-            color="primary"
-            (click)="openPermission(element)"
-          >
-            <mat-icon>manage_accounts</mat-icon>
-          </button>
+          <div class="actions">
+            <button mat-stroked-button color="primary" (click)="edit(element)">
+              编辑
+            </button>
+            <button mat-stroked-button color="warn" (click)="delete(element)">
+              删除
+            </button>
+            <button
+              mat-stroked-button
+              color="primary"
+              (click)="openPermission(element)"
+            >
+              授权
+            </button>
+            <lib-entity-log
+              [id]="element?.id"
+              [modelId]="element?.modelName"
+            ></lib-entity-log>
+          </div>
+
         </mat-cell>
       </ng-container>
 

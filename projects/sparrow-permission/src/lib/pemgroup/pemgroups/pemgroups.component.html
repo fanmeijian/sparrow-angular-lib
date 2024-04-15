@@ -45,7 +45,9 @@
         <mat-chip-list #chipList>
           <mat-chip
             *ngFor="let user of element.users"
-            (removed)="remove(user, element)"
+            (removed)="
+              remove({ usernames: [{ groupId: element.id, username: user }] })
+            "
           >
             {{ user.substring(0, 8) }}
             <button matChipRemove>
@@ -61,10 +63,14 @@
       <mat-cell *matCellDef="let element">
         <mat-chip-list #chipList>
           <mat-chip
-            *ngFor="let user of element.sysroles"
-            (removed)="remove(user, element)"
+            *ngFor="let sysrole of element.sysroles"
+            (removed)="
+              remove({
+                sysroleIds: [{ groupId: element.id, sysroleId: sysrole.id }]
+              })
+            "
           >
-            {{ user.name }}
+            {{ sysrole.name }}
             <button matChipRemove>
               <mat-icon>cancel</mat-icon>
             </button>
@@ -76,19 +82,25 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <button mat-icon-button color="primary" (click)="edit(element)">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button color="warn" (click)="delete(element)">
-          <mat-icon>delete_outline</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          color="primary"
-          (click)="openPermission(element)"
-        >
-          <mat-icon>manage_accounts</mat-icon>
-        </button>
+        <div class="actions">
+          <button mat-stroked-button color="primary" (click)="edit(element)">
+            编辑
+          </button>
+          <button mat-stroked-button color="warn" (click)="delete(element)">
+            删除
+          </button>
+          <button
+            mat-stroked-button
+            color="primary"
+            (click)="openPermission(element)"
+          >
+            添加成员
+          </button>
+          <lib-entity-log
+            [id]="element?.id"
+            [modelId]="element?.modelName"
+          ></lib-entity-log>
+        </div>
       </mat-cell>
     </ng-container>
 

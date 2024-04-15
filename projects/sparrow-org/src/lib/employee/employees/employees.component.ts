@@ -16,6 +16,7 @@ import { combineLatest, map, of, switchMap, zip } from "rxjs";
 import { EmployeeDynamicDatabase } from "../../..//model/employee-database";
 import { EmployeeRoleAddComponent } from "../employee-role-add/employee-role-add.component";
 import { EmployeeLevelAddComponent } from "../employee-level-add/employee-level-add.component";
+import { EmployeeUserAddComponent } from "../employee-user-add/employee-user-add.component";
 
 @Component({
   selector: "lib-employees",
@@ -125,12 +126,15 @@ export class EmployeesComponent implements OnInit {
         )
       );
 
-      combineLatest($org, $roles, $levels, $groups).subscribe((s) => {
+      const $users = this.employeeService.empolyeeUsers(item.id)
+
+      combineLatest($org, $roles, $levels, $groups,$users).subscribe((s) => {
         this.selectedItem = Object.assign({}, item, {
           organization: s[0],
           roles: s[1],
           levels: s[2],
           groups: s[3],
+          users: s[4]
         });
       });
     }
@@ -146,5 +150,9 @@ export class EmployeesComponent implements OnInit {
 
   openLevel(role: any) {
     this.dialog.open(EmployeeLevelAddComponent, { width: "90%", data: role });
+  }
+
+  openUsername(item: any){
+    this.dialog.open(EmployeeUserAddComponent, { width: "90%", data: item })
   }
 }

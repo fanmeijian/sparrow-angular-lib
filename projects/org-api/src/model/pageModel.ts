@@ -16,13 +16,13 @@ import { SortObject } from './sortObject';
 export interface PageModel { 
     totalPages?: number;
     totalElements?: number;
-    size?: number;
-    content?: Array<Model>;
-    number?: number;
     sort?: SortObject;
     first?: boolean;
     last?: boolean;
-    numberOfElements?: number;
+    number?: number;
+    size?: number;
+    content?: Array<Model>;
     pageable?: PageableObject;
+    numberOfElements?: number;
     empty?: boolean;
 }
