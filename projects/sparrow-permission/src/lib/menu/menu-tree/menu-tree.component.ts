@@ -8,6 +8,7 @@ import { MenuService } from '@sparrowmini/org-api';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { SelectionModel } from '@angular/cdk/collections';
 import { HttpClient } from '@angular/common/http';
+import { SysconfigService } from '@sparrowmini/org-api';
 
 /** Flat node with expandable and level information */
 interface ExampleFlatNode {
@@ -56,24 +57,21 @@ export class MenuTreeComponent implements OnInit {
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   isInit: boolean = false;
-  constructor(private menuService: MenuService, private http: HttpClient) {}
+  constructor(private menuService: MenuService, private http: HttpClient,
+    private sysconfigService: SysconfigService) {}
   ngOnInit(): void {
     this.menuService.myMenu().subscribe((res) => {
       this.dataSource.data = res.children!;
     });
-    this.http
-      .get('http://localhost:4421/org-service/sysconfigs/init?page=0&size=20')
-      .subscribe((res: any) => {
-        if (res.totalElements > 0) {
-          this.isInit = true;
-        }
-      });
+    this.sysconfigService.getInitConfigs().subscribe((res: any) => {
+      if (res.totalElements > 0) {
+        this.isInit = true;
+      }
+    });
   }
 
   init() {
-    this.http
-      .post('http://localhost:4421/org-service/sysconfigs/init', {})
-      .subscribe();
+    this.sysconfigService.initSystem({}).subscribe();
   }
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;

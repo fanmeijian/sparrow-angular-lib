@@ -14,10 +14,12 @@ import { Project } from './project';
 import { TeamMember } from './teamMember';
 
 export interface Team { 
+    readonly modelName?: string;
     readonly createdDate?: Date;
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
+    readonly dataPermissionTokenId?: string;
     readonly stat?: string;
     readonly enabled?: boolean;
     readonly id?: string;

@@ -16,12 +16,12 @@ import { SortObject } from './sortObject';
 export interface PageDataPermission { 
     totalPages?: number;
     totalElements?: number;
-    sort?: SortObject;
+    size?: number;
+    content?: Array<DataPermission>;
     first?: boolean;
     last?: boolean;
     number?: number;
-    size?: number;
-    content?: Array<DataPermission>;
+    sort?: SortObject;
     pageable?: PageableObject;
     numberOfElements?: number;
     empty?: boolean;

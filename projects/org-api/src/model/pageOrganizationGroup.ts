@@ -16,12 +16,12 @@ import { SortObject } from './sortObject';
 export interface PageOrganizationGroup { 
     totalPages?: number;
     totalElements?: number;
-    sort?: SortObject;
+    size?: number;
+    content?: Array<OrganizationGroup>;
     first?: boolean;
     last?: boolean;
     number?: number;
-    size?: number;
-    content?: Array<OrganizationGroup>;
+    sort?: SortObject;
     pageable?: PageableObject;
     numberOfElements?: number;
     empty?: boolean;

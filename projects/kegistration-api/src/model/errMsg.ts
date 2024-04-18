@@ -10,7 +10,15 @@
  * Do not edit the class manually.
  */
 
-export interface Score { 
-    name?: string;
-    attachments?: string;
+export interface ErrMsg { 
+    field?: string;
+    type?: ErrMsg.TypeEnum;
+    msg?: string;
+}
+export namespace ErrMsg {
+    export type TypeEnum = 'DENY' | 'ALLOW';
+    export const TypeEnum = {
+        DENY: 'DENY' as TypeEnum,
+        ALLOW: 'ALLOW' as TypeEnum
+    };
 }

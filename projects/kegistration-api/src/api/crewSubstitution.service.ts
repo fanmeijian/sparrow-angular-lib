@@ -17,17 +17,17 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
-import { PageSysconfig } from '../model/pageSysconfig';
-import { Sysconfig } from '../model/sysconfig';
+import { ApiResponseListString } from '../model/apiResponseListString';
+import { CrewSubstitution } from '../model/crewSubstitution';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
 
 @Injectable()
-export class SysconfigService {
+export class CrewSubstitutionService {
 
-    protected basePath = 'http://localhost:4421/org-service';
+    protected basePath = 'http://localhost:8280/fanchuan-service';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -57,33 +57,19 @@ export class SysconfigService {
 
 
     /**
-     * 配置列表
+     * 详情
      * 
-     * @param page Zero-based page index (0..N)
-     * @param size The size of the page to be returned
-     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param id 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getInitConfigs(page?: number, size?: number, sort?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<PageSysconfig>;
-    public getInitConfigs(page?: number, size?: number, sort?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageSysconfig>>;
-    public getInitConfigs(page?: number, size?: number, sort?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageSysconfig>>;
-    public getInitConfigs(page?: number, size?: number, sort?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public crewSubstitution(id: string, observe?: 'body', reportProgress?: boolean): Observable<CrewSubstitution>;
+    public crewSubstitution(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<CrewSubstitution>>;
+    public crewSubstitution(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<CrewSubstitution>>;
+    public crewSubstitution(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-
-
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (page !== undefined && page !== null) {
-            queryParameters = queryParameters.set('page', <any>page);
-        }
-        if (size !== undefined && size !== null) {
-            queryParameters = queryParameters.set('size', <any>size);
-        }
-        if (sort) {
-            sort.forEach((element) => {
-                queryParameters = queryParameters.append('sort', <any>element);
-            })
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling crewSubstitution.');
         }
 
         let headers = this.defaultHeaders;
@@ -101,9 +87,8 @@ export class SysconfigService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<PageSysconfig>('get',`${this.basePath}/sysconfigs/init`,
+        return this.httpClient.request<CrewSubstitution>('get',`${this.basePath}/crew-substitutions/${encodeURIComponent(String(id))}`,
             {
-                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -113,25 +98,26 @@ export class SysconfigService {
     }
 
     /**
-     * 初始化
+     * 创建
      * 
      * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public initSystem(body: Sysconfig, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public initSystem(body: Sysconfig, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public initSystem(body: Sysconfig, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public initSystem(body: Sysconfig, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public newCrewSubstitution(body: Array<CrewSubstitution>, observe?: 'body', reportProgress?: boolean): Observable<ApiResponseListString>;
+    public newCrewSubstitution(body: Array<CrewSubstitution>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApiResponseListString>>;
+    public newCrewSubstitution(body: Array<CrewSubstitution>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApiResponseListString>>;
+    public newCrewSubstitution(body: Array<CrewSubstitution>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling initSystem.');
+            throw new Error('Required parameter body was null or undefined when calling newCrewSubstitution.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
+            '*/*'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -147,7 +133,7 @@ export class SysconfigService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('post',`${this.basePath}/sysconfigs/init`,
+        return this.httpClient.request<ApiResponseListString>('post',`${this.basePath}/crew-substitutions`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,

@@ -17,14 +17,15 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
-import { Response } from '../model/response';
+import { ApiResponseListString } from '../model/apiResponseListString';
+import { DamageReport } from '../model/damageReport';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
 
 @Injectable()
-export class ObjectStorageService {
+export class DamageReportService {
 
     protected basePath = 'http://localhost:8280/fanchuan-service';
     public defaultHeaders = new HttpHeaders();
@@ -56,31 +57,26 @@ export class ObjectStorageService {
 
 
     /**
+     * 详情
      * 
-     * 
-     * @param fileName 
+     * @param id 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getDownloadTmpKey(fileName: string, observe?: 'body', reportProgress?: boolean): Observable<Response>;
-    public getDownloadTmpKey(fileName: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Response>>;
-    public getDownloadTmpKey(fileName: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Response>>;
-    public getDownloadTmpKey(fileName: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public damageReport(id: string, observe?: 'body', reportProgress?: boolean): Observable<DamageReport>;
+    public damageReport(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<DamageReport>>;
+    public damageReport(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<DamageReport>>;
+    public damageReport(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (fileName === null || fileName === undefined) {
-            throw new Error('Required parameter fileName was null or undefined when calling getDownloadTmpKey.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (fileName !== undefined && fileName !== null) {
-            queryParameters = queryParameters.set('fileName', <any>fileName);
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling damageReport.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            'application/json'
+            '*/*'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -91,9 +87,8 @@ export class ObjectStorageService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Response>('get',`${this.basePath}/objectStorages/downloadTmpKeys`,
+        return this.httpClient.request<DamageReport>('get',`${this.basePath}/damage-reports/${encodeURIComponent(String(id))}`,
             {
-                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -103,31 +98,26 @@ export class ObjectStorageService {
     }
 
     /**
+     * 创建
      * 
-     * 
-     * @param fileName 
+     * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getUploadTmpKey(fileName: string, observe?: 'body', reportProgress?: boolean): Observable<Response>;
-    public getUploadTmpKey(fileName: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Response>>;
-    public getUploadTmpKey(fileName: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Response>>;
-    public getUploadTmpKey(fileName: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public newDamageReport(body: Array<DamageReport>, observe?: 'body', reportProgress?: boolean): Observable<ApiResponseListString>;
+    public newDamageReport(body: Array<DamageReport>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApiResponseListString>>;
+    public newDamageReport(body: Array<DamageReport>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApiResponseListString>>;
+    public newDamageReport(body: Array<DamageReport>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (fileName === null || fileName === undefined) {
-            throw new Error('Required parameter fileName was null or undefined when calling getUploadTmpKey.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (fileName !== undefined && fileName !== null) {
-            queryParameters = queryParameters.set('fileName', <any>fileName);
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling newDamageReport.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            'application/json'
+            '*/*'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -136,11 +126,16 @@ export class ObjectStorageService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json'
         ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
 
-        return this.httpClient.request<Response>('get',`${this.basePath}/objectStorages/uploadTmpKeys`,
+        return this.httpClient.request<ApiResponseListString>('post',`${this.basePath}/damage-reports`,
             {
-                params: queryParameters,
+                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

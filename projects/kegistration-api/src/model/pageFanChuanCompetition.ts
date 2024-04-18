@@ -16,13 +16,13 @@ import { SortObject } from './sortObject';
 export interface PageFanChuanCompetition { 
     totalPages?: number;
     totalElements?: number;
-    number?: number;
-    first?: boolean;
-    last?: boolean;
-    sort?: SortObject;
     size?: number;
     content?: Array<FanChuanCompetition>;
-    pageable?: PageableObject;
+    number?: number;
+    sort?: SortObject;
+    first?: boolean;
+    last?: boolean;
     numberOfElements?: number;
+    pageable?: PageableObject;
     empty?: boolean;
 }

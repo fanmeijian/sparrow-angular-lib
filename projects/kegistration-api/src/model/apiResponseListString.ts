@@ -10,8 +10,8 @@
  * Do not edit the class manually.
  */
 
-export interface Pageable { 
-    page?: number;
-    size?: number;
-    sort?: Array<string>;
+export interface ApiResponseListString { 
+    code?: string;
+    message?: string;
+    data?: Array<string>;
 }

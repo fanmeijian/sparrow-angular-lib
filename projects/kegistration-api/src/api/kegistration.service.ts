@@ -240,21 +240,21 @@ export class KegistrationService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public update1(body: Team, competitionId: string, baomingId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public update1(body: Team, competitionId: string, baomingId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public update1(body: Team, competitionId: string, baomingId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public update1(body: Team, competitionId: string, baomingId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateKegistration(body: Team, competitionId: string, baomingId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public updateKegistration(body: Team, competitionId: string, baomingId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public updateKegistration(body: Team, competitionId: string, baomingId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public updateKegistration(body: Team, competitionId: string, baomingId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling update1.');
+            throw new Error('Required parameter body was null or undefined when calling updateKegistration.');
         }
 
         if (competitionId === null || competitionId === undefined) {
-            throw new Error('Required parameter competitionId was null or undefined when calling update1.');
+            throw new Error('Required parameter competitionId was null or undefined when calling updateKegistration.');
         }
 
         if (baomingId === null || baomingId === undefined) {
-            throw new Error('Required parameter baomingId was null or undefined when calling update1.');
+            throw new Error('Required parameter baomingId was null or undefined when calling updateKegistration.');
         }
 
         let headers = this.defaultHeaders;

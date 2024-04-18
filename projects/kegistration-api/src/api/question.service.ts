@@ -17,17 +17,17 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
-import { PageSysconfig } from '../model/pageSysconfig';
-import { Sysconfig } from '../model/sysconfig';
+import { ApiResponseListString } from '../model/apiResponseListString';
+import { Question } from '../model/question';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
 
 @Injectable()
-export class SysconfigService {
+export class QuestionService {
 
-    protected basePath = 'http://localhost:4421/org-service';
+    protected basePath = 'http://localhost:8280/fanchuan-service';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -57,33 +57,71 @@ export class SysconfigService {
 
 
     /**
-     * 配置列表
+     * 保存
      * 
-     * @param page Zero-based page index (0..N)
-     * @param size The size of the page to be returned
-     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getInitConfigs(page?: number, size?: number, sort?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<PageSysconfig>;
-    public getInitConfigs(page?: number, size?: number, sort?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageSysconfig>>;
-    public getInitConfigs(page?: number, size?: number, sort?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageSysconfig>>;
-    public getInitConfigs(page?: number, size?: number, sort?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public newQuestion(body: Array<Question>, observe?: 'body', reportProgress?: boolean): Observable<ApiResponseListString>;
+    public newQuestion(body: Array<Question>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApiResponseListString>>;
+    public newQuestion(body: Array<Question>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApiResponseListString>>;
+    public newQuestion(body: Array<Question>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling newQuestion.');
+        }
 
+        let headers = this.defaultHeaders;
 
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<ApiResponseListString>('post',`${this.basePath}/questions`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 详情
+     * 
+     * @param id 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public question(id: string, observe?: 'body', reportProgress?: boolean): Observable<Question>;
+    public question(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Question>>;
+    public question(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Question>>;
+    public question(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling question.');
+        }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (page !== undefined && page !== null) {
-            queryParameters = queryParameters.set('page', <any>page);
-        }
-        if (size !== undefined && size !== null) {
-            queryParameters = queryParameters.set('size', <any>size);
-        }
-        if (sort) {
-            sort.forEach((element) => {
-                queryParameters = queryParameters.append('sort', <any>element);
-            })
+        if (id !== undefined && id !== null) {
+            queryParameters = queryParameters.set('id', <any>id);
         }
 
         let headers = this.defaultHeaders;
@@ -101,55 +139,9 @@ export class SysconfigService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<PageSysconfig>('get',`${this.basePath}/sysconfigs/init`,
+        return this.httpClient.request<Question>('get',`${this.basePath}/questions/${encodeURIComponent(String(id))}`,
             {
                 params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 初始化
-     * 
-     * @param body 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public initSystem(body: Sysconfig, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public initSystem(body: Sysconfig, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public initSystem(body: Sysconfig, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public initSystem(body: Sysconfig, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling initSystem.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.request<any>('post',`${this.basePath}/sysconfigs/init`,
-            {
-                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

@@ -18,6 +18,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { ApiResponseString } from '../model/apiResponseString';
+import { AttachmentV2 } from '../model/attachmentV2';
 import { BaoMingSummary } from '../model/baoMingSummary';
 import { CompetitionCoachFanHao } from '../model/competitionCoachFanHao';
 import { CompetitionFanHao } from '../model/competitionFanHao';
@@ -25,9 +26,7 @@ import { CompetitionNotification } from '../model/competitionNotification';
 import { CompetitionSignContact } from '../model/competitionSignContact';
 import { FanChuanCompetition } from '../model/fanChuanCompetition';
 import { PageFanChuanCompetition } from '../model/pageFanChuanCompetition';
-import { Pageable } from '../model/pageable';
 import { Project } from '../model/project';
-import { Score } from '../model/score';
 import { Team } from '../model/team';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -65,46 +64,6 @@ export class CompetitionService {
         return false;
     }
 
-
-    /**
-     * 删除比赛
-     * 
-     * @param id 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public _delete(id: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public _delete(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public _delete(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public _delete(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling _delete.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<any>('delete',`${this.basePath}/competitions/${encodeURIComponent(String(id))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
 
     /**
      * 汇总表
@@ -275,6 +234,103 @@ export class CompetitionService {
     }
 
     /**
+     * 比赛详情
+     * 
+     * @param id 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public competition(id: string, observe?: 'body', reportProgress?: boolean): Observable<FanChuanCompetition>;
+    public competition(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<FanChuanCompetition>>;
+    public competition(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<FanChuanCompetition>>;
+    public competition(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling competition.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<FanChuanCompetition>('get',`${this.basePath}/competitions/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 比赛列表
+     * 
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public competitions(page?: number, size?: number, sort?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<PageFanChuanCompetition>;
+    public competitions(page?: number, size?: number, sort?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageFanChuanCompetition>>;
+    public competitions(page?: number, size?: number, sort?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageFanChuanCompetition>>;
+    public competitions(page?: number, size?: number, sort?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (page !== undefined && page !== null) {
+            queryParameters = queryParameters.set('page', <any>page);
+        }
+        if (size !== undefined && size !== null) {
+            queryParameters = queryParameters.set('size', <any>size);
+        }
+        if (sort) {
+            sort.forEach((element) => {
+                queryParameters = queryParameters.append('sort', <any>element);
+            })
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<PageFanChuanCompetition>('get',`${this.basePath}/competitions`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * 联系方式
      * 
      * @param id 
@@ -307,53 +363,6 @@ export class CompetitionService {
 
         return this.httpClient.request<Array<Team>>('get',`${this.basePath}/competitions/${encodeURIComponent(String(id))}/contacts`,
             {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 保存比赛
-     * 
-     * @param body 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public create1(body: FanChuanCompetition, observe?: 'body', reportProgress?: boolean): Observable<ApiResponseString>;
-    public create1(body: FanChuanCompetition, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApiResponseString>>;
-    public create1(body: FanChuanCompetition, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApiResponseString>>;
-    public create1(body: FanChuanCompetition, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling create1.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.request<ApiResponseString>('post',`${this.basePath}/competitions`,
-            {
-                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -414,6 +423,86 @@ export class CompetitionService {
     }
 
     /**
+     * 发布通知
+     * 
+     * @param notificationId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public delNotification(notificationId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public delNotification(notificationId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public delNotification(notificationId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public delNotification(notificationId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (notificationId === null || notificationId === undefined) {
+            throw new Error('Required parameter notificationId was null or undefined when calling delNotification.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('delete',`${this.basePath}/competitions/notifications/${encodeURIComponent(String(notificationId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 删除比赛
+     * 
+     * @param id 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deleteCompetition(id: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteCompetition(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteCompetition(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteCompetition(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling deleteCompetition.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('delete',`${this.basePath}/competitions/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * 帆号对照表
      * 
      * @param id 
@@ -457,27 +546,36 @@ export class CompetitionService {
     /**
      * 比赛列表
      * 
-     * @param pageable 
      * @param status 
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public filter(pageable: Pageable, status: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<PageFanChuanCompetition>;
-    public filter(pageable: Pageable, status: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageFanChuanCompetition>>;
-    public filter(pageable: Pageable, status: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageFanChuanCompetition>>;
-    public filter(pageable: Pageable, status: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (pageable === null || pageable === undefined) {
-            throw new Error('Required parameter pageable was null or undefined when calling filter.');
-        }
+    public filter(status: Array<string>, page?: number, size?: number, sort?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<PageFanChuanCompetition>;
+    public filter(status: Array<string>, page?: number, size?: number, sort?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageFanChuanCompetition>>;
+    public filter(status: Array<string>, page?: number, size?: number, sort?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageFanChuanCompetition>>;
+    public filter(status: Array<string>, page?: number, size?: number, sort?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (status === null || status === undefined) {
             throw new Error('Required parameter status was null or undefined when calling filter.');
         }
 
+
+
+
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (pageable !== undefined && pageable !== null) {
-            queryParameters = queryParameters.set('pageable', <any>pageable);
+        if (page !== undefined && page !== null) {
+            queryParameters = queryParameters.set('page', <any>page);
+        }
+        if (size !== undefined && size !== null) {
+            queryParameters = queryParameters.set('size', <any>size);
+        }
+        if (sort) {
+            sort.forEach((element) => {
+                queryParameters = queryParameters.append('sort', <any>element);
+            })
         }
         if (status) {
             status.forEach((element) => {
@@ -501,94 +599,6 @@ export class CompetitionService {
         ];
 
         return this.httpClient.request<PageFanChuanCompetition>('get',`${this.basePath}/competitions/filter`,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 比赛详情
-     * 
-     * @param id 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public get1(id: string, observe?: 'body', reportProgress?: boolean): Observable<FanChuanCompetition>;
-    public get1(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<FanChuanCompetition>>;
-    public get1(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<FanChuanCompetition>>;
-    public get1(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling get1.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<FanChuanCompetition>('get',`${this.basePath}/competitions/${encodeURIComponent(String(id))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 比赛列表
-     * 
-     * @param pageable 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public list(pageable: Pageable, observe?: 'body', reportProgress?: boolean): Observable<PageFanChuanCompetition>;
-    public list(pageable: Pageable, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageFanChuanCompetition>>;
-    public list(pageable: Pageable, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageFanChuanCompetition>>;
-    public list(pageable: Pageable, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (pageable === null || pageable === undefined) {
-            throw new Error('Required parameter pageable was null or undefined when calling list.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (pageable !== undefined && pageable !== null) {
-            queryParameters = queryParameters.set('pageable', <any>pageable);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<PageFanChuanCompetition>('get',`${this.basePath}/competitions`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -682,6 +692,119 @@ export class CompetitionService {
     }
 
     /**
+     * 我参加的比赛列表
+     * 
+     * @param status 
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public myCompetitions(status: Array<string>, page?: number, size?: number, sort?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<PageFanChuanCompetition>;
+    public myCompetitions(status: Array<string>, page?: number, size?: number, sort?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageFanChuanCompetition>>;
+    public myCompetitions(status: Array<string>, page?: number, size?: number, sort?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageFanChuanCompetition>>;
+    public myCompetitions(status: Array<string>, page?: number, size?: number, sort?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (status === null || status === undefined) {
+            throw new Error('Required parameter status was null or undefined when calling myCompetitions.');
+        }
+
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (page !== undefined && page !== null) {
+            queryParameters = queryParameters.set('page', <any>page);
+        }
+        if (size !== undefined && size !== null) {
+            queryParameters = queryParameters.set('size', <any>size);
+        }
+        if (sort) {
+            sort.forEach((element) => {
+                queryParameters = queryParameters.append('sort', <any>element);
+            })
+        }
+        if (status) {
+            status.forEach((element) => {
+                queryParameters = queryParameters.append('status', <any>element);
+            })
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<PageFanChuanCompetition>('get',`${this.basePath}/competitions/my`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 保存比赛
+     * 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public newCompetition(body: FanChuanCompetition, observe?: 'body', reportProgress?: boolean): Observable<ApiResponseString>;
+    public newCompetition(body: FanChuanCompetition, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApiResponseString>>;
+    public newCompetition(body: FanChuanCompetition, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApiResponseString>>;
+    public newCompetition(body: FanChuanCompetition, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling newCompetition.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<ApiResponseString>('post',`${this.basePath}/competitions`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * 发布成绩
      * 
      * @param body 
@@ -689,10 +812,10 @@ export class CompetitionService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public publicScore(body: Array<Score>, id: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public publicScore(body: Array<Score>, id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public publicScore(body: Array<Score>, id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public publicScore(body: Array<Score>, id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public publicScore(body: Array<AttachmentV2>, id: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public publicScore(body: Array<AttachmentV2>, id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public publicScore(body: Array<AttachmentV2>, id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public publicScore(body: Array<AttachmentV2>, id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling publicScore.');
@@ -779,57 +902,6 @@ export class CompetitionService {
     }
 
     /**
-     * 发布比赛
-     * 
-     * @param body 
-     * @param id 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public publish1(body: FanChuanCompetition, id: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public publish1(body: FanChuanCompetition, id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public publish1(body: FanChuanCompetition, id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public publish1(body: FanChuanCompetition, id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling publish1.');
-        }
-
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling publish1.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.request<any>('patch',`${this.basePath}/competitions/${encodeURIComponent(String(id))}/publish`,
-            {
-                body: body,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
      * 签到表
      * 
      * @param id 
@@ -871,6 +943,57 @@ export class CompetitionService {
     }
 
     /**
+     * 更新并发布比赛
+     * 
+     * @param body 
+     * @param id 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updateAndPublish(body: FanChuanCompetition, id: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public updateAndPublish(body: FanChuanCompetition, id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public updateAndPublish(body: FanChuanCompetition, id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public updateAndPublish(body: FanChuanCompetition, id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling updateAndPublish.');
+        }
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling updateAndPublish.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<any>('patch',`${this.basePath}/competitions/${encodeURIComponent(String(id))}/publish`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * 修改比赛
      * 
      * @param body 
@@ -878,17 +1001,17 @@ export class CompetitionService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public udpate(body: FanChuanCompetition, id: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public udpate(body: FanChuanCompetition, id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public udpate(body: FanChuanCompetition, id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public udpate(body: FanChuanCompetition, id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateCompetition(body: FanChuanCompetition, id: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public updateCompetition(body: FanChuanCompetition, id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public updateCompetition(body: FanChuanCompetition, id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public updateCompetition(body: FanChuanCompetition, id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling udpate.');
+            throw new Error('Required parameter body was null or undefined when calling updateCompetition.');
         }
 
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling udpate.');
+            throw new Error('Required parameter id was null or undefined when calling updateCompetition.');
         }
 
         let headers = this.defaultHeaders;
