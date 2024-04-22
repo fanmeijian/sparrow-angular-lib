@@ -17,15 +17,15 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
-import { ApiResponseListString } from '../model/apiResponseListString';
-import { PenaltyReport } from '../model/penaltyReport';
+import { PageSysconfig } from '../model/pageSysconfig';
+import { Sysconfig } from '../model/sysconfig';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
 
 @Injectable()
-export class PenaltyReportService {
+export class SysconfigService {
 
     protected basePath = 'http://localhost:8280/fanchuan-service';
     public defaultHeaders = new HttpHeaders();
@@ -57,19 +57,33 @@ export class PenaltyReportService {
 
 
     /**
-     * 保存
+     * 配置列表
      * 
-     * @param body 
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public newPenaltyReport(body: Array<PenaltyReport>, observe?: 'body', reportProgress?: boolean): Observable<ApiResponseListString>;
-    public newPenaltyReport(body: Array<PenaltyReport>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApiResponseListString>>;
-    public newPenaltyReport(body: Array<PenaltyReport>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApiResponseListString>>;
-    public newPenaltyReport(body: Array<PenaltyReport>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getInitConfigs(page?: number, size?: number, sort?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<PageSysconfig>;
+    public getInitConfigs(page?: number, size?: number, sort?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageSysconfig>>;
+    public getInitConfigs(page?: number, size?: number, sort?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageSysconfig>>;
+    public getInitConfigs(page?: number, size?: number, sort?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling newPenaltyReport.');
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (page !== undefined && page !== null) {
+            queryParameters = queryParameters.set('page', <any>page);
+        }
+        if (size !== undefined && size !== null) {
+            queryParameters = queryParameters.set('size', <any>size);
+        }
+        if (sort) {
+            sort.forEach((element) => {
+                queryParameters = queryParameters.append('sort', <any>element);
+            })
         }
 
         let headers = this.defaultHeaders;
@@ -77,6 +91,47 @@ export class PenaltyReportService {
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<PageSysconfig>('get',`${this.basePath}/sysconfigs/init`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 初始化
+     * 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public initSystem(body: Sysconfig, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public initSystem(body: Sysconfig, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public initSystem(body: Sysconfig, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public initSystem(body: Sysconfig, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling initSystem.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -92,56 +147,9 @@ export class PenaltyReportService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<ApiResponseListString>('post',`${this.basePath}/penalty-reports`,
+        return this.httpClient.request<any>('post',`${this.basePath}/sysconfigs/init`,
             {
                 body: body,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 详情
-     * 
-     * @param id 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public penaltyReport(id: string, observe?: 'body', reportProgress?: boolean): Observable<PenaltyReport>;
-    public penaltyReport(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PenaltyReport>>;
-    public penaltyReport(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PenaltyReport>>;
-    public penaltyReport(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling penaltyReport.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (id !== undefined && id !== null) {
-            queryParameters = queryParameters.set('id', <any>id);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<PenaltyReport>('get',`${this.basePath}/penalty-reports/${encodeURIComponent(String(id))}`,
-            {
-                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

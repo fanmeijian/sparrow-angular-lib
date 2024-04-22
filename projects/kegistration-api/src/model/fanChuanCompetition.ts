@@ -17,11 +17,13 @@ import { DamageReport } from './damageReport';
 import { EquipmentSubstitution } from './equipmentSubstitution';
 import { HearingRequest } from './hearingRequest';
 import { KegistrationFee } from './kegistrationFee';
+import { OtwPenalty } from './otwPenalty';
 import { PenaltyReport } from './penaltyReport';
 import { Project } from './project';
 import { Question } from './question';
 import { RetirementReport } from './retirementReport';
 import { ScoringInquiry } from './scoringInquiry';
+import { StandardPenalty } from './standardPenalty';
 
 export interface FanChuanCompetition { 
     readonly modelName?: string;
@@ -64,4 +66,6 @@ export interface FanChuanCompetition {
     readonly questions?: Array<Question>;
     readonly retirementReports?: Array<RetirementReport>;
     readonly scoringInquiries?: Array<ScoringInquiry>;
+    readonly otwPenalties?: Array<OtwPenalty>;
+    readonly standardPenalties?: Array<StandardPenalty>;
 }

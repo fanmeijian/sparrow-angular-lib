@@ -19,7 +19,6 @@ import { Observable }                                        from 'rxjs';
 
 import { DataOrganization } from '../model/dataOrganization';
 import { PageDataOrganization } from '../model/pageDataOrganization';
-import { Pageable } from '../model/pageable';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -150,24 +149,33 @@ export class DataOrganizationService {
     }
 
     /**
-     * 创建归属组织
+     * 归属组织列表
      * 
-     * @param pageable 
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public dataOrgs(pageable: Pageable, observe?: 'body', reportProgress?: boolean): Observable<PageDataOrganization>;
-    public dataOrgs(pageable: Pageable, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageDataOrganization>>;
-    public dataOrgs(pageable: Pageable, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageDataOrganization>>;
-    public dataOrgs(pageable: Pageable, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public dataOrgs(page?: number, size?: number, sort?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<PageDataOrganization>;
+    public dataOrgs(page?: number, size?: number, sort?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageDataOrganization>>;
+    public dataOrgs(page?: number, size?: number, sort?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageDataOrganization>>;
+    public dataOrgs(page?: number, size?: number, sort?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (pageable === null || pageable === undefined) {
-            throw new Error('Required parameter pageable was null or undefined when calling dataOrgs.');
-        }
+
+
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (pageable !== undefined && pageable !== null) {
-            queryParameters = queryParameters.set('pageable', <any>pageable);
+        if (page !== undefined && page !== null) {
+            queryParameters = queryParameters.set('page', <any>page);
+        }
+        if (size !== undefined && size !== null) {
+            queryParameters = queryParameters.set('size', <any>size);
+        }
+        if (sort) {
+            sort.forEach((element) => {
+                queryParameters = queryParameters.append('sort', <any>element);
+            })
         }
 
         let headers = this.defaultHeaders;

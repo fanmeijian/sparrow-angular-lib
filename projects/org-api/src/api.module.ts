@@ -13,6 +13,7 @@ import { GroupService } from './api/group.service';
 import { JoblevelService } from './api/joblevel.service';
 import { MenuService } from './api/menu.service';
 import { OrganizationService } from './api/organization.service';
+import { PageElementService } from './api/pageElement.service';
 import { PemgroupService } from './api/pemgroup.service';
 import { RestApiServiceService } from './api/restApiService.service';
 import { RoleService } from './api/role.service';
@@ -37,6 +38,7 @@ import { UserService } from './api/user.service';
     JoblevelService,
     MenuService,
     OrganizationService,
+    PageElementService,
     PemgroupService,
     RestApiServiceService,
     RoleService,

@@ -105,17 +105,17 @@ export class KegistrationService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public create(body: Team, competitionId: string, observe?: 'body', reportProgress?: boolean): Observable<ApiResponseString>;
-    public create(body: Team, competitionId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApiResponseString>>;
-    public create(body: Team, competitionId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApiResponseString>>;
-    public create(body: Team, competitionId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public create1(body: Team, competitionId: string, observe?: 'body', reportProgress?: boolean): Observable<ApiResponseString>;
+    public create1(body: Team, competitionId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApiResponseString>>;
+    public create1(body: Team, competitionId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApiResponseString>>;
+    public create1(body: Team, competitionId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling create.');
+            throw new Error('Required parameter body was null or undefined when calling create1.');
         }
 
         if (competitionId === null || competitionId === undefined) {
-            throw new Error('Required parameter competitionId was null or undefined when calling create.');
+            throw new Error('Required parameter competitionId was null or undefined when calling create1.');
         }
 
         let headers = this.defaultHeaders;

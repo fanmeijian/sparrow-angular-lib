@@ -3,36 +3,74 @@ import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
 
+import { AuditlogService } from './api/auditlog.service';
 import { CompetitionService } from './api/competition.service';
 import { CrewSubstitutionService } from './api/crewSubstitution.service';
 import { DamageReportService } from './api/damageReport.service';
+import { DataOrganizationService } from './api/dataOrganization.service';
+import { DataPermissionService } from './api/dataPermission.service';
+import { DatamodelService } from './api/datamodel.service';
 import { DictService } from './api/dict.service';
+import { EmployeeService } from './api/employee.service';
 import { EquipmentSubstitutionService } from './api/equipmentSubstitution.service';
+import { FileService } from './api/file.service';
+import { GroupService } from './api/group.service';
 import { HearingRequestService } from './api/hearingRequest.service';
+import { JoblevelService } from './api/joblevel.service';
 import { KegistrationService } from './api/kegistration.service';
 import { MemberService } from './api/member.service';
-import { PenaltyReportService } from './api/penaltyReport.service';
+import { MenuService } from './api/menu.service';
+import { ObjectStorageService } from './api/objectStorage.service';
+import { OrganizationService } from './api/organization.service';
+import { PemgroupService } from './api/pemgroup.service';
+import { PenaltyService } from './api/penalty.service';
 import { QuestionService } from './api/question.service';
+import { RestApiServiceService } from './api/restApiService.service';
 import { RetirementReportService } from './api/retirementReport.service';
+import { RoleService } from './api/role.service';
+import { RuleService } from './api/rule.service';
+import { ScopeService } from './api/scope.service';
 import { ScoringInquiryService } from './api/scoringInquiry.service';
+import { SysconfigService } from './api/sysconfig.service';
+import { SysroleService } from './api/sysrole.service';
+import { UserService } from './api/user.service';
 
 @NgModule({
   imports:      [],
   declarations: [],
   exports:      [],
   providers: [
+    AuditlogService,
     CompetitionService,
     CrewSubstitutionService,
     DamageReportService,
+    DataOrganizationService,
+    DataPermissionService,
+    DatamodelService,
     DictService,
+    EmployeeService,
     EquipmentSubstitutionService,
+    FileService,
+    GroupService,
     HearingRequestService,
+    JoblevelService,
     KegistrationService,
     MemberService,
-    PenaltyReportService,
+    MenuService,
+    ObjectStorageService,
+    OrganizationService,
+    PemgroupService,
+    PenaltyService,
     QuestionService,
+    RestApiServiceService,
     RetirementReportService,
-    ScoringInquiryService ]
+    RoleService,
+    RuleService,
+    ScopeService,
+    ScoringInquiryService,
+    SysconfigService,
+    SysroleService,
+    UserService ]
 })
 export class ApiModule {
     public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders<ApiModule> {

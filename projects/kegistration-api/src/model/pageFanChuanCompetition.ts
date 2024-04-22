@@ -14,14 +14,14 @@ import { PageableObject } from './pageableObject';
 import { SortObject } from './sortObject';
 
 export interface PageFanChuanCompetition { 
-    totalPages?: number;
     totalElements?: number;
-    size?: number;
-    content?: Array<FanChuanCompetition>;
+    totalPages?: number;
     number?: number;
-    sort?: SortObject;
     first?: boolean;
     last?: boolean;
+    size?: number;
+    content?: Array<FanChuanCompetition>;
+    sort?: SortObject;
     numberOfElements?: number;
     pageable?: PageableObject;
     empty?: boolean;
