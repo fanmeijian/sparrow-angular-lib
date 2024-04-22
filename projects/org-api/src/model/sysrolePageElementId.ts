@@ -13,4 +13,12 @@
 export interface SysrolePageElementId { 
     sysroleId?: string;
     pageElementId?: string;
+    type?: SysrolePageElementId.TypeEnum;
+}
+export namespace SysrolePageElementId {
+    export type TypeEnum = 'DENY' | 'ALLOW';
+    export const TypeEnum = {
+        DENY: 'DENY' as TypeEnum,
+        ALLOW: 'ALLOW' as TypeEnum
+    };
 }

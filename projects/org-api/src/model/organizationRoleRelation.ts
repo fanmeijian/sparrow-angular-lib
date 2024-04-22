@@ -17,8 +17,8 @@ export interface OrganizationRoleRelation {
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
-    readonly bstat?: string;
-    stat?: OrganizationRoleRelation.StatEnum;
+    readonly stat?: string;
+    entityStat?: OrganizationRoleRelation.EntityStatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
@@ -26,11 +26,11 @@ export interface OrganizationRoleRelation {
     id?: OrganizationRoleRelationPK;
 }
 export namespace OrganizationRoleRelation {
-    export type StatEnum = 'Draft' | 'Submitted' | 'Failed' | 'Completed';
-    export const StatEnum = {
-        Draft: 'Draft' as StatEnum,
-        Submitted: 'Submitted' as StatEnum,
-        Failed: 'Failed' as StatEnum,
-        Completed: 'Completed' as StatEnum
+    export type EntityStatEnum = 'Draft' | 'Submitted' | 'Failed' | 'Completed';
+    export const EntityStatEnum = {
+        Draft: 'Draft' as EntityStatEnum,
+        Submitted: 'Submitted' as EntityStatEnum,
+        Failed: 'Failed' as EntityStatEnum,
+        Completed: 'Completed' as EntityStatEnum
     };
 }

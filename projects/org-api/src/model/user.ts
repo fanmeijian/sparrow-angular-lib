@@ -16,8 +16,8 @@ export interface User {
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
-    readonly bstat?: string;
-    stat?: User.StatEnum;
+    readonly stat?: string;
+    entityStat?: User.EntityStatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
@@ -30,11 +30,11 @@ export interface User {
     lastName?: string;
 }
 export namespace User {
-    export type StatEnum = 'Draft' | 'Submitted' | 'Failed' | 'Completed';
-    export const StatEnum = {
-        Draft: 'Draft' as StatEnum,
-        Submitted: 'Submitted' as StatEnum,
-        Failed: 'Failed' as StatEnum,
-        Completed: 'Completed' as StatEnum
+    export type EntityStatEnum = 'Draft' | 'Submitted' | 'Failed' | 'Completed';
+    export const EntityStatEnum = {
+        Draft: 'Draft' as EntityStatEnum,
+        Submitted: 'Submitted' as EntityStatEnum,
+        Failed: 'Failed' as EntityStatEnum,
+        Completed: 'Completed' as EntityStatEnum
     };
 }

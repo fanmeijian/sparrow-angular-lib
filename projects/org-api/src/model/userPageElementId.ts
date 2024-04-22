@@ -13,4 +13,12 @@
 export interface UserPageElementId { 
     username?: string;
     pageElementId?: string;
+    type?: UserPageElementId.TypeEnum;
+}
+export namespace UserPageElementId {
+    export type TypeEnum = 'DENY' | 'ALLOW';
+    export const TypeEnum = {
+        DENY: 'DENY' as TypeEnum,
+        ALLOW: 'ALLOW' as TypeEnum
+    };
 }

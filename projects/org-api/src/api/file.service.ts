@@ -188,8 +188,9 @@ export class FileService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Blob>('get',`${this.basePath}/files/${encodeURIComponent(String(id))}/download`,
+        return this.httpClient.request('get',`${this.basePath}/files/${encodeURIComponent(String(id))}/download`,
             {
+                responseType: "blob",
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

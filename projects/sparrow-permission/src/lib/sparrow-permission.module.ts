@@ -62,6 +62,10 @@ import { FileUploadComponent } from './file/file-upload/file-upload.component';
 import { DataPermissionViewComponent } from './data-permission/data-permission-view/data-permission-view.component';
 import { ModelPermissionViewComponent } from './sprmodel/model-permission-view/model-permission-view.component';
 import { UserPasswordResetComponent } from './user/user-password-reset/user-password-reset.component';
+import { PageElementsComponent } from './page-element/page-elements/page-elements.component';
+import { PageElementCreateComponent } from './page-element/page-element-create/page-element-create.component';
+import { PageElementPermissionComponent } from './page-element/page-element-permission/page-element-permission.component';
+import { PgelPermissionDirective } from './directives/pgel-permission.directive';
 
 @NgModule({
   declarations: [
@@ -102,6 +106,10 @@ import { UserPasswordResetComponent } from './user/user-password-reset/user-pass
     DataPermissionViewComponent,
     ModelPermissionViewComponent,
     UserPasswordResetComponent,
+    PageElementsComponent,
+    PageElementCreateComponent,
+    PageElementPermissionComponent,
+    PgelPermissionDirective,
   ],
   imports: [
     BrowserModule,
