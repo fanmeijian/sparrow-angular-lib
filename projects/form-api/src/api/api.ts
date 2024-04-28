@@ -1,3 +1,3 @@
-export * from './forms.service';
-import { FormsService } from './forms.service';
-export const APIS = [FormsService];
+export * from './form.service';
+import { FormService } from './form.service';
+export const APIS = [FormService];

@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormsService } from "@sparrowmini/form-api";
+import { FormService } from "@sparrowmini/form-api";
 
 @Component({
   selector: 'lib-form-data-create',
@@ -13,7 +13,7 @@ export class FormDataCreateComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private formService: FormsService,
+    private formService: FormService,
   ) { }
 
   ngOnInit(): void {
@@ -24,13 +24,21 @@ export class FormDataCreateComponent implements OnInit {
           this.form = JSON.parse(res.form?.form!)
         })
       }
+      if(params.formId){
+        this.formId = params.formId
+        this.formService.dataForm(this.formId).subscribe(res=>{
+          this.form=JSON.parse(res.form!)
+        })
+      }
     })
   }
 
   onSubmit(e: any){
-    console.log(e.data)
-    this.formService.saveFormData(this.formId,e.data).subscribe(
-
+    console.log(this.formId,e.data)
+    this.formService.saveFormData(e.data,this.formId).subscribe(
+      res=>{
+        window.history.back()
+      }
     )
 
   }

@@ -9,8 +9,9 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { FilterTreeBean } from './filterTreeBean';
 
-export interface ProcessFormId { 
-    deploymentId?: string;
-    processId?: string;
+export interface SparrowJpaFilter { 
+    filterTreeBean?: FilterTreeBean;
+    children?: Array<SparrowJpaFilter>;
 }

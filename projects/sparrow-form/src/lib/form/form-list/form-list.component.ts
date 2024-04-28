@@ -1,6 +1,9 @@
 import { Component, OnInit } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
 import { MatTableDataSource } from "@angular/material/table";
-import { FormsService } from "@sparrowmini/form-api";
+import { FormService } from "@sparrowmini/form-api";
+import { FormPreviewComponent } from "../form-preview/form-preview.component";
+import { PageEvent } from "@angular/material/paginator";
 
 @Component({
   selector: "lib-form-list",
@@ -9,17 +12,29 @@ import { FormsService } from "@sparrowmini/form-api";
 })
 export class FormListComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
-  pageable = { page: 0, size: 10 };
+  pageable = { pageIndex: 0, pageSize: 10, length: 0 };
 
-  displayedColumns = ["id", "name", "code", "actions"];
+  displayedColumns = ["seq", "name", "code", "actions"];
 
-  constructor(private formService: FormsService) {}
+  constructor(private formService: FormService,
+    private dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
+    this.onPage(this.pageable)
+  }
+  preview(element:any){
+    this.dialog.open(FormPreviewComponent, {width:"80%", data: JSON.parse(element.form)})
+  }
+
+  onPage(e: PageEvent){
+    this.pageable.pageIndex=e.pageIndex
+    this.pageable.pageSize=e.pageSize
     this.formService
-      .dataForms(this.pageable.page, this.pageable.size)
-      .subscribe((res) => {
-        this.dataSource = new MatTableDataSource<any>(res.content);
-      });
+    .dataForms(this.pageable.pageIndex, this.pageable.pageSize)
+    .subscribe((res) => {
+      this.dataSource = new MatTableDataSource<any>(res.content);
+      this.pageable.length=res.totalElements!
+    });
   }
 }

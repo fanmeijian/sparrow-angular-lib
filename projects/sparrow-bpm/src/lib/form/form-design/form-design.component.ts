@@ -10,10 +10,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormioRefreshValue } from '@formio/angular';
-import { ProcessFormId, TaskFormId } from '@sparrowmini/form-api';
+import { ProcessFormId, TaskFormId } from '@sparrowmini/flow-api';
 import { ProcessAndTaskDefinitionsService } from '@sparrowmini/jbpm-api';
 import { map, tap } from 'rxjs';
-import { FormsService } from '@sparrowmini/form-api';
+import { FlowService } from '@sparrowmini/flow-api';
 import Prism from 'prismjs';
 
 @Component({
@@ -23,8 +23,8 @@ import Prism from 'prismjs';
 })
 export class FormDesignComponent implements OnInit {
   formJson: any;
-  taskFormId: TaskFormId = {};
-  processFormId: ProcessFormId = {};
+  taskFormId?: TaskFormId;
+  processFormId?: ProcessFormId;
   variables: any[] = [];
   variablesOutput: any[] = [];
 
@@ -33,7 +33,7 @@ export class FormDesignComponent implements OnInit {
   public form: Object = { components: [] };
   public refreshForm: EventEmitter<FormioRefreshValue> = new EventEmitter();
   constructor(
-    private formService: FormsService,
+    private formService: FlowService,
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
@@ -58,7 +58,7 @@ export class FormDesignComponent implements OnInit {
               this.taskFormId.processId
             )
             .subscribe((res) => {
-              this.form = res?.body ? JSON.parse(res.body) : this.form;
+              this.form = res?.form ? JSON.parse(res?.form.form!) : this.form;
               this.formJson = this.form;
             });
 
@@ -71,7 +71,7 @@ export class FormDesignComponent implements OnInit {
               map(
                 (m: any) =>
                   m.task.filter(
-                    (f:any) => f['task-form-name'] === this.taskFormId.taskFormName
+                    (f:any) => f['task-form-name'] === this.taskFormId?.taskFormName
                   )[0]
               ),
               tap(
@@ -103,12 +103,12 @@ export class FormDesignComponent implements OnInit {
             processId: params.processId,
           };
           this.formService
-            .flowForm(
+            .processForm(
               this.processFormId.deploymentId,
               this.processFormId.processId
             )
             .subscribe((res) => {
-              this.form = res?.body ? JSON.parse(res.body) : this.form;
+              this.form = res?.form ? JSON.parse(res.form.form!) : this.form;
               this.formJson = this.form;
             });
           this.processAndTaskDefinitionsService
@@ -155,13 +155,13 @@ export class FormDesignComponent implements OnInit {
     if (this.taskFormId) {
       this.formService
         .createTaskForm(
-          Object.assign({}, { id: this.taskFormId }, { body: json })
+          Object.assign({}, { form: json }),this.taskFormId.taskFormName,this.taskFormId.deploymentId,this.taskFormId.processId
         )
         .subscribe(() => this.snackBar.open('保存成功!', '关闭'));
     } else {
       this.formService
-        .createFlowForm(
-          Object.assign({}, { id: this.processFormId }, { body: json })
+        .createProcessForm(
+          Object.assign({}, { form: json }), this.processFormId?.deploymentId!,this.processFormId?.processId!
         )
         .subscribe(() => this.snackBar.open('保存成功!', '关闭'));
     }

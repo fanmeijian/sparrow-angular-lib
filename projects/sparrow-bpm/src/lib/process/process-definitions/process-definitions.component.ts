@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { ProcessFormId, TaskFormId } from '@sparrowmini/form-api';
+import { ProcessFormId, TaskFormId } from '@sparrowmini/flow-api';
 import { map, switchMap, zip, tap, of, combineLatest } from 'rxjs';
-import { FormsService } from '@sparrowmini/form-api';
+import { FlowService } from '@sparrowmini/flow-api';
 import {
   KIEServerAndKIEContainersService,
   ProcessAndTaskDefinitionsService,
@@ -30,7 +30,7 @@ export class ProcessDefinitionsComponent implements OnInit {
   constructor(
     private flowService: KIEServerAndKIEContainersService,
     private dialog: MatDialog,
-    private formService: FormsService,
+    private formService: FlowService,
     private processQueriesService: ProcessQueriesService,
     private processAndTaskDefinitionsService: ProcessAndTaskDefinitionsService
   ) {}
@@ -58,7 +58,7 @@ export class ProcessDefinitionsComponent implements OnInit {
                 deploymentId: m['container-id'],
                 processId: m['process-id'],
               };
-              const $isConfigForm = this.formService.flowForm(
+              const $isConfigForm = this.formService.processForm(
                 processFormId.deploymentId,
                 processFormId.processId
               );
@@ -113,7 +113,7 @@ export class ProcessDefinitionsComponent implements OnInit {
 
   startFlow(flow: any) {
     this.formService
-      .flowForm(
+      .processForm(
         flow['container-id'],
         flow['process-id'],
         flow['package'],
@@ -137,7 +137,7 @@ export class ProcessDefinitionsComponent implements OnInit {
       processId: flow['process-id'],
     };
     this.formService
-      .flowForm(processFormId.deploymentId, processFormId.processId)
+      .processForm(processFormId.deploymentId, processFormId.processId)
       .subscribe((res) => {
         if (res) {
           return true;

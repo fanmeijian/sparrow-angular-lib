@@ -658,6 +658,37 @@
           }
         }
       }
+    },
+    "flow-api": {
+      "projectType": "library",
+      "root": "projects/flow-api",
+      "sourceRoot": "projects/flow-api/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/flow-api/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/flow-api/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/flow-api/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/flow-api/src/test.ts",
+            "tsConfig": "projects/flow-api/tsconfig.spec.json",
+            "karmaConfig": "projects/flow-api/karma.conf.js"
+          }
+        }
+      }
     }
   }
 }

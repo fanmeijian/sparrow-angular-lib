@@ -1,35 +1,42 @@
-import { Component, ElementRef, EventEmitter, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormsService } from '@sparrowmini/form-api';
+import { FormService } from '@sparrowmini/form-api';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Prism from 'prismjs';
 import { FormioRefreshValue } from '@formio/angular';
 
-
 @Component({
   selector: 'lib-form-create',
   templateUrl: './form-create.component.html',
-  styleUrls: ['./form-create.component.css']
+  styleUrls: ['./form-create.component.css'],
 })
 export class FormCreateComponent implements OnInit {
   save() {
     this.formGroup.patchValue({ form: JSON.stringify(this.formJson) });
     this.formGroup.markAllAsTouched();
-    console.log(this.formGroup.value)
+    // console.log(this.formGroup.value)
     if (this.formGroup.valid) {
-      console.log(this.formGroup.value)
+      // console.log(this.formGroup.value)
 
       if (this.formGroup.value.id) {
-        this.formService.updateDataForm(
-          this.formGroup.value,
-          this.formGroup.value.id
-        ).subscribe();
+        this.formService
+          .updateDataForm(this.formGroup.value, this.formGroup.value.id)
+          .subscribe(() => window.history.back());
       } else {
         this.formService
           .createDataForm(this.formGroup.value)
-          .subscribe((res) => {});
+          .subscribe((res) => {
+            window.history.back();
+          });
       }
     }
   }
@@ -47,14 +54,15 @@ export class FormCreateComponent implements OnInit {
   public refreshForm: EventEmitter<FormioRefreshValue> = new EventEmitter();
 
   constructor(
-    private formService: FormsService,
+    private formService: FormService,
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
-    private router: Router,
+    private router: Router
   ) {
     this.form = { components: [] };
+    this.formJson = { components: [] };
   }
 
   ngOnInit(): void {
@@ -65,9 +73,9 @@ export class FormCreateComponent implements OnInit {
           // .pipe(map((m) => Object.assign({}, m, { form: JSON.parse(m.form) })))
           .subscribe((res) => {
             this.formGroup.patchValue(res);
-            console.log(res, this.formGroup.value)
+            console.log(res, this.formGroup.value);
             this.form = JSON.parse(res.form!);
-            this.formJson = this.form
+            this.formJson = this.form;
           });
       }
     });
@@ -92,7 +100,7 @@ export class FormCreateComponent implements OnInit {
 
   @ViewChild('soruceCode') soruceCodeTemplate!: TemplateRef<any>;
   viewSource() {
-    console.log(this.soruceCodeTemplate);
+    console.log(this.form);
     this.dialog.open(this.soruceCodeTemplate, { width: '80%', height: '80%' });
   }
 

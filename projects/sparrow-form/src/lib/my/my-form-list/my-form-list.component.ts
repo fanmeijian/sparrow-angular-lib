@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { MatTableDataSource } from "@angular/material/table";
-import { FormsService } from "@sparrowmini/form-api";
+import { FormService } from "@sparrowmini/form-api";
 
 @Component({
   selector: "lib-my-form-list",
@@ -13,12 +13,12 @@ export class MyFormListComponent implements OnInit {
 
   displayedColumns = ["id", "name", "code", "actions"];
 
-  constructor(private formService: FormsService) {}
+  constructor(private formService: FormService) {}
 
   ngOnInit(): void {
     this.formService
       .dataForms(this.pageable.page, this.pageable.size)
-      .subscribe((res) => {
+      .subscribe((res:any) => {
         this.dataSource = new MatTableDataSource<any>(res.content);
       });
   }

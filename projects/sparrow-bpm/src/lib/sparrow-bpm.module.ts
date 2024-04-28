@@ -15,6 +15,8 @@ import { ApiModule as JbpmApiModule,BASE_PATH as JbpmApi_BASE_PATH, } from '@spa
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { SparrowKeycloakAdminApiModule } from '@sparrowmini/sparrow-keycloak-admin-api';
+import { ViewProcessImageComponent } from './process/view-process-image/view-process-image.component';
+import { ViewProcessInstanceComponent } from './process/view-process-instance/view-process-instance.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { SparrowKeycloakAdminApiModule } from '@sparrowmini/sparrow-keycloak-adm
     TaskFormComponent,
     FormDesignComponent,
     ProcessDefinitionsComponent,
+    ViewProcessImageComponent,
+    ViewProcessInstanceComponent,
   ],
   imports: [
     BrowserModule,

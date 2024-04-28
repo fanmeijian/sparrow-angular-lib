@@ -1,30 +1,34 @@
 <mat-table [dataSource]="dataSource">
-  <ng-container matColumnDef="id">
+  <ng-container matColumnDef="seq">
     <mat-header-cell *matHeaderCellDef></mat-header-cell>
     <mat-cell *matCellDef="let element; let index = index"
-      ><a
-        mat-button
-        routerLink="../form-data-view"
-        [queryParams]="{ id: element.id }"
-        >{{ index + 1 }}.</a
-      ></mat-cell
+      >{{ index + 1 }}.</mat-cell
     >
   </ng-container>
 
   <ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef>名称</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element.form.name }}</mat-cell>
+    <mat-header-cell *matHeaderCellDef>创建者</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.createdBy }}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="code">
-    <mat-header-cell *matHeaderCellDef>代码</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element.form.code }}</mat-cell>
+    <mat-header-cell *matHeaderCellDef>创建时间</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{
+      element.createdDate | date : "short"
+    }}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="actions">
     <mat-header-cell *matHeaderCellDef></mat-header-cell>
     <mat-cell *matCellDef="let element">
-      <!-- <button mat-button routerLink="/form-data-create" [queryParams]="{id: element.id}">填写</button> -->
+      <button
+        mat-button
+        routerLink="../form-data-view"
+        [queryParams]="{ id: element.id }"
+        color="primary"
+      >
+        详情
+      </button>
     </mat-cell>
   </ng-container>
 
@@ -35,6 +39,7 @@
 <mat-paginator
   [pageSizeOptions]="[5, 10, 20]"
   [pageSize]="10"
+  [length]="pageable.length"
   showFirstLastButtons
   aria-label="Select page of periodic elements"
 >

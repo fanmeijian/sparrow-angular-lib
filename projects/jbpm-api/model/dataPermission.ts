@@ -9,21 +9,13 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { ProcessFormId } from './processFormId';
 
-export interface ProcessForm { 
+export interface DataPermission { 
     readonly createdDate?: Date;
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
-    id?: ProcessFormId;
-    openType?: ProcessForm.OpenTypeEnum;
-    body?: string;
-}
-export namespace ProcessForm {
-    export type OpenTypeEnum = 'DIALOG' | 'PAGE';
-    export const OpenTypeEnum = {
-        DIALOG: 'DIALOG' as OpenTypeEnum,
-        PAGE: 'PAGE' as OpenTypeEnum
-    };
+    readonly id?: string;
+    name?: string;
+    remark?: string;
 }

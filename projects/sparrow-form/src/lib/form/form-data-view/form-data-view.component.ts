@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { FormsService } from "@sparrowmini/form-api";
+import { FormService } from "@sparrowmini/form-api";
 
 @Component({
   selector: "lib-form-data-view",
@@ -13,7 +13,7 @@ export class FormDataViewComponent implements OnInit {
   formName: string = "";
 
   constructor(
-    private formService: FormsService,
+    private formService: FormService,
     private activatedRoute: ActivatedRoute
   ) {}
 

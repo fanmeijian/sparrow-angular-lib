@@ -11,6 +11,9 @@ import {
 } from '@sparrowmini/jbpm-api';
 import { ProcessSate } from '../../../models/bpm-constan';
 import { map, switchMap, zip } from 'rxjs';
+import { ViewProcessImageComponent } from '../view-process-image/view-process-image.component';
+import { ViewProcessInstanceComponent } from '../view-process-instance/view-process-instance.component';
+import { TaskFormComponent } from '../../form/task-form/task-form.component';
 
 @Component({
   selector: 'lib-process-instaces',
@@ -20,8 +23,9 @@ import { map, switchMap, zip } from 'rxjs';
 export class ProcessInstacesComponent implements OnInit {
   [x: string]: any;
   displayedColumns: string[] = [
-    'position',
+    'seq',
     'name',
+    'position',
     'startdate',
     'status',
     'task',
@@ -63,7 +67,12 @@ export class ProcessInstacesComponent implements OnInit {
     });
   }
 
-  viewProcess(processInstance: any) {}
+  viewProcess(processInstance: any) {
+    this.dialog.open(ViewProcessInstanceComponent, {
+      width: '80%',
+      data: processInstance,
+    });
+  }
 
   onContainerChange($event: any) {
     this.container = $event;
@@ -144,7 +153,10 @@ export class ProcessInstacesComponent implements OnInit {
   }
 
   viewImage(processInstance: any) {
-    // this.dialog.open(ViewProcessImageComponent,{data: processInstance,width:'90%'})
+    this.dialog.open(ViewProcessImageComponent, {
+      data: processInstance,
+      width: '90%',
+    });
   }
 
   onStatusChange(e: any, status: ProcessSate) {
@@ -226,10 +238,10 @@ export class ProcessInstacesComponent implements OnInit {
 
   openTask(task: any) {
     console.log(task);
-    // this.dialog.open(TaskFormComponent, {
-    //   data: task,
-    //   width: '80%',
-    //   height: '80%',
-    // });
+    this.dialog.open(TaskFormComponent, {
+      data: task,
+      width: '80%',
+      height: '80%',
+    });
   }
 }

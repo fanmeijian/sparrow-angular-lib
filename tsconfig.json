@@ -17,6 +17,10 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "paths": {
+      "flow-api": [
+        "dist/flow-api/flow-api",
+        "dist/flow-api"
+      ],
       "form-api": [
         "dist/form-api/form-api",
         "dist/form-api"

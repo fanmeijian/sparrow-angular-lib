@@ -9,18 +9,19 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { TaskFormId } from './taskFormId';
 
-export interface TaskForm { 
+export interface SparrowForm { 
     readonly createdDate?: Date;
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
-    id?: TaskFormId;
-    openType?: TaskForm.OpenTypeEnum;
-    body?: string;
+    readonly id?: string;
+    name?: string;
+    code?: string;
+    form?: string;
+    openType?: SparrowForm.OpenTypeEnum;
 }
-export namespace TaskForm {
+export namespace SparrowForm {
     export type OpenTypeEnum = 'DIALOG' | 'PAGE';
     export const OpenTypeEnum = {
         DIALOG: 'DIALOG' as OpenTypeEnum,

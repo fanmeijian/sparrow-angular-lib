@@ -19,21 +19,17 @@ import { Observable }                                        from 'rxjs';
 
 import { PageSparrowForm } from '../model/pageSparrowForm';
 import { PageSparrowFormData } from '../model/pageSparrowFormData';
-import { ProcessForm } from '../model/processForm';
-import { ProcessFormId } from '../model/processFormId';
 import { SparrowForm } from '../model/sparrowForm';
 import { SparrowFormData } from '../model/sparrowFormData';
-import { TaskForm } from '../model/taskForm';
-import { TaskFormId } from '../model/taskFormId';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
 
 @Injectable()
-export class FormsService {
+export class FormService {
 
-    protected basePath = 'http://localhost:4421/sparrow-form-service';
+    protected basePath = 'http://localhost:4421/org-service';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -107,7 +103,7 @@ export class FormsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<PageSparrowFormData>('get',`${this.basePath}/forms/sparrow-forms/datas`,
+        return this.httpClient.request<PageSparrowFormData>('get',`${this.basePath}/forms/datas`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -153,99 +149,7 @@ export class FormsService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('post',`${this.basePath}/forms/sparrow-forms`,
-            {
-                body: body,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 创建流程表单
-     * 
-     * @param body 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public createFlowForm(body: ProcessForm, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public createFlowForm(body: ProcessForm, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public createFlowForm(body: ProcessForm, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public createFlowForm(body: ProcessForm, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling createFlowForm.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.request<any>('post',`${this.basePath}/forms/process-forms`,
-            {
-                body: body,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 创建任务表单
-     * 
-     * @param body 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public createTaskForm(body: TaskForm, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public createTaskForm(body: TaskForm, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public createTaskForm(body: TaskForm, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public createTaskForm(body: TaskForm, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling createTaskForm.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.request<any>('post',`${this.basePath}/forms/task-forms`,
+        return this.httpClient.request<any>('post',`${this.basePath}/forms`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -287,7 +191,7 @@ export class FormsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<SparrowForm>('get',`${this.basePath}/forms/sparrow-forms/${encodeURIComponent(String(formId))}`,
+        return this.httpClient.request<SparrowForm>('get',`${this.basePath}/forms/${encodeURIComponent(String(formId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -342,7 +246,7 @@ export class FormsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<PageSparrowForm>('get',`${this.basePath}/forms/sparrow-forms`,
+        return this.httpClient.request<PageSparrowForm>('get',`${this.basePath}/forms`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -388,53 +292,7 @@ export class FormsService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('post',`${this.basePath}/forms/sparrow-forms/delete`,
-            {
-                body: body,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 删除流程表单
-     * 
-     * @param body 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public deleteFlowForm(body: Array<ProcessFormId>, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteFlowForm(body: Array<ProcessFormId>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteFlowForm(body: Array<ProcessFormId>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteFlowForm(body: Array<ProcessFormId>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling deleteFlowForm.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.request<any>('post',`${this.basePath}/forms/process-forms/delete`,
+        return this.httpClient.request<any>('post',`${this.basePath}/forms/delete`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -480,104 +338,9 @@ export class FormsService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('post',`${this.basePath}/forms/sparrow-forms/datas/delete`,
+        return this.httpClient.request<any>('post',`${this.basePath}/forms/datas/delete`,
             {
                 body: body,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 删除任务表单
-     * 
-     * @param body 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public deleteTaskForm(body: Array<TaskFormId>, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteTaskForm(body: Array<TaskFormId>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteTaskForm(body: Array<TaskFormId>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteTaskForm(body: Array<TaskFormId>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling deleteTaskForm.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.request<any>('put',`${this.basePath}/forms/task-forms/delete`,
-            {
-                body: body,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 流程表单详情
-     * 
-     * @param deploymentId 
-     * @param processId 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public flowForm(deploymentId?: string, processId?: string, observe?: 'body', reportProgress?: boolean): Observable<ProcessForm>;
-    public flowForm(deploymentId?: string, processId?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ProcessForm>>;
-    public flowForm(deploymentId?: string, processId?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ProcessForm>>;
-    public flowForm(deploymentId?: string, processId?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (deploymentId !== undefined && deploymentId !== null) {
-            queryParameters = queryParameters.set('deploymentId', <any>deploymentId);
-        }
-        if (processId !== undefined && processId !== null) {
-            queryParameters = queryParameters.set('processId', <any>processId);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<ProcessForm>('get',`${this.basePath}/forms/process-forms`,
-            {
-                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -617,7 +380,7 @@ export class FormsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<SparrowFormData>('get',`${this.basePath}/forms/sparrow-forms/datas/${encodeURIComponent(String(formDataId))}`,
+        return this.httpClient.request<SparrowFormData>('get',`${this.basePath}/forms/datas/${encodeURIComponent(String(formDataId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -677,7 +440,7 @@ export class FormsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<PageSparrowFormData>('get',`${this.basePath}/forms/sparrow-forms/${encodeURIComponent(String(formId))}/datas`,
+        return this.httpClient.request<PageSparrowFormData>('get',`${this.basePath}/forms/${encodeURIComponent(String(formId))}/datas`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -728,63 +491,9 @@ export class FormsService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('post',`${this.basePath}/forms/sparrow-forms/${encodeURIComponent(String(formId))}/datas`,
+        return this.httpClient.request<any>('post',`${this.basePath}/forms/${encodeURIComponent(String(formId))}/datas`,
             {
                 body: body,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 任务表单详情
-     * 
-     * @param taskFormName 
-     * @param deploymentId 
-     * @param processId 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public taskForm(taskFormName?: string, deploymentId?: string, processId?: string, observe?: 'body', reportProgress?: boolean): Observable<TaskForm>;
-    public taskForm(taskFormName?: string, deploymentId?: string, processId?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TaskForm>>;
-    public taskForm(taskFormName?: string, deploymentId?: string, processId?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TaskForm>>;
-    public taskForm(taskFormName?: string, deploymentId?: string, processId?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-
-
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (taskFormName !== undefined && taskFormName !== null) {
-            queryParameters = queryParameters.set('taskFormName', <any>taskFormName);
-        }
-        if (deploymentId !== undefined && deploymentId !== null) {
-            queryParameters = queryParameters.set('deploymentId', <any>deploymentId);
-        }
-        if (processId !== undefined && processId !== null) {
-            queryParameters = queryParameters.set('processId', <any>processId);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<TaskForm>('get',`${this.basePath}/forms/task-forms`,
-            {
-                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -833,68 +542,9 @@ export class FormsService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('put',`${this.basePath}/forms/sparrow-forms/${encodeURIComponent(String(formId))}`,
+        return this.httpClient.request<any>('put',`${this.basePath}/forms/${encodeURIComponent(String(formId))}`,
             {
                 body: body,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 更新流程表单
-     * 
-     * @param body 
-     * @param deploymentId 
-     * @param processId 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public updateFlowForm(body: ProcessForm, deploymentId?: string, processId?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public updateFlowForm(body: ProcessForm, deploymentId?: string, processId?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public updateFlowForm(body: ProcessForm, deploymentId?: string, processId?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public updateFlowForm(body: ProcessForm, deploymentId?: string, processId?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling updateFlowForm.');
-        }
-
-
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (deploymentId !== undefined && deploymentId !== null) {
-            queryParameters = queryParameters.set('deploymentId', <any>deploymentId);
-        }
-        if (processId !== undefined && processId !== null) {
-            queryParameters = queryParameters.set('processId', <any>processId);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.request<any>('put',`${this.basePath}/forms/process-forms`,
-            {
-                body: body,
-                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -943,73 +593,9 @@ export class FormsService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('put',`${this.basePath}/forms/sparrow-forms/datas/${encodeURIComponent(String(dataId))}`,
+        return this.httpClient.request<any>('put',`${this.basePath}/forms/datas/${encodeURIComponent(String(dataId))}`,
             {
                 body: body,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 更新任务表单
-     * 
-     * @param body 
-     * @param taskFormName 
-     * @param deploymentId 
-     * @param processId 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public updateTaskForm(body: TaskForm, taskFormName?: string, deploymentId?: string, processId?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public updateTaskForm(body: TaskForm, taskFormName?: string, deploymentId?: string, processId?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public updateTaskForm(body: TaskForm, taskFormName?: string, deploymentId?: string, processId?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public updateTaskForm(body: TaskForm, taskFormName?: string, deploymentId?: string, processId?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling updateTaskForm.');
-        }
-
-
-
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (taskFormName !== undefined && taskFormName !== null) {
-            queryParameters = queryParameters.set('taskFormName', <any>taskFormName);
-        }
-        if (deploymentId !== undefined && deploymentId !== null) {
-            queryParameters = queryParameters.set('deploymentId', <any>deploymentId);
-        }
-        if (processId !== undefined && processId !== null) {
-            queryParameters = queryParameters.set('processId', <any>processId);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.request<any>('put',`${this.basePath}/forms/task-forms`,
-            {
-                body: body,
-                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

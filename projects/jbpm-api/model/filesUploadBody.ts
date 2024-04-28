@@ -10,8 +10,6 @@
  * Do not edit the class manually.
  */
 
-export interface TaskFormId { 
-    deploymentId?: string;
-    processId?: string;
-    taskFormName?: string;
+export interface FilesUploadBody { 
+    file: Blob;
 }

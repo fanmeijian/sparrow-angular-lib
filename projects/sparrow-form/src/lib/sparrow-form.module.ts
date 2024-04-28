@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 import { AngularMaterialModule } from './angular-material.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormioModule } from '@formio/angular';
+import { FormPreviewComponent } from './form/form-preview/form-preview.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { FormioModule } from '@formio/angular';
     FormDataViewComponent,
     FormDataListComponent,
     MyFormListComponent,
-    MyFormDataListComponent
+    MyFormDataListComponent,
+    FormPreviewComponent
   ],
   imports: [
     BrowserModule,
