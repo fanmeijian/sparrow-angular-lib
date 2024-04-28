@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProcessImagesService } from '@sparrowmini/jbpm-api';
+import 'svg-pan-zoom-container'
 
 @Component({
   selector: 'lib-view-process-image',

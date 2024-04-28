@@ -1,0 +1,51 @@
+<ng-container *ngFor="let task of taskComments">
+  <div
+    *ngIf="task?.comments?.length > 0"
+    style="
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+      background-color: #fafafa;
+      margin: 0px 0px 10px 0px;
+      border-radius: 5px;
+    "
+  >
+    <h5>{{ task["task-name"] }}</h5>
+    <ng-container *ngFor="let item of task.comments">
+      <span style="color: grey; font-size: 12px">
+        {{ item["comment-added-by"] }}
+        {{ item["comment-added-at"] | date : "short" }}</span
+      >
+      <div>
+        <span
+          *ngIf="
+            task['task-status'] !== 'Completed' &&
+            user?.username === item['comment-added-by']
+          "
+          style="color: red; cursor: pointer; padding: 10px"
+          (click)="delete(item['comment-id'])"
+          >x</span
+        >
+        <span>{{ item.comment }}</span>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="data && data['task-status'] !== 'Completed'">
+  <div style="display: flex; flex-direction: row; align-items: center">
+    <mat-form-field appearance="fill" style="width: 80%">
+      <mat-label>意见</mat-label>
+      <textarea [(ngModel)]="comment" matInput></textarea>
+    </mat-form-field>
+    <button
+      style="font-size: 14px; margin: 10px"
+      type="button"
+      mat-icon-button
+      color="primary"
+      (click)="save()"
+    >
+      <span class="material-icons"> add_box </span>
+    </button>
+  </div>
+</ng-container>

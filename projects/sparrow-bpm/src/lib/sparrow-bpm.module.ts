@@ -17,6 +17,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { SparrowKeycloakAdminApiModule } from '@sparrowmini/sparrow-keycloak-admin-api';
 import { ViewProcessImageComponent } from './process/view-process-image/view-process-image.component';
 import { ViewProcessInstanceComponent } from './process/view-process-instance/view-process-instance.component';
+import { TaskTodoComponent } from './task/task-todo/task-todo.component';
+import { TaskDoneComponent } from './task/task-done/task-done.component';
+import { MyProcessInstancesComponent } from './process/my-process-instances/my-process-instances.component';
+import { TaskCommentComponent } from './task/task-comment/task-comment.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +34,10 @@ import { ViewProcessInstanceComponent } from './process/view-process-instance/vi
     ProcessDefinitionsComponent,
     ViewProcessImageComponent,
     ViewProcessInstanceComponent,
+    TaskTodoComponent,
+    TaskDoneComponent,
+    MyProcessInstancesComponent,
+    TaskCommentComponent,
   ],
   imports: [
     BrowserModule,
