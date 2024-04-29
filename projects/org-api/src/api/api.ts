@@ -6,6 +6,8 @@ export * from './dataPermission.service';
 import { DataPermissionService } from './dataPermission.service';
 export * from './datamodel.service';
 import { DatamodelService } from './datamodel.service';
+export * from './dict.service';
+import { DictService } from './dict.service';
 export * from './employee.service';
 import { EmployeeService } from './employee.service';
 export * from './file.service';

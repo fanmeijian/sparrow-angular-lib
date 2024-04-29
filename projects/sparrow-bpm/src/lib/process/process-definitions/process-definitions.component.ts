@@ -162,4 +162,8 @@ export class ProcessDefinitionsComponent implements OnInit {
         }
       });
   }
+
+  publish(element:any){
+    this.formService.publishProcess([{name:'',remark:'',deploymentId:element['container-id'],processId:element['process-id']}]).subscribe()
+  }
 }

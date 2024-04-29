@@ -7,6 +7,7 @@ import { AuditlogService } from './api/auditlog.service';
 import { DataOrganizationService } from './api/dataOrganization.service';
 import { DataPermissionService } from './api/dataPermission.service';
 import { DatamodelService } from './api/datamodel.service';
+import { DictService } from './api/dict.service';
 import { EmployeeService } from './api/employee.service';
 import { FileService } from './api/file.service';
 import { GroupService } from './api/group.service';
@@ -32,6 +33,7 @@ import { UserService } from './api/user.service';
     DataOrganizationService,
     DataPermissionService,
     DatamodelService,
+    DictService,
     EmployeeService,
     FileService,
     GroupService,

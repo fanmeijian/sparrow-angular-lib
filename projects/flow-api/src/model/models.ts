@@ -3,3 +3,9 @@ export * from './processFormId';
 export * from './sparrowForm';
 export * from './taskForm';
 export * from './taskFormId';
+export * from './dataOrganization'
+export * from './errMsg'
+export * from './pageableObject'
+export * from './pagePublishedProcess'
+export * from './publishedProcess'
+export * from './sortObject'

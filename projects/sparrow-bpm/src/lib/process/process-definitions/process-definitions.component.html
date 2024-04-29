@@ -95,6 +95,15 @@
       <button
         mat-icon-button
         color="primary"
+        (click)="publish(element)"
+        matTooltip="发布流程"
+      >
+        <mat-icon> share </mat-icon>
+      </button>
+
+      <button
+        mat-icon-button
+        color="primary"
         routerLink="/builder"
         [queryParams]="{ id: element.id }"
         matTooltip="下架"

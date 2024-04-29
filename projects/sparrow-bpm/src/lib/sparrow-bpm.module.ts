@@ -21,6 +21,8 @@ import { TaskTodoComponent } from './task/task-todo/task-todo.component';
 import { TaskDoneComponent } from './task/task-done/task-done.component';
 import { MyProcessInstancesComponent } from './process/my-process-instances/my-process-instances.component';
 import { TaskCommentComponent } from './task/task-comment/task-comment.component';
+import { ProcessPublishedComponent } from './process/process-published/process-published.component';
+import { TaskExecutionComponent } from './task/task-execution/task-execution.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { TaskCommentComponent } from './task/task-comment/task-comment.component
     TaskDoneComponent,
     MyProcessInstancesComponent,
     TaskCommentComponent,
+    ProcessPublishedComponent,
+    TaskExecutionComponent,
   ],
   imports: [
     BrowserModule,
