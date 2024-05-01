@@ -23,6 +23,7 @@ import { ScopeService } from './api/scope.service';
 import { SysconfigService } from './api/sysconfig.service';
 import { SysroleService } from './api/sysrole.service';
 import { UserService } from './api/user.service';
+import { ReportService } from './api/report.service';
 
 @NgModule({
   imports:      [],
@@ -48,7 +49,8 @@ import { UserService } from './api/user.service';
     ScopeService,
     SysconfigService,
     SysroleService,
-    UserService ]
+    UserService,
+    ReportService ]
 })
 export class ApiModule {
     public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders<ApiModule> {

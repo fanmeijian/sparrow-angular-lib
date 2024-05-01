@@ -8,12 +8,18 @@
     "inlineSources": true,
     "types": [],
     "paths": {
-      "@shared/*": ["app/shared/*"],
+      "@shared/*": [
+        "app/shared/*"
+      ],
       "rxjs": [
         "node_modules/rxjs"
       ],
       "rxjs/*": [
         "node_modules/rxjs/*"
+      ],
+      "*": [
+        "node_modules/*",
+        "src/types/*"
       ]
     },
   },

@@ -8,6 +8,8 @@ import { SysrolePermissionComponent } from '../sysrole-permission/sysrole-permis
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataPermissionGrantComponent } from '../../data-permission/data-permission-grant/data-permission-grant.component';
 import { HttpClient } from '@angular/common/http';
+import { ReportTemplateCreateComponent } from '../../report/report-template-create/report-template-create.component';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'lib-sysroles',
@@ -30,7 +32,8 @@ export class SysrolesComponent implements OnInit {
     private sysroleService: SysroleService,
     private dialog: MatDialog,
     private snack: MatSnackBar,
-    private http: HttpClient
+    private http: HttpClient,
+    private sanitizer:DomSanitizer
   ) {}
 
   filters: any[] = [];
@@ -114,14 +117,41 @@ export class SysrolesComponent implements OnInit {
   }
 
   openDataPermission(sysrole: any) {
-    this.dialog.open(DataPermissionGrantComponent, {
-      data: sysrole,
-      width: '80%',
-    }).afterClosed()
-    .subscribe((result) => {
-      if (result) {
-        this.ngOnInit();
-      }
-    });
+    this.dialog
+      .open(DataPermissionGrantComponent, {
+        data: sysrole,
+        width: '80%',
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.ngOnInit();
+        }
+      });
+  }
+
+  newReport() {
+    this.dialog.open(ReportTemplateCreateComponent);
+  }
+
+  hhh: any
+  exportReport() {
+    // this.http
+    //   .get(
+    //     'http://localhost:4421/org-service/reports/ff8080818f320131018f320f03b30002/export?type=HTML',
+    //     { responseType: 'blob' }
+    //   )
+    //   .subscribe((res) => {
+    //     // var downloadURL = URL.createObjectURL(res);
+    //     // window.open(downloadURL);
+    //     // var reader = new FileReader();
+    //     // reader.onload = function () {
+    //     //   alert(reader.result);
+    //     // };
+    //     // reader.readAsText(res);
+    //     res.text().then(text=>{
+    //       this.hhh=this.sanitizer.bypassSecurityTrustHtml(text);
+    //     })
+    //   });
   }
 }

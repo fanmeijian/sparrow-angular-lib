@@ -66,6 +66,14 @@ import { PageElementsComponent } from './page-element/page-elements/page-element
 import { PageElementCreateComponent } from './page-element/page-element-create/page-element-create.component';
 import { PageElementPermissionComponent } from './page-element/page-element-permission/page-element-permission.component';
 import { PgelPermissionDirective } from './directives/pgel-permission.directive';
+import { DictsComponent } from './dict/dicts/dicts.component';
+import { DictCatalogCreateComponent } from './dict/dict-catalog-create/dict-catalog-create.component';
+import { DictCreateComponent } from './dict/dict-create/dict-create.component';
+import { DictSelectionComponent } from './dict/dict-selection/dict-selection.component';
+import { DictCatalogSelectionComponent } from './dict/dict-catalog-selection/dict-catalog-selection.component';
+import { ReportTemplateCreateComponent } from './report/report-template-create/report-template-create.component';
+import { ReportTemplatesComponent } from './report/report-templates/report-templates.component';
+import { ViewReportComponent } from './report/view-report/view-report.component';
 
 @NgModule({
   declarations: [
@@ -110,6 +118,14 @@ import { PgelPermissionDirective } from './directives/pgel-permission.directive'
     PageElementCreateComponent,
     PageElementPermissionComponent,
     PgelPermissionDirective,
+    DictsComponent,
+    DictCatalogCreateComponent,
+    DictCreateComponent,
+    DictSelectionComponent,
+    DictCatalogSelectionComponent,
+    ReportTemplateCreateComponent,
+    ReportTemplatesComponent,
+    ViewReportComponent,
   ],
   imports: [
     BrowserModule,

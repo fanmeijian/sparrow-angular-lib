@@ -104,3 +104,5 @@ export * from './userPermission';
 export * from './userSysrole';
 export * from './userSysrolePK';
 export * from './userToken';
+export * from './pageReportTemplate';
+export * from './reportTemplate';
