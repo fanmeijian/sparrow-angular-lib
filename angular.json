@@ -689,6 +689,37 @@
           }
         }
       }
+    },
+    "camunda-api": {
+      "projectType": "library",
+      "root": "projects/camunda-api",
+      "sourceRoot": "projects/camunda-api/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/camunda-api/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/camunda-api/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/camunda-api/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/camunda-api/src/test.ts",
+            "tsConfig": "projects/camunda-api/tsconfig.spec.json",
+            "karmaConfig": "projects/camunda-api/karma.conf.js"
+          }
+        }
+      }
     }
   }
 }

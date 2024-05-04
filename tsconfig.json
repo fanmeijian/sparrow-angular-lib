@@ -17,6 +17,10 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "paths": {
+      "camunda-api": [
+        "dist/camunda-api/camunda-api",
+        "dist/camunda-api"
+      ],
       "flow-api": [
         "dist/flow-api/flow-api",
         "dist/flow-api"
