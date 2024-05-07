@@ -30,7 +30,9 @@
 
     <ng-container matColumnDef="code">
       <mat-header-cell *matHeaderCellDef>代码</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ element.code }}</mat-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-button color="primary" routerLink="view-report" [queryParams]="{templateId: element.id}">{{ element.code }}</button>
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="users">

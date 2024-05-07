@@ -9,7 +9,6 @@ import {
   ProcessAndTaskDefinitionsService,
   ProcessQueriesService,
 } from '@sparrowmini/jbpm-api';
-import { ProcessCreateComponent } from '../process-create/process-create.component';
 
 @Component({
   selector: 'lib-process-definitions',
@@ -38,82 +37,80 @@ export class ProcessDefinitionsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.flowService.processDefinitions([],this.pageable.pageIndex, this.pageable.pageSize).subscribe(res=>{
-      this.dataSource = new MatTableDataSource<any>(res.content);
-    })
-    // this.flowService
-    //   .listContainers()
-    //   .pipe(
-    //     map((res) => res.result['kie-containers']['kie-container']),
-    //     switchMap((cs) =>
-    //       zip(
-    //         ...cs.map((c:any) =>
-    //           this.processQueriesService
-    //             .getProcessesByDeploymentId1(c['container-id'])
-    //             .pipe(map((ps) => ps.processes))
-    //         )
-    //       )
-    //     ),
-    //     map((m) => m.flat()),
-    //     tap((t) => console.log(t)),
-    //     switchMap((s: any[]) =>
-    //       zip(
-    //         ...s.map((m) => {
-    //           let processFormId: ProcessFormId = {
-    //             deploymentId: m['container-id'],
-    //             processId: m['process-id'],
-    //           };
-    //           const $isConfigForm = this.formService.processForm(
-    //             processFormId.deploymentId,
-    //             processFormId.processId
-    //           );
-    //           const $userTasks = this.processAndTaskDefinitionsService
-    //             .getTasksDefinitions(m['container-id'], m['process-id'])
-    //             .pipe(
-    //               map((tm: any) => tm.task),
-    //               tap((t) => console.log(t)),
-    //               switchMap((tasks: any[]) =>
-    //                 tasks.length === 0
-    //                   ? of([])
-    //                   : zip(
-    //                       tasks.map((task) =>
-    //                         this.formService
-    //                           .taskForm(
-    //                             m['container-id'],
-    //                             m['process-id'],
-    //                             task['task-form-name']
-    //                           )
-    //                           .pipe(
-    //                             map((tt) =>
-    //                               Object.assign({}, task, {
-    //                                 isConfigForm: tt ? true : false,
-    //                               })
-    //                             )
-    //                           )
-    //                       )
-    //                     )
-    //               )
-    //             );
-    //           return combineLatest($userTasks, $isConfigForm).pipe(
-    //             map(([a, b]) =>
-    //               Object.assign(
-    //                 {},
-    //                 m,
-    //                 { task: a },
-    //                 { isConfigForm: b ? true : false }
-    //               )
-    //             )
-    //           );
-    //         })
-    //       )
-    //     ),
-    //     tap((t) => console.log(t))
-    //   )
-    //   .subscribe((res: any) => {
-    //     // console.log(res.result['kie-containers']['kie-container'])
-    //     console.log(res);
-    //     this.dataSource = new MatTableDataSource<any>(res.flat());
-    //   });
+
+    this.kIEServerAndKIEContainersService
+      .listContainers()
+      .pipe(
+        map((res) => res.result['kie-containers']['kie-container']),
+        switchMap((cs) =>
+          zip(
+            ...cs.map((c:any) =>
+              this.processQueriesService
+                .getProcessesByDeploymentId1(c['container-id'])
+                .pipe(map((ps) => ps.processes))
+            )
+          )
+        ),
+        map((m) => m.flat()),
+        tap((t) => console.log(t)),
+        switchMap((s: any[]) =>
+          zip(
+            ...s.map((m) => {
+              let processFormId: ProcessFormId = {
+                deploymentId: m['container-id'],
+                processId: m['process-id'],
+              };
+              const $isConfigForm = this.flowService.processForm(
+                processFormId.deploymentId,
+                processFormId.processId
+              );
+              const $userTasks = this.processAndTaskDefinitionsService
+                .getTasksDefinitions(m['container-id'], m['process-id'])
+                .pipe(
+                  map((tm: any) => tm.task),
+                  tap((t) => console.log(t)),
+                  switchMap((tasks: any[]) =>
+                    tasks.length === 0
+                      ? of([])
+                      : zip(
+                          tasks.map((task) =>
+                            this.flowService
+                              .taskForm(
+                                m['container-id'],
+                                m['process-id'],
+                                task['task-form-name']
+                              )
+                              .pipe(
+                                map((tt) =>
+                                  Object.assign({}, task, {
+                                    isConfigForm: tt ? true : false,
+                                  })
+                                )
+                              )
+                          )
+                        )
+                  )
+                );
+              return combineLatest($userTasks, $isConfigForm).pipe(
+                map(([a, b]) =>
+                  Object.assign(
+                    {},
+                    m,
+                    { task: a },
+                    { isConfigForm: b ? true : false }
+                  )
+                )
+              );
+            })
+          )
+        ),
+        tap((t) => console.log(t))
+      )
+      .subscribe((res: any) => {
+        // console.log(res.result['kie-containers']['kie-container'])
+        console.log(res);
+        this.dataSource = new MatTableDataSource<any>(res.flat());
+      });
   }
 
   startFlow(flow: any) {
@@ -173,6 +170,6 @@ export class ProcessDefinitionsComponent implements OnInit {
   }
 
   open(){
-    this.dialog.open(ProcessCreateComponent,{width:'90%'})
+    // this.dialog.open(ProcessCreateComponent,{width:'90%'})
   }
 }

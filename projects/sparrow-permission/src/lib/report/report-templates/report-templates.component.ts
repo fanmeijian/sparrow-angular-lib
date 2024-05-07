@@ -27,6 +27,7 @@ export class ReportTemplatesComponent implements OnInit {
 
   displayedColumns = ['seq', 'name', 'code', 'users', 'actions'];
 
+
   constructor(
     private sysroleService: ReportService,
     private dialog: MatDialog,
