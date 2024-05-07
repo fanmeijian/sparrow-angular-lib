@@ -9,6 +9,7 @@ import {
   ProcessAndTaskDefinitionsService,
   ProcessQueriesService,
 } from '@sparrowmini/jbpm-api';
+import { ProcessCreateComponent } from '../process-create/process-create.component';
 
 @Component({
   selector: 'lib-process-definitions',
@@ -26,93 +27,97 @@ export class ProcessDefinitionsComponent implements OnInit {
     'symbol',
   ];
   dataSource = new MatTableDataSource<any>();
+  pageable = {pageSize: 10, pageIndex: 0, length: 0}
 
   constructor(
-    private flowService: KIEServerAndKIEContainersService,
+    private kIEServerAndKIEContainersService: KIEServerAndKIEContainersService,
     private dialog: MatDialog,
-    private formService: FlowService,
+    private flowService: FlowService,
     private processQueriesService: ProcessQueriesService,
     private processAndTaskDefinitionsService: ProcessAndTaskDefinitionsService
   ) {}
 
   ngOnInit(): void {
-    this.flowService
-      .listContainers()
-      .pipe(
-        map((res) => res.result['kie-containers']['kie-container']),
-        switchMap((cs) =>
-          zip(
-            ...cs.map((c:any) =>
-              this.processQueriesService
-                .getProcessesByDeploymentId1(c['container-id'])
-                .pipe(map((ps) => ps.processes))
-            )
-          )
-        ),
-        map((m) => m.flat()),
-        tap((t) => console.log(t)),
-        switchMap((s: any[]) =>
-          zip(
-            ...s.map((m) => {
-              let processFormId: ProcessFormId = {
-                deploymentId: m['container-id'],
-                processId: m['process-id'],
-              };
-              const $isConfigForm = this.formService.processForm(
-                processFormId.deploymentId,
-                processFormId.processId
-              );
-              const $userTasks = this.processAndTaskDefinitionsService
-                .getTasksDefinitions(m['container-id'], m['process-id'])
-                .pipe(
-                  map((tm: any) => tm.task),
-                  tap((t) => console.log(t)),
-                  switchMap((tasks: any[]) =>
-                    tasks.length === 0
-                      ? of([])
-                      : zip(
-                          tasks.map((task) =>
-                            this.formService
-                              .taskForm(
-                                m['container-id'],
-                                m['process-id'],
-                                task['task-form-name']
-                              )
-                              .pipe(
-                                map((tt) =>
-                                  Object.assign({}, task, {
-                                    isConfigForm: tt ? true : false,
-                                  })
-                                )
-                              )
-                          )
-                        )
-                  )
-                );
-              return combineLatest($userTasks, $isConfigForm).pipe(
-                map(([a, b]) =>
-                  Object.assign(
-                    {},
-                    m,
-                    { task: a },
-                    { isConfigForm: b ? true : false }
-                  )
-                )
-              );
-            })
-          )
-        ),
-        tap((t) => console.log(t))
-      )
-      .subscribe((res: any) => {
-        // console.log(res.result['kie-containers']['kie-container'])
-        console.log(res);
-        this.dataSource = new MatTableDataSource<any>(res.flat());
-      });
+    this.flowService.processDefinitions([],this.pageable.pageIndex, this.pageable.pageSize).subscribe(res=>{
+      this.dataSource = new MatTableDataSource<any>(res.content);
+    })
+    // this.flowService
+    //   .listContainers()
+    //   .pipe(
+    //     map((res) => res.result['kie-containers']['kie-container']),
+    //     switchMap((cs) =>
+    //       zip(
+    //         ...cs.map((c:any) =>
+    //           this.processQueriesService
+    //             .getProcessesByDeploymentId1(c['container-id'])
+    //             .pipe(map((ps) => ps.processes))
+    //         )
+    //       )
+    //     ),
+    //     map((m) => m.flat()),
+    //     tap((t) => console.log(t)),
+    //     switchMap((s: any[]) =>
+    //       zip(
+    //         ...s.map((m) => {
+    //           let processFormId: ProcessFormId = {
+    //             deploymentId: m['container-id'],
+    //             processId: m['process-id'],
+    //           };
+    //           const $isConfigForm = this.formService.processForm(
+    //             processFormId.deploymentId,
+    //             processFormId.processId
+    //           );
+    //           const $userTasks = this.processAndTaskDefinitionsService
+    //             .getTasksDefinitions(m['container-id'], m['process-id'])
+    //             .pipe(
+    //               map((tm: any) => tm.task),
+    //               tap((t) => console.log(t)),
+    //               switchMap((tasks: any[]) =>
+    //                 tasks.length === 0
+    //                   ? of([])
+    //                   : zip(
+    //                       tasks.map((task) =>
+    //                         this.formService
+    //                           .taskForm(
+    //                             m['container-id'],
+    //                             m['process-id'],
+    //                             task['task-form-name']
+    //                           )
+    //                           .pipe(
+    //                             map((tt) =>
+    //                               Object.assign({}, task, {
+    //                                 isConfigForm: tt ? true : false,
+    //                               })
+    //                             )
+    //                           )
+    //                       )
+    //                     )
+    //               )
+    //             );
+    //           return combineLatest($userTasks, $isConfigForm).pipe(
+    //             map(([a, b]) =>
+    //               Object.assign(
+    //                 {},
+    //                 m,
+    //                 { task: a },
+    //                 { isConfigForm: b ? true : false }
+    //               )
+    //             )
+    //           );
+    //         })
+    //       )
+    //     ),
+    //     tap((t) => console.log(t))
+    //   )
+    //   .subscribe((res: any) => {
+    //     // console.log(res.result['kie-containers']['kie-container'])
+    //     console.log(res);
+    //     this.dataSource = new MatTableDataSource<any>(res.flat());
+    //   });
   }
 
   startFlow(flow: any) {
-    this.formService
+    this.flowService
       .processForm(
         flow['container-id'],
         flow['process-id'],
@@ -136,7 +141,7 @@ export class ProcessDefinitionsComponent implements OnInit {
       deploymentId: flow['container-id'],
       processId: flow['process-id'],
     };
-    this.formService
+    this.flowService
       .processForm(processFormId.deploymentId, processFormId.processId)
       .subscribe((res) => {
         if (res) {
@@ -148,7 +153,7 @@ export class ProcessDefinitionsComponent implements OnInit {
   }
 
   ifConfigTaskForm(taskFormId: TaskFormId) {
-    this.formService
+    this.flowService
       .taskForm(
         taskFormId.taskFormName,
         taskFormId.deploymentId,
@@ -164,6 +169,10 @@ export class ProcessDefinitionsComponent implements OnInit {
   }
 
   publish(element:any){
-    this.formService.publishProcess([{name:'',remark:'',deploymentId:element['container-id'],processId:element['process-id']}]).subscribe()
+    this.flowService.publishProcess([{name:'',remark:'',deploymentId:element['container-id'],processId:element['process-id']}]).subscribe()
+  }
+
+  open(){
+    this.dialog.open(ProcessCreateComponent,{width:'90%'})
   }
 }

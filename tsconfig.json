@@ -5,7 +5,7 @@
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
+    "strict": false,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
@@ -21,6 +21,10 @@
         "dist/camunda-api/camunda-api",
         "dist/camunda-api"
       ],
+      "camunda-bpm": [
+        "dist/camunda-bpm/camunda-bpm",
+        "dist/camunda-bpm"
+      ],
       "flow-api": [
         "dist/flow-api/flow-api",
         "dist/flow-api"
@@ -32,8 +36,6 @@
       "jbpm-api": [
         "dist/jbpm-api/jbpm-api",
         "dist/jbpm-api",
-        "dist/jbpm-api/jbpm-api",
-        "dist/jbpm-api"
       ],
       "kegistration-api": [
         "dist/kegistration-api/kegistration-api",
@@ -123,6 +125,8 @@
       "dom"
     ],
     "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "checkJs": false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

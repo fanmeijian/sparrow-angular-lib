@@ -1,0 +1,43 @@
+<!-- <lib-editing-tools (onDownloadSvg)=handleDownloadSvg() (onDownloadXml)=handleDownloadXml() (onRedo)=handleRedo()
+(onSave)=handleSave() (onUndo)=handleUndo() (onZoomIn)=handleZoom(0.1)
+(onZoomOut)=handleZoom(-0.1) ></lib-editing-tools> -->
+<!-- <button mat-button (click)="deploye()">deploye</button> -->
+
+<!-- <input type="file" class="file-upload" (change)="deploye($event)"> -->
+
+<form [formGroup]="formGroup" (submit)="submit()">
+  <div>
+    <button mat-flat-button color="primary">保存</button>
+  </div>
+
+  <mat-form-field appearance="fill">
+    <mat-label>名称</mat-label>
+    <input matInput formControlName="name" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>代码</mat-label>
+    <input matInput formControlName="code" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" style="width: 100%">
+    <mat-label>备注</mat-label>
+    <textarea matInput formControlName="remark"></textarea>
+  </mat-form-field>
+</form>
+
+<div style="display: flex; flex-direction: row; height: calc(100vh - 300px)">
+  <div #canvas id="canvas" style="float: left; width: 70%; height: 100%"></div>
+  <div
+    #properteis
+    id="properteis"
+    style="float: right; width: 25%; height: 100%"
+  ></div>
+</div>
+
+<!--
+<div class="row">
+  <div id="el" style="float:left;width:70%; height: 1000px">
+  </div>
+  <div id="js-properties-panel" style="float:right;width:25%; height: 1000px"></div>
+</div> -->

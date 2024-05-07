@@ -513,7 +513,10 @@
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/test-lib/ng-package.json"
+            "project": "projects/test-lib/ng-package.json",
+            "scripts": [
+              "node_modules/bpmn-js-properties-panel/dist/index.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -717,6 +720,37 @@
             "main": "projects/camunda-api/src/test.ts",
             "tsConfig": "projects/camunda-api/tsconfig.spec.json",
             "karmaConfig": "projects/camunda-api/karma.conf.js"
+          }
+        }
+      }
+    },
+    "camunda-bpm": {
+      "projectType": "library",
+      "root": "projects/camunda-bpm",
+      "sourceRoot": "projects/camunda-bpm/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/camunda-bpm/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/camunda-bpm/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/camunda-bpm/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/camunda-bpm/src/test.ts",
+            "tsConfig": "projects/camunda-bpm/tsconfig.spec.json",
+            "karmaConfig": "projects/camunda-bpm/karma.conf.js"
           }
         }
       }

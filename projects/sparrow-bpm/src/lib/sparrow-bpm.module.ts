@@ -23,6 +23,8 @@ import { MyProcessInstancesComponent } from './process/my-process-instances/my-p
 import { TaskCommentComponent } from './task/task-comment/task-comment.component';
 import { ProcessPublishedComponent } from './process/process-published/process-published.component';
 import { TaskExecutionComponent } from './task/task-execution/task-execution.component';
+import { ProcessCreateComponent } from './process/process-create/process-create.component';
+import { EditingToolsComponent } from './bpmnio/editing-tools/editing-tools.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import { TaskExecutionComponent } from './task/task-execution/task-execution.com
     TaskCommentComponent,
     ProcessPublishedComponent,
     TaskExecutionComponent,
+    ProcessCreateComponent,
+    EditingToolsComponent,
   ],
   imports: [
     BrowserModule,

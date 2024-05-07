@@ -1,3 +1,6 @@
+<button mat-flat-button [routerLink]="['../process-create']" color="primary">
+  新建流程
+</button>
 <table mat-table [dataSource]="dataSource">
   <ng-container matColumnDef="position">
     <th mat-header-cell *matHeaderCellDef></th>
@@ -7,7 +10,7 @@
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef>流程</th>
     <td mat-cell *matCellDef="let element">
-      <button
+      <!-- <button
         mat-icon-button
         [style]="'color:' + (element.isConfigForm ? 'green' : 'grey')"
         [routerLink]="['../form-design']"
@@ -20,7 +23,19 @@
       >
         <span class="material-icons"> dynamic_form </span>
       </button>
-      {{ element["process-name"] }}
+          {{ element["process-name"] }} -->
+      <button
+        mat-icon-button
+        [style]="'color:' + (element.isConfigForm ? 'green' : 'grey')"
+        [routerLink]="['../form-design']"
+        [queryParams]="{
+          id: element.id
+        }"
+      >
+        <span class="material-icons"> dynamic_form </span>
+      </button>
+      <button mat-button color="primary" [routerLink]="['../process-create']" [queryParams]="{id: element.id}" >{{ element.name }}</button>
+
     </td>
   </ng-container>
 
@@ -97,6 +112,24 @@
         color="primary"
         (click)="publish(element)"
         matTooltip="发布流程"
+      >
+        <mat-icon> share </mat-icon>
+      </button>
+
+      <button
+        mat-icon-button
+        color="primary"
+        (click)="publish(element)"
+        matTooltip="修改流程"
+      >
+        <mat-icon> edit </mat-icon>
+      </button>
+
+      <button
+        mat-icon-button
+        color="primary"
+        (click)="publish(element)"
+        matTooltip="复制流程"
       >
         <mat-icon> share </mat-icon>
       </button>

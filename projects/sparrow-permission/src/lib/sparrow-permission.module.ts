@@ -56,7 +56,7 @@ import { UserCreateComponent } from './user/user-create/user-create.component';
 import { UserSelectionComponent } from './user/user-selection/user-selection.component';
 import { AngularMaterialModule } from "./angular-material.module";
 import { EntityLogComponent } from './common/entity-log/entity-log.component';
-import { BaseOpLogColumnComponent } from './common/base-op-log-column/base-op-log-column.component';
+import { BaseOpLogColumnComponent, baseOpLogColumns } from './common/base-op-log-column/base-op-log-column.component';
 import { FilesComponent } from './file/files/files.component';
 import { FileUploadComponent } from './file/file-upload/file-upload.component';
 import { DataPermissionViewComponent } from './data-permission/data-permission-view/data-permission-view.component';
@@ -140,7 +140,10 @@ import { ViewReportComponent } from './report/view-report/view-report.component'
     MenuComponent,
     MenuTreeComponent,
     SysrolesComponent,
-    RequestLogComponent
+    RequestLogComponent,
+    BaseOpLogColumnComponent,
+    EntityLogComponent,
+    SearchFilterComponent
   ],
 })
 export class SparrowPermissionModule {}

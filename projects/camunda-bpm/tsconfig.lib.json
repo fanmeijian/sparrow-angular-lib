@@ -7,10 +7,12 @@
     "declarationMap": true,
     "inlineSources": true,
     "types": [],
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "checkJs": false
   },
   "exclude": [
     "src/test.ts",
     "**/*.spec.ts"
-  ],
+  ]
 }
