@@ -21,7 +21,11 @@
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef>名称</mat-header-cell>
       <mat-cell *matCellDef="let element"
-        ><div style="display: flex;flex-direction: column;"><span>{{ element.name }}</span><lib-base-op-log-column [element]="element"></lib-base-op-log-column></div>
+        ><div style="display: flex; flex-direction: column">
+
+          <span>{{ element.name }}</span
+          ><lib-base-op-log-column [element]="element"></lib-base-op-log-column>
+        </div>
       </mat-cell>
     </ng-container>
 
@@ -31,19 +35,11 @@
     </ng-container>
 
     <ng-container matColumnDef="users">
-      <mat-header-cell *matHeaderCellDef>授权用户</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>下载</mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <mat-chip-list #chipList>
-          <mat-chip
-            *ngFor="let user of element.users"
-            (removed)="remove(user, element)"
-          >
-            {{ user.substring(0, 8) }}
-            <button matChipRemove>
-              <mat-icon>cancel</mat-icon>
-            </button>
-          </mat-chip>
-        </mat-chip-list>
+        <button mat-icon-button color="primary">
+          <mat-icon>download</mat-icon>
+        </button>
       </mat-cell>
     </ng-container>
 
@@ -81,25 +77,25 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <button mat-icon-button color="primary" (click)="edit(element)">
-          <mat-icon>edit</mat-icon>
+        <button mat-stroked-button color="primary" (click)="edit(element)">
+          编辑
         </button>
-        <button mat-icon-button color="warn" (click)="delete(element)">
-          <mat-icon>delete_outline</mat-icon>
+        <button mat-stroked-button color="warn" (click)="delete(element)">
+          删除
         </button>
-        <button
+        <!-- <button
           mat-icon-button
           color="primary"
           (click)="openPermission(element)"
         >
-          <mat-icon>manage_accounts</mat-icon>
-        </button>
+          授权
+        </button> -->
         <button
-          mat-icon-button
+          mat-stroked-button
           color="primary"
           (click)="openDataPermission(element)"
         >
-          <span class="material-icons"> visibility </span>
+        授权
         </button>
       </mat-cell>
     </ng-container>

@@ -107,7 +107,8 @@
   </mat-tree>
   </mat-grid-tile>
   <mat-grid-tile colspan="3">
-    <mat-card>
+    <span *ngIf="!selectedMenu">请选择菜单</span>
+    <mat-card *ngIf="selectedMenu">
       <mat-card-title
         >{{ selectedMenu?.me.name }} ({{
           selectedMenu?.me.code
