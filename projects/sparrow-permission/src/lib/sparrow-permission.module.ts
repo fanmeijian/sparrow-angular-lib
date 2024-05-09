@@ -143,7 +143,10 @@ import { ViewReportComponent } from './report/view-report/view-report.component'
     RequestLogComponent,
     BaseOpLogColumnComponent,
     EntityLogComponent,
-    SearchFilterComponent
+    SearchFilterComponent,
+    UserSelectionComponent,
+    SysroleSelectionComponent,
+    DictSelectionComponent
   ],
 })
 export class SparrowPermissionModule {}

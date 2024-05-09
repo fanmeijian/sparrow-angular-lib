@@ -6,18 +6,18 @@ import {
   OnInit,
   Output,
   ViewChild,
-} from "@angular/core";
-import { FormControl } from "@angular/forms";
-import { MatChipInputEvent } from "@angular/material/chips";
-import { Observable, startWith, map } from "rxjs";
-import { COMMA, ENTER } from "@angular/cdk/keycodes";
-import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
-import { SysroleService } from "@sparrowmini/org-api";
+} from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { Observable, startWith, map } from 'rxjs';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { SysroleService } from '@sparrowmini/org-api';
 
 @Component({
-  selector: "lib-sysrole-selection",
-  templateUrl: "./sysrole-selection.component.html",
-  styleUrls: ["./sysrole-selection.component.css"],
+  selector: 'lib-sysrole-selection',
+  templateUrl: './sysrole-selection.component.html',
+  styleUrls: ['./sysrole-selection.component.css'],
 })
 export class SysroleSelectionComponent implements OnInit {
   @Input() public selectedSysroles!: any[];
@@ -35,11 +35,11 @@ export class SysroleSelectionComponent implements OnInit {
     sort: ['createdDate,desc'],
   };
 
-  @ViewChild("fruitInput") fruitInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('fruitInput') fruitInput!: ElementRef<HTMLInputElement>;
 
   constructor(private sysroleService: SysroleService) {}
   ngOnInit(): void {
-    this.onPageChange(this.pageable)
+    this.onPageChange(this.pageable);
   }
 
   remove(fruit: any): void {
@@ -52,7 +52,7 @@ export class SysroleSelectionComponent implements OnInit {
 
   select(seletedItem: any) {
     if (!this.multiple) {
-      this.selectedSysroles = [];
+      this.selectedSysroles.length = 0;
     }
 
     if (this.selectedSysroles.indexOf(seletedItem) === -1) {
@@ -65,9 +65,11 @@ export class SysroleSelectionComponent implements OnInit {
     // console.log(event);
     this.pageable.pageIndex = event.pageIndex;
     this.pageable.pageSize = event.pageSize;
-    this.sysroleService.sysroles([],this.pageable.pageIndex, this.pageable.pageSize).subscribe((res) => {
-      this.sysroles = res.content!;
-      this.pageable.length = res.totalElements!
-    });
+    this.sysroleService
+      .sysroles([], this.pageable.pageIndex, this.pageable.pageSize)
+      .subscribe((res) => {
+        this.sysroles = res.content!;
+        this.pageable.length = res.totalElements!;
+      });
   }
 }

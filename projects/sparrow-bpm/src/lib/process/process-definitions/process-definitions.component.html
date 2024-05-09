@@ -1,3 +1,4 @@
+<button mat-flat-button (click)="publishKjar()" color="primary">应用部署</button>
 <table mat-table [dataSource]="dataSource">
   <ng-container matColumnDef="position">
     <th mat-header-cell *matHeaderCellDef></th>
@@ -104,8 +105,7 @@
       <button
         mat-icon-button
         color="primary"
-        routerLink="/builder"
-        [queryParams]="{ id: element.id }"
+        (click)="dispose(element)"
         matTooltip="下架"
       >
         <mat-icon> highlight_off </mat-icon>

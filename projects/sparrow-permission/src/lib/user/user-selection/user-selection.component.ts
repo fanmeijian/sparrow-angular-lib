@@ -36,10 +36,12 @@ export class UserSelectionComponent implements OnInit {
 
   constructor(private userService: UserService) {}
   ngOnInit(): void {
-    this.userService.users([], 0, 100000).subscribe((res) => {
-      this.datas = res.content!;
-      this.pageable.length = res.totalElements!;
-    });
+    this.userService
+      .users(this.filters, this.pageable.pageIndex, this.pageable.pageSize)
+      .subscribe((res) => {
+        this.datas = res.content!;
+        this.pageable.length = res.totalElements!;
+      });
   }
 
   remove(fruit: any): void {
@@ -52,7 +54,7 @@ export class UserSelectionComponent implements OnInit {
 
   select(seletedItem: any) {
     if (!this.multiple) {
-      this.selected = [];
+      this.selected.length = 0;
     }
 
     if (this.selected.indexOf(seletedItem) === -1) {
@@ -61,14 +63,15 @@ export class UserSelectionComponent implements OnInit {
     }
   }
   onPageChange(event: any) {
-    console.log(event);
-    this.dataSource = new MatTableDataSource<any>();
+    // console.log(event);
+    // this.dataSource = new MatTableDataSource<any>();
     this.pageable.pageIndex = event.pageIndex;
     this.pageable.pageSize = event.pageSize;
     this.userService
       .users(this.filters, this.pageable.pageIndex, this.pageable.pageSize)
       .subscribe((res) => {
-        this.dataSource = new MatTableDataSource<any>(res.content);
+        // this.dataSource = new MatTableDataSource<any>(res.content);
+        this.datas = res.content;
         this.pageable.length = res.totalElements!;
       });
   }

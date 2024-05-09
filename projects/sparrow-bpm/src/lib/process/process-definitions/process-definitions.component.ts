@@ -9,6 +9,7 @@ import {
   ProcessAndTaskDefinitionsService,
   ProcessQueriesService,
 } from '@sparrowmini/jbpm-api';
+import { ProcessDeployComponent } from '../process-deploy/process-deploy.component';
 
 @Component({
   selector: 'lib-process-definitions',
@@ -26,7 +27,7 @@ export class ProcessDefinitionsComponent implements OnInit {
     'symbol',
   ];
   dataSource = new MatTableDataSource<any>();
-  pageable = {pageSize: 10, pageIndex: 0, length: 0}
+  pageable = { pageSize: 10, pageIndex: 0, length: 0 };
 
   constructor(
     private kIEServerAndKIEContainersService: KIEServerAndKIEContainersService,
@@ -37,14 +38,13 @@ export class ProcessDefinitionsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     this.kIEServerAndKIEContainersService
       .listContainers()
       .pipe(
         map((res) => res.result['kie-containers']['kie-container']),
         switchMap((cs) =>
           zip(
-            ...cs.map((c:any) =>
+            ...cs.map((c: any) =>
               this.processQueriesService
                 .getProcessesByDeploymentId1(c['container-id'])
                 .pipe(map((ps) => ps.processes))
@@ -165,11 +165,30 @@ export class ProcessDefinitionsComponent implements OnInit {
       });
   }
 
-  publish(element:any){
-    this.flowService.publishProcess([{name:'',remark:'',deploymentId:element['container-id'],processId:element['process-id']}]).subscribe()
+  publish(element: any) {
+    this.flowService
+      .publishProcess([
+        {
+          name: '',
+          remark: '',
+          deploymentId: element['container-id'],
+          processId: element['process-id'],
+        },
+      ])
+      .subscribe();
   }
 
-  open(){
+  open() {
     // this.dialog.open(ProcessCreateComponent,{width:'90%'})
+  }
+
+  publishKjar() {
+    this.dialog.open(ProcessDeployComponent, {width: '80%'});
+  }
+
+  dispose(element: any) {
+    this.kIEServerAndKIEContainersService
+      .disposeContainer(element['container-id'], false)
+      .subscribe(() => {});
   }
 }

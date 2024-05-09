@@ -1,17 +1,10 @@
-<mat-form-field class="example-chip-list" appearance="fill">
-  <mat-label>Favorite Fruits</mat-label>
-  <mat-chip-list #chipList aria-label="Fruit selection">
-    <mat-chip *ngFor="let fruit of fruits" (removed)="remove(fruit)">
-      {{fruit.name}}
-      <button matChipRemove>
-        <mat-icon>cancel</mat-icon>
-      </button>
-    </mat-chip>
-    <input placeholder="New fruit..."
-           [matChipInputFor]="chipList"
-           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-           [matChipInputAddOnBlur]="addOnBlur"
-           (matChipInputTokenEnd)="add($event)">
-  </mat-chip-list>
-</mat-form-field>
-<button mat-button (click)="submit()">submit</button>
+<h1 mat-dialog-title>关联用户</h1>
+<mat-dialog-content>
+  <lib-user-selection [selected]="selectedUsers"></lib-user-selection>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button cdkFocusInitial color="primary" (click)="submit()">
+    确定
+  </button>
+  <button type="button" mat-button mat-dialog-close color="warn">取消</button>
+</mat-dialog-actions>

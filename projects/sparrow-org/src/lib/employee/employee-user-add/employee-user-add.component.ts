@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { EmployeeService, UserService } from '@sparrowmini/org-api';
+import { SysroleCreateComponent } from '@sparrowmini/sparrow-permission/lib/sysrole/sysrole-create/sysrole-create.component';
 
 export interface Fruit {
   name: string;
@@ -17,34 +18,22 @@ export class EmployeeUserAddComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private employeeService: EmployeeService,
+    private dialogRef: MatDialogRef<SysroleCreateComponent>
   ) {}
 
   ngOnInit(): void {}
-  addOnBlur = true;
-  readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  fruits: Fruit[] = [];
 
-  add(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
+  selectedUsers = [];
 
-    // Add our fruit
-    if (value) {
-      this.fruits.push({ name: value });
-    }
-
-    // Clear the input value
-    event.chipInput!.clear();
-  }
-
-  remove(fruit: Fruit): void {
-    const index = this.fruits.indexOf(fruit);
-
-    if (index >= 0) {
-      this.fruits.splice(index, 1);
-    }
-  }
-
-  submit(){
-    this.employeeService.addEmpolyeeUsers(this.fruits.map(m=>m.name),this.data.id).subscribe()
+  submit() {
+    // console.log(this.selectedUsers)
+    this.employeeService
+      .addEmpolyeeUsers(
+        this.selectedUsers.map((m) => m.username),
+        this.data.id
+      )
+      .subscribe(() => {
+        this.dialogRef.close(true);
+      });
   }
 }

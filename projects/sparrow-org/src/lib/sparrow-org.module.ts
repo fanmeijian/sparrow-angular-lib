@@ -22,6 +22,9 @@ import { OrggroupMemberAddComponent } from "./orggroup/orggroup-member-add/orggr
 import { EmployeeSelectionComponent } from "./employee/employee-selection/employee-selection.component";
 import { AngularMaterialModule } from "./angular-material.module";
 import { EmployeeUserAddComponent } from './employee/employee-user-add/employee-user-add.component';
+import { EmployeeRoleSelectComponent } from './employee/employee-role-select/employee-role-select.component';
+import { SparrowPermissionModule } from "@sparrowmini/sparrow-permission";
+
 // import { EmployeeRouteComponent } from './employee/employee-route/employee-route.component';
 
 @NgModule({
@@ -45,9 +48,10 @@ import { EmployeeUserAddComponent } from './employee/employee-user-add/employee-
     OrggroupMemberAddComponent,
     EmployeeSelectionComponent,
     EmployeeUserAddComponent,
+    EmployeeRoleSelectComponent,
     // EmployeeRouteComponent
   ],
-  imports: [BrowserModule, RouterModule, AngularMaterialModule],
-  exports: [SparrowOrgComponent, OrgApiModule],
+  imports: [BrowserModule, RouterModule, AngularMaterialModule, SparrowPermissionModule],
+  exports: [SparrowOrgComponent, OrgApiModule, EmployeeRoleSelectComponent],
 })
 export class SparrowOrgModule {}
