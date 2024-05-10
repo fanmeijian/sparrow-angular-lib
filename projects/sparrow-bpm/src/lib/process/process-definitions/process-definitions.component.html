@@ -1,6 +1,8 @@
-<button mat-flat-button (click)="publishKjar()" color="primary">应用部署</button>
+<button mat-flat-button (click)="publishKjar()" color="primary">
+  应用部署
+</button>
 <table mat-table [dataSource]="dataSource">
-  <ng-container matColumnDef="position">
+  <ng-container matColumnDef="seq">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let index = index">{{ index + 1 }}.</td>
   </ng-container>
@@ -8,20 +10,80 @@
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef>流程</th>
     <td mat-cell *matCellDef="let element">
-      <button
-        mat-icon-button
-        [style]="'color:' + (element.isConfigForm ? 'green' : 'grey')"
-        [routerLink]="['../form-design']"
-        [queryParams]="{
-          deploymentId: element['container-id'],
-          packageName: element['package'],
-          processId: element['process-id'],
-          processVersion: element['process-version']
-        }"
-      >
-        <span class="material-icons"> dynamic_form </span>
+      <button mat-button (click)="viewProcess(element)" color="primary">
+        流程列表
       </button>
-          {{ element["process-name"] }}
+      <div *ngFor="let item of element.processes; let i = index">
+        <button
+          mat-icon-button
+          [style]="'color:' + (item.isConfigForm ? 'green' : 'grey')"
+          [routerLink]="['../form-design']"
+          [queryParams]="{
+            deploymentId: item['container-id'],
+            packageName: item['package'],
+            processId: item['process-id'],
+            processVersion: item['process-version']
+          }"
+        >
+          <span class="material-icons"> dynamic_form </span>
+        </button>
+
+        <button mat-button [matMenuTriggerFor]="menu" color="primary">
+          {{ item["process-name"] }}
+        </button>
+        <mat-menu #menu="matMenu">
+          <button
+            [disabled]="!item.isConfigForm"
+            mat-menu-item
+            color="primary"
+            routerLink="../process-form"
+            [queryParams]="{
+              deploymentId: item['container-id'],
+              processId: item['process-id'],
+              packageName: item['package'],
+              processVersion: item['process-version']
+            }"
+          >
+            <mat-icon> play_circle_filled </mat-icon>
+            <span>启动流程</span>
+          </button>
+
+          <button mat-menu-item color="primary" (click)="publish(item)">
+            <mat-icon> share </mat-icon>
+            <span>发布流程</span>
+          </button>
+
+          <button mat-menu-item color="primary" (click)="viewImage(item)">
+            <mat-icon> search </mat-icon>
+            <span>查看流程</span>
+          </button>
+
+          <button mat-menu-item (click)="viewTasks(item)" color="primary">
+            <mat-icon> list </mat-icon>
+            任务列表
+          </button>
+        </mat-menu>
+
+        <div style="margin-left: 20px">
+          <div *ngFor="let task of item.tasks">
+            <button
+              mat-icon-button
+              [style]="'color:' + (task.isConfigForm ? 'green' : 'grey')"
+              [routerLink]="['../form-design']"
+              [queryParams]="{
+                deploymentId: item['container-id'],
+                packageName: item['package'],
+                processId: item['process-id'],
+                processVersion: item['process-version'],
+                taskFormName: task['task-form-name']
+              }"
+            >
+              <span class="material-icons"> dynamic_form </span>
+            </button>
+            {{ task["task-name"] }}
+          </div>
+        </div>
+      </div>
     </td>
   </ng-container>
 
@@ -74,41 +136,16 @@
     </td>
   </ng-container>
 
-  <ng-container matColumnDef="symbol">
+  <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef>操作</th>
     <td mat-cell *matCellDef="let element">
       <button
-        [disabled]="!element.isConfigForm"
-        mat-icon-button
-        color="primary"
-        matTooltip="启动流程"
-        routerLink="../process-form"
-        [queryParams]="{
-          deploymentId: element['container-id'],
-          processId: element['process-id'],
-          packageName: element['package'],
-          processVersion: element['process-version']
-        }"
-      >
-        <mat-icon> play_circle_filled </mat-icon>
-      </button>
-
-      <button
-        mat-icon-button
-        color="primary"
-        (click)="publish(element)"
-        matTooltip="发布流程"
-      >
-        <mat-icon> share </mat-icon>
-      </button>
-
-      <button
-        mat-icon-button
-        color="primary"
+        mat-stroked-button
+        color="warn"
         (click)="dispose(element)"
         matTooltip="下架"
       >
-        <mat-icon> highlight_off </mat-icon>
+        下架
       </button>
     </td>
   </ng-container>

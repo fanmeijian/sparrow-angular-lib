@@ -10,6 +10,9 @@
  * Do not edit the class manually.
  */
 
-export interface FilesUploadBody { 
-    file: Blob;
+export interface AFReleaseId { 
+    version?: string;
+    snapshot?: boolean;
+    groupId?: string;
+    artifactId?: string;
 }

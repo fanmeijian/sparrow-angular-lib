@@ -21,6 +21,7 @@ import { ProcessQueriesService } from './api/processQueries.service';
 import { StaticFilesEndpointBPMService } from './api/staticFilesEndpointBPM.service';
 import { TaskInstanceAdministrationService } from './api/taskInstanceAdministration.service';
 import { TaskInstancesService } from './api/taskInstances.service';
+import { JbpmExtService } from './api/jbpmExt.service';
 
 @NgModule({
   imports:      [],
@@ -44,10 +45,11 @@ import { TaskInstancesService } from './api/taskInstances.service';
     ProcessQueriesService,
     StaticFilesEndpointBPMService,
     TaskInstanceAdministrationService,
-    TaskInstancesService ]
+    TaskInstancesService,
+    JbpmExtService ]
 })
 export class ApiModule {
-    public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders<any> {
+    public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders<ApiModule> {
         return {
             ngModule: ApiModule,
             providers: [ { provide: Configuration, useFactory: configurationFactory } ]

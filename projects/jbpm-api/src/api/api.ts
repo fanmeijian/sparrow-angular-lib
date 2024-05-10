@@ -34,4 +34,6 @@ export * from './taskInstanceAdministration.service';
 import { TaskInstanceAdministrationService } from './taskInstanceAdministration.service';
 export * from './taskInstances.service';
 import { TaskInstancesService } from './taskInstances.service';
-export const APIS = [CaseInstanceAdministrationService, CaseInstancesService, CaseQueriesService, CustomQueriesService, DMNModelsService, DocumentsService, JobsService, KIEServerAndKIEContainersService, KIESessionAssetsService, ProcessAndTaskDefinitionsService, ProcessAndTaskFormsService, ProcessImagesService, ProcessInstanceAdministrationService, ProcessInstancesService, ProcessQueriesService, StaticFilesEndpointBPMService, TaskInstanceAdministrationService, TaskInstancesService];
+export * from './jbpmExt.service';
+import { JbpmExtService } from './jbpmExt.service';
+export const APIS = [CaseInstanceAdministrationService, CaseInstancesService, CaseQueriesService, CustomQueriesService, DMNModelsService, DocumentsService, JobsService, KIEServerAndKIEContainersService, KIESessionAssetsService, ProcessAndTaskDefinitionsService, ProcessAndTaskFormsService, ProcessImagesService, ProcessInstanceAdministrationService, ProcessInstancesService, ProcessQueriesService, StaticFilesEndpointBPMService, TaskInstanceAdministrationService, TaskInstancesService, JbpmExtService];
