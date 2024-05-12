@@ -13,6 +13,7 @@ import { AngularMaterialModule } from './angular-material.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormioModule } from '@formio/angular';
 import { FormPreviewComponent } from './form/form-preview/form-preview.component';
+import { SparrowPermissionModule } from '@sparrowmini/sparrow-permission'
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { FormPreviewComponent } from './form/form-preview/form-preview.component
     BrowserAnimationsModule,
     AngularMaterialModule,
     FormioModule,
+    SparrowPermissionModule,
   ],
   exports: [
     SparrowFormComponent

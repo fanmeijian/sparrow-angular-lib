@@ -1,8 +1,9 @@
 
 <h3>表单设计</h3>
-<button mat-button (click)="save()" color="primary">保存</button>
-<button mat-button (click)="preview1()" color="primary">预览</button>
-<button mat-button (click)="viewSource()" color="primary">源码</button>
+<button mat-flat-button (click)="window.history.back()" color="warn">返回</button>
+<button mat-flat-button (click)="save()" color="primary">保存</button>
+<button mat-flat-button (click)="preview1()" color="primary">预览</button>
+<button mat-flat-button (click)="viewSource()" color="primary">源码</button>
 <div>
   <form [formGroup]="formGroup">
     <mat-form-field appearance="fill">

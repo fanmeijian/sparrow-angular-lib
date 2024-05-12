@@ -14,7 +14,7 @@ export class FormListComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
   pageable = { pageIndex: 0, pageSize: 10, length: 0 };
 
-  displayedColumns = ["seq", "name", "code", "actions"];
+  displayedColumns = ["seq", "name", "code","update", "actions"];
 
   constructor(private formService: FormService,
     private dialog: MatDialog,

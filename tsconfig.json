@@ -69,6 +69,10 @@
         "dist/purchase-api/purchase-api",
         "dist/purchase-api"
       ],
+      "report-api": [
+        "dist/report-api/report-api",
+        "dist/report-api"
+      ],
       "rule-api": [
         "dist/rule-api/rule-api",
         "dist/rule-api"
