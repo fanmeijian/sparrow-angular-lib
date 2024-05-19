@@ -24,6 +24,9 @@ import { TaskCommentComponent } from './task/task-comment/task-comment.component
 import { ProcessPublishedComponent } from './process/process-published/process-published.component';
 import { TaskExecutionComponent } from './task/task-execution/task-execution.component';
 import { ProcessDeployComponent } from './process/process-deploy/process-deploy.component';
+import { QueryListComponent } from './query/query-list/query-list.component';
+import { QueryCreateComponent } from './query/query-create/query-create.component';
+import { QueryExecuteComponent } from './query/query-execute/query-execute.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +47,9 @@ import { ProcessDeployComponent } from './process/process-deploy/process-deploy.
     ProcessPublishedComponent,
     TaskExecutionComponent,
     ProcessDeployComponent,
+    QueryListComponent,
+    QueryCreateComponent,
+    QueryExecuteComponent,
   ],
   imports: [
     BrowserModule,

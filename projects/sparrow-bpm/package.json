@@ -1,6 +1,6 @@
 {
   "name": "@sparrowmini/sparrow-bpm",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "peerDependencies": {
     "@angular/animations": "^13.4.0",
     "@angular/cdk": "^13.3.9",
@@ -22,6 +22,7 @@
     "npm": "^10.7.0",
     "prismjs": "^1.29.0",
     "rxjs": "^7.8.1",
+    "json5": "^2.2.3",
     "svg-pan-zoom-container": "^0.6.1"
   },
   "dependencies": {

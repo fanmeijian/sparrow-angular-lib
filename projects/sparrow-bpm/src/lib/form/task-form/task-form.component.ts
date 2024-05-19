@@ -2,9 +2,7 @@ import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TaskFormId, FlowService } from '@sparrowmini/flow-api';
 import { TaskInstancesService, ProcessQueriesService } from '@sparrowmini/jbpm-api';
-import { FormService } from 'dist/form-api/projects';
 import { ProcessFormComponent } from '../process-form/process-form.component';
-import { Formio } from 'formiojs';
 
 @Component({
   selector: 'lib-task-form',

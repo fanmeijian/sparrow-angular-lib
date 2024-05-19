@@ -2,8 +2,6 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FlowService } from '@sparrowmini/flow-api';
 import { ProcessInstancesService } from '@sparrowmini/jbpm-api';
-import { FormService } from 'dist/form-api/projects';
-import { Formio } from 'formiojs';
 
 @Component({
   selector: 'lib-process-form',

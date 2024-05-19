@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FlowService, ProcessFormId } from '@sparrowmini/flow-api';
 import { ProcessInstancesService } from '@sparrowmini/jbpm-api';
-import { FormService } from 'dist/form-api/projects';
 
 @Component({
   selector: 'lib-view-process-instance',
