@@ -1,0 +1,123 @@
+<h5 *ngIf="formId">{{ form.name }}-{{ form.code }}</h5>
+<div class="card">
+  <div *ngIf="formId">
+    <button
+      pButton
+      pRipple
+      label="填写"
+      routerLink="../form-data-create"
+      [queryParams]="{ formId: formId }"
+      class="mr-2 mb-2"
+    ></button>
+  </div>
+  <p-table
+    #dt1
+    [value]="customers1"
+    dataKey="id"
+    [lazy]="true"
+    (onLazyLoad)="pageChange($event)"
+    [rows]="pageable.pageSize"
+    [loading]="loading"
+    [rowHover]="true"
+    [totalRecords]="pageable.length"
+    styleClass="p-datatable-gridlines"
+    [paginator]="true"
+    [globalFilterFields]="[
+      'name',
+      'country.name',
+      'representative.name',
+      'status'
+    ]"
+    responsiveLayout="scroll"
+    (onPage)="pageChange($event)"
+    [rowsPerPageOptions]="[5, 10, 25, 50]"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex justify-content-between flex-column sm:flex-row">
+        <button
+          pButton
+          label="Clear"
+          class="p-button-outlined mb-2"
+          icon="pi pi-filter-slash"
+          (click)="clear(dt1)"
+        ></button>
+        <span class="p-input-icon-left mb-2">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            #filter
+            (input)="onGlobalFilter(dt1, $event)"
+            placeholder="Search Keyword"
+            class="w-full"
+          />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>
+          <div class="flex justify-content-between align-items-center">#</div>
+        </th>
+        <th>
+          <div class="flex justify-content-between align-items-center">
+            表单
+          </div>
+        </th>
+
+        <th *ngFor="let column of form.displayColumns">
+          <!-- {{ column }} -->
+          {{ getColumnLabel(column) }}
+        </th>
+        <th>填写时间</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customer let-i="rowIndex">
+      <tr>
+        <td style="width: 2em">
+          <p-button
+            label="{{ i + 1 }}."
+            styleClass="p-button-link mr-2 mb-2"
+            routerLink="../form-data-view"
+            [queryParams]="{ id: customer.id }"
+          ></p-button>
+        </td>
+        <td>{{ customer.form.name }}</td>
+        <td *ngFor="let column of form.displayColumns">
+          {{ customer.data[column] }}
+        </td>
+        <td>{{customer.createdDate|date :'short'}}</td>
+        <td class="text-center" style="width: 8rem">
+          <div class="flex">
+            <button
+              pButton
+              pRipple
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-success mr-2"
+              [routerLink]="['../form-data-create']"
+              [queryParams]="{ formId: customer.form.id, id: customer.id }"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-warning"
+              (click)="deleteItem(customer)"
+            ></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7">No customers found.</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="loadingbody">
+      <tr>
+        <td colspan="7">Loading customers data. Please wait.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

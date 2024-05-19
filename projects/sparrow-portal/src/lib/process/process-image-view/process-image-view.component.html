@@ -1,0 +1,32 @@
+<button
+  pButton
+  pRipple
+  type="button"
+  [label]="label?label:'流程图'"
+  class="p-button-text mr-2 mb-2"
+  (click)="openDialog()"
+></button>
+
+<p-dialog
+  [(visible)]="productDialog"
+  [style]="{ width: '80%' }"
+  header="流程图"
+  [modal]="true"
+  class="p-fluid"
+>
+  <ng-template pTemplate="content"
+  ><div data-zoom-on-wheel data-pan-on-drag style="height: 100%; width: 100%">
+    <div #processSvg></div>
+  </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="关闭"
+      class="p-button-text"
+      (click)="productDialog=false"
+    ></button>
+  </ng-template>
+</p-dialog>

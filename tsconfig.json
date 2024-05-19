@@ -105,6 +105,10 @@
         "dist/sparrow-permission/sparrow-permission",
         "dist/sparrow-permission"
       ],
+      "sparrow-portal": [
+        "dist/sparrow-portal/sparrow-portal",
+        "dist/sparrow-portal"
+      ],
       "sparrow-rule": [
         "dist/sparrow-rule/sparrow-rule",
         "dist/sparrow-rule"
