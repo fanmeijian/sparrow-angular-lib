@@ -18,6 +18,9 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { AFReleaseId } from '../model/aFReleaseId';
+import { PageImplProcessInstanceLog } from '../model/pageImplProcessInstanceLog';
+import { PageImplTaskImpl } from '../model/pageImplTaskImpl';
+import { SparrowJpaFilter } from '../model/sparrowJpaFilter';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -38,6 +41,7 @@ export class JbpmExtService {
             this.configuration = configuration;
             this.basePath = basePath || configuration.basePath || this.basePath;
         }
+        this.basePath=this.basePath.replace('/rest','')
     }
 
     /**
@@ -62,19 +66,19 @@ export class JbpmExtService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deployKjar(files: Array<{file:Blob,name:string}>, observe?: 'body', reportProgress?: boolean): Observable<AFReleaseId>;
-    public deployKjar(files: Array<{file:Blob,name:string}>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AFReleaseId>>;
-    public deployKjar(files: Array<{file:Blob,name:string}>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AFReleaseId>>;
-    public deployKjar(files: Array<{file:Blob,name:string}>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deployKjar(files: Array<Blob>, observe?: 'body', reportProgress?: boolean): Observable<AFReleaseId>;
+    public deployKjar(files: Array<Blob>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AFReleaseId>>;
+    public deployKjar(files: Array<Blob>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AFReleaseId>>;
+    public deployKjar(files: Array<Blob>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (files === null || files === undefined) {
             throw new Error('Required parameter files was null or undefined when calling deployKjar.');
         }
 
-        let queryParameters = new FormData();
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (files) {
             files.forEach((element) => {
-                queryParameters.append('files', <any>element.file,element.name);
+                queryParameters = queryParameters.append('files', <any>element);
             })
         }
 
@@ -88,14 +92,148 @@ export class JbpmExtService {
         if (httpHeaderAcceptSelected != undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
-        headers.set('Content-Type', 'multipart/form-data');
+
         // to determine the Content-Type header
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<AFReleaseId>('post',`${this.basePath.replace('/rest','')}/jbpm-ext/kjars/deploy`,
+        return this.httpClient.request<AFReleaseId>('post',`${this.basePath}/jbpm-ext/kjars/deploy`,
             {
-                body: queryParameters,
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 我发起的流程
+     *
+     * @param body
+     * @param pageIndex
+     * @param pageSize
+     * @param sort
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public processInstances(body: Array<SparrowJpaFilter>, pageIndex?: number, pageSize?: number, sort?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<PageImplProcessInstanceLog>;
+    public processInstances(body: Array<SparrowJpaFilter>, pageIndex?: number, pageSize?: number, sort?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageImplProcessInstanceLog>>;
+    public processInstances(body: Array<SparrowJpaFilter>, pageIndex?: number, pageSize?: number, sort?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageImplProcessInstanceLog>>;
+    public processInstances(body: Array<SparrowJpaFilter>, pageIndex?: number, pageSize?: number, sort?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling processInstances.');
+        }
+
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (pageIndex !== undefined && pageIndex !== null) {
+            queryParameters = queryParameters.set('pageIndex', <any>pageIndex);
+        }
+        if (pageSize !== undefined && pageSize !== null) {
+            queryParameters = queryParameters.set('pageSize', <any>pageSize);
+        }
+        if (sort) {
+            sort.forEach((element) => {
+                queryParameters = queryParameters.append('sort', <any>element);
+            })
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<PageImplProcessInstanceLog>('post',`${this.basePath}/jbpm-ext/process-instances`,
+            {
+                body: body,
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 我的任务
+     *
+     * @param body
+     * @param pageIndex
+     * @param pageSize
+     * @param sort
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public taskInstances(body: Array<SparrowJpaFilter>, pageIndex?: number, pageSize?: number, sort?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<PageImplTaskImpl>;
+    public taskInstances(body: Array<SparrowJpaFilter>, pageIndex?: number, pageSize?: number, sort?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageImplTaskImpl>>;
+    public taskInstances(body: Array<SparrowJpaFilter>, pageIndex?: number, pageSize?: number, sort?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageImplTaskImpl>>;
+    public taskInstances(body: Array<SparrowJpaFilter>, pageIndex?: number, pageSize?: number, sort?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling taskInstances.');
+        }
+
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (pageIndex !== undefined && pageIndex !== null) {
+            queryParameters = queryParameters.set('pageIndex', <any>pageIndex);
+        }
+        if (pageSize !== undefined && pageSize !== null) {
+            queryParameters = queryParameters.set('pageSize', <any>pageSize);
+        }
+        if (sort) {
+            sort.forEach((element) => {
+                queryParameters = queryParameters.append('sort', <any>element);
+            })
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<PageImplTaskImpl>('post',`${this.basePath}/jbpm-ext/task-instances`,
+            {
+                body: body,
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
