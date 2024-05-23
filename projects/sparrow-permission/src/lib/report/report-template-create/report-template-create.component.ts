@@ -55,7 +55,7 @@ export class ReportTemplateCreateComponent implements OnInit {
             }
           });
       } else {
-        this.sysroleService.newReportTemplate(this.formGroup.value).subscribe(() => {
+        this.sysroleService.newReportTemplate([this.formGroup.value]).subscribe(() => {
           this.dialogRef.close(true);
           this.snack.open('保存成功！', '关闭');
         });
