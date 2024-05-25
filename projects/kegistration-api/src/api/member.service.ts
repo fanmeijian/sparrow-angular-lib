@@ -61,10 +61,10 @@ export class MemberService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public get1(observe?: 'body', reportProgress?: boolean): Observable<MemberInfo>;
-    public get1(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<MemberInfo>>;
-    public get1(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<MemberInfo>>;
-    public get1(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public get(observe?: 'body', reportProgress?: boolean): Observable<MemberInfo>;
+    public get(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<MemberInfo>>;
+    public get(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<MemberInfo>>;
+    public get(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -98,13 +98,13 @@ export class MemberService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public update1(body: MemberInfo, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public update1(body: MemberInfo, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public update1(body: MemberInfo, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public update1(body: MemberInfo, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public update(body: MemberInfo, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public update(body: MemberInfo, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public update(body: MemberInfo, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public update(body: MemberInfo, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling update1.');
+            throw new Error('Required parameter body was null or undefined when calling update.');
         }
 
         let headers = this.defaultHeaders;

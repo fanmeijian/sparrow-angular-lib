@@ -10,18 +10,21 @@
  * Do not edit the class manually.
  */
 import { AttachmentV2 } from './attachmentV2';
+import { ErrMsg } from './errMsg';
 import { Project } from './project';
 import { TeamMember } from './teamMember';
 
 export interface Team { 
-    readonly modelName?: string;
     readonly createdDate?: Date;
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
-    readonly dataPermissionTokenId?: string;
     readonly stat?: string;
+    readonly entityStat?: Team.EntityStatEnum;
     readonly enabled?: boolean;
+    readonly modelName?: string;
+    readonly dataPermissionTokenId?: string;
+    readonly errMsgs?: Array<ErrMsg>;
     readonly id?: string;
     name?: string;
     project?: Project;
@@ -32,4 +35,13 @@ export interface Team {
     teamContactPhone?: string;
     members?: Array<TeamMember>;
     attachments?: Array<AttachmentV2>;
+}
+export namespace Team {
+    export type EntityStatEnum = 'Draft' | 'Submitted' | 'Failed' | 'Completed';
+    export const EntityStatEnum = {
+        Draft: 'Draft' as EntityStatEnum,
+        Submitted: 'Submitted' as EntityStatEnum,
+        Failed: 'Failed' as EntityStatEnum,
+        Completed: 'Completed' as EntityStatEnum
+    };
 }

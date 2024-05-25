@@ -16,22 +16,22 @@ export interface Question {
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
-    readonly bstat?: string;
-    stat?: Question.StatEnum;
+    readonly stat?: string;
+    readonly entityStat?: Question.EntityStatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
-    errMsgs?: Array<ErrMsg>;
+    readonly errMsgs?: Array<ErrMsg>;
     readonly id?: string;
     competitonId?: string;
     formData?: string;
 }
 export namespace Question {
-    export type StatEnum = 'Draft' | 'Submitted' | 'Failed' | 'Completed';
-    export const StatEnum = {
-        Draft: 'Draft' as StatEnum,
-        Submitted: 'Submitted' as StatEnum,
-        Failed: 'Failed' as StatEnum,
-        Completed: 'Completed' as StatEnum
+    export type EntityStatEnum = 'Draft' | 'Submitted' | 'Failed' | 'Completed';
+    export const EntityStatEnum = {
+        Draft: 'Draft' as EntityStatEnum,
+        Submitted: 'Submitted' as EntityStatEnum,
+        Failed: 'Failed' as EntityStatEnum,
+        Completed: 'Completed' as EntityStatEnum
     };
 }

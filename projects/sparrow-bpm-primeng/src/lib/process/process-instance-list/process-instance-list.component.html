@@ -1,0 +1,174 @@
+<div class="card">
+  <h5>{{processName}}</h5>
+  <p-table
+    #dt1
+    [value]="customers1"
+    dataKey="id"
+    [rows]="10"
+    [loading]="loading"
+    [rowHover]="true"
+    styleClass="p-datatable-gridlines"
+    [paginator]="true"
+    [globalFilterFields]="[
+      'name',
+      'country.name',
+      'representative.name',
+      'status'
+    ]"
+    responsiveLayout="scroll"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex justify-content-between flex-column sm:flex-row">
+        <button
+          pButton
+          label="Clear"
+          class="p-button-outlined mb-2"
+          icon="pi pi-filter-slash"
+          (click)="clear(dt1)"
+        ></button>
+        <span class="p-input-icon-left mb-2">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            #filter
+            (input)="onGlobalFilter(dt1, $event)"
+            placeholder="Search Keyword"
+            class="w-full"
+          />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>
+          <div class="flex justify-content-between align-items-center">
+            名称
+            <p-columnFilter
+              type="text"
+              field="name"
+              display="menu"
+              placeholder="Search by name"
+            ></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="flex justify-content-between align-items-center">
+            描述
+            <p-columnFilter
+              type="text"
+              field="country.name"
+              display="menu"
+              placeholder="Search by country"
+            ></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="flex justify-content-between align-items-center">
+            当前任务
+            <p-columnFilter
+              type="date"
+              field="date"
+              display="menu"
+              placeholder="mm/dd/yyyy"
+            ></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="flex justify-content-between align-items-center">
+            状态
+            <p-columnFilter field="status" matchMode="equals" display="menu">
+              <ng-template
+                pTemplate="filter"
+                let-value
+                let-filter="filterCallback"
+              >
+                <p-dropdown
+                  [options]="statuses"
+                  (onChange)="filter($event.value)"
+                  placeholder="Any"
+                  [style]="{ 'min-width': '12rem' }"
+                >
+                  <ng-template let-option pTemplate="item">
+                    <span [class]="'customer-badge status-' + option.value">{{
+                        option.label
+                      }}</span>
+                  </ng-template>
+                </p-dropdown>
+              </ng-template>
+            </p-columnFilter>
+          </div>
+        </th>
+        <th>发起人</th>
+        <th style="width: 20rem"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customer>
+      <tr>
+        <td style="min-width: 12rem">
+          <a
+            mat-button
+            color="primary"
+            routerLink="../process-instance-view"
+            [queryParams]="{
+              'container-id': customer['container-id'],
+              'process-id': customer['process-id'],
+              'process-instance-id': customer['process-instance-id']
+            }"
+          >
+            {{ customer["process-instance-id"] }} -
+            {{ customer["process-name"] }}
+          </a>
+        </td>
+        <td style="min-width: 12rem">
+          <span class="image-text ml-2">{{
+              customer["process-instance-desc"]
+            }}</span>
+        </td>
+        <td style="min-width: 10rem">
+          <div *ngFor="let task of customer['task-summary']">
+            <span>{{ task["task-id"] }}-{{ task["task-name"] }}</span>
+            <span>{{ task["task-created-on"] | date : "short" }}</span>
+            <span>{{ task["task-actual-owner"] }}</span>
+          </div>
+        </td>
+        <td style="min-width: 10rem">
+          {{ customer["process-instance-state"] }}
+        </td>
+        <td>
+          {{ customer.initiator }}
+        </td>
+        <td class="text-center" style="min-width: 8rem">
+          <!-- <button
+            pButton
+            pRipple
+            type="button"
+            label="流程图"
+            class="p-button-text mr-2 mb-2"
+            routerLink="../process-image-view"
+            [queryParams]="{
+              'container-id': customer['container-id'],
+              'process-id': customer['process-id'],
+              'process-instance-id': customer['process-instance-id']
+            }"
+          ></button> -->
+          <lib-process-image-view
+            [containerId]="customer['container-id']"
+            [processId]="customer['process-id']"
+            [processInstanceId]="customer['process-instance-id']"
+          ></lib-process-image-view>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7">No customers found.</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="loadingbody">
+      <tr>
+        <td colspan="7">Loading customers data. Please wait.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

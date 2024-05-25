@@ -9,22 +9,32 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { ErrMsg } from './errMsg';
 
 export interface MemberInfo { 
-    readonly modelName?: string;
     readonly createdDate?: Date;
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
-    readonly dataPermissionTokenId?: string;
     readonly stat?: string;
+    readonly entityStat?: MemberInfo.EntityStatEnum;
     readonly enabled?: boolean;
+    readonly modelName?: string;
+    readonly dataPermissionTokenId?: string;
+    readonly errMsgs?: Array<ErrMsg>;
     readonly username?: string;
     name?: string;
     chinaSailboatId?: string;
     gender?: MemberInfo.GenderEnum;
 }
 export namespace MemberInfo {
+    export type EntityStatEnum = 'Draft' | 'Submitted' | 'Failed' | 'Completed';
+    export const EntityStatEnum = {
+        Draft: 'Draft' as EntityStatEnum,
+        Submitted: 'Submitted' as EntityStatEnum,
+        Failed: 'Failed' as EntityStatEnum,
+        Completed: 'Completed' as EntityStatEnum
+    };
     export type GenderEnum = 'MALE' | 'FEMALE';
     export const GenderEnum = {
         MALE: 'MALE' as GenderEnum,

@@ -81,6 +81,10 @@
         "dist/sparrow-bpm/sparrow-bpm",
         "dist/sparrow-bpm"
       ],
+      "sparrow-bpm-primeng": [
+        "dist/sparrow-bpm-primeng/sparrow-bpm-primeng",
+        "dist/sparrow-bpm-primeng"
+      ],
       "sparrow-breadcrumb": [
         "dist/sparrow-breadcrumb/sparrow-breadcrumb",
         "dist/sparrow-breadcrumb"

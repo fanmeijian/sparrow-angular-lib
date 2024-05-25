@@ -15,6 +15,7 @@ import { AttachmentV2 } from './attachmentV2';
 import { CrewSubstitution } from './crewSubstitution';
 import { DamageReport } from './damageReport';
 import { EquipmentSubstitution } from './equipmentSubstitution';
+import { ErrMsg } from './errMsg';
 import { HearingRequest } from './hearingRequest';
 import { KegistrationFee } from './kegistrationFee';
 import { OtwPenalty } from './otwPenalty';
@@ -26,14 +27,16 @@ import { ScoringInquiry } from './scoringInquiry';
 import { StandardPenalty } from './standardPenalty';
 
 export interface FanChuanCompetition { 
-    readonly modelName?: string;
     readonly createdDate?: Date;
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
-    readonly dataPermissionTokenId?: string;
     readonly stat?: string;
+    readonly entityStat?: FanChuanCompetition.EntityStatEnum;
     readonly enabled?: boolean;
+    readonly modelName?: string;
+    readonly dataPermissionTokenId?: string;
+    readonly errMsgs?: Array<ErrMsg>;
     title?: string;
     content?: string;
     remark?: string;
@@ -68,4 +71,13 @@ export interface FanChuanCompetition {
     readonly scoringInquiries?: Array<ScoringInquiry>;
     readonly otwPenalties?: Array<OtwPenalty>;
     readonly standardPenalties?: Array<StandardPenalty>;
+}
+export namespace FanChuanCompetition {
+    export type EntityStatEnum = 'Draft' | 'Submitted' | 'Failed' | 'Completed';
+    export const EntityStatEnum = {
+        Draft: 'Draft' as EntityStatEnum,
+        Submitted: 'Submitted' as EntityStatEnum,
+        Failed: 'Failed' as EntityStatEnum,
+        Completed: 'Completed' as EntityStatEnum
+    };
 }

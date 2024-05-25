@@ -1,0 +1,19 @@
+<div class="card">
+  <h5>{{ taskInstance["task-name"] }}-{{ taskInstance["task-id"] }}</h5>
+  <formio
+    *ngIf="taskInstance['task-status'] !== 'Completed'"
+    #formIo
+    [form]="form"
+    (submit)="onSubmit($event)"
+    [submission]="data"
+  ></formio>
+
+  <formio
+    *ngIf="taskInstance['task-status'] === 'Completed'"
+    #formIo
+    [form]="form"
+    [viewOnly]="true"
+    [readOnly]="true"
+    [submission]="data"
+  ></formio>
+</div>
