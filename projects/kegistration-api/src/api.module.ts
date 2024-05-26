@@ -10,6 +10,7 @@ import { CrewSubstitutionService } from './api/crewSubstitution.service';
 import { DamageReportService } from './api/damageReport.service';
 import { DictService } from './api/dict.service';
 import { EquipmentSubstitutionService } from './api/equipmentSubstitution.service';
+import { FocusService } from './api/focus.service';
 import { HearingRequestService } from './api/hearingRequest.service';
 import { KegistrationService } from './api/kegistration.service';
 import { MemberService } from './api/member.service';
@@ -17,6 +18,7 @@ import { PenaltyService } from './api/penalty.service';
 import { QuestionService } from './api/question.service';
 import { RetirementReportService } from './api/retirementReport.service';
 import { ScoringInquiryService } from './api/scoringInquiry.service';
+import { ThumbupService } from './api/thumbup.service';
 
 @NgModule({
   imports:      [],
@@ -30,13 +32,15 @@ import { ScoringInquiryService } from './api/scoringInquiry.service';
     DamageReportService,
     DictService,
     EquipmentSubstitutionService,
+    FocusService,
     HearingRequestService,
     KegistrationService,
     MemberService,
     PenaltyService,
     QuestionService,
     RetirementReportService,
-    ScoringInquiryService ]
+    ScoringInquiryService,
+    ThumbupService ]
 })
 export class ApiModule {
     public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders<ApiModule> {

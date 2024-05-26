@@ -16,13 +16,13 @@ import { SortObject } from './sortObject';
 export interface PageClub { 
     totalPages?: number;
     totalElements?: number;
-    size?: number;
-    content?: Array<Club>;
     sort?: SortObject;
     number?: number;
     first?: boolean;
     last?: boolean;
-    numberOfElements?: number;
+    size?: number;
+    content?: Array<Club>;
     pageable?: PageableObject;
+    numberOfElements?: number;
     empty?: boolean;
 }

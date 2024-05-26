@@ -16,13 +16,13 @@ import { SortObject } from './sortObject';
 export interface PageAlbum { 
     totalPages?: number;
     totalElements?: number;
-    size?: number;
-    content?: Array<Album>;
     sort?: SortObject;
     number?: number;
     first?: boolean;
     last?: boolean;
-    numberOfElements?: number;
+    size?: number;
+    content?: Array<Album>;
     pageable?: PageableObject;
+    numberOfElements?: number;
     empty?: boolean;
 }

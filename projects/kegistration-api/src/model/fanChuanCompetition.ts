@@ -37,6 +37,7 @@ export interface FanChuanCompetition {
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
     readonly errMsgs?: Array<ErrMsg>;
+    readonly id?: string;
     title?: string;
     content?: string;
     remark?: string;
@@ -54,7 +55,6 @@ export interface FanChuanCompetition {
     maxParticipant?: number;
     fees?: Array<KegistrationFee>;
     files?: Array<Attachment>;
-    readonly id?: string;
     body?: string;
     projects?: Array<Project>;
     club?: string;
