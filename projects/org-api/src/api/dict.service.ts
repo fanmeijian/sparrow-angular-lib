@@ -18,6 +18,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { Dict } from '../model/dict';
+import { DictBean } from '../model/dictBean';
 import { DictCatalog } from '../model/dictCatalog';
 import { PageDict } from '../model/pageDict';
 import { PageDictCatalog } from '../model/pageDictCatalog';
@@ -30,7 +31,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class DictService {
 
-    protected basePath = 'http://localhost:4421/org-service';
+    protected basePath = 'http://localhost:8280/fanchuan-service';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -119,25 +120,30 @@ export class DictService {
      * 指定分类下的字典
      * 
      * @param catalogId 
+     * @param catalogCode 
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
      * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public dictByCatalogId(catalogId: string, page?: number, size?: number, sort?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<PageDict>;
-    public dictByCatalogId(catalogId: string, page?: number, size?: number, sort?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageDict>>;
-    public dictByCatalogId(catalogId: string, page?: number, size?: number, sort?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageDict>>;
-    public dictByCatalogId(catalogId: string, page?: number, size?: number, sort?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public dictByCatalog(catalogId?: string, catalogCode?: string, page?: number, size?: number, sort?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<PageDict>;
+    public dictByCatalog(catalogId?: string, catalogCode?: string, page?: number, size?: number, sort?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageDict>>;
+    public dictByCatalog(catalogId?: string, catalogCode?: string, page?: number, size?: number, sort?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageDict>>;
+    public dictByCatalog(catalogId?: string, catalogCode?: string, page?: number, size?: number, sort?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (catalogId === null || catalogId === undefined) {
-            throw new Error('Required parameter catalogId was null or undefined when calling dictByCatalogId.');
-        }
+
 
 
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (catalogId !== undefined && catalogId !== null) {
+            queryParameters = queryParameters.set('catalogId', <any>catalogId);
+        }
+        if (catalogCode !== undefined && catalogCode !== null) {
+            queryParameters = queryParameters.set('catalogCode', <any>catalogCode);
+        }
         if (page !== undefined && page !== null) {
             queryParameters = queryParameters.set('page', <any>page);
         }
@@ -165,7 +171,7 @@ export class DictService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<PageDict>('get',`${this.basePath}/dicts/catalogs/${encodeURIComponent(String(catalogId))}/dicts`,
+        return this.httpClient.request<PageDict>('get',`${this.basePath}/dicts`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -226,7 +232,7 @@ export class DictService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<PageDict>('get',`${this.basePath}/dicts/dicts/${encodeURIComponent(String(parentId))}/children`,
+        return this.httpClient.request<PageDict>('get',`${this.basePath}/dicts/${encodeURIComponent(String(parentId))}/children`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -241,21 +247,23 @@ export class DictService {
      * 指定分类下的树字典
      * 
      * @param catalogId 
+     * @param catalogCode 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public dictTreeByCatalogId(catalogId: string, observe?: 'body', reportProgress?: boolean): Observable<SparrowTreeDictString>;
-    public dictTreeByCatalogId(catalogId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<SparrowTreeDictString>>;
-    public dictTreeByCatalogId(catalogId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<SparrowTreeDictString>>;
-    public dictTreeByCatalogId(catalogId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public dictTreeByCatalog(catalogId?: string, catalogCode?: string, observe?: 'body', reportProgress?: boolean): Observable<SparrowTreeDictString>;
+    public dictTreeByCatalog(catalogId?: string, catalogCode?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<SparrowTreeDictString>>;
+    public dictTreeByCatalog(catalogId?: string, catalogCode?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<SparrowTreeDictString>>;
+    public dictTreeByCatalog(catalogId?: string, catalogCode?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (catalogId === null || catalogId === undefined) {
-            throw new Error('Required parameter catalogId was null or undefined when calling dictTreeByCatalogId.');
-        }
+
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (catalogId !== undefined && catalogId !== null) {
             queryParameters = queryParameters.set('catalogId', <any>catalogId);
+        }
+        if (catalogCode !== undefined && catalogCode !== null) {
+            queryParameters = queryParameters.set('catalogCode', <any>catalogCode);
         }
 
         let headers = this.defaultHeaders;
@@ -273,8 +281,65 @@ export class DictService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<SparrowTreeDictString>('get',`${this.basePath}/dicts/catalogs/${encodeURIComponent(String(catalogId))}/dict-tree`,
+        return this.httpClient.request<SparrowTreeDictString>('get',`${this.basePath}/dicts/dict-tree`,
             {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 导入字典
+     * 
+     * @param body 
+     * @param catalogCode 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public importDict(body: Array<DictBean>, catalogCode: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public importDict(body: Array<DictBean>, catalogCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public importDict(body: Array<DictBean>, catalogCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public importDict(body: Array<DictBean>, catalogCode: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling importDict.');
+        }
+
+        if (catalogCode === null || catalogCode === undefined) {
+            throw new Error('Required parameter catalogCode was null or undefined when calling importDict.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (catalogCode !== undefined && catalogCode !== null) {
+            queryParameters = queryParameters.set('catalogCode', <any>catalogCode);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<any>('post',`${this.basePath}/dicts/import`,
+            {
+                body: body,
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -365,7 +430,7 @@ export class DictService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('post',`${this.basePath}/dicts/catalogs/dicts`,
+        return this.httpClient.request<any>('post',`${this.basePath}/dicts`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,

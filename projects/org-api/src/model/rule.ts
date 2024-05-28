@@ -17,11 +17,11 @@ export interface Rule {
     readonly createdBy?: string;
     readonly modifiedBy?: string;
     readonly stat?: string;
-    entityStat?: Rule.EntityStatEnum;
+    readonly entityStat?: Rule.EntityStatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
-    errMsgs?: Array<ErrMsg>;
+    readonly errMsgs?: Array<ErrMsg>;
     readonly id?: string;
     name?: string;
     description?: string;

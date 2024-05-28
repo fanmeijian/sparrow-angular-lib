@@ -18,11 +18,11 @@ export interface Menu {
     readonly createdBy?: string;
     readonly modifiedBy?: string;
     readonly stat?: string;
-    entityStat?: Menu.EntityStatEnum;
+    readonly entityStat?: Menu.EntityStatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
-    errMsgs?: Array<ErrMsg>;
+    readonly errMsgs?: Array<ErrMsg>;
     dataPermissionId?: string;
     dataPermission?: DataPermission;
     readonly id?: string;

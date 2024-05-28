@@ -31,7 +31,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class PageElementService {
 
-    protected basePath = 'http://localhost:4421/org-service';
+    protected basePath = 'http://localhost:8280/fanchuan-service';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -159,9 +159,9 @@ export class PageElementService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public hasPageElementPermission(id: string, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
-    public hasPageElementPermission(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
-    public hasPageElementPermission(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
+    public hasPageElementPermission(id: string, observe?: 'body', reportProgress?: boolean): Observable<string>;
+    public hasPageElementPermission(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
+    public hasPageElementPermission(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
     public hasPageElementPermission(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (id === null || id === undefined) {
@@ -183,7 +183,7 @@ export class PageElementService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<boolean>('get',`${this.basePath}/page-elements/${encodeURIComponent(String(id))}/hasPermission`,
+        return this.httpClient.request<string>('get',`${this.basePath}/page-elements/${encodeURIComponent(String(id))}/hasPermission`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

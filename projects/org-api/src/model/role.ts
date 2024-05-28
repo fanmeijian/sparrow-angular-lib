@@ -17,11 +17,11 @@ export interface Role {
     readonly createdBy?: string;
     readonly modifiedBy?: string;
     readonly stat?: string;
-    entityStat?: Role.EntityStatEnum;
+    readonly entityStat?: Role.EntityStatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
-    errMsgs?: Array<ErrMsg>;
+    readonly errMsgs?: Array<ErrMsg>;
     readonly id?: string;
     code?: string;
     name?: string;

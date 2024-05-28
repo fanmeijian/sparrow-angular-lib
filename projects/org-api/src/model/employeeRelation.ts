@@ -18,11 +18,11 @@ export interface EmployeeRelation {
     readonly createdBy?: string;
     readonly modifiedBy?: string;
     readonly stat?: string;
-    entityStat?: EmployeeRelation.EntityStatEnum;
+    readonly entityStat?: EmployeeRelation.EntityStatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
-    errMsgs?: Array<ErrMsg>;
+    readonly errMsgs?: Array<ErrMsg>;
     id?: EmployeeRelationPK;
 }
 export namespace EmployeeRelation {

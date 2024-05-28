@@ -18,11 +18,11 @@ export interface OrganizationGroup {
     readonly createdBy?: string;
     readonly modifiedBy?: string;
     readonly stat?: string;
-    entityStat?: OrganizationGroup.EntityStatEnum;
+    readonly entityStat?: OrganizationGroup.EntityStatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
-    errMsgs?: Array<ErrMsg>;
+    readonly errMsgs?: Array<ErrMsg>;
     id?: OrganizationGroupPK;
 }
 export namespace OrganizationGroup {

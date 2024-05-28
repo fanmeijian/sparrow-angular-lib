@@ -28,7 +28,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class ReportService {
 
-    protected basePath = 'http://localhost:4421/org-service';
+    protected basePath = 'http://localhost:8280/fanchuan-service';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 

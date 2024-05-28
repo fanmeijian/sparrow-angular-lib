@@ -9,7 +9,6 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { DataOrganization } from './dataOrganization';
 import { ErrMsg } from './errMsg';
 
 export interface Group { 
@@ -18,14 +17,14 @@ export interface Group {
     readonly createdBy?: string;
     readonly modifiedBy?: string;
     readonly stat?: string;
-    entityStat?: Group.EntityStatEnum;
+    readonly entityStat?: Group.EntityStatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
-    errMsgs?: Array<ErrMsg>;
+    readonly errMsgs?: Array<ErrMsg>;
     readonly id?: string;
     readonly organizationId?: string;
-    dataOrganization?: DataOrganization;
+    readonly dataOrganizationId?: string;
     code?: string;
     name?: string;
     owner?: string;

@@ -18,11 +18,11 @@ export interface EmployeeOrganizationLevel {
     readonly createdBy?: string;
     readonly modifiedBy?: string;
     readonly stat?: string;
-    entityStat?: EmployeeOrganizationLevel.EntityStatEnum;
+    readonly entityStat?: EmployeeOrganizationLevel.EntityStatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
-    errMsgs?: Array<ErrMsg>;
+    readonly errMsgs?: Array<ErrMsg>;
     id?: EmployeeOrganizationLevelPK;
 }
 export namespace EmployeeOrganizationLevel {

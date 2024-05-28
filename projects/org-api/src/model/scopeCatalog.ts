@@ -17,11 +17,11 @@ export interface ScopeCatalog {
     readonly createdBy?: string;
     readonly modifiedBy?: string;
     readonly stat?: string;
-    entityStat?: ScopeCatalog.EntityStatEnum;
+    readonly entityStat?: ScopeCatalog.EntityStatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
-    errMsgs?: Array<ErrMsg>;
+    readonly errMsgs?: Array<ErrMsg>;
     readonly id?: string;
     name?: string;
     code?: string;

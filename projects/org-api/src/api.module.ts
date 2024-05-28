@@ -4,18 +4,22 @@ import { HttpClient } from '@angular/common/http';
 
 
 import { AuditlogService } from './api/auditlog.service';
+import { CosService } from './api/cos.service';
 import { DataOrganizationService } from './api/dataOrganization.service';
 import { DataPermissionService } from './api/dataPermission.service';
 import { DatamodelService } from './api/datamodel.service';
 import { DictService } from './api/dict.service';
 import { EmployeeService } from './api/employee.service';
 import { FileService } from './api/file.service';
+import { FlowService } from './api/flow.service';
+import { FormService } from './api/form.service';
 import { GroupService } from './api/group.service';
 import { JoblevelService } from './api/joblevel.service';
 import { MenuService } from './api/menu.service';
 import { OrganizationService } from './api/organization.service';
 import { PageElementService } from './api/pageElement.service';
 import { PemgroupService } from './api/pemgroup.service';
+import { ReportService } from './api/report.service';
 import { RestApiServiceService } from './api/restApiService.service';
 import { RoleService } from './api/role.service';
 import { RuleService } from './api/rule.service';
@@ -23,7 +27,6 @@ import { ScopeService } from './api/scope.service';
 import { SysconfigService } from './api/sysconfig.service';
 import { SysroleService } from './api/sysrole.service';
 import { UserService } from './api/user.service';
-import { ReportService } from './api/report.service';
 
 @NgModule({
   imports:      [],
@@ -31,26 +34,29 @@ import { ReportService } from './api/report.service';
   exports:      [],
   providers: [
     AuditlogService,
+    CosService,
     DataOrganizationService,
     DataPermissionService,
     DatamodelService,
     DictService,
     EmployeeService,
     FileService,
+    FlowService,
+    FormService,
     GroupService,
     JoblevelService,
     MenuService,
     OrganizationService,
     PageElementService,
     PemgroupService,
+    ReportService,
     RestApiServiceService,
     RoleService,
     RuleService,
     ScopeService,
     SysconfigService,
     SysroleService,
-    UserService,
-    ReportService ]
+    UserService ]
 })
 export class ApiModule {
     public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders<ApiModule> {

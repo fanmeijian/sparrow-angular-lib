@@ -18,11 +18,11 @@ export interface EmployeeOrganizationRole {
     readonly createdBy?: string;
     readonly modifiedBy?: string;
     readonly stat?: string;
-    entityStat?: EmployeeOrganizationRole.EntityStatEnum;
+    readonly entityStat?: EmployeeOrganizationRole.EntityStatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
-    errMsgs?: Array<ErrMsg>;
+    readonly errMsgs?: Array<ErrMsg>;
     id?: EmployeeOrganizationRolePK;
     organizationId?: string;
     employeeId?: string;

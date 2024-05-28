@@ -19,11 +19,11 @@ export interface UserSysrole {
     readonly createdBy?: string;
     readonly modifiedBy?: string;
     readonly stat?: string;
-    entityStat?: UserSysrole.EntityStatEnum;
+    readonly entityStat?: UserSysrole.EntityStatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
-    errMsgs?: Array<ErrMsg>;
+    readonly errMsgs?: Array<ErrMsg>;
     dataPermissionId?: string;
     dataPermission?: DataPermission;
     id?: UserSysrolePK;

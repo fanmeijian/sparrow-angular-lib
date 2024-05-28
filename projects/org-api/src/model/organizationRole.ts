@@ -18,11 +18,11 @@ export interface OrganizationRole {
     readonly createdBy?: string;
     readonly modifiedBy?: string;
     readonly stat?: string;
-    entityStat?: OrganizationRole.EntityStatEnum;
+    readonly entityStat?: OrganizationRole.EntityStatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
-    errMsgs?: Array<ErrMsg>;
+    readonly errMsgs?: Array<ErrMsg>;
     id?: OrganizationRolePK;
 }
 export namespace OrganizationRole {

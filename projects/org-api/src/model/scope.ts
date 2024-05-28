@@ -19,11 +19,11 @@ export interface Scope {
     readonly createdBy?: string;
     readonly modifiedBy?: string;
     readonly stat?: string;
-    entityStat?: Scope.EntityStatEnum;
+    readonly entityStat?: Scope.EntityStatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
-    errMsgs?: Array<ErrMsg>;
+    readonly errMsgs?: Array<ErrMsg>;
     dataPermissionId?: string;
     dataPermission?: DataPermission;
     readonly id?: string;

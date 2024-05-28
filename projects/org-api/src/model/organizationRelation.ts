@@ -18,12 +18,16 @@ export interface OrganizationRelation {
     readonly createdBy?: string;
     readonly modifiedBy?: string;
     readonly stat?: string;
-    entityStat?: OrganizationRelation.EntityStatEnum;
+    readonly entityStat?: OrganizationRelation.EntityStatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
-    errMsgs?: Array<ErrMsg>;
+    readonly errMsgs?: Array<ErrMsg>;
     id?: OrganizationRelationPK;
+    name?: string;
+    parentName?: string;
+    type?: OrganizationRelation.TypeEnum;
+    parentType?: OrganizationRelation.ParentTypeEnum;
 }
 export namespace OrganizationRelation {
     export type EntityStatEnum = 'Draft' | 'Submitted' | 'Failed' | 'Completed';
@@ -32,5 +36,15 @@ export namespace OrganizationRelation {
         Submitted: 'Submitted' as EntityStatEnum,
         Failed: 'Failed' as EntityStatEnum,
         Completed: 'Completed' as EntityStatEnum
+    };
+    export type TypeEnum = 'ORGANIZATION' | 'UNIT';
+    export const TypeEnum = {
+        ORGANIZATION: 'ORGANIZATION' as TypeEnum,
+        UNIT: 'UNIT' as TypeEnum
+    };
+    export type ParentTypeEnum = 'ORGANIZATION' | 'UNIT';
+    export const ParentTypeEnum = {
+        ORGANIZATION: 'ORGANIZATION' as ParentTypeEnum,
+        UNIT: 'UNIT' as ParentTypeEnum
     };
 }

@@ -18,11 +18,11 @@ export interface OrganizationPositionLevel {
     readonly createdBy?: string;
     readonly modifiedBy?: string;
     readonly stat?: string;
-    entityStat?: OrganizationPositionLevel.EntityStatEnum;
+    readonly entityStat?: OrganizationPositionLevel.EntityStatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
-    errMsgs?: Array<ErrMsg>;
+    readonly errMsgs?: Array<ErrMsg>;
     id?: OrganizationPositionLevelPK;
 }
 export namespace OrganizationPositionLevel {

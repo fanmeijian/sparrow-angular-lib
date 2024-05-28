@@ -17,11 +17,11 @@ export interface PageElement {
     readonly createdBy?: string;
     readonly modifiedBy?: string;
     readonly stat?: string;
-    entityStat?: PageElement.EntityStatEnum;
+    readonly entityStat?: PageElement.EntityStatEnum;
     readonly enabled?: boolean;
     readonly modelName?: string;
     readonly dataPermissionTokenId?: string;
-    errMsgs?: Array<ErrMsg>;
+    readonly errMsgs?: Array<ErrMsg>;
     id?: string;
     name?: string;
     remark?: string;
