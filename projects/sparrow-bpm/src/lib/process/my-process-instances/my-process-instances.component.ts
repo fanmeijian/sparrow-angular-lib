@@ -6,7 +6,6 @@ import {
   ProcessQueriesService,
   TaskInstancesService,
 } from '@sparrowmini/jbpm-api';
-import { UserService } from '@sparrowmini/sparrow-keycloak-admin-api';
 import { map, switchMap, zip, of, combineLatest } from 'rxjs';
 import { ViewProcessImageComponent } from '../view-process-image/view-process-image.component';
 
@@ -32,7 +31,6 @@ export class MyProcessInstancesComponent implements OnInit {
     public flowService: FlowService,
     private processQueriesService: ProcessQueriesService,
     private dialog: MatDialog,
-    private userService: UserService,
     private taskInstancesService: TaskInstancesService
   ) {}
 

@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { TaskInstancesService, ProcessQueriesService } from '@sparrowmini/jbpm-api';
-import { UserService } from '@sparrowmini/sparrow-keycloak-admin-api';
 import { FormBuilder } from 'formiojs';
 import { map, switchMap, zip, of } from 'rxjs';
 

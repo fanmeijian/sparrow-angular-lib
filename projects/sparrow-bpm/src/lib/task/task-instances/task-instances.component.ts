@@ -5,7 +5,6 @@ import {
   ProcessQueriesService,
   TaskInstancesService,
 } from '@sparrowmini/jbpm-api';
-import { UserService } from '@sparrowmini/sparrow-keycloak-admin-api';
 import { FlowService } from '../../../services/flow.service';
 import { map, switchMap, zip, combineLatest } from 'rxjs';
 
@@ -57,7 +56,6 @@ export class TaskInstancesComponent implements OnInit {
   constructor(
     private processQueriesService: ProcessQueriesService,
     private dialog: MatDialog,
-    private userService: UserService,
     private taskInstancesService: TaskInstancesService,
     public flowService: FlowService
   ) {}
@@ -83,17 +81,11 @@ export class TaskInstancesComponent implements OnInit {
           switchMap((res: any) =>
             zip(
               ...res.map((m: any) => {
-                const proc: any = this.processQueriesService
-                  .getProcessInstanceById(m['task-proc-inst-id'])
-                  .pipe(
-                    switchMap((proc1: any) =>
-                      this.userService
-                        .getUserInfo(proc1.initiator)
-                        .pipe(
-                          map((r) => Object.assign(proc1, { initiatorInfo: r }))
-                        )
-                    )
+                const proc: any =
+                  this.processQueriesService.getProcessInstanceById(
+                    m['task-proc-inst-id']
                   );
+
                 const task: any = this.taskInstancesService.getTask(
                   m['task-container-id'],
                   m['task-id'],
@@ -131,32 +123,16 @@ export class TaskInstancesComponent implements OnInit {
           switchMap((res: any) =>
             zip(
               ...res.map((m: any) => {
-                const proc: any = this.processQueriesService
-                  .getProcessInstanceById(m['task-proc-inst-id'])
-                  .pipe(
-                    switchMap((proc1: any) =>
-                      this.userService
-                        .getUserInfo(proc1.initiator)
-                        .pipe(
-                          map((r) => Object.assign(proc1, { initiatorInfo: r }))
-                        )
-                    )
+                const proc: any =
+                  this.processQueriesService.getProcessInstanceById(
+                    m['task-proc-inst-id']
                   );
-                const task: any = this.taskInstancesService
-                  .getTask(m['task-container-id'], m['task-id'], true)
-                  .pipe(
-                    switchMap((task1: any) =>
-                      this.userService
-                        .getUserInfo(task1['task-actual-owner'])
-                        .pipe(
-                          map((r) =>
-                            Object.assign(task1, {
-                              'task-actual-owner-info': r,
-                            })
-                          )
-                        )
-                    )
-                  );
+
+                const task: any = this.taskInstancesService.getTask(
+                  m['task-container-id'],
+                  m['task-id'],
+                  true
+                );
 
                 return combineLatest(proc, task).pipe(
                   map((c: any) => Object.assign({}, c[1], { proc: c[0] }))

@@ -35,6 +35,7 @@ import { SparrowPermissionModule } from '@sparrowmini/sparrow-permission'
     AngularMaterialModule,
     FormioModule,
     SparrowPermissionModule,
+
   ],
   exports: [
     SparrowFormComponent

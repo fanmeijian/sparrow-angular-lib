@@ -9,7 +9,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormService } from '@sparrowmini/form-api';
+import { FormService,CosFileService } from '@sparrowmini/form-api';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Prism from 'prismjs';
 import { FormioRefreshValue } from '@formio/angular';
@@ -40,6 +40,9 @@ export class FormCreateComponent implements OnInit {
     }
   }
   formJson: any;
+  formOptions = {
+    fileService: this.formioFileService,
+  }
   formGroup: FormGroup = this.formBuilder.group({
     name: [null, Validators.required],
     code: [null, Validators.required],
@@ -58,7 +61,9 @@ export class FormCreateComponent implements OnInit {
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private formioFileService: CosFileService
+
   ) {
     this.form = { components: [] };
     this.formJson = { components: [] };

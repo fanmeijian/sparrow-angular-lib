@@ -14,7 +14,6 @@ import { RouterModule } from '@angular/router';
 import { ApiModule as JbpmApiModule,BASE_PATH as JbpmApi_BASE_PATH, } from '@sparrowmini/jbpm-api';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import { SparrowKeycloakAdminApiModule } from '@sparrowmini/sparrow-keycloak-admin-api';
 import { ViewProcessImageComponent } from './process/view-process-image/view-process-image.component';
 import { ViewProcessInstanceComponent } from './process/view-process-instance/view-process-instance.component';
 import { TaskTodoComponent } from './task/task-todo/task-todo.component';
@@ -59,7 +58,6 @@ import { QueryExecuteComponent } from './query/query-execute/query-execute.compo
     HttpClientModule,
     FormioModule,
     JbpmApiModule,
-    SparrowKeycloakAdminApiModule,
   ],
   exports: [
     SparrowBpmComponent,

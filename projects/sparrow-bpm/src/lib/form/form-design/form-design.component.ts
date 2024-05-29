@@ -13,7 +13,7 @@ import { FormioRefreshValue } from '@formio/angular';
 import { ProcessFormId, TaskFormId } from '@sparrowmini/flow-api';
 import { ProcessAndTaskDefinitionsService } from '@sparrowmini/jbpm-api';
 import { map, tap } from 'rxjs';
-import { FlowService } from '@sparrowmini/flow-api';
+import { FlowService,CosFileService } from '@sparrowmini/flow-api';
 import Prism from 'prismjs';
 
 @Component({
@@ -23,6 +23,9 @@ import Prism from 'prismjs';
 })
 export class FormDesignComponent implements OnInit {
   formJson: any;
+  formOptions = {
+    fileService: this.formioFileService,
+  }
   taskFormId?: TaskFormId;
   processFormId?: ProcessFormId;
   variables: any[] = [];
@@ -38,7 +41,8 @@ export class FormDesignComponent implements OnInit {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private router: Router,
-    private processAndTaskDefinitionsService: ProcessAndTaskDefinitionsService
+    private processAndTaskDefinitionsService: ProcessAndTaskDefinitionsService,
+    private formioFileService: CosFileService,
   ) {
     this.form = { components: [] };
   }

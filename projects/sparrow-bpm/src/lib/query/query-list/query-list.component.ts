@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { FlowService } from '@sparrowmini/flow-api';
 import { CustomQueriesService, ProcessQueriesService, TaskInstancesService } from '@sparrowmini/jbpm-api';
-import { UserService } from '@sparrowmini/sparrow-keycloak-admin-api';
 import { map, switchMap, zip, combineLatest } from 'rxjs';
 import { ProcessSate } from '../../task/task-instances/task-instances.component';
 import { QueryCreateComponent } from '../query-create/query-create.component';

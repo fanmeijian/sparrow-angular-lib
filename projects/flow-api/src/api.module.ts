@@ -8,12 +8,13 @@ import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
 import { FlowService } from './api/flow.service';
+import { CosFileService } from './api/cos-file.service';
 
 @NgModule({
   imports: [],
   declarations: [],
   exports: [],
-  providers: [FlowService],
+  providers: [FlowService,CosFileService],
 })
 export class ApiModule {
   public static forRoot(

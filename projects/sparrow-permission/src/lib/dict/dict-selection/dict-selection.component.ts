@@ -49,7 +49,7 @@ export class DictSelectionComponent implements OnInit {
     });
 
     if(this.showType==='SELECT'){
-      this.dictService.dictByCatalogId(this.catalogId!).subscribe(res=>{
+      this.dictService.dictByCatalog(this.catalogId!).subscribe(res=>{
         this.dicts=res.content!
       })
     }

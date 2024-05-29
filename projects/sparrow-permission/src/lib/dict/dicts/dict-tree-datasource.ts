@@ -48,7 +48,7 @@ export class DynamicDatabase {
 
   getChildren(node: DynamicFlatNode): Observable<Dict[]> {
     if(node.type==='CATALOG'){
-      return this.dictService.dictByCatalogId(node.id).pipe(map((m) => m.content!));
+      return this.dictService.dictByCatalog(node.id).pipe(map((m) => m.content!));
     }else{
       return this.dictService.dictByParentId(node.id).pipe(map((m) => m.content!));
     }
