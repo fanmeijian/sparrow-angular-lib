@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FlowService } from '@sparrowmini/flow-api';
+import { CosFileService, FlowService } from '@sparrowmini/flow-api';
 import { ProcessInstancesService } from '@sparrowmini/jbpm-api';
 
 @Component({
@@ -15,13 +15,10 @@ export class ProcessFormComponent implements OnInit {
   window = window
 
   constructor(
-    // @Inject(MAT_DIALOG_DATA) public data: any,
-    // private formService: FormService,
-    // private dialogRef: MatDialogRef<ProcessFormComponent>,
     private flowService: FlowService,
-    // private keycloakService: KeycloakService,
     private processService: ProcessInstancesService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public formioFileService: CosFileService,
   ) {}
 
   ngOnInit(): void {

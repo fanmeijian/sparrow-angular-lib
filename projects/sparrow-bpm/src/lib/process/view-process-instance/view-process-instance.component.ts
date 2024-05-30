@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FlowService, ProcessFormId } from '@sparrowmini/flow-api';
+import { CosFileService, FlowService, ProcessFormId } from '@sparrowmini/flow-api';
 import { ProcessInstancesService } from '@sparrowmini/jbpm-api';
 
 @Component({
@@ -12,7 +12,8 @@ export class ViewProcessInstanceComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formService: FlowService,
-    private processInstancesService: ProcessInstancesService
+    private processInstancesService: ProcessInstancesService,
+    public formioFileService: CosFileService,
   ) {}
 
   form: any;

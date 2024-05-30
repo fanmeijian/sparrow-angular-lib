@@ -2,7 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, Optional } from '@angular/core';
 import * as COS from 'cos-js-sdk-v5';
 import { Md5 } from 'ts-md5';
-import { BASE_PATH, COLLECTION_FORMATS, COS_CONFIG }                     from '../variables';
+import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
+import { COS_CLIENT, COS_CONFIG }                     from '../cos-variables';
 import { Configuration }                                     from '../configuration';
 
 @Injectable()
@@ -13,9 +14,9 @@ export class CosFileService {
   protected cosConfig :any = {};
   public defaultHeaders = new HttpHeaders();
   public configuration = new Configuration();
-  protected cos!: COS;
+  protected cosClient!: COS;
 
-  constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration,@Optional()@Inject(COS_CONFIG) cosConfig: any) {
+  constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration,@Optional()@Inject(COS_CONFIG) cosConfig: any,@Optional()@Inject(COS_CLIENT) cosClient: COS) {
       if (basePath) {
           this.basePath = basePath;
       }
@@ -25,25 +26,8 @@ export class CosFileService {
       }
 
       this.cosConfig = cosConfig
-      let that = this;
+      this.cosClient = cosClient
 
-      this.cos = new COS({
-        getAuthorization: function (options, callback) {
-          // that.objService
-          //   .getUploadTmpKey('apply_ico_delete.png')
-          that.httpClient
-            .get(that.basePath + '/cos/tx/uploadTmpKeys?fileName=sad')
-            .subscribe((res: any) => {
-              callback({
-                TmpSecretId: res.credentials.tmpSecretId,
-                TmpSecretKey: res.credentials.tmpSecretKey,
-                SecurityToken: res.credentials.sessionToken,
-                StartTime: res.startTime, // 时间戳，单位秒，如：1580000000
-                ExpiredTime: res.expiredTime, // 时间戳，单位秒，如：1580000000
-              });
-            });
-        },
-      });
   }
 
   /**
@@ -73,7 +57,9 @@ export class CosFileService {
     options: any
   ) {
     //do something
-    console.log(storage, file, fileName, dir, evt, url, options);
+    // console.log(storage, file, fileName, dir, evt, url, options);
+    let that = this
+
 
     let attachment = {
       name: file.name,
@@ -95,7 +81,7 @@ export class CosFileService {
         return attachment;
       })
       .then(async (attachment: any) => {
-        await this.cos
+        await this.cosClient
           .putObject({
             Bucket: attachment.bucket,
             Region: attachment.region,
@@ -109,7 +95,7 @@ export class CosFileService {
           });
       });
     await $filereq;
-    console.log(attachment);
+    // console.log(attachment);
     return attachment;
   }
 

@@ -5,6 +5,7 @@
   #formIo
   [form]="form"
   (submit)="onSubmit($event)"
+  [options]="{ fileService: formioFileService }"
   [submission]="submission"
 ></formio>
 <button mat-button color="primary" (click)="submit()" cdkFocusInitial>

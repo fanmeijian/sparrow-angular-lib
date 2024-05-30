@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProcessInstancesService } from "@sparrowmini/jbpm-api";
 import { ActivatedRoute } from "@angular/router";
-import { FlowService } from "@sparrowmini/flow-api";
+import { CosFileService, FlowService } from "@sparrowmini/flow-api";
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -20,6 +20,7 @@ export class ProcessFormComponent implements OnInit {
     private route: ActivatedRoute,
     private flowService: FlowService,
     private http: HttpClient,
+    public cosFileService: CosFileService
   ) { }
 
   ngOnInit(): void {

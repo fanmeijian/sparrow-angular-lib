@@ -1,6 +1,6 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TaskFormId, FlowService } from '@sparrowmini/flow-api';
+import { TaskFormId, FlowService, CosFileService } from '@sparrowmini/flow-api';
 import { TaskInstancesService, ProcessQueriesService } from '@sparrowmini/jbpm-api';
 import { ProcessFormComponent } from '../process-form/process-form.component';
 
@@ -21,7 +21,8 @@ export class TaskFormComponent implements OnInit {
     private dialogRef: MatDialogRef<ProcessFormComponent>,
     private flowService: FlowService,
     private taskInstancesService: TaskInstancesService,
-    private proc: ProcessQueriesService
+    private proc: ProcessQueriesService,
+    public formioFileService: CosFileService,
   ) {}
 
   data: any;

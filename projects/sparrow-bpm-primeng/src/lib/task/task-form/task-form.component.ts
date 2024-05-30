@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormioComponent} from "@formio/angular";
-import {FlowService, TaskFormId} from "@sparrowmini/flow-api";
+import {CosFileService, FlowService, TaskFormId} from "@sparrowmini/flow-api";
 import {ActivatedRoute} from "@angular/router";
 import {FormService} from "@sparrowmini/form-api";
 import {TaskInstancesService} from "@sparrowmini/jbpm-api";
@@ -29,6 +29,7 @@ export class TaskFormComponent implements OnInit {
     private flowService: FlowService,
     private taskInstanceService: TaskInstancesService,
     private http: HttpClient,
+    public cosFileService: CosFileService
   ) {}
 
   @ViewChild('formIo', { static: true }) formIo!: FormioComponent;

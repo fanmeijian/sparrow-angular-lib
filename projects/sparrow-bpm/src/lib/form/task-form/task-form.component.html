@@ -4,6 +4,7 @@
     #formIo
     [form]="form"
     (submit)="onSubmit($event)"
+    [options]="{ fileService: formioFileService }"
     [submission]="inputDate"
     [viewOnly]="viewOnly"
     [readOnly]="readOnly"

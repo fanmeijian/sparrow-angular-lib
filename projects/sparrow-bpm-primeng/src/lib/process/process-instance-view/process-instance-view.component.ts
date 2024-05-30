@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FlowService, ProcessFormId} from "@sparrowmini/flow-api";
+import {CosFileService, FlowService, ProcessFormId} from "@sparrowmini/flow-api";
 import {ProcessInstancesService} from "@sparrowmini/jbpm-api";
 import {ActivatedRoute} from "@angular/router";
 
@@ -12,7 +12,8 @@ export class ProcessInstanceViewComponent implements OnInit {
   constructor(
     private formService: FlowService,
     private processInstancesService: ProcessInstancesService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public cosFileService: CosFileService,
   ) {}
 
   form: any;

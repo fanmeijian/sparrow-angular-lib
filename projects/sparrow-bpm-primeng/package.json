@@ -1,6 +1,6 @@
 {
   "name": "@sparrowmini/sparrow-bpm-primeng",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "peerDependencies": {
     "@angular/cdk": "^13.3.9",
     "@angular/common": "^13.3.0",
@@ -12,7 +12,7 @@
     "@angular/platform-browser-dynamic": "^13.4.0",
     "@angular/router": "^13.4.0",
     "@formio/angular": "^5.3.0",
-    "@sparrowmini/flow-api": "^0.3.0",
+    "@sparrowmini/flow-api": "^0.4.5",
     "@sparrowmini/form-api": "^0.1.0",
     "@sparrowmini/jbpm-api": "^0.2.1",
     "formiojs": "^4.19.0",
