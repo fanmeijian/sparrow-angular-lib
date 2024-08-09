@@ -1,16 +1,16 @@
 {
   "name": "@sparrowmini/sparrow-portal",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "peerDependencies": {
-    "@angular/animations": "^13.4.0",
+    "@angular/animations": "^13.3.0",
     "@angular/cdk": "^13.3.9",
     "@angular/common": "^13.3.0",
-    "@angular/compiler": "^13.4.0",
+    "@angular/compiler": "^13.3.0",
     "@angular/core": "^13.3.0",
-    "@angular/elements": "^13.4.0",
-    "@angular/forms": "^13.4.0",
+    "@angular/elements": "^13.3.0",
+    "@angular/forms": "^13.3.0",
     "@angular/platform-browser": "^13.0.0",
-    "@angular/router": "^13.4.0",
+    "@angular/router": "^13.3.0",
     "@formio/angular": "^5.3.0",
     "@sparrowmini/flow-api": "^0.3.0",
     "@sparrowmini/form-api": "^0.1.0",
@@ -21,7 +21,7 @@
     "primeicons": "^5.0.0",
     "primeng": "^13.4.1",
     "prismjs": "^1.29.0",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.5.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"

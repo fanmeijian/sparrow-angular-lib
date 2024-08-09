@@ -1,7 +1,7 @@
-<button mat-flat-button (click)="exportPdf()">导出pdf</button>
-<button mat-flat-button>导出word</button>
-<button mat-flat-button>导出csv</button>
-<button mat-flat-button>导出excel</button>
+<button pButton pRipple (click)="export('PDF')" type="button" label="导出pdf" class="p-button-text mr-2 mb-2"></button>
+<button pButton pRipple (click)="export('WORD')" type="button" label="导出word" class="p-button-text mr-2 mb-2"></button>
+<button pButton pRipple (click)="export('CSV')" type="button" label="导出csv" class="p-button-text mr-2 mb-2"></button>
+<button pButton pRipple (click)="export('EXCEL')" type="button" label="导出excel" class="p-button-text mr-2 mb-2"></button>
 <div [innerHtml]="reportHtmlStr"></div>
 <ng-template pTemplate="loadingbody">
   <tr>

@@ -45,7 +45,7 @@
           <mat-chip-list #chipList>
             <mat-chip
               *ngFor="let user of element.users"
-              (removed)="remove(user, element)"
+              (removed)="removeUser(user, element)"
             >
               {{ user.substring(0, 8) }}
               <button matChipRemove>

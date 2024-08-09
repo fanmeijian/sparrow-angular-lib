@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpUrlEncodingCodec} from "@angular/common/http";
 import {ReportService} from "@sparrowmini/report-api";
 import {DomSanitizer} from "@angular/platform-browser";
 
@@ -35,12 +35,24 @@ export class ReportViewComponent implements OnInit {
     });
   }
 
-  exportPdf() {
+  export(type: 'PDF'|'WORD'|'EXCEL'|'CSV') {
     this.reportService
-      .exportReport(this.templateId!, 'PDF')
+      .exportReport(this.templateId!, type,'response')
       .subscribe((res: any) => {
-        let downloadURL = URL.createObjectURL(res);
-        window.open(downloadURL);
+        let fileName =decodeURI(res.headers.get('content-disposition').split(';')[1].trim().split('=')[1])
+        console.log(fileName)
+
+        // let file =new File([res.body],decodeURI(fileName) ,{ type: 'application/octet-stream' })
+        // let downloadURL = URL.createObjectURL(file);
+        // window.open(downloadURL);
+
+        const objectUrl = URL.createObjectURL(res.body);
+        const a = document.createElement('a');
+        a.setAttribute('style', 'display:none');
+        a.setAttribute('href', objectUrl);
+        a.setAttribute('download', fileName);
+        a.click();
+        URL.revokeObjectURL(objectUrl);
       });
   }
 

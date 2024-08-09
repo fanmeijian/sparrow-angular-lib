@@ -74,6 +74,7 @@ import { DictCatalogSelectionComponent } from './dict/dict-catalog-selection/dic
 import { ReportTemplateCreateComponent } from './report/report-template-create/report-template-create.component';
 import { ReportTemplatesComponent } from './report/report-templates/report-templates.component';
 import { ViewReportComponent } from './report/view-report/view-report.component';
+import { DataPermissionNewComponent } from './data-permission/data-permission-new/data-permission-new.component';
 
 @NgModule({
   declarations: [
@@ -126,6 +127,7 @@ import { ViewReportComponent } from './report/view-report/view-report.component'
     ReportTemplateCreateComponent,
     ReportTemplatesComponent,
     ViewReportComponent,
+    DataPermissionNewComponent,
   ],
   imports: [
     BrowserModule,
@@ -146,7 +148,7 @@ import { ViewReportComponent } from './report/view-report/view-report.component'
     SearchFilterComponent,
     UserSelectionComponent,
     SysroleSelectionComponent,
-    DictSelectionComponent
+    DictSelectionComponent,
   ],
 })
 export class SparrowPermissionModule {}
