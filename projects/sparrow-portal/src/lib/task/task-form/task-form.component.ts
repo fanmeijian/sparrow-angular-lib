@@ -2,7 +2,6 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormioComponent} from "@formio/angular";
 import {FlowService, TaskFormId} from "@sparrowmini/flow-api";
 import {ActivatedRoute} from "@angular/router";
-import {FormService} from "@sparrowmini/form-api";
 import {TaskInstancesService} from "@sparrowmini/jbpm-api";
 
 @Component({
@@ -24,7 +23,6 @@ export class TaskFormComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private formService: FormService,
     private flowService: FlowService,
     private taskInstanceService: TaskInstancesService
   ) {}

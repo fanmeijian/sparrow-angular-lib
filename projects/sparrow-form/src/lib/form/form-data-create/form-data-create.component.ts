@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormService } from "@sparrowmini/form-api";
+import { CosFileService, FormService } from "@sparrowmini/form-api";
 
 @Component({
   selector: 'lib-form-data-create',
@@ -11,9 +11,14 @@ export class FormDataCreateComponent implements OnInit {
   form: any;
   formId: string='';
 
+  formOptions = {
+    fileService: this.formioFileService,
+  }
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private formService: FormService,
+    private formioFileService: CosFileService,
   ) { }
 
   ngOnInit(): void {

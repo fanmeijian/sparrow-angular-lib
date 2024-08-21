@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {FormService} from "@sparrowmini/form-api";
+import { CosFileService } from '@sparrowmini/form-api';
 
 @Component({
   selector: 'lib-form-data-view',
@@ -11,13 +12,18 @@ export class FormDataViewComponent implements OnInit {
   form: any;
   formData: any;
   formName: string = "";
-
+  formOptions = {
+    fileService: this.formioFileService,
+  }
   constructor(
     private formService: FormService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private formioFileService: CosFileService,
   ) {}
 
   ngOnInit(): void {
+    console.log('00000000000')
+
     this.activatedRoute.queryParams.subscribe((params: any) => {
       if (params.id) {
         this.formService.formData(params.id).subscribe((res) => {

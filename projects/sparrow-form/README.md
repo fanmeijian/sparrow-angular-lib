@@ -1,24 +1,16 @@
-# SparrowForm
+使用腾讯cos作为formio的附件处理
+1. 在项目的app.module.ts里面增加cosconfi和formioapp config
+import {
+  ApiModule as FormApiModule,
+  BASE_PATH as FormApi_BASE_PATH,
+  COS_CONFIG as COS_CONFIG,
+} from '@sparrowmini/form-api';
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.0.
+{ provide: COS_CONFIG, useValue: {bucket: 'sportunione-1252583813',region: 'ap-guangzhou'}},
+{provide: FormioAppConfig, useValue: {appUrl: "http://localhost:4200/asd",apiUrl: "http://localhost:4200/sd"}}
 
-## Code scaffolding
+2. 在设计添加附件的时候,勾选storage为url
 
-Run `ng generate component component-name --project sparrow-form` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project sparrow-form`.
-> Note: Don't forget to add `--project sparrow-form` or else it will be added to the default project in your `angular.json` file. 
 
-## Build
-
-Run `ng build sparrow-form` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Publishing
-
-After building your library with `ng build sparrow-form`, go to the dist folder `cd dist/sparrow-form` and run `npm publish`.
-
-## Running unit tests
-
-Run `ng test sparrow-form` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+npm i cos-js-sdk-v5 ts-md5  
+"allowSyntheticDefaultImports": true,

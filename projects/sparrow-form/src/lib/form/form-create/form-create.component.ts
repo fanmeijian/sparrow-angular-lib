@@ -9,11 +9,11 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormService,CosFileService } from '@sparrowmini/form-api';
+import { FormService, CosFileService } from '@sparrowmini/form-api';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Prism from 'prismjs';
 import { FormioRefreshValue } from '@formio/angular';
-
+import { Formio } from 'formiojs'
 @Component({
   selector: 'lib-form-create',
   templateUrl: './form-create.component.html',
@@ -21,7 +21,7 @@ import { FormioRefreshValue } from '@formio/angular';
 })
 export class FormCreateComponent implements OnInit {
   window = window;
-
+  columns: any[] = []
   save() {
     this.formGroup.patchValue({ form: JSON.stringify(this.formJson) });
     this.formGroup.markAllAsTouched();
@@ -48,11 +48,12 @@ export class FormCreateComponent implements OnInit {
     code: [null, Validators.required],
     id: [null],
     form: [{ components: [] }, Validators.required],
+    displayColumns: [null],
   });
 
   @ViewChild('json', { static: true }) jsonElement?: ElementRef;
   @ViewChild('code', { static: true }) codeElement?: ElementRef;
-  public form: Object = { components: [] };
+  public form: any = { components: [] };
   public refreshForm: EventEmitter<FormioRefreshValue> = new EventEmitter();
 
   constructor(
@@ -62,7 +63,7 @@ export class FormCreateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
     private router: Router,
-    private formioFileService: CosFileService
+    private formioFileService: CosFileService,
 
   ) {
     this.form = { components: [] };
@@ -75,29 +76,39 @@ export class FormCreateComponent implements OnInit {
         this.formService.dataForm(params.id).subscribe((res) => {
           this.formGroup.patchValue(res);
           console.log(res, this.formGroup.value);
+          console.log('-------', Formio.providers)
+
           this.form = JSON.parse(res.form!);
           this.formJson = this.form;
+
+          let a: any[] = this.form.components.filter(f => f.widget && f.widget.type == 'input').map(m => Object.assign({}, { name: m.label, code: m.key }))
+          this.columns = a
         });
       }
     });
   }
 
   onChange(event: any) {
-    this.formJson = event.form;
-
-    this.refreshForm.emit({
-      property: 'form',
-      value: event.form,
-    });
+    // this.formJson = event.form;
+    console.log("888888888", this.formJson)
+    let a: any[] = this.formJson.components.filter(f => f.widget && f.widget.type == 'input').map(m => Object.assign({}, { name: m.label, code: m.key }))
+    this.columns = a
+    console.log(this.columns)
+    // this.refreshForm.emit({
+    //   property: 'form',
+    //   value: event.form,
+    // });
   }
 
+  @ViewChild('formbuilder') formbuilder: any
   ngAfterViewInit() {
     Prism.highlightAll();
+
   }
+
 
   @ViewChild('soruceCode') soruceCodeTemplate!: TemplateRef<any>;
   viewSource() {
-    console.log(this.form);
     this.dialog.open(this.soruceCodeTemplate, { width: '80%', height: '80%' });
   }
 
