@@ -72,6 +72,15 @@ export class ScopesComponent implements OnInit {
       });
   }
 
+  removeUser(user: any, scope: any) {
+    this.scopeService
+      .removeScopePermissions({ users: [user] }, scope.id)
+      .subscribe(() => {
+        this.snack.open('移除成功！', '关闭');
+        this.ngOnInit();
+      });
+  }
+
   openPermission(sysrole: any) {
     this.dialog
       .open(ScopePermissionComponent, { data: sysrole })

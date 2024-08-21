@@ -74,7 +74,7 @@ export class DataPermissionGrantComponent implements OnInit {
         this.dataPermissionService
           .updateDataPermission(
             { sysroleIds: sysrolePermissions, usernames: userPermissions },
-            this.data.id
+            this.data.dataPermissionId
           )
           .subscribe((res) => this.snack.open('授权成功！', '关闭'));
       } else {
