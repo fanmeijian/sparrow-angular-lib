@@ -82,7 +82,7 @@ export class FormDataListComponent implements OnInit {
             )
             .subscribe((res) => {
               this.customers1 = res.content?.map((m) =>
-                Object.assign(m, { data: JSON.parse(m.data!), form: form.form })
+                Object.assign(m, { data: JSON.parse(m.data!), form: Object.assign({},form.form,{id: params.formId}) })
               )!;
               this.pageable.length = res.totalElements!;
               this.loading = false;
