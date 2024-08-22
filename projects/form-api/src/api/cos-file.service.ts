@@ -4,6 +4,8 @@ import COS from 'cos-js-sdk-v5';
 import { Md5 } from 'ts-md5';
 import { BASE_PATH, COLLECTION_FORMATS, COS_CONFIG } from '../variables';
 import { Configuration } from '../configuration';
+import { firstValueFrom } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Injectable()
 export class CosFileService {
@@ -16,7 +18,7 @@ export class CosFileService {
   protected cos!: COS;
   protected cosDownload!: COS;
 
-  constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration, @Optional() @Inject(COS_CONFIG) cosConfig: any) {
+  constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration, @Optional() @Inject(COS_CONFIG) cosConfig: any,private datePipe: DatePipe) {
     if (basePath) {
       this.basePath = basePath;
     }
@@ -30,10 +32,8 @@ export class CosFileService {
 
     this.cos = new COS({
       getAuthorization: function (options, callback) {
-        // that.objService
-        //   .getUploadTmpKey('apply_ico_delete.png')
         that.httpClient
-          .get(that.basePath + '/cos/tx/uploadTmpKeys?fileName=sad')
+          .get(that.basePath + '/cos/tx/uploadTmpKeys')
           .subscribe((res: any) => {
             callback({
               TmpSecretId: res.credentials.tmpSecretId,
@@ -48,10 +48,8 @@ export class CosFileService {
 
     this.cosDownload = new COS({
       getAuthorization: function (options, callback) {
-        // that.objService
-        //   .getUploadTmpKey('apply_ico_delete.png')
         that.httpClient
-          .get(that.basePath + '/cos/tx/downloadTmpKeys?fileName=sad&path=*')
+          .get(that.basePath + '/cos/tx/downloadTmpKeys?fileName=download&path=*')
           .subscribe((res: any) => {
             callback({
               TmpSecretId: res.credentials.tmpSecretId,
@@ -92,7 +90,6 @@ export class CosFileService {
     options: any
   ) {
     //do something
-    console.log(url)
     console.log(storage, file, fileName, dir, evt, url, options);
 
     let attachment = {
@@ -101,7 +98,7 @@ export class CosFileService {
       hash: '',
       bucket: this.cosConfig.bucket,
       region: this.cosConfig.region,
-      path: 'upload/',
+      path: this.cosConfig.rootPath + this.datePipe.transform(new Date(),'yyyy/MM/dd') + '/',
       type: file.type || file.name.split('.')[file.name.split('.').length - 1],
       size: file.size,
       file: file,
@@ -140,11 +137,12 @@ export class CosFileService {
   async downloadFile(fileInfo: any, options: any) {
     console.log('00000', fileInfo);
     let that = this
-
+    const url : URL = new URL(fileInfo.url)
+    console.log(url.pathname)
     this.cosDownload.getObject({
       Bucket: fileInfo.bucket, /* Your bucket name. Required. */
       Region: fileInfo.region,  /* Bucket region, such as `ap-beijing`. Required. */
-      Key: fileInfo.path + fileInfo.url.split('/')[fileInfo.url.split('/').length - 1],  /* Object key stored in the bucket (such as `1.jpg` and `a/b/test.txt`). Required. */
+      Key: url.pathname,  /* Object key stored in the bucket (such as `1.jpg` and `a/b/test.txt`). Required. */
       DataType: 'blob',        // 非必须
       onProgress: function (progressData) {
         console.log(JSON.stringify(progressData));
@@ -159,19 +157,7 @@ export class CosFileService {
       anchor.download = fileInfo.name;
       anchor.href = downloadURL;
       anchor.click();
-      // let file = new File([data.Body], 'file.json', { type: 'application/octet-stream' });
-      // let url = window.URL.createObjectURL(file);
-      // var pwa = window.open(url);
-      // if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
-      //   alert('Please disable your Pop-up blocker and try again.');
-      // }
     });
-
-    // let blob
-    // await this.http.get(fileInfo.url,{responseType: 'arraybuffer'}).subscribe(res=>
-    //   blob = res
-    // )
-    // return blob
-    // return NativePromise.resolve(file);
   }
+
 }

@@ -3,13 +3,14 @@ import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 import { FormService } from './api/form.service';
 import { CosFileService } from './api/cos-file.service';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   imports:      [],
   declarations: [],
   exports:      [],
   providers: [
-    FormService, CosFileService ]
+    FormService, CosFileService,DatePipe ]
 })
 export class ApiModule {
     public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders<ApiModule> {

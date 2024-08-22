@@ -6,7 +6,7 @@ import {
   COS_CONFIG as COS_CONFIG,
 } from '@sparrowmini/form-api';
 
-{ provide: COS_CONFIG, useValue: {bucket: 'sportunione-1252583813',region: 'ap-guangzhou'}},
+{ provide: COS_CONFIG, useValue: {bucket: 'sportunione-1252583813',region: 'ap-guangzhou',rootPath: 'contract/' }},
 {provide: FormioAppConfig, useValue: {appUrl: "http://localhost:4200/asd",apiUrl: "http://localhost:4200/sd"}}
 
 2. 在设计添加附件的时候,勾选storage为url
@@ -14,3 +14,4 @@ import {
 
 npm i cos-js-sdk-v5 ts-md5  
 "allowSyntheticDefaultImports": true,
+
