@@ -1,0 +1,17 @@
+export enum PermissionEnum {
+  READER = "读者",
+  AUTHOR = "作者",
+  EDITOR = "编辑者",
+  DELETER = "删除者",
+  DOWNLOAD = "下载",
+  FORWARD = "转发",
+  SHARE_READER = "授权读者",
+  SHARE_AUTHOR = "授权作者",
+  SHARE_EDITOR = "授权编辑者",
+  SHARE_DELETER = "授权删除者",
+  SHARE_FORWARD = "授权转发",
+  SHARE_DOWNLOAD = "授权下载",
+  ALL_CRUD = "所有操作",
+  SHARE_ALL = "所有授权",
+  ALL = "所有",
+}

@@ -14,14 +14,14 @@ import { OrgCreateComponent } from "../org-create/org-create.component";
 /**
  * Node for to-do item
  */
-export class TodoItemNode {
-  children!: TodoItemNode[];
+export class OrgItemNode {
+  children!: OrgItemNode[];
   id!: string;
   me: any;
 }
 
 /** Flat to-do item node with expandable and level information */
-export class TodoItemFlatNode {
+export class OrgItemFlatNode {
   id!: string;
   me: any;
   level!: number;
@@ -30,10 +30,10 @@ export class TodoItemFlatNode {
 }
 
 @Injectable()
-export class ChecklistDatabase {
-  dataChange = new BehaviorSubject<TodoItemNode[]>([]);
+export class OrgChecklistDatabase {
+  dataChange = new BehaviorSubject<OrgItemNode[]>([]);
 
-  get data(): TodoItemNode[] {
+  get data(): OrgItemNode[] {
     return this.dataChange.value;
   }
 
@@ -56,10 +56,10 @@ export class ChecklistDatabase {
    * Build the file structure tree. The `value` is the Json object, or a sub-tree of a Json object.
    * The return value is the list of `TodoItemNode`.
    */
-  buildFileTree(obj: { [key: string]: any }, level: number): TodoItemNode[] {
-    return Object.keys(obj).reduce<TodoItemNode[]>((accumulator, key) => {
+  buildFileTree(obj: { [key: string]: any }, level: number): OrgItemNode[] {
+    return Object.keys(obj).reduce<OrgItemNode[]>((accumulator, key) => {
       const value = obj[key];
-      const node = new TodoItemNode();
+      const node = new OrgItemNode();
       node.id = key;
 
       if (value != null) {
@@ -75,14 +75,14 @@ export class ChecklistDatabase {
   }
 
   /** Add an item to to-do list */
-  insertItem(parent: TodoItemNode, name: string) {
+  insertItem(parent: OrgItemNode, name: string) {
     if (parent.children) {
-      parent.children.push({ id: name } as TodoItemNode);
+      parent.children.push({ id: name } as OrgItemNode);
       this.dataChange.next(this.data);
     }
   }
 
-  updateItem(node: TodoItemNode, name: string) {
+  updateItem(node: OrgItemNode, name: string) {
     node.id = name;
     this.dataChange.next(this.data);
   }
@@ -92,34 +92,34 @@ export class ChecklistDatabase {
   selector: "lib-orgs",
   templateUrl: "./orgs.component.html",
   styleUrls: ["./orgs.component.css"],
-  providers: [ChecklistDatabase],
+  providers: [OrgChecklistDatabase],
 })
 export class OrgsComponent implements OnInit {
   /** Map from flat node to nested node. This helps us finding the nested node to be modified */
   flatNodeMap = new Map<any, any>();
 
   /** Map from nested node to flattened node. This helps us to keep the same object for selection */
-  nestedNodeMap = new Map<TodoItemNode, TodoItemFlatNode>();
+  nestedNodeMap = new Map<OrgItemNode, OrgItemFlatNode>();
 
   /** A selected parent node to be inserted */
-  selectedParent: TodoItemFlatNode | null = null;
+  selectedParent: OrgItemFlatNode | null = null;
 
   /** The new item's name */
   newItemName = "";
 
-  treeControl!: FlatTreeControl<TodoItemFlatNode>;
+  treeControl!: FlatTreeControl<OrgItemFlatNode>;
 
-  treeFlattener!: MatTreeFlattener<TodoItemNode, TodoItemFlatNode>;
+  treeFlattener!: MatTreeFlattener<OrgItemNode, OrgItemFlatNode>;
 
-  dataSource!: MatTreeFlatDataSource<TodoItemNode, TodoItemFlatNode>;
+  dataSource!: MatTreeFlatDataSource<OrgItemNode, OrgItemFlatNode>;
 
   /** The selection for checklist */
-  checklistSelection = new SelectionModel<TodoItemFlatNode>(
+  checklistSelection = new SelectionModel<OrgItemFlatNode>(
     true /* multiple */
   );
 
   constructor(
-    private _database: ChecklistDatabase,
+    private _database: OrgChecklistDatabase,
     private dialog: MatDialog,
     private snack: MatSnackBar,
     private orgService: OrganizationService
@@ -131,7 +131,7 @@ export class OrgsComponent implements OnInit {
       this.isExpandable,
       this.getChildren
     );
-    this.treeControl = new FlatTreeControl<TodoItemFlatNode>(
+    this.treeControl = new FlatTreeControl<OrgItemFlatNode>(
       this.getLevel,
       this.isExpandable
     );
@@ -144,26 +144,26 @@ export class OrgsComponent implements OnInit {
     });
   }
 
-  getLevel = (node: TodoItemFlatNode) => node.level;
+  getLevel = (node: OrgItemFlatNode) => node.level;
 
-  isExpandable = (node: TodoItemFlatNode) => node.expandable;
+  isExpandable = (node: OrgItemFlatNode) => node.expandable;
 
-  getChildren = (node: TodoItemNode): TodoItemNode[] => node.children;
+  getChildren = (node: OrgItemNode): OrgItemNode[] => node.children;
 
-  hasChild = (_: number, _nodeData: TodoItemFlatNode) => _nodeData.expandable;
+  hasChild = (_: number, _nodeData: OrgItemFlatNode) => _nodeData.expandable;
 
-  hasNoContent = (_: number, _nodeData: TodoItemFlatNode) =>
+  hasNoContent = (_: number, _nodeData: OrgItemFlatNode) =>
     _nodeData.id === "";
 
   /**
    * Transformer to convert nested node to flat node. Record the nodes in maps for later use.
    */
-  transformer = (node: TodoItemNode, level: number) => {
+  transformer = (node: OrgItemNode, level: number) => {
     const existingNode = this.nestedNodeMap.get(node);
     const flatNode =
       existingNode && existingNode.id === node.id
         ? existingNode
-        : new TodoItemFlatNode();
+        : new OrgItemFlatNode();
     flatNode.id = node.id;
     flatNode.me = node.me;
     flatNode.level = level;
@@ -175,7 +175,7 @@ export class OrgsComponent implements OnInit {
   };
 
   /** Whether all the descendants of the node are selected. */
-  descendantsAllSelected(node: TodoItemFlatNode): boolean {
+  descendantsAllSelected(node: OrgItemFlatNode): boolean {
     const descendants = this.treeControl.getDescendants(node);
     const descAllSelected =
       descendants.length > 0 &&
@@ -186,7 +186,7 @@ export class OrgsComponent implements OnInit {
   }
 
   /** Whether part of the descendants are selected */
-  descendantsPartiallySelected(node: TodoItemFlatNode): boolean {
+  descendantsPartiallySelected(node: OrgItemFlatNode): boolean {
     const descendants = this.treeControl.getDescendants(node);
     const result = descendants.some((child) =>
       this.checklistSelection.isSelected(child)
@@ -195,7 +195,7 @@ export class OrgsComponent implements OnInit {
   }
 
   /** Toggle the to-do item selection. Select/deselect all the descendants node */
-  todoItemSelectionToggle(node: TodoItemFlatNode): void {
+  todoItemSelectionToggle(node: OrgItemFlatNode): void {
     this.checklistSelection.toggle(node);
     const descendants = this.treeControl.getDescendants(node);
     this.checklistSelection.isSelected(node)
@@ -208,14 +208,14 @@ export class OrgsComponent implements OnInit {
   }
 
   /** Toggle a leaf to-do item selection. Check all the parents to see if they changed */
-  todoLeafItemSelectionToggle(node: TodoItemFlatNode): void {
+  todoLeafItemSelectionToggle(node: OrgItemFlatNode): void {
     this.checklistSelection.toggle(node);
     this.checkAllParentsSelection(node);
   }
 
   /* Checks all the parents when a leaf node is selected/unselected */
-  checkAllParentsSelection(node: TodoItemFlatNode): void {
-    let parent: TodoItemFlatNode | null = this.getParentNode(node);
+  checkAllParentsSelection(node: OrgItemFlatNode): void {
+    let parent: OrgItemFlatNode | null = this.getParentNode(node);
     while (parent) {
       this.checkRootNodeSelection(parent);
       parent = this.getParentNode(parent);
@@ -223,7 +223,7 @@ export class OrgsComponent implements OnInit {
   }
 
   /** Check root node checked state and change it accordingly */
-  checkRootNodeSelection(node: TodoItemFlatNode): void {
+  checkRootNodeSelection(node: OrgItemFlatNode): void {
     const nodeSelected = this.checklistSelection.isSelected(node);
     const descendants = this.treeControl.getDescendants(node);
     const descAllSelected =
@@ -239,7 +239,7 @@ export class OrgsComponent implements OnInit {
   }
 
   /* Get the parent node of a node */
-  getParentNode(node: TodoItemFlatNode): TodoItemFlatNode | null {
+  getParentNode(node: OrgItemFlatNode): OrgItemFlatNode | null {
     const currentLevel = this.getLevel(node);
 
     if (currentLevel < 1) {
@@ -259,14 +259,14 @@ export class OrgsComponent implements OnInit {
   }
 
   /** Select the category so we can insert the new item. */
-  addNewItem(node: TodoItemFlatNode) {
+  addNewItem(node: OrgItemFlatNode) {
     const parentNode = this.flatNodeMap.get(node);
     this._database.insertItem(parentNode!, "");
     this.treeControl.expand(node);
   }
 
   /** Save the node to database */
-  saveNode(node: TodoItemFlatNode, itemValue: string) {
+  saveNode(node: OrgItemFlatNode, itemValue: string) {
     const nestedNode = this.flatNodeMap.get(node);
     this._database.updateItem(nestedNode!, itemValue);
   }

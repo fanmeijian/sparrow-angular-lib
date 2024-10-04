@@ -3,7 +3,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { EmployeeService, UserService } from '@sparrowmini/org-api';
-import { SysroleCreateComponent } from '@sparrowmini/sparrow-permission/lib/sysrole/sysrole-create/sysrole-create.component';
+import { SysroleCreateComponent } from '../../sysrole/sysrole-create/sysrole-create.component';
 
 export interface Fruit {
   name: string;

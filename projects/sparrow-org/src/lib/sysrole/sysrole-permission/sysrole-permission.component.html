@@ -1,0 +1,17 @@
+<h3 mat-dialog-title>角色授权</h3>
+
+<mat-dialog-content>
+  <h3>授权角色</h3>
+  <div>{{ data.name }}</div>
+  <lib-user-selection
+  [multiple]="true"
+  [selected]="selectedUsernames"
+></lib-user-selection>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="submit()" cdkFocusInitial [mat-dialog-close]="true" color="primary">
+    确定
+  </button>
+  <button mat-button mat-dialog-close color="warn">取消</button>
+</mat-dialog-actions>

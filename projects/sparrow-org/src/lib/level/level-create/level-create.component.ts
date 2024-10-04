@@ -3,9 +3,7 @@ import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { JoblevelService, RoleService } from "@sparrowmini/org-api";
-import { switchMap } from "rxjs";
 import { OrgCreateComponent } from "../../org/org-create/org-create.component";
-import { truncateSync } from "fs";
 
 @Component({
   selector: "lib-level-create",
