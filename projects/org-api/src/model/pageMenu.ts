@@ -16,12 +16,12 @@ import { SortObject } from './sortObject';
 export interface PageMenu { 
     totalPages?: number;
     totalElements?: number;
-    size?: number;
-    content?: Array<Menu>;
     number?: number;
     first?: boolean;
     last?: boolean;
     sort?: SortObject;
+    size?: number;
+    content?: Array<Menu>;
     pageable?: PageableObject;
     numberOfElements?: number;
     empty?: boolean;

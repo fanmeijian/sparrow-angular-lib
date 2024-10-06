@@ -16,12 +16,12 @@ import { UserSysrole } from './userSysrole';
 export interface PageUserSysrole { 
     totalPages?: number;
     totalElements?: number;
-    size?: number;
-    content?: Array<UserSysrole>;
     number?: number;
     first?: boolean;
     last?: boolean;
     sort?: SortObject;
+    size?: number;
+    content?: Array<UserSysrole>;
     pageable?: PageableObject;
     numberOfElements?: number;
     empty?: boolean;

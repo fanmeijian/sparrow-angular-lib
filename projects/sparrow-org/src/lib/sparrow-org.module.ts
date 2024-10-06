@@ -90,6 +90,18 @@ import { ReportTemplatesComponent } from './report/report-templates/report-templ
 import { ViewReportComponent } from './report/view-report/view-report.component';
 import { DataPermissionNewComponent } from './data-permission/data-permission-new/data-permission-new.component';
 import { OrgRoutingModule } from "./org-routing.module";
+import { SysconfigListComponent } from './sysconfig/sysconfig-list/sysconfig-list.component';
+import { SysconfigFormComponent } from './sysconfig/sysconfig-form/sysconfig-form.component';
+import { SysconfigDesignComponent } from './sysconfig/sysconfig-design/sysconfig-design.component';
+import { FormioModule } from "@formio/angular";
+import { FormPreviewComponent } from "./form/form-preview/form-preview.component";
+import { FormCreateComponent } from "./form/form-create/form-create.component";
+import { FormListComponent } from "./form/form-list/form-list.component";
+import { FormDataCreateComponent } from "./form/form-data-create/form-data-create.component";
+import { FormDataViewComponent } from "./form/form-data-view/form-data-view.component";
+import { FormDataListComponent } from "./form/form-data-list/form-data-list.component";
+import { MyFormListComponent } from "./my/my-form-list/my-form-list.component";
+import { MyFormDataListComponent } from "./my/my-form-data-list/my-form-data-list.component";
 
 // import { EmployeeRouteComponent } from './employee/employee-route/employee-route.component';
 
@@ -164,8 +176,19 @@ import { OrgRoutingModule } from "./org-routing.module";
     ReportTemplatesComponent,
     ViewReportComponent,
     DataPermissionNewComponent,
+    SysconfigListComponent,
+    SysconfigFormComponent,
+    SysconfigDesignComponent,
+    FormCreateComponent,
+    FormListComponent,
+    FormDataCreateComponent,
+    FormDataViewComponent,
+    FormDataListComponent,
+    MyFormListComponent,
+    MyFormDataListComponent,
+    FormPreviewComponent
   ],
-  imports: [BrowserModule, RouterModule, AngularMaterialModule, OrgApiModule, OrgRoutingModule],
+  imports: [BrowserModule, RouterModule, AngularMaterialModule, OrgApiModule, OrgRoutingModule,FormioModule],
   exports: [SparrowOrgComponent, OrgApiModule, EmployeeRoleSelectComponent,
     MenuComponent,
     MenuTreeComponent,

@@ -16,12 +16,12 @@ import { SparrowFormData } from './sparrowFormData';
 export interface PageSparrowFormData { 
     totalPages?: number;
     totalElements?: number;
-    size?: number;
-    content?: Array<SparrowFormData>;
     number?: number;
     first?: boolean;
     last?: boolean;
     sort?: SortObject;
+    size?: number;
+    content?: Array<SparrowFormData>;
     pageable?: PageableObject;
     numberOfElements?: number;
     empty?: boolean;

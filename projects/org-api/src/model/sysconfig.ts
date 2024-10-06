@@ -15,10 +15,10 @@ export interface Sysconfig {
     readonly modifiedDate?: Date;
     readonly createdBy?: string;
     readonly modifiedBy?: string;
-    readonly id?: string;
     init?: boolean;
     name?: string;
     code?: string;
+    form?: string;
     remark?: string;
     configJson?: string;
 }

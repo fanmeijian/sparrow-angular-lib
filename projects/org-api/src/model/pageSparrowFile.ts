@@ -16,12 +16,12 @@ import { SparrowFile } from './sparrowFile';
 export interface PageSparrowFile { 
     totalPages?: number;
     totalElements?: number;
-    size?: number;
-    content?: Array<SparrowFile>;
     number?: number;
     first?: boolean;
     last?: boolean;
     sort?: SortObject;
+    size?: number;
+    content?: Array<SparrowFile>;
     pageable?: PageableObject;
     numberOfElements?: number;
     empty?: boolean;

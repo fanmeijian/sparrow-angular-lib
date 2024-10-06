@@ -35,3 +35,12 @@ export * from './lib/common/search-filter/search-filter.component'
 export * from './lib/user/user-selection/user-selection.component'
 export * from './lib/sysrole/sysrole-selection/sysrole-selection.component'
 export * from './lib/dict/dict-selection/dict-selection.component'
+export * from './lib/form/form-list/form-list.component';
+export * from './lib/form/form-data-list/form-data-list.component';
+export * from './lib/form/form-data-view/form-data-view.component';
+export * from './lib/my/my-form-list/my-form-list.component';
+export * from './lib/my/my-form-data-list/my-form-data-list.component';
+export * from './lib/form/form-data-create/form-data-create.component';
+export * from './lib/form/form-create/form-create.component';
+export * from './lib/my/my-form-data-list/my-form-data-list.component';
+export * from './lib/my/my-form-list/my-form-list.component';

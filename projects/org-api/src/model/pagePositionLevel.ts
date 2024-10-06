@@ -16,12 +16,12 @@ import { SortObject } from './sortObject';
 export interface PagePositionLevel { 
     totalPages?: number;
     totalElements?: number;
-    size?: number;
-    content?: Array<PositionLevel>;
     number?: number;
     first?: boolean;
     last?: boolean;
     sort?: SortObject;
+    size?: number;
+    content?: Array<PositionLevel>;
     pageable?: PageableObject;
     numberOfElements?: number;
     empty?: boolean;

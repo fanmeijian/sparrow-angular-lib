@@ -16,12 +16,12 @@ import { SortObject } from './sortObject';
 export interface PageDictCatalog { 
     totalPages?: number;
     totalElements?: number;
-    size?: number;
-    content?: Array<DictCatalog>;
     number?: number;
     first?: boolean;
     last?: boolean;
     sort?: SortObject;
+    size?: number;
+    content?: Array<DictCatalog>;
     pageable?: PageableObject;
     numberOfElements?: number;
     empty?: boolean;

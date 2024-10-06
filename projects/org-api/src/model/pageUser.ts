@@ -16,12 +16,12 @@ import { User } from './user';
 export interface PageUser { 
     totalPages?: number;
     totalElements?: number;
-    size?: number;
-    content?: Array<User>;
     number?: number;
     first?: boolean;
     last?: boolean;
     sort?: SortObject;
+    size?: number;
+    content?: Array<User>;
     pageable?: PageableObject;
     numberOfElements?: number;
     empty?: boolean;

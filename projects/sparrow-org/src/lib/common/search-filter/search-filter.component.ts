@@ -2,19 +2,20 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
+import { FilterTreeBean, SparrowJpaFilter } from '@sparrowmini/org-api';
 import { BehaviorSubject } from 'rxjs';
 
-export interface SparrowJpaFilter {
-  filterTreeBean?: FilterTreeBean;
-  children?: SparrowJpaFilter[];
-}
+// export interface SparrowJpaFilter {
+//   filterTreeBean?: FilterTreeBean;
+//   children?: SparrowJpaFilter[];
+// }
 
-export interface FilterTreeBean {
-  type?: string;
-  name?: string;
-  op?: string;
-  value?: any;
-}
+// export interface FilterTreeBean {
+//   type?: string;
+//   name?: string;
+//   op?: string;
+//   value?: any;
+// }
 
 @Component({
   selector: 'lib-search-filter',
@@ -85,7 +86,7 @@ export class SearchFilterComponent implements OnInit {
   ];
 
   filterBean: FilterTreeBean = {
-    type: '',
+    type: FilterTreeBean.TypeEnum.AND,
     name: '',
     op: '',
     value: undefined,

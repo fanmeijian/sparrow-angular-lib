@@ -1,7 +1,33 @@
 import { NgModule } from "@angular/core";
 import { Route, RouterModule, Routes } from "@angular/router";
-import { SysrolesComponent, MenuComponent, ScopesComponent, SprmodesComponent, PemgroupsComponent, DataPermissionsComponent, DataPermissionNewComponent, UserListComponent, FilesComponent, PageElementsComponent, RequestLogComponent, DeleteLogComponent, EditLogComponent, DictsComponent, OrgsComponent, RolesComponent, LevelsComponent, OrggroupsComponent, EmployeesComponent, ViewReportComponent, ReportTemplatesComponent } from "../projects";
 import { SparrowOrgComponent } from "./sparrow-org.component";
+import { SysconfigListComponent } from "./sysconfig/sysconfig-list/sysconfig-list.component";
+import { MenuComponent } from "./components/menu/menu.component";
+import { SysrolesComponent } from "./sysrole/sysroles/sysroles.component";
+import { ScopesComponent } from "./scope/scopes/scopes.component";
+import { SprmodesComponent } from "./sprmodel/sprmodes/sprmodes.component";
+import { PemgroupsComponent } from "./pemgroup/pemgroups/pemgroups.component";
+import { DataPermissionsComponent } from "./data-permission/data-permissions/data-permissions.component";
+import { DataPermissionNewComponent } from "./data-permission/data-permission-new/data-permission-new.component";
+import { UserListComponent } from "./user/user-list/user-list.component";
+import { FilesComponent } from "./file/files/files.component";
+import { PageElementsComponent } from "./page-element/page-elements/page-elements.component";
+import { RequestLogComponent } from "./log/request-log/request-log.component";
+import { DeleteLogComponent } from "./log/delete-log/delete-log.component";
+import { EditLogComponent } from "./log/edit-log/edit-log.component";
+import { DictsComponent } from "./dict/dicts/dicts.component";
+import { OrgsComponent } from "./org/orgs/orgs.component";
+import { RolesComponent } from "./role/roles/roles.component";
+import { LevelsComponent } from "./level/levels/levels.component";
+import { OrggroupsComponent } from "./orggroup/orggroups/orggroups.component";
+import { EmployeesComponent } from "./employee/employees/employees.component";
+import { ViewReportComponent } from "./report/view-report/view-report.component";
+import { ReportTemplatesComponent } from "./report/report-templates/report-templates.component";
+import { SysconfigDesignComponent } from "./sysconfig/sysconfig-design/sysconfig-design.component";
+import { MyFormListComponent } from "./my/my-form-list/my-form-list.component";
+import { MyFormDataListComponent } from "./my/my-form-data-list/my-form-data-list.component";
+import { FormDataViewComponent } from "./form/form-data-view/form-data-view.component";
+import { FormDataCreateComponent } from "./form/form-data-create/form-data-create.component";
 export const ADMIN_ROUTES: Route[] = [
   {path: "admin",
     component: SparrowOrgComponent,
@@ -95,21 +121,31 @@ export const ADMIN_ROUTES: Route[] = [
             data: { title: '数据字典' },
             component: DictsComponent,
           },
+          {
+            path: 'sysconfig',
+            data: { title: '配置文件' },
+            component: SysconfigListComponent,
+          },
+          {
+            path: 'sysconfig-design',
+            data: { title: '配置表单设计' },
+            component: SysconfigDesignComponent,
+          },
         ],
       },
       // { path: 'builder', component: FormDesignComponent },
-      // { path: 'my-forms', component: MyFormListComponent },
-      // { path: 'my-form-datas', component: MyFormDataListComponent },
-      // {
-      //   path: 'form-data-view',
-      //   data: { title: '查看数据' },
-      //   component: FormDataViewComponent,
-      // },
-      // {
-      //   path: 'form-data-create',
-      //   data: { title: '填写数据' },
-      //   component: FormDataCreateComponent,
-      // },
+      { path: 'my-forms', component: MyFormListComponent },
+      { path: 'my-form-datas', component: MyFormDataListComponent },
+      {
+        path: 'form-data-view',
+        data: { title: '查看数据' },
+        component: FormDataViewComponent,
+      },
+      {
+        path: 'form-data-create',
+        data: { title: '填写数据' },
+        component: FormDataCreateComponent,
+      },
       {
         path: 'organization',
         data: { title: '组织管理' },
