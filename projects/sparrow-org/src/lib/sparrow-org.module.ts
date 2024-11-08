@@ -102,6 +102,8 @@ import { FormDataViewComponent } from "./form/form-data-view/form-data-view.comp
 import { FormDataListComponent } from "./form/form-data-list/form-data-list.component";
 import { MyFormListComponent } from "./my/my-form-list/my-form-list.component";
 import { MyFormDataListComponent } from "./my/my-form-data-list/my-form-data-list.component";
+import { RuleCreateComponent } from "./rule/rule-create/rule-create.component";
+import { RuleTemplatesComponent } from "./rule/rule-templates/rule-templates.component";
 
 // import { EmployeeRouteComponent } from './employee/employee-route/employee-route.component';
 
@@ -186,10 +188,15 @@ import { MyFormDataListComponent } from "./my/my-form-data-list/my-form-data-lis
     FormDataListComponent,
     MyFormListComponent,
     MyFormDataListComponent,
-    FormPreviewComponent
+    FormPreviewComponent,
+    RuleCreateComponent,
+    RuleTemplatesComponent
   ],
-  imports: [BrowserModule, RouterModule, AngularMaterialModule, OrgApiModule, OrgRoutingModule,FormioModule],
-  exports: [SparrowOrgComponent, OrgApiModule, EmployeeRoleSelectComponent,
+  imports: [BrowserModule, RouterModule, AngularMaterialModule, OrgApiModule, OrgRoutingModule, FormioModule],
+  exports: [
+    SparrowOrgComponent,
+    OrgApiModule,
+    EmployeeRoleSelectComponent,
     MenuComponent,
     MenuTreeComponent,
     SysrolesComponent,
@@ -199,6 +206,8 @@ import { MyFormDataListComponent } from "./my/my-form-data-list/my-form-data-lis
     SearchFilterComponent,
     UserSelectionComponent,
     SysroleSelectionComponent,
-    DictSelectionComponent,],
+    DictSelectionComponent,
+    PgelPermissionDirective
+  ],
 })
 export class SparrowOrgModule { }

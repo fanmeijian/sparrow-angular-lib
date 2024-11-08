@@ -28,6 +28,11 @@ import { MyFormListComponent } from "./my/my-form-list/my-form-list.component";
 import { MyFormDataListComponent } from "./my/my-form-data-list/my-form-data-list.component";
 import { FormDataViewComponent } from "./form/form-data-view/form-data-view.component";
 import { FormDataCreateComponent } from "./form/form-data-create/form-data-create.component";
+import { RuleTemplatesComponent } from "./rule/rule-templates/rule-templates.component";
+import { RuleCreateComponent } from "./rule/rule-create/rule-create.component";
+import { FormDataListComponent } from "./form/form-data-list/form-data-list.component";
+import { FormListComponent } from "./form/form-list/form-list.component";
+import { FormCreateComponent } from "./form/form-create/form-create.component";
 export const ADMIN_ROUTES: Route[] = [
   {path: "admin",
     component: SparrowOrgComponent,
@@ -221,60 +226,60 @@ export const ADMIN_ROUTES: Route[] = [
       //     }
       //   ],
       // },
-      // {
-      //   path: 'rule',
-      //   data: { title: '规则管理' },
-      //   component: SparrowOrgComponent,
-      //   children: [
-      //     {
-      //       path: 'templates',
-      //       data: { title: '规则模版列表' },
-      //       component: RuleTemplatesComponent,
-      //     },
-      //     {
-      //       path: 'rule-create',
-      //       data: { title: '新建规则' },
-      //       component: RuleCreateComponent,
-      //     },
-      //   ],
-      // },
-      // {
-      //   path: 'form',
-      //   data: { title: '表单管理' },
-      //   component: SparrowFormComponent,
-      //   children: [
-      //     {
-      //       path: 'form-data-list',
-      //       data: { title: '表单数据' },
-      //       component: FormDataListComponent,
-      //     },
-      //     {
-      //       path: 'sparrow-forms',
-      //       data: { title: '设计' },
-      //       component: FormListComponent,
-      //     },
-      //     {
-      //       path: 'sparrow-form-create',
-      //       data: { title: '设计表单' },
-      //       component: FormCreateComponent,
-      //     },
-      //     {
-      //       path: 'form-data-create',
-      //       data: { title: '表单数据' },
-      //       component: FormDataCreateComponent,
-      //     },
-      //     {
-      //       path: 'form-data-view',
-      //       data: { title: '表单详情' },
-      //       component: FormDataViewComponent,
-      //     },
-      //     // {
-      //     //   path: 'process-form',
-      //     //   data: { title: '流程表单' },
-      //     //   component: ProcessFormComponent,
-      //     // },
-      //   ],
-      // },
+      {
+        path: 'rule',
+        data: { title: '规则管理' },
+        component: SparrowOrgComponent,
+        children: [
+          {
+            path: 'templates',
+            data: { title: '规则模版列表' },
+            component: RuleTemplatesComponent,
+          },
+          {
+            path: 'rule-create',
+            data: { title: '新建规则' },
+            component: RuleCreateComponent,
+          },
+        ],
+      },
+      {
+        path: 'form',
+        data: { title: '表单管理' },
+        component: SparrowOrgComponent,
+        children: [
+          {
+            path: 'form-data-list',
+            data: { title: '表单数据' },
+            component: FormDataListComponent,
+          },
+          {
+            path: 'sparrow-forms',
+            data: { title: '设计' },
+            component: FormListComponent,
+          },
+          {
+            path: 'sparrow-form-create',
+            data: { title: '设计表单' },
+            component: FormCreateComponent,
+          },
+          {
+            path: 'form-data-create',
+            data: { title: '表单数据' },
+            component: FormDataCreateComponent,
+          },
+          {
+            path: 'form-data-view',
+            data: { title: '表单详情' },
+            component: FormDataViewComponent,
+          },
+          // {
+          //   path: 'process-form',
+          //   data: { title: '流程表单' },
+          //   component: ProcessFormComponent,
+          // },
+        ],
+      },
       // {
       //   path: 'task',
       //   data: { title: '任务中心' },
