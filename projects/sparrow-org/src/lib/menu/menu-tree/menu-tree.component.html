@@ -1,13 +1,7 @@
 <button mat-button (click)="init()" color="primary" *ngIf="!isInit">系统初始化</button>
 
-<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList (cdkDropListDropped)="drop($event)">
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
   <mat-tree-node
-    cdkDrag
-    [cdkDragData]="node"
-    (mouseenter)="dragHover(node)"
-    (mouseleave)="dragHoverEnd()"
-    (cdkDragStarted)="dragStart()"
-    (cdkDragReleased)="dragEnd()"
     *matTreeNodeDef="let node"
     [matTreeNodePaddingIndent]="5*node.level"
     matTreeNodePadding
@@ -28,12 +22,6 @@
     >
   </mat-tree-node>
   <mat-tree-node
-    cdkDrag
-    [cdkDragData]="node"
-    (mouseenter)="dragHover(node)"
-    (mouseleave)="dragHoverEnd()"
-    (cdkDragStarted)="dragStart()"
-    (cdkDragReleased)="dragEnd()"
     *matTreeNodeDef="let node; when: hasChild"
     [matTreeNodePaddingIndent]="5*node.level"
     matTreeNodePadding
