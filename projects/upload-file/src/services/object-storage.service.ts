@@ -30,7 +30,7 @@ export class ObjectStorageService {
   getUploadTmpKey(fileName: string) {
     console.log(this.basePath);
     return this.httpClient.get(
-      `${this.basePath}/objectStorages/uploadTmpKeys`,
+      `${this.basePath}/cos/tx/uploadTmpKeys`,
       {
         params: new HttpParams({
           fromObject: {

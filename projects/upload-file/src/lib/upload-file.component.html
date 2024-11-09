@@ -1,60 +1,79 @@
 <div style="padding-bottom: 10px; width: 100%">
-  <label [for]="id" class="mat-stroked-button">
-    <span class="mat-button-wrapper"> 选择上传的文件 </span>
-    <span
-      matripple=""
-      class="mat-ripple mat-button-ripple"
-      ng-reflect-disabled="false"
-      ng-reflect-centered="false"
-      ng-reflect-trigger="[object HTMLButtonElement]"
-    ></span>
-    <span class="mat-button-focus-overlay"></span>
-  </label>
+  <ng-container *ngIf="!disableUpload">
+    <label [for]="id" class="mat-stroked-button">
+      <span class="mat-button-wrapper"> 选择上传的文件 </span>
+      <span
+        matripple=""
+        class="mat-ripple mat-button-ripple"
+        ng-reflect-disabled="false"
+        ng-reflect-centered="false"
+        ng-reflect-trigger="[object HTMLButtonElement]"
+      ></span>
+      <span class="mat-button-focus-overlay"></span>
+    </label>
 
-  <input
-    type="file"
-    [id]="id"
-    [accept]="fileType"
-    [multiple]="multiple"
-    (change)="handleFileInput($event)"
-  />
-
-  <br />
-  <div
-    style="width: 300px; margin-top: 10px"
-    *ngFor="let attachment of attachments; let i = index"
-  >
-    <img
-      *ngIf="attachment.file?.type?.includes('image')"
-      [src]="attachment.url"
-      width="300px"
-      height="200px"
+    <input
+      type="file"
+      [id]="id"
+      [accept]="fileType"
+      [multiple]="multiple"
+      (change)="handleFileInput($event)"
     />
 
-    <ng-container *ngIf="attachment.file">
-      <span [style]="attachment.progress === 100 ? 'color:green;' : ''"
-        >进度:{{ attachment.progress?.toFixed(2) }}% 上传速度:{{
-          attachment.speed?.toFixed(2)
-        }}k</span
-      >
-      <div class="w3-border">
-        <div class="w3-green" [style]='"height: 12px; width: "+attachment.progress+"%;"'></div>
+    <br />
+
+  </ng-container>
+
+  <div class="file-list">
+    <div
+      class="file-container"
+      *ngFor="let attachment of attachments; let i = index"
+    >
+      <img
+        *ngIf="attachment?.file?.type?.includes('image')||attachment.url"
+        [src]="attachment.url"
+      />
+
+      <ng-container *ngIf="attachment.file">
+        <span [style]="attachment.progress === 100 ? 'color:green;' : ''"
+          >进度:{{ attachment.progress?.toFixed(2) }}% 上传速度:{{
+            attachment.speed?.toFixed(2)
+          }}k</span
+        >
+        <div class="w3-border">
+          <div
+            class="w3-green"
+            [style]="'height: 12px; width: ' + attachment.progress + '%;'"
+          ></div>
+        </div>
+      </ng-container>
+
+      <div *ngIf="attachment" style="display: flex;align-items: center;">
+        <span *ngIf="!disableUpload"
+          class="material-icons"
+          style="cursor: pointer; color: red"
+          (click)="removeInitUrl(attachment, i)"
+        >
+          clear
+        </span>
+        {{ attachment.name }}
       </div>
-    </ng-container>
-  </div>
-  <div
-    style="display: flex; align-items: center"
-    *ngFor="let item of attachments; let i = index"
-  >
-    <ng-container *ngIf="item">
-      <span
-        class="material-icons"
-        style="cursor: pointer; color: red"
-        (click)="removeInitUrl(item, i)"
-      >
-        clear
-      </span>
-      {{ item.name }}
-    </ng-container>
+    </div>
+
+    <!-- <div
+      style="display: flex; align-items: center"
+      *ngFor="let item of attachments; let i = index"
+    >
+      <ng-container *ngIf="item">
+        <span
+          class="material-icons"
+          style="cursor: pointer; color: red"
+          (click)="removeInitUrl(item, i)"
+        >
+          clear
+        </span>
+        {{ item.name }}
+      </ng-container>
+    </div> -->
   </div>
 </div>

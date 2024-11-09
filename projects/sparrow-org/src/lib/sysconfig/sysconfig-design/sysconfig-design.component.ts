@@ -21,17 +21,11 @@ export class SysconfigDesignComponent implements OnInit {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
       if (this.formGroup.value.id) {
-        // this.formService
-        //   .updateDataForm(this.formGroup.value, this.formGroup.value.id)
-        //   .subscribe(() => window.history.back());
+        this.formService
+          .updateConfig(this.formGroup.value, this.formGroup.value.id)
+          .subscribe(() => window.history.back());
 
       } else {
-        // this.formService
-          // .createDataForm(this.formGroup.value)
-          // .subscribe((res) => {
-          //   window.history.back();
-          // });
-          // this.sysconfigService.configuration()
           this.sysconfigService.createConfig([this.formGroup.value]).subscribe()
       }
     }
@@ -54,7 +48,7 @@ export class SysconfigDesignComponent implements OnInit {
   public refreshForm: EventEmitter<FormioRefreshValue> = new EventEmitter();
 
   constructor(
-    private formService: FormService,
+    private formService: SysconfigService,
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -71,7 +65,7 @@ export class SysconfigDesignComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params: any) => {
       if (params.id) {
-        this.formService.dataForm(params.id).subscribe((res) => {
+        this.formService.getConfig(params.id).subscribe((res) => {
           this.formGroup.patchValue(res);
           console.log(res, this.formGroup.value);
           console.log('-------', Formio.providers)

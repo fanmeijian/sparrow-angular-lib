@@ -26,6 +26,7 @@ export class UploadFileComponent implements OnInit, OnChanges {
   @Input() fileType?: string; //允许的文件类型
   @Input() multiple?: boolean;
   @Input() attachments: Attachment[] = []; //双向绑定
+  @Input() disableUpload?: boolean;
   @Output() fileUploadedEvent = new EventEmitter<Attachment>();
   @Output() fileRemovedEvent = new EventEmitter<Attachment>();
 
@@ -34,7 +35,7 @@ export class UploadFileComponent implements OnInit, OnChanges {
     private objService: ObjectStorageService,
     public domSanitizer: DomSanitizer,
     @Inject(CONFIGURATION) public config: UploadFileConfig
-  ) {}
+  ) { }
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.attachments);
   }
@@ -113,7 +114,7 @@ export class UploadFileComponent implements OnInit, OnChanges {
                 .putObject({
                   Bucket: attachment.bucket,
                   Region: attachment.region,
-                  Key: attachment.path + attachment.hash,
+                  Key: attachment.path + attachment.hash + '.' + this.getFileType(attachment.name),
                   Body: file,
                   onProgress: function (progressData) {
                     if (progressData.speed > 0) {
@@ -142,7 +143,12 @@ export class UploadFileComponent implements OnInit, OnChanges {
 
   removeInitUrl(attachment: Attachment, i: number) {
 
-    this.attachments.splice(i,1)
+    this.attachments.splice(i, 1)
     this.fileRemovedEvent.emit(attachment);
+  }
+
+  getFileType(name: string) {
+    let names = name.split('.')
+    return names[names.length - 1]
   }
 }
