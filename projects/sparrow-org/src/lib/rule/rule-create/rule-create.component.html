@@ -1,29 +1,22 @@
 <form [formGroup]="formGroup">
-  <mat-form-field appearance="fill">
-    <mat-label>规则集</mat-label>
-    <mat-select>
-      <mat-option></mat-option>
-    </mat-select>
-  </mat-form-field>
-
+  <button mat-button (click)="submit()">保存</button>
   <mat-form-field appearance="fill">
     <mat-label>规则名称</mat-label>
-    <input type="text" matInput />
+    <input type="text" matInput formControlName="name" />
   </mat-form-field>
-
-  <!-- <mat-form-field appearance="fill">
-    <mat-label>触发条件</mat-label>
-    <textarea matInput></textarea>
-  </mat-form-field> -->
-
-  <div class="editor-container" #editorContainer>
-    触发条件
-  </div>
 
   <mat-form-field appearance="fill">
-    <mat-label>规则内容</mat-label>
-    <textarea matInput></textarea>
+    <mat-label>规则描述</mat-label>
+    <textarea matInput formControlName="description"></textarea>
   </mat-form-field>
+
+  <div class="editor-container" #editorContainer>
+    规则内容
+  </div>
+
+
+
+
 </form>
 
 

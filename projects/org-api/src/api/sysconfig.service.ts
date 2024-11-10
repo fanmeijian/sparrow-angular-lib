@@ -27,7 +27,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class SysconfigService {
 
-    protected basePath = 'http://127.0.0.1:8510/car-boss-service';
+    protected basePath = 'http://localhost:8510/car-boss-service';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -265,6 +265,48 @@ export class SysconfigService {
         return this.httpClient.request<any>('post',`${this.basePath}/sysconfigs/init`,
             {
                 body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 同步功能权限列表
+     * 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public synchronizeScope(observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public synchronizeScope(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public synchronizeScope(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public synchronizeScope(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('post',`${this.basePath}/sysconfigs/scopes/synchronize`,
+            {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

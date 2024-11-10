@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from "@angular/core";
 import {
   FormBuilder,
   FormControl,
@@ -6,10 +6,11 @@ import {
   Validators,
 } from "@angular/forms";
 
-import { first } from "rxjs";
+import { first, Subject } from "rxjs";
 import * as monaco from "monaco-editor";
-import { MonacoEditorService } from "../../services/monaco-editor.service";
 import { RuleService } from '@sparrowmini/org-api'
+import { ActivatedRoute } from "@angular/router";
+import { MonacoEditorService } from '../../../service/monaco-editor.service';
 
 
 @Component({
@@ -17,31 +18,77 @@ import { RuleService } from '@sparrowmini/org-api'
   templateUrl: "./rule-create.component.html",
   styleUrls: ["./rule-create.component.css"],
 })
-export class RuleCreateComponent implements OnInit {
+export class RuleCreateComponent implements OnInit, AfterViewInit {
+
+  public loadingFinished: Subject<void> = new Subject<void>();
+
+  submit() {
+    console.log(this._editor.getValue())
+    this.formGroup.patchValue({ drl: this._editor.getValue() })
+
+    if(this.formGroup.value.id){
+      this.rulesService.updateRule(this.formGroup.value,this.formGroup.value.id).subscribe()
+    }else{
+      this.rulesService.newRule([this.formGroup.value]).subscribe()
+    }
+
+  }
   formGroup: FormGroup = this.fb.group({
-    ruleSetId: [null, Validators.required],
+    id: [null],
+    description: [null, Validators.required],
     name: [null, Validators.required],
-    triggerCondition: [null, Validators.required],
-    content: [null, Validators.required],
+    drl: [null],
+    ruleCondition: [null],
   });
 
   models: any;
   constructor(
     private fb: FormBuilder,
     private rulesService: RuleService,
-    private monacoEditorService: MonacoEditorService
-  ) {}
+    private monacoEditorService: MonacoEditorService,
+    private route: ActivatedRoute,
+  ) { }
+  ngAfterViewInit(): void {
+    // console.log(this._editorContainer.nativeElement);
+    const baseUrl = "./assets/monaco-editor/min/vs";
+
+    const onGotAmdLoader: any = () => {
+      // load Monaco
+      (<any>window).require.config({ paths: { vs: `${baseUrl}` } });
+      (<any>window).require([`vs/editor/editor.main`], () => {
+        this.loadingFinished.next((<any>window).monaco)
+        this.initMonaco().then(() => {
+
+          this.route.params.subscribe((params: any) => {
+            if (params.id) {
+              this.rulesService.getRule(params.id).subscribe(res => {
+                this.formGroup.patchValue(res)
+                this._editor?.setValue(res.drl ? res.drl : '')
+              })
+            }
+          })
+        })
+      });
+    };
+
+    const loaderScript: HTMLScriptElement = document.createElement("script");
+    loaderScript.type = "text/javascript";
+    loaderScript.src = `${baseUrl}/loader.js`;
+    loaderScript.addEventListener("load", onGotAmdLoader);
+    document.body.appendChild(loaderScript);
+
+
+
+  }
 
   ngOnInit(): void {
     // this.rulesService.().subscribe((res) => {
     //   this.models = res;
     // });
-    console.log(this._editorContainer.nativeElement);
-    this.monacoEditorService.load();
-    this.initMonaco();
+
   }
 
-  public _editor: any;
+  public _editor: monaco.editor.IStandaloneCodeEditor;
   @ViewChild("editorContainer", { static: true })
   _editorContainer!: ElementRef<any>;
 
@@ -49,7 +96,7 @@ export class RuleCreateComponent implements OnInit {
     console.log(this.monacoEditorService.loaded);
     if (!this.monacoEditorService.loaded) {
       this.monacoEditorService.loadingFinished.pipe(first()).subscribe(() => {
-        console.log(this.monacoEditorService.loaded);
+        console.log('99999', this.monacoEditorService.loaded);
         this.initMonaco();
       });
 
@@ -316,7 +363,6 @@ export class RuleCreateComponent implements OnInit {
           return { suggestions: suggestions };
         },
       });
-
       this._editor = monaco.editor.create(this._editorContainer.nativeElement, {
         language: "java",
         theme: "vs-dark",

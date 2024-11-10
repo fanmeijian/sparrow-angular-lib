@@ -10,8 +10,9 @@
  * Do not edit the class manually.
  */
 
-export interface SortObject { 
-    empty?: boolean;
-    sorted?: boolean;
-    unsorted?: boolean;
+export interface Credentials { 
+    tmpSecretId?: string;
+    tmpSecretKey?: string;
+    sessionToken?: string;
+    token?: string;
 }

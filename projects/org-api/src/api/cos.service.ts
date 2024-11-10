@@ -17,15 +17,15 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
-import { PageRule } from '../model/pageRule';
-import { Rule } from '../model/rule';
+import { CosFile } from '../model/cosFile';
+import { Response } from '../model/response';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
 
 @Injectable()
-export class RuleService {
+export class CosService {
 
     protected basePath = 'http://localhost:8510/car-boss-service';
     public defaultHeaders = new HttpHeaders();
@@ -57,120 +57,19 @@ export class RuleService {
 
 
     /**
-     * 删除规则
+     * 创建cosfile对象
      * 
      * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteRule(body: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteRule(body: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteRule(body: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteRule(body: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public createCosFile(body: CosFile, observe?: 'body', reportProgress?: boolean): Observable<CosFile>;
+    public createCosFile(body: CosFile, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<CosFile>>;
+    public createCosFile(body: CosFile, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<CosFile>>;
+    public createCosFile(body: CosFile, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling deleteRule.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.request<any>('post',`${this.basePath}/rules/delete`,
-            {
-                body: body,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 规则详情
-     * 
-     * @param id 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getRule(id: string, observe?: 'body', reportProgress?: boolean): Observable<Rule>;
-    public getRule(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Rule>>;
-    public getRule(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Rule>>;
-    public getRule(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling getRule.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<Rule>('get',`${this.basePath}/rules/${encodeURIComponent(String(id))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 新增规则
-     * 
-     * @param body 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public newRule(body: Array<Rule>, observe?: 'body', reportProgress?: boolean): Observable<Array<string>>;
-    public newRule(body: Array<Rule>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<string>>>;
-    public newRule(body: Array<Rule>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<string>>>;
-    public newRule(body: Array<Rule>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling newRule.');
+            throw new Error('Required parameter body was null or undefined when calling createCosFile.');
         }
 
         let headers = this.defaultHeaders;
@@ -200,7 +99,7 @@ export class RuleService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<Array<string>>('post',`${this.basePath}/rules`,
+        return this.httpClient.request<CosFile>('post',`${this.basePath}/cos/tx/cos-files`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -212,33 +111,80 @@ export class RuleService {
     }
 
     /**
-     * 规则列表
+     * 从TXCOS下载文件
      * 
-     * @param page Zero-based page index (0..N)
-     * @param size The size of the page to be returned
-     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param fileId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ruleList(page?: number, size?: number, sort?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<PageRule>;
-    public ruleList(page?: number, size?: number, sort?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageRule>>;
-    public ruleList(page?: number, size?: number, sort?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageRule>>;
-    public ruleList(page?: number, size?: number, sort?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public download(fileId: string, observe?: 'body', reportProgress?: boolean): Observable<Array<string>>;
+    public download(fileId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<string>>>;
+    public download(fileId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<string>>>;
+    public download(fileId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
+        if (fileId === null || fileId === undefined) {
+            throw new Error('Required parameter fileId was null or undefined when calling download.');
+        }
 
+        let headers = this.defaultHeaders;
 
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/octet-stream'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<string>>('get',`${this.basePath}/cos/tx/${encodeURIComponent(String(fileId))}/download`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param fileName 
+     * @param path 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getDownloadTmpKey(fileName: string, path: string, observe?: 'body', reportProgress?: boolean): Observable<Response>;
+    public getDownloadTmpKey(fileName: string, path: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Response>>;
+    public getDownloadTmpKey(fileName: string, path: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Response>>;
+    public getDownloadTmpKey(fileName: string, path: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (fileName === null || fileName === undefined) {
+            throw new Error('Required parameter fileName was null or undefined when calling getDownloadTmpKey.');
+        }
+
+        if (path === null || path === undefined) {
+            throw new Error('Required parameter path was null or undefined when calling getDownloadTmpKey.');
+        }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (page !== undefined && page !== null) {
-            queryParameters = queryParameters.set('page', <any>page);
+        if (fileName !== undefined && fileName !== null) {
+            queryParameters = queryParameters.set('fileName', <any>fileName);
         }
-        if (size !== undefined && size !== null) {
-            queryParameters = queryParameters.set('size', <any>size);
-        }
-        if (sort) {
-            sort.forEach((element) => {
-                queryParameters = queryParameters.append('sort', <any>element);
-            })
+        if (path !== undefined && path !== null) {
+            queryParameters = queryParameters.set('path', <any>path);
         }
 
         let headers = this.defaultHeaders;
@@ -252,7 +198,7 @@ export class RuleService {
         }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -263,7 +209,7 @@ export class RuleService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<PageRule>('get',`${this.basePath}/rules`,
+        return this.httpClient.request<Response>('get',`${this.basePath}/cos/tx/downloadTmpKeys`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -275,24 +221,26 @@ export class RuleService {
     }
 
     /**
-     * 更新规则
      * 
-     * @param body 
-     * @param id 
+     * 
+     * @param fileName 
+     * @param path 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateRule(body: { [key: string]: any; }, id: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public updateRule(body: { [key: string]: any; }, id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public updateRule(body: { [key: string]: any; }, id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public updateRule(body: { [key: string]: any; }, id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getUploadTmpKey(fileName?: string, path?: string, observe?: 'body', reportProgress?: boolean): Observable<Response>;
+    public getUploadTmpKey(fileName?: string, path?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Response>>;
+    public getUploadTmpKey(fileName?: string, path?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Response>>;
+    public getUploadTmpKey(fileName?: string, path?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling updateRule.');
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (fileName !== undefined && fileName !== null) {
+            queryParameters = queryParameters.set('fileName', <any>fileName);
         }
-
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling updateRule.');
+        if (path !== undefined && path !== null) {
+            queryParameters = queryParameters.set('path', <any>path);
         }
 
         let headers = this.defaultHeaders;
@@ -306,6 +254,7 @@ export class RuleService {
         }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -314,16 +263,76 @@ export class RuleService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
-            'application/json'
         ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
+
+        return this.httpClient.request<Response>('get',`${this.basePath}/cos/tx/uploadTmpKeys`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 上传文件到TXCOS
+     * 
+     * @param file 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public uploadToTxCosForm(file?: Blob, observe?: 'body', reportProgress?: boolean): Observable<CosFile>;
+    public uploadToTxCosForm(file?: Blob, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<CosFile>>;
+    public uploadToTxCosForm(file?: Blob, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<CosFile>>;
+    public uploadToTxCosForm(file?: Blob, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
-        return this.httpClient.request<any>('patch',`${this.basePath}/rules/${encodeURIComponent(String(id))}`,
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'multipart/form-data'
+        ];
+
+        const canConsumeForm = this.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): void; };
+        let useForm = false;
+        let convertFormParamsToString = false;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
+        useForm = canConsumeForm;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        }
+
+        if (file !== undefined) {
+            formParams = formParams.append('file', <any>file) as any || formParams;
+        }
+
+        return this.httpClient.request<CosFile>('post',`${this.basePath}/cos/tx/upload`,
             {
-                body: body,
+                body: convertFormParamsToString ? formParams.toString() : formParams,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

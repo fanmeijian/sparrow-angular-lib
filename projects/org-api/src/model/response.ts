@@ -9,9 +9,12 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { Credentials } from './credentials';
 
-export interface SortObject { 
-    empty?: boolean;
-    sorted?: boolean;
-    unsorted?: boolean;
+export interface Response { 
+    credentials?: Credentials;
+    requestId?: string;
+    expiration?: string;
+    startTime?: number;
+    expiredTime?: number;
 }

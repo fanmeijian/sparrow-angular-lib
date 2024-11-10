@@ -25,3 +25,10 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 
 0.1.3 add employee selection
+
+安装nanoedirot,在angular.json的build的assets里加上
+{
+      "glob": "**/*",
+      "input": "node_modules/monaco-editor",
+      "output": "assets/monaco-editor"
+    },

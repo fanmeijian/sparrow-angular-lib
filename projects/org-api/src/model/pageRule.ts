@@ -10,16 +10,16 @@
  * Do not edit the class manually.
  */
 import { PageableObject } from './pageableObject';
+import { Rule } from './rule';
 import { SortObject } from './sortObject';
-import { Sysrole } from './sysrole';
 
-export interface PageSysrole { 
+export interface PageRule { 
     totalPages?: number;
     totalElements?: number;
     sort?: SortObject;
     number?: number;
     size?: number;
-    content?: Array<Sysrole>;
+    content?: Array<Rule>;
     first?: boolean;
     last?: boolean;
     numberOfElements?: number;

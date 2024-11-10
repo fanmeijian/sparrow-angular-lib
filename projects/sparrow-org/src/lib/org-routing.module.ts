@@ -237,8 +237,13 @@ export const ADMIN_ROUTES: Route[] = [
             component: RuleTemplatesComponent,
           },
           {
-            path: 'rule-create',
+            path: 'rule-create/:id',
             data: { title: '新建规则' },
+            component: RuleCreateComponent,
+          },
+          {
+            path: 'rule-create',
+            data: { title: '规则详情' },
             component: RuleCreateComponent,
           },
         ],

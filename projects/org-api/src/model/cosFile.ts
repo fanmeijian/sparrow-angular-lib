@@ -10,8 +10,17 @@
  * Do not edit the class manually.
  */
 
-export interface SortObject { 
-    empty?: boolean;
-    sorted?: boolean;
-    unsorted?: boolean;
+export interface CosFile { 
+    bucket?: string;
+    region?: string;
+    readonly id?: string;
+    seq?: number;
+    path?: string;
+    name?: string;
+    size?: number;
+    hash?: string;
+    fileName?: string;
+    type?: string;
+    url?: string;
+    catalog?: Array<string>;
 }

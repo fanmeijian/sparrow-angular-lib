@@ -25,7 +25,8 @@ export interface Rule {
     readonly id?: string;
     name?: string;
     description?: string;
-    condition?: string;
+    ruleCondition?: string;
+    drl?: string;
 }
 export namespace Rule {
     export type EntityStatEnum = 'Draft' | 'Submitted' | 'Failed' | 'Completed';

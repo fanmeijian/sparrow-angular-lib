@@ -29,7 +29,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class FormService {
 
-    protected basePath = 'http://127.0.0.1:8510/car-boss-service';
+    protected basePath = 'http://localhost:8510/car-boss-service';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 

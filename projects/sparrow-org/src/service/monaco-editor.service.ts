@@ -22,9 +22,10 @@ export class MonacoEditorService {
 
     const baseUrl = "./assets/monaco-editor/min/vs";
 
-    console.log(typeof (<any>window).monaco);
+
     if (typeof (<any>window).monaco === "object") {
       this.finishLoading();
+      console.log('001')
       return;
     }
 
@@ -33,6 +34,7 @@ export class MonacoEditorService {
       (<any>window).require.config({ paths: { vs: `${baseUrl}` } });
       (<any>window).require([`vs/editor/editor.main`], () => {
         this.finishLoading();
+        console.log('002')
       });
     };
 
@@ -43,8 +45,10 @@ export class MonacoEditorService {
       loaderScript.src = `${baseUrl}/loader.js`;
       loaderScript.addEventListener("load", onGotAmdLoader);
       document.body.appendChild(loaderScript);
+      console.log('003')
     } else {
       onGotAmdLoader();
+      console.log('004')
     }
   }
 
