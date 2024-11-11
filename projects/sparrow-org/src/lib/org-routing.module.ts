@@ -132,7 +132,7 @@ export const ADMIN_ROUTES: Route[] = [
             component: SysconfigListComponent,
           },
           {
-            path: 'sysconfig-design',
+            path: 'sysconfig-design/:code',
             data: { title: '配置表单设计' },
             component: SysconfigDesignComponent,
           },

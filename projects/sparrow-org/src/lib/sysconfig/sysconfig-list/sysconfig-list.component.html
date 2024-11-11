@@ -92,13 +92,15 @@
           </button>
           <mat-menu #actions="matMenu">
             <button mat-menu-item color="primary" (click)="fillConfig(element)">
+              填写
+            </button>
+            <button mat-menu-item  color="primary" [routerLink]="['../sysconfig-design',element.code]">
               编辑
             </button>
           </mat-menu>
           <div class="spr-actions">
-            <!-- <button mat-stroked-button color="primary" (click)="edit(element)">
-              编辑
-            </button>
+
+            <!--
             <button mat-stroked-button color="warn" (click)="delete(element)">
               删除
             </button>

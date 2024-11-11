@@ -20,9 +20,9 @@ export class SysconfigDesignComponent implements OnInit {
     this.formGroup.patchValue({ form: JSON.stringify(this.formJson) });
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
-      if (this.formGroup.value.id) {
+      if (this.formGroup.value.code) {
         this.formService
-          .updateConfig(this.formGroup.value, this.formGroup.value.id)
+          .updateConfig(this.formGroup.value, this.formGroup.value.code)
           .subscribe(() => window.history.back());
 
       } else {
@@ -63,15 +63,17 @@ export class SysconfigDesignComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe((params: any) => {
-      if (params.id) {
-        this.formService.getConfig(params.id).subscribe((res) => {
-          this.formGroup.patchValue(res);
+    this.activatedRoute.params.subscribe((params: any) => {
+      if (params.code) {
+        this.formService.getConfig(params.code).subscribe((res) => {
+          this.form = JSON.parse(res.form!);
+          this.formJson = this.form;
+          this.formGroup.patchValue({code: res.code, name: res.name, remark: res.remark,form: res.form});
           console.log(res, this.formGroup.value);
           console.log('-------', Formio.providers)
 
-          this.form = JSON.parse(res.form!);
-          this.formJson = this.form;
+
+
 
           let a: any[] = this.form.components.filter(f => f.widget && f.widget.type == 'input').map(m => Object.assign({}, { name: m.label, code: m.key }))
           this.columns = a
