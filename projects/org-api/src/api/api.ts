@@ -1,5 +1,7 @@
 export * from './auditlog.service';
 import { AuditlogService } from './auditlog.service';
+export * from './comment.service';
+import { CommentService } from './comment.service';
 export * from './cos.service';
 import { CosService } from './cos.service';
 export * from './dataOrganization.service';
@@ -46,4 +48,4 @@ export * from './sysrole.service';
 import { SysroleService } from './sysrole.service';
 export * from './user.service';
 import { UserService } from './user.service';
-export const APIS = [AuditlogService, CosService, DataOrganizationService, DataPermissionService, DatamodelService, DictService, EmployeeService, FileService, FormService, GroupService, JoblevelService, MenuService, OrganizationService, PageElementService, PemgroupService, ReportService, RestApiServiceService, RoleService, RuleService, ScheduleService, ScopeService, SysconfigService, SysroleService, UserService];
+export const APIS = [AuditlogService, CommentService, CosService, DataOrganizationService, DataPermissionService, DatamodelService, DictService, EmployeeService, FileService, FormService, GroupService, JoblevelService, MenuService, OrganizationService, PageElementService, PemgroupService, ReportService, RestApiServiceService, RoleService, RuleService, ScheduleService, ScopeService, SysconfigService, SysroleService, UserService];

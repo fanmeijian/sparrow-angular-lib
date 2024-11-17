@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 
 import { AuditlogService } from './api/auditlog.service';
+import { CommentService } from './api/comment.service';
 import { CosService } from './api/cos.service';
 import { DataOrganizationService } from './api/dataOrganization.service';
 import { DataPermissionService } from './api/dataPermission.service';
@@ -34,6 +35,7 @@ import { UserService } from './api/user.service';
   exports:      [],
   providers: [
     AuditlogService,
+    CommentService,
     CosService,
     DataOrganizationService,
     DataPermissionService,

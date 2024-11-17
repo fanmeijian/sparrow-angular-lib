@@ -16,12 +16,12 @@ import { SortObject } from './sortObject';
 export interface PageRequestAuditLog { 
     totalPages?: number;
     totalElements?: number;
-    sort?: SortObject;
+    first?: boolean;
+    last?: boolean;
     number?: number;
     size?: number;
     content?: Array<RequestAuditLog>;
-    first?: boolean;
-    last?: boolean;
+    sort?: SortObject;
     numberOfElements?: number;
     pageable?: PageableObject;
     empty?: boolean;

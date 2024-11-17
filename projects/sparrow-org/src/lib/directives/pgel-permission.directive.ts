@@ -29,7 +29,10 @@ export class PgelPermissionDirective implements AfterViewInit {
         if (!res) {
           this.el.nativeElement.style.display = 'none';
         }
-      });
+      },
+        err => {
+          this.el.nativeElement.style.display = 'none';
+        });
     // if (this.libPgelPermission === 'test') {
     //   // this.el.nativeElement.disabled = true;
     //   // this.el.nativeElement.classList.add('mat-button-disabled')

@@ -9,18 +9,18 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { Comment } from './comment';
 import { PageableObject } from './pageableObject';
 import { SortObject } from './sortObject';
-import { Sysrole } from './sysrole';
 
-export interface PageSysrole { 
+export interface PageComment { 
     totalPages?: number;
     totalElements?: number;
     first?: boolean;
     last?: boolean;
     number?: number;
     size?: number;
-    content?: Array<Sysrole>;
+    content?: Array<Comment>;
     sort?: SortObject;
     numberOfElements?: number;
     pageable?: PageableObject;

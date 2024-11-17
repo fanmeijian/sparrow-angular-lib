@@ -323,10 +323,10 @@ export class SysconfigService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateConfig(body: { [key: string]: any; }, id: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public updateConfig(body: { [key: string]: any; }, id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public updateConfig(body: { [key: string]: any; }, id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public updateConfig(body: { [key: string]: any; }, id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateConfig(body: Sysconfig, id: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public updateConfig(body: Sysconfig, id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public updateConfig(body: Sysconfig, id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public updateConfig(body: Sysconfig, id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updateConfig.');

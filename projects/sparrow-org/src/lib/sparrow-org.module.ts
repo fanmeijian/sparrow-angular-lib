@@ -104,6 +104,8 @@ import { MyFormListComponent } from "./my/my-form-list/my-form-list.component";
 import { MyFormDataListComponent } from "./my/my-form-data-list/my-form-data-list.component";
 import { RuleCreateComponent } from "./rule/rule-create/rule-create.component";
 import { RuleTemplatesComponent } from "./rule/rule-templates/rule-templates.component";
+import { CommentFormComponent } from "./comment/comment-form/comment-form.component";
+import { UploadFileModule } from "@sparrowmini/tx-upload-file";
 
 // import { EmployeeRouteComponent } from './employee/employee-route/employee-route.component';
 
@@ -190,9 +192,10 @@ import { RuleTemplatesComponent } from "./rule/rule-templates/rule-templates.com
     MyFormDataListComponent,
     FormPreviewComponent,
     RuleCreateComponent,
-    RuleTemplatesComponent
+    RuleTemplatesComponent,
+    CommentFormComponent,
   ],
-  imports: [BrowserModule, RouterModule, AngularMaterialModule, OrgApiModule, OrgRoutingModule, FormioModule],
+  imports: [BrowserModule, RouterModule, AngularMaterialModule, OrgApiModule, OrgRoutingModule, FormioModule, UploadFileModule],
   exports: [
     SparrowOrgComponent,
     OrgApiModule,
@@ -207,7 +210,8 @@ import { RuleTemplatesComponent } from "./rule/rule-templates/rule-templates.com
     UserSelectionComponent,
     SysroleSelectionComponent,
     DictSelectionComponent,
-    PgelPermissionDirective
+    PgelPermissionDirective,
+    CommentFormComponent,
   ],
 })
 export class SparrowOrgModule { }

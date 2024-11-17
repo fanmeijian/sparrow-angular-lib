@@ -1,5 +1,7 @@
 export * from './apiResponseListObject';
 export * from './apiResponseListString';
+export * from './comment';
+export * from './commentAttachment';
 export * from './cosFile';
 export * from './credentials';
 export * from './dataOrganization';
@@ -52,6 +54,7 @@ export * from './organizationRole';
 export * from './organizationRolePK';
 export * from './organizationRoleRelation';
 export * from './organizationRoleRelationPK';
+export * from './pageComment';
 export * from './pageDataOrganization';
 export * from './pageDataPermission';
 export * from './pageDict';
