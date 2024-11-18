@@ -15,12 +15,12 @@ import { SortObject } from './sortObject';
 export interface PageObject { 
     totalPages?: number;
     totalElements?: number;
+    number?: number;
     first?: boolean;
     last?: boolean;
-    number?: number;
+    sort?: SortObject;
     size?: number;
     content?: Array<any>;
-    sort?: SortObject;
     numberOfElements?: number;
     pageable?: PageableObject;
     empty?: boolean;

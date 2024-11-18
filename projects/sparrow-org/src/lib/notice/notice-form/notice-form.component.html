@@ -1,0 +1,10 @@
+<form [formGroup]="fg" (submit)="submit()">
+  <mat-form-field appearance="fill">
+    <mat-label>标题</mat-label>
+    <input matInput formControlName="title" >
+  </mat-form-field>
+
+  <lib-ckeditor-control [formGroup]="fg" [name]="'content'"></lib-ckeditor-control>
+
+  <button mat-button>submit</button>
+</form>

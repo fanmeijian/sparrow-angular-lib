@@ -11,11 +11,13 @@ import { DataPermissionService } from './api/dataPermission.service';
 import { DatamodelService } from './api/datamodel.service';
 import { DictService } from './api/dict.service';
 import { EmployeeService } from './api/employee.service';
+import { FeedbackService } from './api/feedback.service';
 import { FileService } from './api/file.service';
 import { FormService } from './api/form.service';
 import { GroupService } from './api/group.service';
 import { JoblevelService } from './api/joblevel.service';
 import { MenuService } from './api/menu.service';
+import { NoticeService } from './api/notice.service';
 import { OrganizationService } from './api/organization.service';
 import { PageElementService } from './api/pageElement.service';
 import { PemgroupService } from './api/pemgroup.service';
@@ -42,11 +44,13 @@ import { UserService } from './api/user.service';
     DatamodelService,
     DictService,
     EmployeeService,
+    FeedbackService,
     FileService,
     FormService,
     GroupService,
     JoblevelService,
     MenuService,
+    NoticeService,
     OrganizationService,
     PageElementService,
     PemgroupService,

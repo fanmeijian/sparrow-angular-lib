@@ -106,7 +106,12 @@ import { RuleCreateComponent } from "./rule/rule-create/rule-create.component";
 import { RuleTemplatesComponent } from "./rule/rule-templates/rule-templates.component";
 import { CommentFormComponent } from "./comment/comment-form/comment-form.component";
 import { UploadFileModule } from "@sparrowmini/tx-upload-file";
-
+import { NoticeListComponent } from './notice/notice-list/notice-list.component';
+import { NoticeFormComponent } from './notice/notice-form/notice-form.component';
+import { CkeditorControlComponent } from './common/ckeditor-control/ckeditor-control.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { FeedbackFormComponent } from './feedback/feedback-form/feedback-form.component';
+import { FeedbackListComponent } from './feedback/feedback-list/feedback-list.component';
 // import { EmployeeRouteComponent } from './employee/employee-route/employee-route.component';
 
 @NgModule({
@@ -194,8 +199,13 @@ import { UploadFileModule } from "@sparrowmini/tx-upload-file";
     RuleCreateComponent,
     RuleTemplatesComponent,
     CommentFormComponent,
+    NoticeListComponent,
+    NoticeFormComponent,
+    CkeditorControlComponent,
+    FeedbackFormComponent,
+    FeedbackListComponent,
   ],
-  imports: [BrowserModule, RouterModule, AngularMaterialModule, OrgApiModule, OrgRoutingModule, FormioModule, UploadFileModule],
+  imports: [BrowserModule, RouterModule, AngularMaterialModule, OrgApiModule, OrgRoutingModule, FormioModule, UploadFileModule,CKEditorModule],
   exports: [
     SparrowOrgComponent,
     OrgApiModule,

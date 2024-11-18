@@ -25,7 +25,7 @@ export class UploadFileComponent implements OnInit, OnChanges {
   @Input() id?: string;
   @Input() fileType?: string; //允许的文件类型
   @Input() multiple?: boolean;
-  @Input() attachments: Attachment[] = []; //双向绑定
+  @Input() attachments: Attachment[]|any[] = []; //双向绑定
   @Input() disableUpload?: boolean;
   @Output() fileUploadedEvent = new EventEmitter<Attachment>();
   @Output() fileRemovedEvent = new EventEmitter<Attachment>();

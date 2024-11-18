@@ -33,8 +33,13 @@ import { RuleCreateComponent } from "./rule/rule-create/rule-create.component";
 import { FormDataListComponent } from "./form/form-data-list/form-data-list.component";
 import { FormListComponent } from "./form/form-list/form-list.component";
 import { FormCreateComponent } from "./form/form-create/form-create.component";
+import { NoticeListComponent } from "./notice/notice-list/notice-list.component";
+import { NoticeFormComponent } from "./notice/notice-form/notice-form.component";
+import { FeedbackListComponent } from "./feedback/feedback-list/feedback-list.component";
+import { FeedbackFormComponent } from "./feedback/feedback-form/feedback-form.component";
 export const ADMIN_ROUTES: Route[] = [
-  {path: "admin",
+  {
+    path: "admin",
     component: SparrowOrgComponent,
     children: [
       {
@@ -135,6 +140,40 @@ export const ADMIN_ROUTES: Route[] = [
             path: 'sysconfig-design/:code',
             data: { title: '配置表单设计' },
             component: SysconfigDesignComponent,
+          },
+        ],
+      },
+      {
+        path: 'notice',
+        data: { title: '公告管理' },
+        component: SparrowOrgComponent,
+        children: [
+          {
+            path: 'notice-list',
+            data: { title: '公告列表' },
+            component: NoticeListComponent,
+          },
+          {
+            path: 'notice-form',
+            data: { title: '公告表单' },
+            component: NoticeFormComponent,
+          },
+        ],
+      },
+      {
+        path: 'feedback',
+        data: { title: '反馈管理' },
+        component: SparrowOrgComponent,
+        children: [
+          {
+            path: 'feedback-list',
+            data: { title: '反馈列表' },
+            component: FeedbackListComponent,
+          },
+          {
+            path: 'feedback-form',
+            data: { title: '反馈表单' },
+            component: FeedbackFormComponent,
           },
         ],
       },
