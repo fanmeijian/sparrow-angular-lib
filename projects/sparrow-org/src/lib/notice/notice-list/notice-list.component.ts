@@ -10,8 +10,11 @@ import { NoticeService, SparrowJpaFilter } from '@sparrowmini/org-api';
   styleUrls: ['./notice-list.component.css']
 })
 export class NoticeListComponent implements OnInit {
+  updateStat(id: string,arg0: string) {
+    this.dataService.updateNoticeStatus(id, arg0).subscribe(()=>this.ngOnInit());
+  }
   delete(id: string) {
-    this.dataService.deleteNotice([id]).subscribe(()=>{
+    this.dataService.deleteNotice([id]).subscribe(() => {
       this.ngOnInit()
     })
   }

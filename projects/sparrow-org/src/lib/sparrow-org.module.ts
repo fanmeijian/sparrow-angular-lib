@@ -222,7 +222,7 @@ import { FeedbackListComponent } from './feedback/feedback-list/feedback-list.co
     DictSelectionComponent,
     PgelPermissionDirective,
     CommentFormComponent,
-    CkeditorControlComponent
+    CkeditorControlComponent,
   ],
 })
 export class SparrowOrgModule { }

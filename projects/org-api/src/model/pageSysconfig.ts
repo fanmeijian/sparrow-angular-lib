@@ -16,13 +16,13 @@ import { Sysconfig } from './sysconfig';
 export interface PageSysconfig { 
     totalPages?: number;
     totalElements?: number;
+    sort?: SortObject;
     number?: number;
     first?: boolean;
     last?: boolean;
-    sort?: SortObject;
     size?: number;
     content?: Array<Sysconfig>;
-    numberOfElements?: number;
     pageable?: PageableObject;
+    numberOfElements?: number;
     empty?: boolean;
 }

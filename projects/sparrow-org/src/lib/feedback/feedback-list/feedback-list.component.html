@@ -1,4 +1,4 @@
-<button mat-button routerLink="../notice-form">新增</button>
+<!-- <button mat-button routerLink="../notice-form">新增</button> -->
 
 <div class="spr-table-container">
   <mat-table [dataSource]="dataSource" class="spr-table">
@@ -23,7 +23,15 @@
 
     <ng-container matColumnDef="amount">
       <mat-header-cell *matHeaderCellDef>标题</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ element.content?.substring(0,20) }}</mat-cell>
+      <mat-cell *matCellDef="let element">
+        <button
+          mat-button
+          color="primary"
+          [routerLink]="['../feedback-form', element.id]"
+        >
+          {{ element.content?.substring(0, 20) }}
+        </button>
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="description">
@@ -51,15 +59,7 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button
-            mat-menu-item
-            [routerLink]="['../prize', element.id]"
-            [queryParams]="{ action: 'edit' }"
-            routerLinkActive="router-link-active"
-          >
-            审核通过
-          </button>
-          <button
+          <!-- <button
             mat-menu-item
             [routerLink]="['../prize', element.id]"
             [queryParams]="{ action: 'edit' }"
@@ -69,10 +69,14 @@
           </button>
           <button
             mat-menu-item
-            (click)="delete(element.id)"
+            [routerLink]="['../prize', element.id]"
+            [queryParams]="{ action: 'edit' }"
+            routerLinkActive="router-link-active"
           >
-            删除
+            审核通过
           </button>
+
+          <button mat-menu-item (click)="delete(element.id)">删除</button> -->
         </mat-menu>
       </mat-cell>
     </ng-container>

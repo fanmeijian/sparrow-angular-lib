@@ -171,12 +171,13 @@ export const ADMIN_ROUTES: Route[] = [
             component: FeedbackListComponent,
           },
           {
-            path: 'feedback-form',
+            path: 'feedback-form/:id',
             data: { title: '反馈表单' },
             component: FeedbackFormComponent,
           },
         ],
       },
+
       // { path: 'builder', component: FormDesignComponent },
       { path: 'my-forms', component: MyFormListComponent },
       { path: 'my-form-datas', component: MyFormDataListComponent },

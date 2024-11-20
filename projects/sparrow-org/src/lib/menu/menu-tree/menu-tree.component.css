@@ -60,3 +60,7 @@
   padding: 10px;
   border-radius: 5px;
 }
+
+.expanded-tree-node{
+  background-color: #e5e5e5;
+}

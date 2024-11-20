@@ -1,4 +1,4 @@
-<button mat-button routerLink="../notice-form">新增</button>
+<button mat-raised-button color="primary" routerLink="../notice-form">新增</button>
 
 <div class="spr-table-container">
   <mat-table [dataSource]="dataSource" class="spr-table">
@@ -53,19 +53,15 @@
         <mat-menu #menu="matMenu">
           <button
             mat-menu-item
-            [routerLink]="['../prize', element.id]"
-            [queryParams]="{ action: 'edit' }"
-            routerLinkActive="router-link-active"
+            (click)="updateStat(element.id,'TOP1')"
           >
-            审核通过
+            发布
           </button>
           <button
             mat-menu-item
-            [routerLink]="['../prize', element.id]"
-            [queryParams]="{ action: 'edit' }"
-            routerLinkActive="router-link-active"
+            (click)="updateStat(element.id,'Archived')"
           >
-            已完成
+            下架
           </button>
           <button
             mat-menu-item

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { FeedbackService, SparrowJpaFilter } from '@sparrowmini/org-api';
+import { Comment, FeedbackService, SparrowJpaFilter } from '@sparrowmini/org-api';
 
 @Component({
   selector: 'lib-feedback-list',
@@ -10,8 +10,9 @@ import { FeedbackService, SparrowJpaFilter } from '@sparrowmini/org-api';
   styleUrls: ['./feedback-list.component.css']
 })
 export class FeedbackListComponent implements OnInit {
+
   delete(id: string) {
-    this.dataService.deleteFeedback([id]).subscribe(()=>{
+    this.dataService.deleteFeedback([id]).subscribe(() => {
       this.ngOnInit()
     })
   }

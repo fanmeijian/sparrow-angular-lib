@@ -23,7 +23,7 @@
   </mat-tree-node>
   <mat-tree-node
     *matTreeNodeDef="let node; when: hasChild"
-    [matTreeNodePaddingIndent]="5*node.level"
+    [matTreeNodePaddingIndent]="25*node.level"
     matTreeNodePadding
   >
     <!-- <button
@@ -37,7 +37,7 @@
         {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
       </mat-icon>
     </button> -->
-    <div class="mat-tree-node expandable-tree-node">
+    <div class="mat-tree-node expandable-tree-node {{treeControl.isExpanded(node)?'expanded-tree-node':''}}">
       <div
         style="
           display: flex;
