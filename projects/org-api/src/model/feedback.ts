@@ -26,7 +26,7 @@ export interface Feedback {
     readonly id?: string;
     content?: string;
     attachments?: Array<FeedAttachment>;
-    readonly commentId?: string;
+    commentId?: string;
 }
 export namespace Feedback {
     export type EntityStatEnum = 'Draft' | 'Submitted' | 'Failed' | 'Completed';

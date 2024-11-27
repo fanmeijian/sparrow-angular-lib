@@ -92,6 +92,7 @@ export * from './pageableObject';
 export * from './permissionRequestBean';
 export * from './permissionRequestBody';
 export * from './positionLevel';
+export * from './reportFilterBean';
 export * from './reportTemplate';
 export * from './requestAuditLog';
 export * from './response';

@@ -16,13 +16,13 @@ import { SortObject } from './sortObject';
 export interface PageFeedback { 
     totalPages?: number;
     totalElements?: number;
-    sort?: SortObject;
-    number?: number;
-    first?: boolean;
-    last?: boolean;
     size?: number;
     content?: Array<Feedback>;
-    pageable?: PageableObject;
+    number?: number;
+    sort?: SortObject;
+    first?: boolean;
+    last?: boolean;
     numberOfElements?: number;
+    pageable?: PageableObject;
     empty?: boolean;
 }

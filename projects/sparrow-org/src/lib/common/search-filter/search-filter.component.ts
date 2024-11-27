@@ -24,7 +24,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class SearchFilterComponent implements OnInit {
   @Input() filters: SparrowJpaFilter[] = [];
-  @Input() fields?: any[] = [];
+  @Input() fields?: {name: string, value: string}[] = [];
   @Output() applyFilter = new EventEmitter<SparrowJpaFilter[]>();
 
   propertyNames = [
@@ -52,6 +52,10 @@ export class SearchFilterComponent implements OnInit {
       value: '=',
     },
     {
+      name: '不等于',
+      value: '!=',
+    },
+    {
       name: '大于',
       value: '>',
     },
@@ -65,7 +69,7 @@ export class SearchFilterComponent implements OnInit {
     },
     {
       name: '小于等于',
-      value: '=',
+      value: '<=',
     },
     {
       name: '以...开始',

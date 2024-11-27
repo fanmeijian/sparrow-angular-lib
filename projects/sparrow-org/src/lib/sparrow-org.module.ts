@@ -112,6 +112,7 @@ import { CkeditorControlComponent } from './common/ckeditor-control/ckeditor-con
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FeedbackFormComponent } from './feedback/feedback-form/feedback-form.component';
 import { FeedbackListComponent } from './feedback/feedback-list/feedback-list.component';
+import { ReportExportToolbarComponent } from './report/report-export-toolbar/report-export-toolbar.component';
 // import { EmployeeRouteComponent } from './employee/employee-route/employee-route.component';
 
 @NgModule({
@@ -204,6 +205,7 @@ import { FeedbackListComponent } from './feedback/feedback-list/feedback-list.co
     CkeditorControlComponent,
     FeedbackFormComponent,
     FeedbackListComponent,
+    ReportExportToolbarComponent,
   ],
   imports: [BrowserModule, RouterModule, AngularMaterialModule, OrgApiModule, OrgRoutingModule, FormioModule, UploadFileModule,CKEditorModule],
   exports: [
@@ -223,6 +225,7 @@ import { FeedbackListComponent } from './feedback/feedback-list/feedback-list.co
     PgelPermissionDirective,
     CommentFormComponent,
     CkeditorControlComponent,
+    ReportExportToolbarComponent,
   ],
 })
 export class SparrowOrgModule { }

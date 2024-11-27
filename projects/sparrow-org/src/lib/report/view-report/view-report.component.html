@@ -1,5 +1,7 @@
-<button mat-flat-button (click)="exportPdf()">导出pdf</button>
-<button mat-flat-button>导出word</button>
-<button mat-flat-button>导出csv</button>
-<button mat-flat-button>导出excel</button>
+<!-- <button mat-flat-button (click)="export('PDF')" color="primary">导出pdf</button>
+<button mat-flat-button (click)="export('WORD')" color="primary">导出word</button>
+<button mat-flat-button (click)="export('CSV')" color="primary">导出csv</button>
+<button mat-flat-button (click)="export('EXCEL')" color="primary">导出excel</button> -->
+<lib-report-export-toolbar [filters]="filters" [templateId]="templateId"></lib-report-export-toolbar>
+<lib-search-filter [filters]="filters" [fields]="fields" (applyFilter)="applyFilter($event)"></lib-search-filter>
 <div [innerHtml]="reportHtmlStr"></div>

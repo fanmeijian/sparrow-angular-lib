@@ -46,3 +46,4 @@ export * from './lib/my/my-form-data-list/my-form-data-list.component';
 export * from './lib/my/my-form-list/my-form-list.component';
 export * from './lib/comment/comment-form/comment-form.component';
 export * from './lib/common/ckeditor-control/ckeditor-control.component';
+export * from './lib/report/report-export-toolbar/report-export-toolbar.component'

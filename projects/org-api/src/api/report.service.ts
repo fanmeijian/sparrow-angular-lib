@@ -18,6 +18,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { PageReportTemplate } from '../model/pageReportTemplate';
+import { ReportFilterBean } from '../model/reportFilterBean';
 import { ReportTemplate } from '../model/reportTemplate';
 import { SparrowJpaFilter } from '../model/sparrowJpaFilter';
 
@@ -160,6 +161,74 @@ export class ReportService {
 
         return this.httpClient.request('get',`${this.basePath}/reports/${encodeURIComponent(String(templateId))}/export`,
             {
+                params: queryParameters,
+                responseType: "blob",
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 导出报表
+     * 
+     * @param type 
+     * @param templateId 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public exportReportByFilter(type: string, templateId: string, body?: ReportFilterBean, observe?: 'body', reportProgress?: boolean): Observable<Array<string>>;
+    public exportReportByFilter(type: string, templateId: string, body?: ReportFilterBean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<string>>>;
+    public exportReportByFilter(type: string, templateId: string, body?: ReportFilterBean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<string>>>;
+    public exportReportByFilter(type: string, templateId: string, body?: ReportFilterBean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (type === null || type === undefined) {
+            throw new Error('Required parameter type was null or undefined when calling exportReportByFilter.');
+        }
+
+        if (templateId === null || templateId === undefined) {
+            throw new Error('Required parameter templateId was null or undefined when calling exportReportByFilter.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (type !== undefined && type !== null) {
+            queryParameters = queryParameters.set('type', <any>type);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/octet-stream'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request('post',`${this.basePath}/reports/${encodeURIComponent(String(templateId))}/export`,
+            {
+                body: body,
                 params: queryParameters,
                 responseType: "blob",
                 withCredentials: this.configuration.withCredentials,
