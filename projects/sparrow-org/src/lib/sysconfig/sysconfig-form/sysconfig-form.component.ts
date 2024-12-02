@@ -30,14 +30,14 @@ export class SysconfigFormComponent implements OnInit {
   ngOnInit(): void {
     this.form=JSON.parse(this.config.form)
     this.formData = {data:JSON.parse(this.config.configJson||{})}
-    console.log(this.formData)
+    console.log(this.formData, this.config)
     if(this.config.action!='view'){
       this.viewOnly=false
     }
   }
 
   onSubmit(e: any){
-    this.sysconfigService.updateConfig({configJson: JSON.stringify(e.data)}, this.config.id).subscribe(()=>{
+    this.sysconfigService.updateConfig({configJson: JSON.stringify(e.data)}, this.config.code).subscribe(()=>{
       this.dialogRef.close(true)
     })
 
