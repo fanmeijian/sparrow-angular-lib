@@ -25,3 +25,7 @@
 .example-tree div[role=group] > .mat-tree-node {
   padding-left: 40px;
 }
+.mat-tree-node{
+  background: #eee;
+  border: 2px solid white;
+}

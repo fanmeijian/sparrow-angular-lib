@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UserService } from '@sparrowmini/org-api';
 
 @Component({
@@ -19,7 +19,8 @@ export class UserCreateComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    @Inject(MAT_DIALOG_DATA) public data:any
+    @Inject(MAT_DIALOG_DATA) public data:any,
+    private dialogRef: MatDialogRef<UserCreateComponent>,
   ) {
     if(this.data){
       this.formGroup.patchValue(this.data)
@@ -37,7 +38,7 @@ export class UserCreateComponent implements OnInit {
       })
     }else{
       this.userService.createUser([this.formGroup.value]).subscribe(()=>{
-
+          this.dialogRef.close(this.formGroup.value)
       })
     }
 
