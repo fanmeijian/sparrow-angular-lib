@@ -13,7 +13,7 @@
         <span
           class="material-icons"
           style="color: red; cursor: pointer"
-          (click)="removeUser(user, permission)"
+          (click)="removeUser(user)"
         >
           close </span
         ><span>{{ user.id?.username }} {{ user.id?.permission }} </span
@@ -39,7 +39,7 @@
                   <span
                     class="material-icons"
                     style="color: red; cursor: pointer"
-                    (click)="remove(sysrole, permission)"
+                    (click)="remove(sysrole)"
                   >
                     close </span
                   ><span
@@ -63,7 +63,7 @@
                 <span
                   class="material-icons"
                   style="color: red; cursor: pointer"
-                  (click)="removeRule(rule, permission)"
+                  (click)="removeRule(rule)"
                 >
                   close </span
                 ><span

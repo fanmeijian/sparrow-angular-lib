@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http';
 
 import { AuditlogService } from './api/auditlog.service';
 import { CommentService } from './api/comment.service';
-import { CosService } from './api/cos.service';
 import { DataOrganizationService } from './api/dataOrganization.service';
 import { DataPermissionService } from './api/dataPermission.service';
 import { DatamodelService } from './api/datamodel.service';
@@ -38,7 +37,6 @@ import { UserService } from './api/user.service';
   providers: [
     AuditlogService,
     CommentService,
-    CosService,
     DataOrganizationService,
     DataPermissionService,
     DatamodelService,

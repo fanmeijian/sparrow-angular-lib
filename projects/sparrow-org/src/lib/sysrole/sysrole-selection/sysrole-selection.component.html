@@ -1,4 +1,4 @@
-<h3>授权角色：</h3>
+<div>授权角色：</div>
 <mat-chip-list #chipList aria-label="Fruit selection">
   <mat-chip *ngFor="let fruit of selectedSysroles" (removed)="remove(fruit)">
     {{ fruit.name }}
@@ -9,7 +9,7 @@
 </mat-chip-list>
 
 <div>
-  <h3>角色列表</h3>
+  <div>角色列表</div>
   <mat-selection-list #shoes [multiple]="false">
     <mat-list-option
       *ngFor="let item of sysroles; let i = index"

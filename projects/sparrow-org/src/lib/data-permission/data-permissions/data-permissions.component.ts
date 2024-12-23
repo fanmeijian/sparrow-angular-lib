@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataPermissionService, SysroleService } from '@sparrowmini/org-api';
@@ -12,9 +13,9 @@ import { map, switchMap, tap, zip } from 'rxjs';
 })
 export class DataPermissionsComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
-  pageable = { pageIndex: 0, pageSize: 10, length: 0 };
+  pageable = { pageIndex: 0, pageSize: 10, length: 0 , sort: []};
 
-  displayedColumns = ['seq','name', 'remark'];
+  displayedColumns = ['seq','name', 'remark','permission'];
 
   constructor(
     private dataPermissionService: DataPermissionService,
@@ -27,25 +28,14 @@ export class DataPermissionsComponent implements OnInit {
     this.onPageChange(this.pageable);
   }
 
-  onPageChange(event: any) {
+  onPageChange(event: PageEvent) {
+    this.pageable.pageIndex =event.pageIndex
+    this.pageable.pageSize = event.pageSize
     this.dataPermissionService
-      .dataPermissions(event.page, event.size)
-      .pipe(
-        tap((t) => (this.pageable.length = t.totalElements!)),
-        map((m) => m.content),
-        switchMap((m: any) =>
-          zip(
-            ...m.map((a: any) =>
-              this.dataPermissionService
-                .dataPermission(a.id)
-                .pipe(map((r) => Object.assign({}, a, r)))
-            )
-          )
-        )
-      )
-      .subscribe((res: any) => {
-        this.dataSource = new MatTableDataSource<any>(res);
-        // console.log(res);
+      .dataPermissions(this.pageable.pageIndex, this.pageable.pageSize, this.pageable.sort)
+      .subscribe((res) => {
+        this.dataSource = new MatTableDataSource<any>(res.content);
+        this.pageable.length = res.totalElements;
       });
   }
 }

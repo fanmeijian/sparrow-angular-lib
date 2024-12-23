@@ -1,5 +1,5 @@
 <div class="log" *ngFor="let item of logs">
-  {{item.createdBy}} - {{item.createdDate}} - {{item.origin}}
+  {{item.createdBy}} - {{item.createdDate| date: 'yyyy-MM-dd HH:mm:ss'}} - {{item.origin}}
   <div>{{item.method}}</div>
   <div>{{item|json}}</div>
 </div>

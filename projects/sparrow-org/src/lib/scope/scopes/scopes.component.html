@@ -1,4 +1,7 @@
-<button mat-flat-button (click)="new()" color="primary">新增</button>
+<div class="spr-toolbar-container">
+  <button mat-raised-button (click)="new()" color="primary">新增</button>
+  <button mat-raised-button (click)="sync()" color="primary">同步</button>
+</div>
 <lib-search-filter
   [filters]="filters"
   [fields]="[
@@ -86,26 +89,23 @@
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <div class="actions">
-            <button mat-stroked-button color="primary" (click)="edit(element)">
-              编辑
-            </button>
-            <button mat-stroked-button color="warn" (click)="delete(element)">
-              删除
-            </button>
-            <button
-              mat-stroked-button
-              color="primary"
-              (click)="openPermission(element)"
-            >
-              授权
-            </button>
-            <lib-entity-log
-              [id]="element?.id"
-              [modelId]="element?.modelName"
-            ></lib-entity-log>
-          </div>
-
+          <button mat-stroked-button color="primary" (click)="edit(element)">
+            编辑
+          </button>
+          <button mat-stroked-button color="warn" (click)="delete(element)">
+            删除
+          </button>
+          <button
+            mat-stroked-button
+            color="primary"
+            (click)="openPermission(element)"
+          >
+            授权
+          </button>
+          <lib-entity-log
+            [id]="element?.id"
+            [modelId]="element?.modelName"
+          ></lib-entity-log>
         </mat-cell>
       </ng-container>
 

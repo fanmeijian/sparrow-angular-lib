@@ -32,6 +32,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { CdkTreeModule } from "@angular/cdk/tree";
 import { MatRadioModule } from '@angular/material/radio';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -138,6 +139,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatSelectModule,
     MatRadioModule,
     DragDropModule,
+    MatProgressSpinnerModule
   ],
 })
-export class AngularMaterialModule {}
+export class AngularMaterialModule { }

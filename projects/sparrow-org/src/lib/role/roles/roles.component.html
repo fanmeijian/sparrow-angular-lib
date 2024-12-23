@@ -1,30 +1,27 @@
-<button class="button" mat-flat-button color="primary" (click)="new()">
-  新增
-</button>
-<!-- <button class="button" mat-flat-button color="warn" (click)="delete(null)">
-  删除
-</button> -->
-<mat-grid-list cols="4" rowHeight="100%">
-  <mat-grid-tile>
+<div class="spr-toolbar-container">
+  <button class="button" mat-raised-button color="primary" (click)="new()">
+    新增
+  </button>
+  <!-- <button class="button" mat-raised-button color="warn" (click)="delete(null)">
+    删除
+  </button> -->
+</div>
+<div class="left-tree-right-content-container">
+  <div>
+    <div
+      style="width: 100%; color: grey; text-align: center"
+      *ngIf="dataSource.data.length == 0"
+    >
+      尚无数据<br />
+    </div>
     <mat-tree
+      *ngIf="dataSource.data.length > 0"
       [dataSource]="dataSource"
       [treeControl]="treeControl"
       class="mat-tree"
     >
       <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
         <button mat-icon-button disabled></button>
-        <img
-          src="/assets/role.svg"
-          *ngIf="node.item.type === 'ROLE'"
-          width="12px"
-          height="12px"
-        />
-        <!-- <img
-        src="/assets/unit.svg"
-        *ngIf="node.item.type === 'UNIT'"
-        width="20px"
-        height="10px"
-      /> -->
         <span
           [class]="
             node.item.type === 'ROLE'
@@ -51,12 +48,6 @@
             {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
           </mat-icon>
         </button>
-        <!-- <img
-        src="/assets/org.svg"
-        *ngIf="node.item.type === 'ORGANIZATION'"
-        width="20px"
-        height="10px"
-      /> -->
         <span
           [class]="
             node.item.type === 'ROLE'
@@ -78,10 +69,10 @@
         ></mat-progress-bar>
       </mat-tree-node>
     </mat-tree>
-  </mat-grid-tile>
+  </div>
 
-  <mat-grid-tile colspan="3">
-    <mat-card>
+  <div>
+    <mat-card *ngIf="selectedItem">
       <mat-card-title
         >{{ selectedItem?.name }} ({{ selectedItem?.code }})</mat-card-title
       >
@@ -90,55 +81,28 @@
           <mat-tab-group>
             <mat-tab label="基本信息">
               <div class="twocolumn-box">
-                <span>名称:</span><span>{{ selectedItem?.name }}</span>
-                <span>代码:</span><span>{{ selectedItem?.code }}</span>
-                <span>类型:</span><span>{{ selectedItem?.type }}</span>
-                <span>组织: </span>
-                <span>
-                  <ng-container *ngFor="let item of selectedItem?.organizations"
-                    >{{ item.name }},</ng-container
-                  ></span
-                >
-                <span>上级: </span>
-                <span>
-                  <ng-container *ngFor="let item of selectedItem?.parents"
-                    >{{ item.name }},</ng-container
-                  ></span
-                >
+                <div><span>名称:</span><span>{{ selectedItem?.name }}</span></div>
+                <div><span>代码:</span><span>{{ selectedItem?.code }}</span></div>
+                <div><span>类型:</span><span>{{ selectedItem?.type }}</span></div>
+                <div><span>组织: </span>
+                  <span>
+                    <ng-container *ngFor="let item of selectedItem?.organizations"
+                      >{{ item.name }},</ng-container
+                    ></span
+                  ></div>
+                <div><span>上级: </span>
+                  <span>
+                    <ng-container *ngFor="let item of selectedItem?.parents"
+                      >{{ item.name }},</ng-container
+                    ></span
+                  ></div>
               </div>
-              <!-- <lib-base-op-log-column
-                [element]="selectedMenu?.me"
-              ></lib-base-op-log-column> -->
             </mat-tab>
-            <!-- <mat-tab label="授权用户（{{ permissions?.users?.length }}）">
-              <mat-chip
-                *ngFor="let chipItem of permissions.users"
-                (removed)="removePermission(chipItem)"
-              >
-                {{ chipItem.name }}
-                <button matChipRemove>
-                  <mat-icon>cancel</mat-icon>
-                </button>
-              </mat-chip>
-            </mat-tab> -->
-            <!-- <mat-tab label="授权角色（{{ permissions?.sysroles?.length }}）">
-              <mat-chip-list #chipList>
-                <mat-chip
-                  *ngFor="let chipItem of permissions.sysroles"
-                  (removed)="removePermission(chipItem)"
-                >
-                  {{ chipItem.name }}
-                  <button matChipRemove>
-                    <mat-icon>cancel</mat-icon>
-                  </button>
-                </mat-chip>
-              </mat-chip-list>
-            </mat-tab> -->
             <mat-tab label="审计日志">
-              <!-- <lib-entity-log
-                [id]="selectedMenu?.id"
-                [modelId]="selectedMenu?.me.modelName"
-              ></lib-entity-log> -->
+              <lib-entity-log
+                [id]="selectedItem?.id"
+                [modelId]="selectedItem?.me?.modelName"
+              ></lib-entity-log>
             </mat-tab>
           </mat-tab-group>
         </div>
@@ -164,5 +128,5 @@
         </button>
       </mat-card-actions>
     </mat-card>
-  </mat-grid-tile>
-</mat-grid-list>
+  </div>
+</div>

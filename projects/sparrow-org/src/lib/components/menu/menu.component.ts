@@ -109,7 +109,7 @@ export class ChecklistDatabase {
 @Component({
   selector: 'lib-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css'],
+  styleUrls: ['./menu.component.css','../../org.css'],
   providers: [ChecklistDatabase],
 })
 export class MenuComponent implements OnInit {

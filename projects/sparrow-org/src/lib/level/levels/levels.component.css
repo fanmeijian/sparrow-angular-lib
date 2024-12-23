@@ -4,10 +4,6 @@
   align-items: center;
 }
 
-.button {
-  margin: 0px 10px 10px 0px;
-}
-
 .detail{
   display: flex;
   flex-wrap: wrap;
@@ -75,10 +71,6 @@
   /* margin: 0px 0px 0px 5px; */
 }
 
-mat-card{
-  width: 100%;
-  margin: 0px 0px 0px 10px;
-}
 
 ::ng-deep .mat-grid-tile-content{
   justify-content: flex-start !important;

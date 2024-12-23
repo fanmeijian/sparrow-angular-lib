@@ -4,9 +4,9 @@ import {
   Menu,
   MenuService,
   Sysrole,
-  SysroleMenuPK,
+  SysroleMenuId,
   User,
-  UserMenuPK,
+  UserMenuId,
 } from '@sparrowmini/org-api';
 
 @Component({
@@ -28,8 +28,8 @@ export class MenuPermissionComponent implements OnInit {
   }
 
   submit() {
-    let userMenus: UserMenuPK[] = [];
-    let sysroleMenus: SysroleMenuPK[] = [];
+    let userMenus: UserMenuId[] = [];
+    let sysroleMenus: SysroleMenuId[] = [];
     let menus = this.data.forEach((m: Menu) => {
       userMenus.push(
         ...this.selectedUsernames.map((user: User) =>

@@ -91,7 +91,7 @@ export class OrgChecklistDatabase {
 @Component({
   selector: "lib-orgs",
   templateUrl: "./orgs.component.html",
-  styleUrls: ["./orgs.component.css"],
+  styleUrls: ["./orgs.component.css",'../../org.css'],
   providers: [OrgChecklistDatabase],
 })
 export class OrgsComponent implements OnInit {

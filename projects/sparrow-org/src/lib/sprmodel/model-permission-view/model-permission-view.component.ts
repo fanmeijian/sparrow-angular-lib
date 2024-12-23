@@ -9,6 +9,9 @@ import { MatDialog } from '@angular/material/dialog';
 import {
   DatamodelService,
   ModelPermissionResponseBody,
+  ModelRule,
+  SysroleModel,
+  UserModel,
 } from '@sparrowmini/org-api';
 
 @Component({
@@ -25,14 +28,14 @@ export class ModelPermissionViewComponent implements OnInit {
   constructor(
     private modelService: DatamodelService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    if(this.attributeId){
-      this.modelService.attrPermissions(this.modelId,this.attributeId).subscribe((res) => {
+    if (this.attributeId) {
+      this.modelService.attrPermissions(this.modelId, this.attributeId).subscribe((res) => {
         this.permission = res;
       });
-    }else{
+    } else {
       this.modelService.modelPermissions(this.modelId).subscribe((res) => {
         this.permission = res;
       });
@@ -43,8 +46,38 @@ export class ModelPermissionViewComponent implements OnInit {
   view() {
     this.dialog.open(this.permissionTemplate);
   }
-  removeUser(a: any, b: any) {}
-  remove(a: any, b: any) {}
+  removeUser(user: UserModel) {
+    this.modelService.removeModelPermissions({
+      usernames: [{
+        username: user.id.username,
+        permission: user.id.permission,
+        permissionType: user.id.permissionType
+      }]
+    }, user.id.modelId).subscribe((res) => {
+      this.ngOnInit()
+    })
+  }
+  remove(a: SysroleModel) {
+    this.modelService.removeModelPermissions({
+      sysroles: [{
+        sysroleId: a.id.sysroleId,
+        permission: a.id.permission,
+        permissionType: a.id.permissionType
+      }]
+    }, a.id.modelId).subscribe((res) => {
+      this.ngOnInit()
+    })
+  }
 
-  removeRule(a: any, b: any) {}
+  removeRule(a: ModelRule) {
+    this.modelService.removeModelPermissions({
+      rules: [{
+        ruleId: a.id.ruleId,
+        permission: a.id.permission,
+        permissionType: a.id.permissionType
+      }]
+    }, a.id.modelId).subscribe((res) => {
+      this.ngOnInit()
+    })
+  }
 }

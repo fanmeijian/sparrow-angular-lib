@@ -49,3 +49,11 @@ export * from './lib/common/ckeditor-control/ckeditor-control.component';
 export * from './lib/report/report-export-toolbar/report-export-toolbar.component'
 export * from './lib/user/user-create/user-create.component'
 export * from './lib/common/breadcrump/breadcrump.component'
+export * from './lib/services/loading-dialog.service'
+export * from './lib/services/global-error-handler.service'
+export * from './lib/services/error-dialog.service'
+import { GlobalErrorHandlerService } from './lib/services/global-error-handler.service';
+import { LoadingDialogService } from './lib/services/loading-dialog.service';
+import { ErrorDialogService } from './lib/services/error-dialog.service';
+export * from './lib/services/error-catching-interceptor'
+import { ErrorCatchingInterceptor } from './lib/services/error-catching-interceptor';

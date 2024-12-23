@@ -1,7 +1,7 @@
-import { NgModule } from "@angular/core";
+import { ModuleWithProviders, NgModule, Optional, SkipSelf } from "@angular/core";
 import { SparrowOrgComponent } from "./sparrow-org.component";
 import { OrgsComponent } from "./org/orgs/orgs.component";
-import { ApiModule as OrgApiModule } from "@sparrowmini/org-api";
+import { ApiModule, Configuration, ApiModule as OrgApiModule } from "@sparrowmini/org-api";
 import { RolesComponent } from "./role/roles/roles.component";
 import { LevelsComponent } from "./level/levels/levels.component";
 import { OrggroupsComponent } from "./orggroup/orggroups/orggroups.component";
@@ -114,6 +114,10 @@ import { FeedbackFormComponent } from './feedback/feedback-form/feedback-form.co
 import { FeedbackListComponent } from './feedback/feedback-list/feedback-list.component';
 import { ReportExportToolbarComponent } from './report/report-export-toolbar/report-export-toolbar.component';
 import { BreadcrumpComponent } from './common/breadcrump/breadcrump.component';
+import { ErrorDialogComponent } from "./common/error-dialog/error-dialog.component";
+import { LoadingDialogComponent } from "./common/loading-dialog/loading-dialog.component";
+import { ErrorDialogService, GlobalErrorHandlerService, LoadingDialogService } from "../projects";
+import { HttpClient } from "@angular/common/http";
 // import { EmployeeRouteComponent } from './employee/employee-route/employee-route.component';
 
 @NgModule({
@@ -208,6 +212,8 @@ import { BreadcrumpComponent } from './common/breadcrump/breadcrump.component';
     FeedbackListComponent,
     ReportExportToolbarComponent,
     BreadcrumpComponent,
+    ErrorDialogComponent,
+    LoadingDialogComponent
   ],
   imports: [BrowserModule, RouterModule, AngularMaterialModule, OrgApiModule, OrgRoutingModule, FormioModule, UploadFileModule,CKEditorModule],
   exports: [
@@ -230,5 +236,28 @@ import { BreadcrumpComponent } from './common/breadcrump/breadcrump.component';
     ReportExportToolbarComponent,
     BreadcrumpComponent,
   ],
+  // providers: [
+  //   GlobalErrorHandlerService,
+  //   LoadingDialogService,
+  //   ErrorDialogService,
+  // ]
 })
-export class SparrowOrgModule { }
+export class SparrowOrgModule {
+  public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders<SparrowOrgModule> {
+      return {
+          ngModule: ApiModule,
+          providers: [ { provide: Configuration, useFactory: configurationFactory } ]
+      };
+  }
+
+  constructor( @Optional() @SkipSelf() parentModule: SparrowOrgModule,
+               @Optional() http: HttpClient) {
+      if (parentModule) {
+          throw new Error('ApiModule is already loaded. Import in your base AppModule only.');
+      }
+      if (!http) {
+          throw new Error('You need to import the HttpClientModule in your AppModule! \n' +
+          'See also https://github.com/angular/angular/issues/20575');
+      }
+  }
+}

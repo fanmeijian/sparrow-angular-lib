@@ -1,75 +1,94 @@
-<button mat-button (click)="init()" color="primary" *ngIf="!isInit">系统初始化</button>
+<button mat-button (click)="init()" color="primary" *ngIf="!isInit">
+  系统初始化
+</button>
 
-<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-  <mat-tree-node
-    *matTreeNodeDef="let node"
-    [matTreeNodePaddingIndent]="5*node.level"
-    matTreeNodePadding
-  >
-    <button mat-icon-button disabled></button>
-    <!-- <button color="primary" mat-button [routerLink]="node.url">
-      {{ node.name }}
-    </button> -->
-    <span
-      [class]="
-        selectedNode === node.url
-          ? 'norml-tree-node selected-norml-tree-node'
-          : 'norml-tree-node'
-      "
-      [routerLink]="node.url"
-      (click)="selectedNode = node.url"
-      >{{ node.name }}</span
+<div style="height: calc(100vh - 130px); overflow-y: auto;">
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <mat-tree-node
+      *matTreeNodeDef="let node"
+      [matTreeNodePaddingIndent]="5 * node.level"
+      matTreeNodePadding
     >
-  </mat-tree-node>
-  <mat-tree-node
-    *matTreeNodeDef="let node; when: hasChild"
-    [matTreeNodePaddingIndent]="25*node.level"
-    matTreeNodePadding
-  >
-    <!-- <button
-      mat-button
-      matTreeNodeToggle
-      style="width: 100%; text-align: left"
-      [attr.aria-label]="'Toggle ' + node.name"
-    >
-      {{ node.name }}
-      <mat-icon class="mat-icon-rtl-mirror">
-        {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
-      </mat-icon>
-    </button> -->
-    <div class="mat-tree-node expandable-tree-node {{treeControl.isExpanded(node)?'expanded-tree-node':''}}">
-      <div
-        style="
-          display: flex;
-          flex-direction: row;
-          width: 100%;
-          align-items: center;
+      <button mat-icon-button disabled></button>
+      <!-- <button color="primary" mat-button [routerLink]="node.url">
+        {{ node.name }}
+      </button> -->
+      <span
+        [class]="
+          selectedNode === node.url
+            ? 'norml-tree-node selected-norml-tree-node'
+            : 'norml-tree-node'
         "
-        matTreeNodeToggle
+        [routerLink]="node.url"
+        (click)="selectedNode = node.url"
+        >{{ node.name }}</span
       >
-        <div style="width: 100%">{{ node.name }}</div>
-        <div style="width: 60px">
-          <button
-            mat-icon-button
-            matTreeNodeToggle
-            [attr.aria-label]="'Toggle ' + node.name"
-          >
-            <mat-icon class="mat-icon-rtl-mirror">
-              {{
-                treeControl.isExpanded(node) ? "expand_more" : "chevron_right"
-              }}
-            </mat-icon>
-          </button>
+    </mat-tree-node>
+    <mat-tree-node
+      *matTreeNodeDef="let node; when: hasChild"
+      [matTreeNodePaddingIndent]="25 * node.level"
+      matTreeNodePadding
+    >
+      <!-- <button
+        mat-button
+        matTreeNodeToggle
+        style="width: 100%; text-align: left"
+        [attr.aria-label]="'Toggle ' + node.name"
+      >
+        {{ node.name }}
+        <mat-icon class="mat-icon-rtl-mirror">
+          {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
+        </mat-icon>
+      </button> -->
+      <div
+        class="mat-tree-node expandable-tree-node {{
+          treeControl.isExpanded(node) ? 'expanded-tree-node' : ''
+        }}"
+      >
+        <div
+          style="
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            align-items: center;
+          "
+          matTreeNodeToggle
+        >
+        <!-- <span class="material-symbols-outlined">
+          {{node.icon}}
+          </span> -->
+          <span class="material-icons" style="font-size: 20px;"> {{node.icon}} </span>
+          <div style="width: 100%;padding-left: 10px;">
+            {{ node.name }}
+          </div>
+          <div style="width: 60px">
+            <button
+              mat-icon-button
+              matTreeNodeToggle
+              [attr.aria-label]="'Toggle ' + node.name"
+            >
+              <mat-icon class="mat-icon-rtl-mirror">
+                {{
+                  treeControl.isExpanded(node) ? "expand_more" : "chevron_right"
+                }}
+              </mat-icon>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-    <!-- There is inline padding applied to this div using styles.
-          This padding value depends on the mat-icon-button width.  -->
-    <div
-      [class.example-tree-invisible]="!treeControl.isExpanded(node)"
-      role="group"
-    >
-      <ng-container matTreeNodeOutlet></ng-container>
-    </div>
-  </mat-tree-node>
-</mat-tree>
+      <!-- There is inline padding applied to this div using styles.
+            This padding value depends on the mat-icon-button width.  -->
+      <div
+        [class.example-tree-invisible]="!treeControl.isExpanded(node)"
+        role="group"
+      >
+        <ng-container matTreeNodeOutlet></ng-container>
+      </div>
+    </mat-tree-node>
+  </mat-tree>
+</div>
+<span style="margin-right: auto;"></span>
+<div class="avatar-container">
+  <span class="avatar">{{ userInfo?.username?.substring(0, 1) }}</span>
+  <span style="word-break: break-all;">{{ userInfo.username }}</span>
+</div>

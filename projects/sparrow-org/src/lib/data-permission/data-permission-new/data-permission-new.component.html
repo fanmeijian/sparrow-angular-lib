@@ -1,5 +1,5 @@
 <mat-form-field appearance="fill" style="width: 100%;">
-  <mat-label>Choose an option</mat-label>
+  <mat-label>数据模型</mat-label>
   <mat-select (selectionChange)="selectionChange($event)">
     <mat-option *ngFor="let shoe of models" [value]="shoe">{{shoe.id}}</mat-option>
   </mat-select>
@@ -19,7 +19,8 @@
       <mat-header-cell *matHeaderCellDef>名称</mat-header-cell>
       <mat-cell *matCellDef="let element; let index = index">
         <div style="display: flex; flex-direction: column">
-          <span>{{element.id}} {{ (element | json).substring(0,100) }}</span>
+          <span>主键: {{showId(element.id)}}</span>
+          <span>内容: {{ showContent(element).substring(0,100) }}</span>
         </div>
       </mat-cell>
     </ng-container>
@@ -27,7 +28,7 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef>名称</mat-header-cell>
       <mat-cell *matCellDef="let element; let index = index">
-        <button mat-button (click)="grantPermission(element)">授权</button>
+        <button mat-stroked-button color="primary" (click)="grantPermission(element)">授权</button>
       </mat-cell>
     </ng-container>
 

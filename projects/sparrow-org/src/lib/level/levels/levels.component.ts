@@ -12,7 +12,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 @Component({
   selector: "lib-levels",
   templateUrl: "./levels.component.html",
-  styleUrls: ["./levels.component.css"],
+  styleUrls: ["./levels.component.css",'../../org.css'],
 })
 export class LevelsComponent implements OnInit {
   constructor(

@@ -21,7 +21,7 @@ import { DictCreateComponent } from '../dict-create/dict-create.component';
 @Component({
   selector: 'lib-dicts',
   templateUrl: './dicts.component.html',
-  styleUrls: ['./dicts.component.css'],
+  styleUrls: ['./dicts.component.css','../../org.css'],
 })
 export class DictsComponent implements OnInit {
   selectedMenu: any;
@@ -39,7 +39,7 @@ export class DictsComponent implements OnInit {
     this.dataSource = new DynamicDataSource(this.treeControl, database);
 
     database.initialData().subscribe(res=>{
-      console.log(res)
+      // console.log(res)
       this.dataSource.data=res
     });
   }

@@ -29,29 +29,14 @@ mat-table{
   -webkit-hyphens: auto;
   hyphens: auto;
 }
-
-.mat-column-actions {
-  word-wrap: break-word !important;
-  white-space: unset !important;
-  width: 50px;
-  /* width: 5% !important; */
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-  padding: 2px;
-  word-break: break-word;
-
-  -ms-hyphens: auto;
-  -moz-hyphens: auto;
-  -webkit-hyphens: auto;
-  hyphens: auto;
-}
-
-button{
-  margin: 0px 5px 5px 0px;
-}
-
+/*
 .actions{
   width: 300px;
   display: flex;
   flex-wrap: wrap;
+} */
+
+.mat-column-users {
+  flex: 0 1 120px !important;
+  /* width: 120px !important; */
 }

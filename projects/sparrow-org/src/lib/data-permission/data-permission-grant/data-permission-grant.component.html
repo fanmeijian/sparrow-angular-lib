@@ -1,9 +1,14 @@
-<h3 mat-dialog-title>数据授权</h3>
+<h5 mat-dialog-title>数据授权</h5>
 <!-- <lib-model-permission-rules></lib-model-permission-rules> -->
 
 <mat-dialog-content>
-  <div>{{ data.id }}</div>
+  <div>授权模型</div>
+  <div>{{ showId(data.modelName) }}</div>
 
+  <div>授权数据</div>
+  <div>{{ showId(data.id) }}</div>
+
+  <div>权限规则</div>
   <mat-form-field appearance="fill">
     <mat-label>授予权限</mat-label>
     <mat-select multiple [(ngModel)]="selectedPermissions">
@@ -12,6 +17,7 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+
 
   <div>
     <label id="example-radio-group-label">权限类型</label>

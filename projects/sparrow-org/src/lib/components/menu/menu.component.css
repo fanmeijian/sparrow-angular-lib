@@ -4,9 +4,6 @@
   align-items: center;
 }
 
-.button {
-  margin: 0px 10px 10px 0px;
-}
 
 .detail>span {
   padding: 10px;
@@ -105,10 +102,10 @@
   background-color: #e5e5e5;
 }
 
-mat-card{
+/* mat-card{
   width: 100%;
   margin: 0px 0px 0px 10px;
-}
+} */
 
 ::ng-deep .mat-grid-tile-content{
   justify-content: flex-start !important;

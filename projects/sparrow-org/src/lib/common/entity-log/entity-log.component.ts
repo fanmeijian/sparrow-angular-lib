@@ -33,6 +33,7 @@ export class EntityLogComponent implements OnInit, OnChanges {
     private dialog: MatDialog,
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
+    // console.log('changes', changes);
     if(this.modelId){
       this.auditLogService
       .logs(this.modelId, this.id,0,10000)

@@ -1,4 +1,6 @@
-<button mat-flat-button (click)="new()" color="primary">新增</button>
+<div class="spr-toolbar-container">
+  <button mat-raised-button (click)="new()" color="primary">新增</button>
+</div>
 <lib-search-filter
   [filters]="filters"
   [fields]="[{
@@ -37,13 +39,10 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <div class="actions">
-          <button mat-stroked-button color="primary" (click)="edit(element)">
-            编辑
-          </button>
-          <lib-user-password-reset [user]="element"></lib-user-password-reset>
-        </div>
-
+        <button mat-stroked-button color="primary" (click)="edit(element)">
+          编辑
+        </button>
+        <lib-user-password-reset [user]="element"></lib-user-password-reset>
       </mat-cell>
     </ng-container>
 

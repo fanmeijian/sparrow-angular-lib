@@ -1,4 +1,4 @@
-<h3>授权用户：</h3>
+<div>授权用户：</div>
 <mat-chip-list #chipList aria-label="Fruit selection">
   <mat-chip *ngFor="let item of selected" (removed)="remove(item)">
     {{
@@ -13,7 +13,7 @@
 </mat-chip-list>
 
 <div>
-  <h3>用户列表</h3>
+  <div>用户列表</div>
   <mat-selection-list #shoes [multiple]="false">
     <mat-list-option
       *ngFor="let item of datas; let i = index"

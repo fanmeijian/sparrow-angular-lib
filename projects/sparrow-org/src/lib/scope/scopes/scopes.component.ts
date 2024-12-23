@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { ScopeService, SysroleService } from '@sparrowmini/org-api';
+import { ScopeService, SysconfigService, SysroleService } from '@sparrowmini/org-api';
 import { combineLatest, map, of, switchMap, tap, zip } from 'rxjs';
 import { SysroleCreateComponent } from '../../sysrole/sysrole-create/sysrole-create.component';
 import { SysrolePermissionComponent } from '../../sysrole/sysrole-permission/sysrole-permission.component';
@@ -17,6 +17,12 @@ import { baseOpLogColumns } from '../../common/base-op-log-column/base-op-log-co
   styleUrls: ['./scopes.component.css'],
 })
 export class ScopesComponent implements OnInit {
+  sync() {
+    this.sysconfigService.synchronizeScope().subscribe(() => {
+      this.snack.open('同步成功！', '关闭');
+      this.ngOnInit();
+    })
+  }
   users: any[] = [];
   dataSource = new MatTableDataSource<any>();
   // pageable = { page: 0, size: 10 };
@@ -36,8 +42,9 @@ export class ScopesComponent implements OnInit {
     private scopeService: ScopeService,
     private dialog: MatDialog,
     private snack: MatSnackBar,
-    private sysroleService: SysroleService
-  ) {}
+    private sysroleService: SysroleService,
+    private sysconfigService: SysconfigService,
+  ) { }
 
   ngOnInit(): void {
     this.onPage(this.pageable);
@@ -124,10 +131,10 @@ export class ScopesComponent implements OnInit {
                   switchMap((res: any) =>
                     res.length > 0
                       ? zip(
-                          ...res.map((m: any) =>
-                            this.sysroleService.sysrole(m.id.sysroleId)
-                          )
+                        ...res.map((m: any) =>
+                          this.sysroleService.sysrole(m.id.sysroleId)
                         )
+                      )
                       : of([])
                   )
                 );

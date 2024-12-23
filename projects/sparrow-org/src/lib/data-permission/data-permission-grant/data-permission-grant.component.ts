@@ -8,6 +8,7 @@ import {
   RuleService,
 } from '@sparrowmini/org-api';
 import { PermissionEnum } from '../../../model/constant';
+import { showId } from '../../util/model-util';
 
 @Component({
   selector: 'lib-data-permission-grant',
@@ -15,6 +16,8 @@ import { PermissionEnum } from '../../../model/constant';
   styleUrls: ['./data-permission-grant.component.css'],
 })
 export class DataPermissionGrantComponent implements OnInit {
+  showId = showId
+
   formGroup: FormGroup = this.fb.group({
     sysroles: this.fb.array([]),
     usernames: this.fb.array([]),
@@ -82,7 +85,7 @@ export class DataPermissionGrantComponent implements OnInit {
           .newDataPermission(
             { sysroleIds: sysrolePermissions, usernames: userPermissions },
             this.data.modelName,
-            this.data.id
+            typeof this.data.id === 'object'? JSON.stringify(this.data.id): this.data.id
           )
           .subscribe((res) => this.snack.open('授权成功！', '关闭'));
       }

@@ -25,6 +25,9 @@ interface ExampleFlatNode {
   styleUrls: ['./menu-tree.component.css'],
 })
 export class MenuTreeComponent implements OnInit {
+  isInit: boolean = true;
+  userInfo: any = JSON.parse(localStorage.getItem('userInfo')) ;
+
   selectedNode = '';
 
   dragging = false;
@@ -39,6 +42,7 @@ export class MenuTreeComponent implements OnInit {
       name: node.me.name,
       url: node.me.url,
       level: level,
+      icon: node.me.icon
     };
   };
 
@@ -56,7 +60,6 @@ export class MenuTreeComponent implements OnInit {
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  isInit: boolean = false;
   constructor(private menuService: MenuService, private http: HttpClient,
     private sysconfigService: SysconfigService) {}
   ngOnInit(): void {

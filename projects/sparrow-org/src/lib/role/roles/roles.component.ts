@@ -20,7 +20,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 @Component({
   selector: "lib-roles",
   templateUrl: "./roles.component.html",
-  styleUrls: ["./roles.component.css"],
+  styleUrls: ["./roles.component.css","../../org.css"],
 })
 export class RolesComponent implements OnInit {
   selectedItem: any;

@@ -13,7 +13,7 @@ import { OrggroupMemberAddComponent } from "../orggroup-member-add/orggroup-memb
 @Component({
   selector: "lib-orggroups",
   templateUrl: "./orggroups.component.html",
-  styleUrls: ["./orggroups.component.css"],
+  styleUrls: ["./orggroups.component.css",'../../org.css'],
 })
 export class OrggroupsComponent implements OnInit {
   constructor(

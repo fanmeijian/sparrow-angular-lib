@@ -1,7 +1,19 @@
-<button mat-flat-button color="primary" (click)="newCatalog()">新建分类</button>
-<button mat-flat-button color="primary" (click)="newDict()">新建字典</button>
-<mat-grid-list cols="4" rowHeight="100%">
-  <mat-grid-tile>
+<div class="spr-toolbar-container">
+  <button mat-raised-button color="primary" (click)="newCatalog()">
+    新建分类
+  </button>
+  <button mat-raised-button color="primary" (click)="newDict()">
+    新建字典
+  </button>
+</div>
+<div class="left-tree-right-content-container">
+  <div>
+    <div
+      style="width: 100%; color: grey; text-align: center"
+      *ngIf="dataSource.data.length == 0"
+    >
+      尚无数据<br />
+    </div>
     <mat-tree
       [dataSource]="dataSource"
       [treeControl]="treeControl"
@@ -16,7 +28,7 @@
               : 'tree-node-name'
           "
           (click)="selectedMenu = node"
-          >[{{ node.me.code }}]{{ node.me.name }}({{ node.childCount }})</span
+          >[{{ node.me.code }}]{{ node.me.name }}</span
         >
       </mat-tree-node>
       <mat-tree-node
@@ -40,7 +52,7 @@
               : 'tree-node-name'
           "
           (click)="selectedMenu = node"
-          >[{{ node.me.code }}]{{ node.me.name }}({{ node.childCount }})</span
+          >[{{ node.me.code }}]{{ node.me.name }}</span
         >
         <mat-progress-bar
           *ngIf="node.isLoading"
@@ -49,9 +61,9 @@
         ></mat-progress-bar>
       </mat-tree-node>
     </mat-tree>
-  </mat-grid-tile>
+  </div>
 
-  <mat-grid-tile colspan="3">
+  <div>
     <mat-card>
       <mat-card-title
         >{{ selectedMenu?.me?.name }} ({{
@@ -91,5 +103,5 @@
         </button>
       </mat-card-actions>
     </mat-card>
-  </mat-grid-tile>
-</mat-grid-list>
+  </div>
+</div>

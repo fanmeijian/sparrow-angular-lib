@@ -1,11 +1,13 @@
-<button
-  mat-flat-button
-  [routerLink]="['../sysconfig-design']"
-  routerLinkActive="router-link-active"
-  color="primary"
->
-  新增
-</button>
+<div class="spr-toolbar-container">
+  <button
+    mat-raised-button
+    [routerLink]="['../sysconfig-design']"
+    routerLinkActive="router-link-active"
+    color="primary"
+  >
+    新增
+  </button>
+</div>
 <div class="example-container">
   <div class="example-table-container">
     <mat-table [dataSource]="dataSource">
@@ -94,12 +96,15 @@
             <button mat-menu-item color="primary" (click)="fillConfig(element)">
               填写
             </button>
-            <button mat-menu-item  color="primary" [routerLink]="['../sysconfig-design',element.code]">
+            <button
+              mat-menu-item
+              color="primary"
+              [routerLink]="['../sysconfig-design', element.code]"
+            >
               编辑
             </button>
           </mat-menu>
           <div class="spr-actions">
-
             <!--
             <button mat-stroked-button color="warn" (click)="delete(element)">
               删除

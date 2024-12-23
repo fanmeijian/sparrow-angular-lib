@@ -1,5 +1,5 @@
 <div class="log" *ngFor="let item of logs">
-  {{item.createdBy}} - {{item.createdDate}} - {{item.id}}
+  {{item.createdBy}} - {{item.createdDate| date: 'yyyy-MM-dd HH:mm:ss'}} - {{item.id}}
   <div>{{item.className}}</div>
   <div>{{item.pkValue}}</div>
 </div>

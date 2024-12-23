@@ -21,7 +21,7 @@ import { EmployeeUserAddComponent } from "../employee-user-add/employee-user-add
 @Component({
   selector: "lib-employees",
   templateUrl: "./employees.component.html",
-  styleUrls: ["./employees.component.css"],
+  styleUrls: ["./employees.component.css",'../../org.css'],
 })
 export class EmployeesComponent implements OnInit {
   constructor(

@@ -40,6 +40,7 @@ import { FeedbackFormComponent } from "./feedback/feedback-form/feedback-form.co
 export const ADMIN_ROUTES: Route[] = [
   {
     path: "admin",
+    data: { title: '管理后台' },
     component: SparrowOrgComponent,
     children: [
       {

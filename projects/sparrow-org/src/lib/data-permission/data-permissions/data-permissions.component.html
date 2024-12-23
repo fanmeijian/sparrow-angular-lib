@@ -1,5 +1,7 @@
+<div class="spr-toolbar-container">
+  <button mat-raised-button routerLink="../data-permission-new" color="primary">添加</button>
+</div>
 <div class="example-table-container">
-  <button mat-button>添加</button>---
   <mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="seq">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
@@ -21,12 +23,19 @@
     <ng-container matColumnDef="remark">
       <mat-header-cell *matHeaderCellDef>备注</mat-header-cell>
       <mat-cell *matCellDef="let element; let index = index">
+        {{element.remark}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="permission">
+      <mat-header-cell *matHeaderCellDef>授权</mat-header-cell>
+      <mat-cell *matCellDef="let element; let index = index">
         <div
           style="display: flex; flex-direction: column; word-break: break-all"
         >
-          <div *ngFor="let item of element.sysroleIds">
-            {{ item.sysroleId }} - {{ item.permission }} -
-            {{ item.permissionType }}
+          <div class="permission" *ngFor="let item of element.dataPermissionSysroles">
+            {{ item.sysrole.name }}({{item.sysrole.code}}) - {{ item.id.permission }} -
+            <span [style]="item.id.permissionType==='DENY'?'color:red':''">{{ item.id.permissionType }}</span>
           </div>
 
           <div *ngFor="let item of element.groups">
@@ -34,9 +43,9 @@
             {{ item.permissionType }}
           </div>
 
-          <div *ngFor="let item of element.usernames">
-            {{ item.username }} - {{ item.permission }} -
-            {{ item.permissionType }}
+          <div class="permission" *ngFor="let item of element.dataPermissionUsernames">
+            {{ item.id.username }} - {{ item.id.permission }} -
+            <span [style]="item.id.permissionType==='DENY'?'color:red':''">{{ item.id.permissionType }}</span>
           </div>
         </div>
       </mat-cell>

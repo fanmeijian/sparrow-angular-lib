@@ -1,5 +1,8 @@
 <form [formGroup]="formGroup">
-  <button mat-button (click)="submit()">保存</button>
+  <div class="spr-toolbar-container">
+    <button mat-raised-button (click)="submit()" color="primary">保存</button>
+
+  </div>
   <mat-form-field appearance="fill">
     <mat-label>规则名称</mat-label>
     <input type="text" matInput formControlName="name" />
@@ -13,10 +16,6 @@
   <div class="editor-container" #editorContainer>
     规则内容
   </div>
-
-
-
-
 </form>
 
 
