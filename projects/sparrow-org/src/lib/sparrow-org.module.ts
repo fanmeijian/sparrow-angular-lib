@@ -118,6 +118,8 @@ import { ErrorDialogComponent } from "./common/error-dialog/error-dialog.compone
 import { LoadingDialogComponent } from "./common/loading-dialog/loading-dialog.component";
 import { ErrorDialogService, GlobalErrorHandlerService, LoadingDialogService } from "../projects";
 import { HttpClient } from "@angular/common/http";
+import { DashboardComponent } from './org/dashboard/dashboard.component';
+import { SolrSearchResultComponent } from './solr/solr-search-result/solr-search-result.component';
 // import { EmployeeRouteComponent } from './employee/employee-route/employee-route.component';
 
 @NgModule({
@@ -213,7 +215,9 @@ import { HttpClient } from "@angular/common/http";
     ReportExportToolbarComponent,
     BreadcrumpComponent,
     ErrorDialogComponent,
-    LoadingDialogComponent
+    LoadingDialogComponent,
+    DashboardComponent,
+    SolrSearchResultComponent
   ],
   imports: [BrowserModule, RouterModule, AngularMaterialModule, OrgApiModule, OrgRoutingModule, FormioModule, UploadFileModule,CKEditorModule],
   exports: [

@@ -12,7 +12,7 @@
   (applyFilter)="applyFilter()"
 ></lib-search-filter>
 <div class="spr-table-container">
-  <mat-table [dataSource]="dataSource">
+  <mat-table [dataSource]="dataSource" matSort matSortActive="name" matSortDisableClear matSortDirection="desc">
     <ng-container matColumnDef="seq" sticky>
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let element; let index = index">
@@ -21,7 +21,7 @@
     </ng-container>
 
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef>名称</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>名称</mat-header-cell>
       <mat-cell *matCellDef="let element"
         ><div style="display: flex; flex-direction: column">
           <span>{{ element.name }}</span

@@ -37,12 +37,19 @@ import { NoticeListComponent } from "./notice/notice-list/notice-list.component"
 import { NoticeFormComponent } from "./notice/notice-form/notice-form.component";
 import { FeedbackListComponent } from "./feedback/feedback-list/feedback-list.component";
 import { FeedbackFormComponent } from "./feedback/feedback-form/feedback-form.component";
+import { DashboardComponent } from "./org/dashboard/dashboard.component";
+import { SolrSearchResultComponent } from "./solr/solr-search-result/solr-search-result.component";
 export const ADMIN_ROUTES: Route[] = [
   {
     path: "admin",
-    data: { title: '管理后台' },
     component: SparrowOrgComponent,
     children: [
+      {
+        path: "search",
+        data: { title: "搜索" },
+        component: SolrSearchResultComponent
+      }
+      ,
       {
         path: 'permission',
         data: { title: '权限管理' },
@@ -197,6 +204,11 @@ export const ADMIN_ROUTES: Route[] = [
         data: { title: '组织管理' },
         component: SparrowOrgComponent,
         children: [
+          {
+            path: 'dashboard',
+            data: { title: '组织树' },
+            component: DashboardComponent,
+          },
           {
             path: 'organizations',
             data: { title: '机构列表' },

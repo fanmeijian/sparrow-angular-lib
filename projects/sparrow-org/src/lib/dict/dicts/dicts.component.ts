@@ -71,7 +71,8 @@ export class DictsComponent implements OnInit {
 
   getLevel = (node: DynamicFlatNode) => node.level;
 
-  isExpandable = (node: DynamicFlatNode) => node.expandable;
+  isExpandable = (node: DynamicFlatNode) => (node.type ==='DICT' && node.childCount > 0)||node.type ==='CATALOG';
 
-  hasChild = (_: number, _nodeData: DynamicFlatNode) => _nodeData.expandable;
+  hasChild = (_: number, _nodeData: DynamicFlatNode) => (_nodeData.type ==='DICT' && _nodeData.childCount > 0)||_nodeData.type ==='CATALOG';
+
 }

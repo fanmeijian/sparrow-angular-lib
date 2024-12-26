@@ -19,7 +19,8 @@ export class DynamicFlatNode {
     public me: DictCatalog| Dict,
     public level = 1,
     public expandable = false,
-    public isLoading = false
+    public isLoading = false,
+    public childCount= 0
   ) {}
 }
 
@@ -123,7 +124,7 @@ export class DynamicDataSource implements DataSource<DynamicFlatNode> {
       // );
       // this.data.splice(index + 1, 0, ...nodes);
 
-      children.subscribe((res) => {
+      children.subscribe((res:any) => {
         const nodes = res.map(
           (name) =>
             new DynamicFlatNode(
@@ -132,7 +133,9 @@ export class DynamicDataSource implements DataSource<DynamicFlatNode> {
               'DICT',
               name,
               node.level + 1,
-              this._database.isExpandable(name.id!)
+              this._database.isExpandable(name.id!),
+              false,
+              name.childCount
             )
         );
         this.data.splice(index + 1, 0, ...nodes);

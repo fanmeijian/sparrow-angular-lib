@@ -57,7 +57,7 @@
         *matTreeNodeDef="let node; when: hasNoContent"
         matTreeNodePadding
       >
-        <button mat-icon-button disabled></button>
+        <!-- <button mat-icon-button disabled></button> -->
       </mat-tree-node>
 
       <mat-tree-node
@@ -98,19 +98,23 @@
   <div>
     <span *ngIf="!selectedMenu">请选择菜单</span>
     <mat-card *ngIf="selectedMenu">
-      <mat-card-title
-        >{{ selectedMenu?.me.name }} ({{
-          selectedMenu?.me.code
-        }})</mat-card-title
-      >
+      <mat-card-subtitle>
+        {{ selectedMenu?.me.name }} ({{ selectedMenu?.me.code }})
+      </mat-card-subtitle>
       <mat-card-content>
         <div>
           <mat-tab-group>
             <mat-tab label="基本信息">
               <div class="twocolumn-box">
-                <span>url</span><span>{{ selectedMenu?.me.url }}</span>
-                <span>图标</span><span>{{ selectedMenu?.me.icon }}</span>
-                <span>上级</span><span>{{ selectedMenu?.me.parentId }}</span>
+                <div>
+                  <span>url</span><span>{{ selectedMenu?.me.url }}</span>
+                </div>
+                <div>
+                  <span>图标</span><span>{{ selectedMenu?.me.icon }}</span>
+                </div>
+                <div>
+                  <span>上级</span><span>{{ selectedMenu?.me.parentId }}</span>
+                </div>
               </div>
               <lib-base-op-log-column
                 [element]="selectedMenu?.me"

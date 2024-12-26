@@ -13,8 +13,9 @@
   gap: 10px;
   >:nth-child(1){
     width: 300px;
-    overflow: scroll;
+    overflow-y: scroll;
     height: calc(100vh - 120px);
+    background-color: white
   };
   >:nth-child(2){
     width: calc(100% - 310px);
@@ -51,3 +52,21 @@
     border-radius: 5px;
   }
 }
+
+
+.tree-node-name,.tree-node-name-selected  {
+  margin: 0px 0px 0px 5px;
+  cursor: pointer;
+}
+
+.tree-node-name:hover,.tree-node-name-selected {
+  color: #3f51b5;
+}
+
+/**
+  * 树形的与checkbox垂直对齐
+  */
+::ng-deep label{
+  margin-bottom: 0px !important;
+}
+

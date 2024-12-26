@@ -2,7 +2,7 @@
   <button class="button" mat-raised-button color="primary" (click)="new()">
     新增
   </button>
-  <button
+  <!-- <button
     class="button"
     mat-raised-button
     color="warn"
@@ -10,7 +10,7 @@
     [disabled]="checklistSelection.selected.length === 0"
   >
     删除
-  </button>
+  </button> -->
   <!-- <button
     class="button"
     mat-raised-button
@@ -41,26 +41,26 @@
         matTreeNodeToggle
         matTreeNodePadding
       >
-        <!-- <button mat-icon-button disabled></button> -->
-         <span style="width: 20px;"></span>
-        <div
-          style="display: flex; flex-direction: row; justify-content: center"
+        <!-- <mat-checkbox
+      class="checklist-leaf-node"
+      [checked]="checklistSelection.isSelected(node)"
+      (change)="todoLeafItemSelectionToggle(node)"
+    ></mat-checkbox> -->
+        <span
+          [class]="
+            node.me.id === selectedMenu?.me?.id
+              ? 'tree-node-name-selected'
+              : 'tree-node-name'
+          "
+          (click)="onMenuClick(node)"
+          >[{{ node.me.code }}]{{ node.me.name }}</span
         >
-          <mat-checkbox
-            class="checklist-leaf-node"
-            [checked]="checklistSelection.isSelected(node)"
-            (change)="todoLeafItemSelectionToggle(node)"
-          ></mat-checkbox>
-          <span
-            [class]="
-              node.me.id === selectedMenu?.me?.id
-                ? 'tree-node-name-selected'
-                : 'tree-node-name'
-            "
-            (click)="onMenuClick(node)"
-            >[{{ node.me.code }}]{{ node.me.name }}</span
-          >
-        </div>
+        <!-- <button mat-icon-button disabled></button> -->
+        <!-- <div
+          style="display: flex; flex-direction: row; justify-content: center; align-items: center;"
+        >
+
+        </div> -->
       </mat-tree-node>
 
       <mat-tree-node
@@ -74,58 +74,63 @@
         *matTreeNodeDef="let node; when: hasChild"
         matTreeNodePadding
       >
-        <div style="display: flex; flex-direction: row; align-items: center">
-          <button
-            mat-icon-button
-            matTreeNodeToggle
-            [attr.aria-label]="'Toggle ' + node.me.name"
-          >
-            <mat-icon class="mat-icon-rtl-mirror">
-              {{
-                treeControl.isExpanded(node) ? "expand_more" : "chevron_right"
-              }}
-            </mat-icon>
-          </button>
-          <mat-checkbox
+        <button
+          mat-icon-button
+          matTreeNodeToggle
+          [attr.aria-label]="'Toggle ' + node.me.name"
+        >
+          <mat-icon class="mat-icon-rtl-mirror">
+            {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
+          </mat-icon>
+        </button>
+        <!-- <mat-checkbox
             [checked]="descendantsAllSelected(node)"
             [indeterminate]="descendantsPartiallySelected(node)"
             (change)="todoItemSelectionToggle(node)"
-          ></mat-checkbox>
-          <span
-            [class]="
-              node.me.id === selectedMenu?.me?.id
-                ? 'tree-node-name-selected'
-                : 'tree-node-name'
-            "
-            (click)="onMenuClick(node)"
-            >[{{ node.me.code }}]{{ node.me.name }}({{ node.childCount }})</span
-          >
-        </div>
+          ></mat-checkbox> -->
+        <span
+          [class]="
+            node.me.id === selectedMenu?.me?.id
+              ? 'tree-node-name-selected'
+              : 'tree-node-name'
+          "
+          (click)="onMenuClick(node)"
+          >[{{ node.me.code }}]{{ node.me.name }}({{ node.childCount }})</span
+        >
+        <!-- <div style="display: flex; flex-direction: row; align-items: center">
+
+        </div> -->
       </mat-tree-node>
     </mat-tree>
   </div>
 
   <div>
     <mat-card *ngIf="selectedMenu">
-      <mat-card-title
-        >{{ selectedMenu?.me?.name }} ({{
-          selectedMenu?.me?.code
-        }})</mat-card-title
-      >
+      <mat-card-subtitle
+        >{{ selectedMenu?.me?.name }} ({{ selectedMenu?.me?.code }})
+      </mat-card-subtitle>
       <mat-card-content>
         <div>
           <mat-tab-group>
             <mat-tab label="基本信息">
               <div class="twocolumn-box">
-                <span>名称:</span><span>{{ selectedMenu?.me?.name }}</span>
-                <span>代码:</span><span>{{ selectedMenu?.me?.code }}</span>
-                <span>类型:</span><span>{{ selectedMenu?.me?.type }}</span>
-                <span>上级: </span>
-                <span>
-                  <ng-container *ngFor="let item of selectedMenu?.parents"
-                    >{{ item.name }},</ng-container
-                  ></span
-                >
+                <div>
+                  <span>名称:</span><span>{{ selectedMenu?.me?.name }}</span>
+                </div>
+                <div>
+                  <span>代码:</span><span>{{ selectedMenu?.me?.code }}</span>
+                </div>
+                <div>
+                  <span>类型:</span><span>{{ selectedMenu?.me?.type }}</span>
+                </div>
+                <div>
+                  <span>上级: </span>
+                  <span>
+                    <ng-container *ngFor="let item of selectedMenu?.parents"
+                      >{{ item.name }},</ng-container
+                    ></span
+                  >
+                </div>
               </div>
               <!-- <lib-base-op-log-column
                 [element]="selectedMenu?.me"

@@ -21,7 +21,7 @@
       class="mat-tree"
     >
       <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
-        <button mat-icon-button disabled></button>
+        <!-- <button mat-icon-button disabled></button> -->
         <span
           [class]="
             node.item.type === 'ROLE'
@@ -73,29 +73,40 @@
 
   <div>
     <mat-card *ngIf="selectedItem">
-      <mat-card-title
-        >{{ selectedItem?.name }} ({{ selectedItem?.code }})</mat-card-title
-      >
+      <mat-card-subtitle
+        >{{ selectedItem?.name }} ({{ selectedItem?.code }})
+      </mat-card-subtitle>
       <mat-card-content>
         <div>
           <mat-tab-group>
             <mat-tab label="基本信息">
               <div class="twocolumn-box">
-                <div><span>名称:</span><span>{{ selectedItem?.name }}</span></div>
-                <div><span>代码:</span><span>{{ selectedItem?.code }}</span></div>
-                <div><span>类型:</span><span>{{ selectedItem?.type }}</span></div>
-                <div><span>组织: </span>
+                <div>
+                  <span>名称:</span><span>{{ selectedItem?.name }}</span>
+                </div>
+                <div>
+                  <span>代码:</span><span>{{ selectedItem?.code }}</span>
+                </div>
+                <div>
+                  <span>类型:</span><span>{{ selectedItem?.type }}</span>
+                </div>
+                <div>
+                  <span>组织: </span>
                   <span>
-                    <ng-container *ngFor="let item of selectedItem?.organizations"
+                    <ng-container
+                      *ngFor="let item of selectedItem?.organizations"
                       >{{ item.name }},</ng-container
                     ></span
-                  ></div>
-                <div><span>上级: </span>
+                  >
+                </div>
+                <div>
+                  <span>上级: </span>
                   <span>
                     <ng-container *ngFor="let item of selectedItem?.parents"
                       >{{ item.name }},</ng-container
                     ></span
-                  ></div>
+                  >
+                </div>
               </div>
             </mat-tab>
             <mat-tab label="审计日志">

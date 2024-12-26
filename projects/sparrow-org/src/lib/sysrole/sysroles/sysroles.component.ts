@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { SysroleService } from '@sparrowmini/org-api';
@@ -10,13 +10,15 @@ import { DataPermissionGrantComponent } from '../../data-permission/data-permiss
 import { HttpClient } from '@angular/common/http';
 import { ReportTemplateCreateComponent } from '../../report/report-template-create/report-template-create.component';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MatSort, SortDirection } from '@angular/material/sort';
 
 @Component({
   selector: 'lib-sysroles',
   templateUrl: './sysroles.component.html',
   styleUrls: ['./sysroles.component.css'],
 })
-export class SysrolesComponent implements OnInit {
+export class SysrolesComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatSort) sort: MatSort;
   users: any[] = [];
   dataSource = new MatTableDataSource<any>();
   pageable = {
@@ -33,12 +35,15 @@ export class SysrolesComponent implements OnInit {
     private dialog: MatDialog,
     private snack: MatSnackBar,
     private http: HttpClient,
-    private sanitizer:DomSanitizer
-  ) {}
+    private sanitizer: DomSanitizer
+  ) { }
+  ngAfterViewInit(): void {
+    this.onPageChange(this.pageable);
+  }
 
   filters: any[] = [];
   ngOnInit(): void {
-    this.onPageChange(this.pageable);
+
   }
 
   applyFilter() {
@@ -71,6 +76,7 @@ export class SysrolesComponent implements OnInit {
       )
       .subscribe((res) => {
         this.dataSource = new MatTableDataSource<any>(res);
+        this.dataSource.sort = this.sort;
       });
   }
 
