@@ -1,2 +1,14 @@
-<h3>表单名称：{{formName}}</h3>
-<formio #formIo [form]="form" [options]="formOptions"  [viewOnly]="true" [readOnly]="true" [submission]='formData'></formio>
+<div class="spr-toolbar-container">
+  <button mat-raised-button (click)="window.history.back()" color="primary">
+    返回
+  </button>
+</div>
+<!-- <h3>表单名称：{{formName}}</h3> -->
+<formio
+  #formIo
+  [form]="form"
+  [options]="formOptions"
+  [viewOnly]="true"
+  [readOnly]="true"
+  [submission]="formData"
+></formio>

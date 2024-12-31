@@ -57,3 +57,5 @@ import { LoadingDialogService } from './lib/services/loading-dialog.service';
 import { ErrorDialogService } from './lib/services/error-dialog.service';
 export * from './lib/services/error-catching-interceptor'
 import { ErrorCatchingInterceptor } from './lib/services/error-catching-interceptor';
+import { AngularMaterialModule } from './lib/angular-material.module';
+export * from './lib/angular-material.module'

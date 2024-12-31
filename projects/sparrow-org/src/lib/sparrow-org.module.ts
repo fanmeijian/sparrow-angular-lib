@@ -239,6 +239,7 @@ import { SolrSearchResultComponent } from './solr/solr-search-result/solr-search
     CkeditorControlComponent,
     ReportExportToolbarComponent,
     BreadcrumpComponent,
+    AngularMaterialModule
   ],
   // providers: [
   //   GlobalErrorHandlerService,

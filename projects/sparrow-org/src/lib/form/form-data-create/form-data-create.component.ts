@@ -1,6 +1,8 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, Optional, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormService } from '@sparrowmini/org-api';
+import { BASE_PATH, FormService } from '@sparrowmini/org-api';
+import { CosFileService } from '../../services/cos-file.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'lib-form-data-create',
@@ -12,36 +14,39 @@ export class FormDataCreateComponent implements OnInit {
   formId: string='';
 
   formOptions = {
-    // fileService: this.formioFileService,
+    fileService: this.formioFileService,
   }
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private formService: FormService,
-    // private formioFileService: CosFileService,
+    private formioFileService: CosFileService,
+    private http: HttpClient,
+    @Optional() @Inject(BASE_PATH) private basePath: string,
   ) { }
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params:any)=>{
       if(params.id){
-        this.formId = params.id
-        this.formService.formData(this.formId).subscribe(res=>{
+        this.formService.formData(params.id).subscribe(res=>{
           this.form = JSON.parse(res.form?.form!)
+          this.formId = res.formId
         })
       }
       if(params.formId){
-        this.formId = params.formId
-        this.formService.dataForm(this.formId).subscribe(res=>{
+        this.formService.dataForm(params.formId).subscribe(res=>{
           this.form=JSON.parse(res.form!)
+          this.formId = res.id
         })
       }
     })
   }
 
   onSubmit(e: any){
-    console.log(this.formId,e.data)
+    console.log("e.data",e.data)
     this.formService.saveFormData(e.data,this.formId).subscribe(
       res=>{
+        this.http.post(this.basePath+'/contracts/'+res.data+'/attachments/index',e.data).subscribe()
         window.history.back()
       }
     )

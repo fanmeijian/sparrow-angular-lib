@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { FormService } from "@sparrowmini/org-api";
+import { CosFileService } from "../../services/cos-file.service";
 
 @Component({
   selector: "lib-form-data-view",
@@ -8,17 +9,18 @@ import { FormService } from "@sparrowmini/org-api";
   styleUrls: ["./form-data-view.component.css"],
 })
 export class FormDataViewComponent implements OnInit {
+  window=window
   form: any;
   formData: any;
   formName: string = "";
   formOptions = {
-    // fileService: this.formioFileService,
+    fileService: this.formioFileService,
   }
 
   constructor(
     private formService: FormService,
     private activatedRoute: ActivatedRoute,
-    // private formioFileService: CosFileService,
+    private formioFileService: CosFileService,
   ) {}
 
   ngOnInit(): void {

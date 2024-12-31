@@ -7,3 +7,6 @@
 div{
   word-break: break-all;
 }
+a{
+  cursor: pointer;
+}
