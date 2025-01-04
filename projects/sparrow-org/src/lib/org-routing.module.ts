@@ -39,6 +39,12 @@ import { FeedbackListComponent } from "./feedback/feedback-list/feedback-list.co
 import { FeedbackFormComponent } from "./feedback/feedback-form/feedback-form.component";
 import { DashboardComponent } from "./org/dashboard/dashboard.component";
 import { SolrSearchResultComponent } from "./solr/solr-search-result/solr-search-result.component";
+import { ArticleListComponent } from "./article/article-list/article-list.component";
+import { ArticleFormComponent } from "./article/article-form/article-form.component";
+import { ArticleCatalogComponent } from "./article/article-catalog/article-catalog.component";
+import { TaskResolveService } from "./article/article-resolver";
+import { CommonModule } from "@angular/common";
+import { ArticleRouteComponent } from "./article/article-route/article-route.component";
 export const ADMIN_ROUTES: Route[] = [
   {
     path: "admin",
@@ -48,8 +54,36 @@ export const ADMIN_ROUTES: Route[] = [
         path: "search",
         data: { title: "搜索" },
         component: SolrSearchResultComponent
-      }
-      ,
+      },
+      {
+        path: "article-catalog",
+        data: { title: "文章分类" },
+        component: ArticleCatalogComponent,
+        children: [
+          {
+            path: ":id",
+            data: { title: "文章" },
+            component: ArticleRouteComponent,
+            children: [
+              {
+                path: "",
+                data: { title: "列表" },
+                component: ArticleListComponent,
+              },
+              {
+                path: "article-form/:id",
+                data: { title: "详情" },
+                component: ArticleFormComponent
+              },
+              {
+                path: "article-form",
+                data: { title: "添加文章" },
+                component: ArticleFormComponent
+              },
+            ]
+          }
+        ]
+      },
       {
         path: 'permission',
         data: { title: '权限管理' },

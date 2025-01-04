@@ -67,8 +67,8 @@ export class MenuTreeComponent implements OnInit {
       this.dataSource.data = res.children!;
     });
     this.sysconfigService.getInitConfigs().subscribe((res: any) => {
-      if (res.totalElements > 0) {
-        this.isInit = true;
+      if (res.totalElements <= 0) {
+        this.isInit = false;
       }
     });
   }

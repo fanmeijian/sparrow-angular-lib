@@ -3,6 +3,7 @@ import { DecoupledEditor, type EditorConfig, } from 'ckeditor5';
 import { ckeditorConfig } from '../../../model/constant';
 import { FormGroup } from '@angular/forms';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'lib-ckeditor-control',
@@ -28,6 +29,7 @@ export class CkeditorControlComponent implements OnInit, AfterViewInit {
 
   constructor(
     private changeDetector: ChangeDetectorRef,
+    public santizer: DomSanitizer,
   ) { }
   ngAfterViewInit(): void {
     this.isLayoutReady = true;
@@ -35,6 +37,7 @@ export class CkeditorControlComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    console.log(this.formGroup)
   }
 
   public onReady(editor: DecoupledEditor): void {
@@ -45,11 +48,20 @@ export class CkeditorControlComponent implements OnInit, AfterViewInit {
       child.remove()
     );
 
+
     this.editorToolbar.nativeElement.appendChild(
       editor.ui.view.toolbar.element!
     );
     this.editorMenuBar.nativeElement.appendChild(
       editor.ui.view.menuBarView.element!
     );
+
+    editor.editing.view.change((writer) => {
+      writer.setStyle(
+        'height',
+        '200px',
+        editor.editing.view.document.getRoot()
+      );
+    });
   }
 }

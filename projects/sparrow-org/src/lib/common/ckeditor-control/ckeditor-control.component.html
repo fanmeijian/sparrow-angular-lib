@@ -1,11 +1,8 @@
-<ng-container [formGroup]="formGroup">
-  <!-- <ckeditor
-    [editor]="Editor"
-    [config]="config"
-    (ready)="onReady($event)"
-    *ngIf="isLayoutReady"
-    [formControlName]="name"
-  ></ckeditor> -->
+<div
+  *ngIf="formGroup.disabled"
+  [innerHTML]="santizer.bypassSecurityTrustHtml(formGroup.controls[name].value)"
+></div>
+<ng-container *ngIf="formGroup.enabled" [formGroup]="formGroup">
   <div class="editor-container__menu-bar" #editorMenuBarElement></div>
   <div class="editor-container__toolbar" #editorToolbarElement></div>
   <div

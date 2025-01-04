@@ -2,6 +2,15 @@
   <button mat-raised-button (click)="window.history.back()" color="primary">
     返回
   </button>
+  <button
+    mat-flat-button
+    libPgelPermission="btn:contract:new"
+    color="primary"
+    routerLink="/form-data-create"
+    [queryParams]="{ formId: sparrowFormData.formId, id: sparrowFormData.id }"
+  >
+    编辑
+  </button>
 </div>
 <!-- <h3>表单名称：{{formName}}</h3> -->
 <formio

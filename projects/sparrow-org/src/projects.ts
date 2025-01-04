@@ -59,3 +59,6 @@ export * from './lib/services/error-catching-interceptor'
 import { ErrorCatchingInterceptor } from './lib/services/error-catching-interceptor';
 import { AngularMaterialModule } from './lib/angular-material.module';
 export * from './lib/angular-material.module'
+
+import { DynamicMenuComponent } from './lib/common/dynamic-menu/dynamic-menu.component';
+export * from './lib/common/dynamic-menu/dynamic-menu.component';

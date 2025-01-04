@@ -14,7 +14,7 @@
   >:nth-child(1){
     width: 300px;
     overflow-y: scroll;
-    height: calc(100vh - 120px);
+    /* height: calc(100vh - 120px); */
     background-color: white
   };
   >:nth-child(2){
@@ -36,6 +36,7 @@
     >:nth-child(2){
       width: 100% !important;
       max-height: 300px;
+      overflow-y: scroll;
     }
   }
 

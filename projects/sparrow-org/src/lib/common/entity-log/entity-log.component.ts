@@ -34,6 +34,20 @@ export class EntityLogComponent implements OnInit, OnChanges {
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
     // console.log('changes', changes);
+
+
+  }
+
+  ngOnInit(): void {}
+
+  diffEntity(oldData:any|undefined, newData:any|undefined){
+    const diffs = diff(oldData, newData);
+    return diffs
+  }
+
+
+  @ViewChild("dialogTempl") dialogTempl!: TemplateRef<any>
+  openDialog(){
     if(this.modelId){
       this.auditLogService
       .logs(this.modelId, this.id,0,10000)
@@ -57,19 +71,6 @@ export class EntityLogComponent implements OnInit, OnChanges {
         this.opLogs?.push(...res);
       });
     }
-
-  }
-
-  ngOnInit(): void {}
-
-  diffEntity(oldData:any|undefined, newData:any|undefined){
-    const diffs = diff(oldData, newData);
-    return diffs
-  }
-
-
-  @ViewChild("dialogTempl") dialogTempl!: TemplateRef<any>
-  openDialog(){
     this.dialog.open(this.dialogTempl,{width:'80%'})
   }
 }

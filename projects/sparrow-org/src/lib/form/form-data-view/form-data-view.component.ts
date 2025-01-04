@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { FormService } from "@sparrowmini/org-api";
+import { FormService, SparrowFormData } from "@sparrowmini/org-api";
 import { CosFileService } from "../../services/cos-file.service";
 
 @Component({
@@ -10,6 +10,7 @@ import { CosFileService } from "../../services/cos-file.service";
 })
 export class FormDataViewComponent implements OnInit {
   window=window
+  sparrowFormData: SparrowFormData = {}
   form: any;
   formData: any;
   formName: string = "";
@@ -27,6 +28,7 @@ export class FormDataViewComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params: any) => {
       if (params.id) {
         this.formService.formData(params.id).subscribe((res) => {
+          this.sparrowFormData = res
           this.form = JSON.parse(res.form?.form!);
           this.formData = { data: JSON.parse(res.data!) };
           this.formName = res.form?.name!;
