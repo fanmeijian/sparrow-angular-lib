@@ -1,6 +1,6 @@
-import { ModuleWithProviders, NgModule, Optional, SkipSelf } from "@angular/core";
+import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { ApiModule, Configuration, ApiModule as OrgApiModule } from "@sparrowmini/org-api";
+import { ApiModule as OrgApiModule } from "@sparrowmini/org-api";
 import { EmployeeCreateComponent } from "./employee/employee-create/employee-create.component";
 import { EmployeeLevelAddComponent } from "./employee/employee-level-add/employee-level-add.component";
 import { EmployeeRoleAddComponent } from "./employee/employee-role-add/employee-role-add.component";
@@ -23,7 +23,6 @@ import { RolesComponent } from "./role/roles/roles.component";
 import { SparrowOrgComponent } from "./sparrow-org.component";
 
 import { CommonModule } from "@angular/common";
-import { HttpClient } from "@angular/common/http";
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FormioModule } from "@formio/angular";
 import { UploadFileModule } from "@sparrowmini/tx-upload-file";
@@ -31,6 +30,7 @@ import { AngularMaterialModule } from "./angular-material.module";
 import { ArticleCatalogComponent } from './article/article-catalog/article-catalog.component';
 import { ArticleFormComponent } from './article/article-form/article-form.component';
 import { ArticleListComponent } from './article/article-list/article-list.component';
+import { ArticleRouteComponent } from './article/article-route/article-route.component';
 import { CommentFormComponent } from "./comment/comment-form/comment-form.component";
 import { BaseOpLogColumnComponent } from './common/base-op-log-column/base-op-log-column.component';
 import { BreadcrumpComponent } from './common/breadcrump/breadcrump.component';
@@ -63,6 +63,7 @@ import { FormDataListComponent } from "./form/form-data-list/form-data-list.comp
 import { FormDataViewComponent } from "./form/form-data-view/form-data-view.component";
 import { FormListComponent } from "./form/form-list/form-list.component";
 import { FormPreviewComponent } from "./form/form-preview/form-preview.component";
+import { ForumListComponent } from './forum/forum-list/forum-list.component';
 import { DeleteLogComponent } from './log/delete-log/delete-log.component';
 import { EditLogComponent } from './log/edit-log/edit-log.component';
 import { LoginLogComponent } from './log/login-log/login-log.component';
@@ -109,7 +110,8 @@ import { UserCreateComponent } from './user/user-create/user-create.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { UserPasswordResetComponent } from './user/user-password-reset/user-password-reset.component';
 import { UserSelectionComponent } from './user/user-selection/user-selection.component';
-import { ArticleRouteComponent } from './article/article-route/article-route.component';
+import { ForumCatalogComponent } from './forum/forum-catalog/forum-catalog.component';
+import { ForumFormComponent } from './forum/forum-form/forum-form.component';
 // import { EmployeeRouteComponent } from './employee/employee-route/employee-route.component';
 
 @NgModule({
@@ -214,7 +216,10 @@ import { ArticleRouteComponent } from './article/article-route/article-route.com
     DynamicMenuComponent,
     ArticleFormComponent,
     ArticleCatalogComponent,
-    ArticleRouteComponent
+    ArticleRouteComponent,
+    ForumListComponent,
+    ForumCatalogComponent,
+    ForumFormComponent
   ],
   imports: [CommonModule, RouterModule, AngularMaterialModule, OrgRoutingModule, FormioModule, UploadFileModule,CKEditorModule],
   exports: [

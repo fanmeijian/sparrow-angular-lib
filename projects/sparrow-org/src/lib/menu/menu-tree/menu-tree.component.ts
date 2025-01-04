@@ -26,7 +26,7 @@ interface ExampleFlatNode {
 })
 export class MenuTreeComponent implements OnInit {
   isInit: boolean = true;
-  userInfo: any = JSON.parse(localStorage.getItem('userInfo')) ;
+  userInfo: any = JSON.parse(localStorage.getItem('userInfo'));
 
   selectedNode = '';
 
@@ -61,7 +61,7 @@ export class MenuTreeComponent implements OnInit {
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   constructor(private menuService: MenuService, private http: HttpClient,
-    private sysconfigService: SysconfigService) {}
+    private sysconfigService: SysconfigService) { }
   ngOnInit(): void {
     this.menuService.myMenu().subscribe((res) => {
       this.dataSource.data = res.children!;
@@ -74,7 +74,10 @@ export class MenuTreeComponent implements OnInit {
   }
 
   init() {
-    this.sysconfigService.initSystem({}).subscribe();
+    this.sysconfigService.initSystem({}).subscribe(() => {
+      this.ngOnInit()
+      this.isInit = true
+    });
   }
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;

@@ -1,55 +1,65 @@
 import { NgModule } from "@angular/core";
-import { Route, RouterModule, Routes } from "@angular/router";
-import { SparrowOrgComponent } from "./sparrow-org.component";
-import { SysconfigListComponent } from "./sysconfig/sysconfig-list/sysconfig-list.component";
+import { Route, RouterModule } from "@angular/router";
+import { ArticleCatalogComponent } from "./article/article-catalog/article-catalog.component";
+import { ArticleFormComponent } from "./article/article-form/article-form.component";
+import { ArticleListComponent } from "./article/article-list/article-list.component";
+import { ArticleRouteComponent } from "./article/article-route/article-route.component";
 import { MenuComponent } from "./components/menu/menu.component";
-import { SysrolesComponent } from "./sysrole/sysroles/sysroles.component";
-import { ScopesComponent } from "./scope/scopes/scopes.component";
-import { SprmodesComponent } from "./sprmodel/sprmodes/sprmodes.component";
-import { PemgroupsComponent } from "./pemgroup/pemgroups/pemgroups.component";
-import { DataPermissionsComponent } from "./data-permission/data-permissions/data-permissions.component";
 import { DataPermissionNewComponent } from "./data-permission/data-permission-new/data-permission-new.component";
-import { UserListComponent } from "./user/user-list/user-list.component";
+import { DataPermissionsComponent } from "./data-permission/data-permissions/data-permissions.component";
+import { DictsComponent } from "./dict/dicts/dicts.component";
+import { EmployeesComponent } from "./employee/employees/employees.component";
+import { FeedbackFormComponent } from "./feedback/feedback-form/feedback-form.component";
+import { FeedbackListComponent } from "./feedback/feedback-list/feedback-list.component";
 import { FilesComponent } from "./file/files/files.component";
-import { PageElementsComponent } from "./page-element/page-elements/page-elements.component";
-import { RequestLogComponent } from "./log/request-log/request-log.component";
+import { FormCreateComponent } from "./form/form-create/form-create.component";
+import { FormDataCreateComponent } from "./form/form-data-create/form-data-create.component";
+import { FormDataListComponent } from "./form/form-data-list/form-data-list.component";
+import { FormDataViewComponent } from "./form/form-data-view/form-data-view.component";
+import { FormListComponent } from "./form/form-list/form-list.component";
+import { LevelsComponent } from "./level/levels/levels.component";
 import { DeleteLogComponent } from "./log/delete-log/delete-log.component";
 import { EditLogComponent } from "./log/edit-log/edit-log.component";
-import { DictsComponent } from "./dict/dicts/dicts.component";
-import { OrgsComponent } from "./org/orgs/orgs.component";
-import { RolesComponent } from "./role/roles/roles.component";
-import { LevelsComponent } from "./level/levels/levels.component";
-import { OrggroupsComponent } from "./orggroup/orggroups/orggroups.component";
-import { EmployeesComponent } from "./employee/employees/employees.component";
-import { ViewReportComponent } from "./report/view-report/view-report.component";
-import { ReportTemplatesComponent } from "./report/report-templates/report-templates.component";
-import { SysconfigDesignComponent } from "./sysconfig/sysconfig-design/sysconfig-design.component";
-import { MyFormListComponent } from "./my/my-form-list/my-form-list.component";
+import { RequestLogComponent } from "./log/request-log/request-log.component";
 import { MyFormDataListComponent } from "./my/my-form-data-list/my-form-data-list.component";
-import { FormDataViewComponent } from "./form/form-data-view/form-data-view.component";
-import { FormDataCreateComponent } from "./form/form-data-create/form-data-create.component";
-import { RuleTemplatesComponent } from "./rule/rule-templates/rule-templates.component";
-import { RuleCreateComponent } from "./rule/rule-create/rule-create.component";
-import { FormDataListComponent } from "./form/form-data-list/form-data-list.component";
-import { FormListComponent } from "./form/form-list/form-list.component";
-import { FormCreateComponent } from "./form/form-create/form-create.component";
-import { NoticeListComponent } from "./notice/notice-list/notice-list.component";
+import { MyFormListComponent } from "./my/my-form-list/my-form-list.component";
 import { NoticeFormComponent } from "./notice/notice-form/notice-form.component";
-import { FeedbackListComponent } from "./feedback/feedback-list/feedback-list.component";
-import { FeedbackFormComponent } from "./feedback/feedback-form/feedback-form.component";
+import { NoticeListComponent } from "./notice/notice-list/notice-list.component";
 import { DashboardComponent } from "./org/dashboard/dashboard.component";
+import { OrgsComponent } from "./org/orgs/orgs.component";
+import { OrggroupsComponent } from "./orggroup/orggroups/orggroups.component";
+import { PageElementsComponent } from "./page-element/page-elements/page-elements.component";
+import { PemgroupsComponent } from "./pemgroup/pemgroups/pemgroups.component";
+import { ReportTemplatesComponent } from "./report/report-templates/report-templates.component";
+import { ViewReportComponent } from "./report/view-report/view-report.component";
+import { RolesComponent } from "./role/roles/roles.component";
+import { RuleCreateComponent } from "./rule/rule-create/rule-create.component";
+import { RuleTemplatesComponent } from "./rule/rule-templates/rule-templates.component";
+import { ScopesComponent } from "./scope/scopes/scopes.component";
 import { SolrSearchResultComponent } from "./solr/solr-search-result/solr-search-result.component";
-import { ArticleListComponent } from "./article/article-list/article-list.component";
-import { ArticleFormComponent } from "./article/article-form/article-form.component";
-import { ArticleCatalogComponent } from "./article/article-catalog/article-catalog.component";
-import { TaskResolveService } from "./article/article-resolver";
-import { CommonModule } from "@angular/common";
-import { ArticleRouteComponent } from "./article/article-route/article-route.component";
+import { SparrowOrgComponent } from "./sparrow-org.component";
+import { SprmodesComponent } from "./sprmodel/sprmodes/sprmodes.component";
+import { SysconfigDesignComponent } from "./sysconfig/sysconfig-design/sysconfig-design.component";
+import { SysconfigListComponent } from "./sysconfig/sysconfig-list/sysconfig-list.component";
+import { SysrolesComponent } from "./sysrole/sysroles/sysroles.component";
+import { UserListComponent } from "./user/user-list/user-list.component";
+import { ForumListComponent } from "./forum/forum-list/forum-list.component";
+import { ForumCatalogComponent } from "./forum/forum-catalog/forum-catalog.component";
 export const ADMIN_ROUTES: Route[] = [
   {
     path: "admin",
     component: SparrowOrgComponent,
     children: [
+      {
+        path: "forum",
+        component: ForumCatalogComponent,
+        children: [
+          {
+            path: ":catalogId",
+            component: ForumListComponent,
+          }
+        ]
+      },
       {
         path: "search",
         data: { title: "搜索" },
