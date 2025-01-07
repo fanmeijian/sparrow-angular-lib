@@ -1,0 +1,43 @@
+<mat-tree
+  class="spr-mat-tree"
+  [dataSource]="dataSource"
+  [treeControl]="treeControl"
+>
+  <!-- This is the tree node template for leaf nodes -->
+  <mat-tree-node
+    class="spr-mat-tree-leaf-node"
+    *matTreeNodeDef="let node"
+    matTreeNodePadding
+  >
+    <!-- use a disabled button to provide padding for tree leaf -->
+    <button mat-icon-button disabled></button>
+    <span
+      class="spr-mat-tree-leaf-node-link"
+      (click)="onNodeClick.emit(node)"
+      [routerLink]="[node.id]"
+      routerLinkActive="spr-mat-tree-leaf-node-link-active"
+      >{{ node.name }} {{ node.index }}</span
+    >
+  </mat-tree-node>
+  <!-- This is the tree node template for expandable nodes -->
+  <mat-tree-node
+    class="spr-mat-tree-parent-node"
+    *matTreeNodeDef="let node; let i = index; when: hasChild"
+    matTreeNodePadding
+  >
+    <button
+      mat-icon-button
+      matTreeNodeToggle
+      [attr.aria-label]="'Toggle ' + node.name"
+    >
+      <mat-icon class="mat-icon-rtl-mirror">
+        {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
+      </mat-icon>
+    </button>
+    <span
+      class="spr-mat-tree-parent-node-link"
+      (click)="onNodeClick.emit(node)"
+      >{{ node.name }} ({{ node.childCount }})</span
+    >
+  </mat-tree-node>
+</mat-tree>

@@ -112,6 +112,7 @@ import { UserPasswordResetComponent } from './user/user-password-reset/user-pass
 import { UserSelectionComponent } from './user/user-selection/user-selection.component';
 import { ForumCatalogComponent } from './forum/forum-catalog/forum-catalog.component';
 import { ForumFormComponent } from './forum/forum-form/forum-form.component';
+import { DynamicTreeViewComponent } from './common/dynamic-tree-view/dynamic-tree-view.component';
 // import { EmployeeRouteComponent } from './employee/employee-route/employee-route.component';
 
 @NgModule({
@@ -219,7 +220,8 @@ import { ForumFormComponent } from './forum/forum-form/forum-form.component';
     ArticleRouteComponent,
     ForumListComponent,
     ForumCatalogComponent,
-    ForumFormComponent
+    ForumFormComponent,
+    DynamicTreeViewComponent
   ],
   imports: [CommonModule, RouterModule, AngularMaterialModule, OrgRoutingModule, FormioModule, UploadFileModule,CKEditorModule],
   exports: [

@@ -1,21 +1,7 @@
-<div style="display: flex; flex-direction: row; align-items: center">
-  <div class="material-icons" style="font-size: 15px">home</div>
-  <div><span class="home" routerLink="" color="primary">首页</span></div>
-
-  <ng-container *ngFor="let item of breadCrump; let i = index">
-    <span *ngIf="item.label">/</span>
-    <a
-      mat-button
-      *ngIf="i != breadCrump.length - 1"
-      color="primary"
-      routerLink="{{ item.url }}"
-      >{{ item.label }}</a
-    >
-    <span
-      mat-button
-      *ngIf="i == breadCrump.length - 1"
-      style="font-weight: bold; padding-left: 10px"
-      >{{ item.label }}</span
-    >
+<div class="spr-breadcrumb">
+  <ng-container *ngFor="let breadcrumb of breadcrumbs; let last = last">
+    <div class="spr-breadcrumb-link" *ngIf="!last" [routerLink]="breadcrumb.url">{{ breadcrumb.label }}</div>
+    <div class="spr-breadcrumb-splitor" *ngIf="!last" class="material-symbols-outlined"> chevron_right </div>
+    <div class=spr-breadcrumb-last *ngIf="last">{{ breadcrumb.label }}</div>
   </ng-container>
 </div>

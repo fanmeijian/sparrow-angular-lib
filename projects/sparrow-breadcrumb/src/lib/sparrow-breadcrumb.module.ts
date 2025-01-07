@@ -3,6 +3,7 @@ import { SparrowBreadcrumbComponent } from './sparrow-breadcrumb.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
 
 @NgModule({
@@ -10,7 +11,7 @@ import { BrowserModule } from '@angular/platform-browser';
     SparrowBreadcrumbComponent
   ],
   imports: [
-    BrowserModule,
+    CommonModule,
     RouterModule
   ],
   exports: [

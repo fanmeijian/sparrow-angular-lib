@@ -1,43 +1,7 @@
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree';
-
-/**
- * Food data with nested structure.
- * Each node has a name and an optional list of children.
- */
-interface FoodNode {
-  name: string;
-  children?: FoodNode[];
-}
-
-const TREE_DATA: FoodNode[] = [
-  {
-    name: 'Fruit',
-    children: [{ name: 'Apple' }, { name: 'Banana' }, { name: 'Fruit loops' }],
-  },
-  {
-    name: 'Vegetables',
-    children: [
-      {
-        name: 'Green',
-        children: [{ name: 'Broccoli' }, { name: 'Brussels sprouts' }],
-      },
-      {
-        name: 'Orange',
-        children: [{ name: 'Pumpkins' }, { name: 'Carrots' }],
-      },
-    ],
-  },
-];
-
-/** Flat node with expandable and level information */
-interface ExampleFlatNode {
-  expandable: boolean;
-  name: string;
-  level: number;
-}
-
+import { TreeNode, FlatTreeNode } from '../dynamic-tree-view/dynamic-tree-constant';
 
 
 @Component({
@@ -53,20 +17,24 @@ export class DynamicMenuComponent implements OnInit, OnChanges {
     console.log('onMouseLeave', $event);
   }
 
-  @Input() menu: any;
+  @Input() menu: TreeNode | any;
 
   isOpen = false;
   ngOnInit(): void {
   }
-  private _transformer = (node: FoodNode, level: number) => {
+  private _transformer = (node: TreeNode, level: number) => {
     return {
-      expandable: !!node.children && node.children.length > 0,
+      expandable: node.childCount > 0,
       name: node.name,
+      id: node.id,
+      childCount: node.childCount,
       level: level,
+      index: node.index,
+      parentId: node.parentId
     };
   };
 
-  treeControl = new FlatTreeControl<ExampleFlatNode>(
+  treeControl = new FlatTreeControl<FlatTreeNode>(
     node => node.level,
     node => node.expandable,
   );
@@ -87,5 +55,5 @@ export class DynamicMenuComponent implements OnInit, OnChanges {
 
   }
 
-  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+  hasChild = (_: number, node: FlatTreeNode) => node.expandable;
 }

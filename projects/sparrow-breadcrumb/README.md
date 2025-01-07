@@ -1,24 +1,26 @@
-# SparrowBreadcrumb
+在需要的地方加入
+<spr-sparrow-breadcrumb></spr-sparrow-breadcrumb>
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.0.
+在父路由的地方, 如果需要隐藏父路由的内容, 则用一下语句
+*ngIf="!route.firstChild"
 
-## Code scaffolding
+下面为导航的样式
+.spr-breadcrumb {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  align-items: center;
+  padding-top: 3px;
+  font-weight:normal;
+}
+.spr-breadcrumb-splitor{
+}
 
-Run `ng generate component component-name --project sparrow-breadcrumb` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project sparrow-breadcrumb`.
-> Note: Don't forget to add `--project sparrow-breadcrumb` or else it will be added to the default project in your `angular.json` file. 
+.spr-breadcrumb-link, .spr-breadcrumb-last {
+  cursor: pointer;
+}
 
-## Build
+.spr-breadcrumb-link:hover {
+  text-decoration: underline;
 
-Run `ng build sparrow-breadcrumb` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Publishing
-
-After building your library with `ng build sparrow-breadcrumb`, go to the dist folder `cd dist/sparrow-breadcrumb` and run `npm publish`.
-
-## Running unit tests
-
-Run `ng test sparrow-breadcrumb` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+}

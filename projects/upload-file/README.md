@@ -18,3 +18,4 @@ config provider
 只读模式
 disableUpload
 <lib-upload-file [attachments]="attachments" [disableUpload]="true"></lib-upload-file>
+allowSyntheticDefaultImports
