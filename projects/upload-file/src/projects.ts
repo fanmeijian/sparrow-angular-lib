@@ -6,5 +6,6 @@ export * from './lib/upload-file.service';
 export * from './lib/upload-file.component';
 export * from './lib/upload-file.module';
 export * from './variables';
-export * from './lib/attachment'
-export * from './lib/upload-file-config'
+// import { UploadService, UploadFileConfig, Attachment } from './lib/upload-service'
+export * from './lib/upload-service';
+export * from './lib/services/txcos-upload-service'

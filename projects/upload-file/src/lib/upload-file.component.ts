@@ -5,16 +5,14 @@ import {
   Input,
   OnChanges,
   OnInit,
+  Optional,
   Output,
   SimpleChanges,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import COS from 'cos-js-sdk-v5';
-import { Attachment } from './attachment';
-import { ObjectStorageService } from '../services/object-storage.service';
-import { UploadFileConfig } from './upload-file-config';
-import { Md5 } from 'ts-md5';
-import { CONFIGURATION } from '../variables';
+import { Attachment, UploadFileConfig, UploadService } from './upload-service';
+import { UploadFileService } from './upload-file.service';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'lib-upload-file',
@@ -22,123 +20,75 @@ import { CONFIGURATION } from '../variables';
   styleUrls: ['./upload-file.component.css'],
 })
 export class UploadFileComponent implements OnInit, OnChanges {
+  download(_t12: any) {
+    this.objService.download(_t12);
+  }
   @Input() id?: string;
   @Input() fileType?: string; //允许的文件类型
   @Input() multiple?: boolean;
-  @Input() attachments: Attachment[]|any[] = []; //双向绑定
+  @Input() attachments: Attachment[] | any[] = []; //双向绑定
   @Input() disableUpload?: boolean;
+  @Input() downloadButtonPgel?: string = 'btn:file:download'
   @Output() fileUploadedEvent = new EventEmitter<Attachment>();
   @Output() fileRemovedEvent = new EventEmitter<Attachment>();
 
-  cos!: COS;
+
   constructor(
-    private objService: ObjectStorageService,
-    public domSanitizer: DomSanitizer,
-    @Inject(CONFIGURATION) public config: UploadFileConfig
+    @Optional() @Inject(UploadFileConfig) private objService: UploadService,
+    // public domSanitizer: DomSanitizer,
   ) { }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.attachments);
   }
 
   ngOnInit(): void {
-    console.log(this.id, this.attachments);
-    if (this.attachments && this.attachments[0] === null) {
-      this.attachments = [];
-    }
-    let that = this;
-    console.log(this.attachments);
 
-    this.cos = new COS({
-      getAuthorization: function (options, callback) {
-        that.objService
-          .getUploadTmpKey('apply_ico_delete.png')
-          .subscribe((res: any) => {
-            console.log(res);
-            callback({
-              TmpSecretId: res.credentials.tmpSecretId,
-              TmpSecretKey: res.credentials.tmpSecretKey,
-              SecurityToken: res.credentials.sessionToken,
-              StartTime: res.startTime, // 时间戳，单位秒，如：1580000000
-              ExpiredTime: res.expiredTime, // 时间戳，单位秒，如：1580000000
-            });
-          });
-      },
-    });
   }
 
   handleFileInput(event: any) {
-    let that = this;
-    // 处理上传的文件
     let selectedFiles: File[] = Array.from(event.target.files);
-    if (selectedFiles.length > 0) {
-      let toBeUploadAttachments = selectedFiles.map((file, i) =>
-        Object.assign(
-          {
-            name: '',
-            bucket: '',
-            region: '',
-            path: '',
-            hash: '',
-          },
-          {
-            name: file.name,
-            url: '',
-            seq: this.attachments ? this.attachments.length + i : i,
-            bucket: this.config.bucket,
-            region: this.config.region,
-            path: 'upload/',
-            type: file.type,
-            size: file.size,
-            file: file,
-          }
-        )
-      );
-      if (this.multiple === false) {
-        this.attachments[0] = toBeUploadAttachments[0];
-      } else {
-        this.attachments?.unshift(...toBeUploadAttachments);
+
+
+    selectedFiles.forEach((file, i) => {
+      this.attachments.push(
+        {
+          seq: i,
+          file: file,
+          name: file.name,
+          type: file.type,
+          size: file.size,
+        }
+      )
+      if (file.type.includes('image')) {
+        this.previewLocalImage(file, this.attachments[i])
       }
 
-      // 初始化附件对象
-      toBeUploadAttachments.forEach((attachment, i) => {
-        if (attachment.file) {
-          let file = attachment.file;
-          file
-            .text()
-            .then((x) => Md5.hashAsciiStr(x))
-            .then((hash) => {
-              return Object.assign(attachment, { hash: hash });
-            })
-            .then((attachment: Attachment) => {
-              that.cos
-                .putObject({
-                  Bucket: attachment.bucket,
-                  Region: attachment.region,
-                  Key: attachment.path + attachment.hash + '.' + this.getFileType(attachment.name),
-                  Body: file,
-                  onProgress: function (progressData) {
-                    if (progressData.speed > 0) {
-                      attachment.speed = progressData.speed / 1024;
-                    }
-
-                    if (progressData.percent * 100 !== 100) {
-                      attachment.progress =
-                        progressData.percent * 100 === 100
-                          ? 99
-                          : progressData.percent * 100;
-                    }
-                  },
-                })
-                .then((res: any) => {
-                  console.log(attachment);
-                  attachment.url = 'https://' + res.Location;
-                  attachment.progress = 100;
-                  this.fileUploadedEvent.emit(attachment);
-                });
-            });
-        }
+      this.objService.upload(file).subscribe({
+        next: (event: HttpEvent<any>) => {
+          if (event.type === HttpEventType.UploadProgress && event.total) {
+            this.attachments[i] = Object.assign({}, this.attachments[i], { progress: Math.round((event.loaded / event.total) * 100) }, event, { type: file.type })
+            // console.log('progress', event)
+          } else if (event.type === HttpEventType.Response) {
+            this.attachments[i] = Object.assign(this.attachments[i],event.body);
+          }
+        },
+        error: (err) => {
+          console.error('Upload error:', err);
+        },
+        complete: () => {
+          // console.log('All files uploaded!');
+        },
       });
-    }
+    })
+  }
+
+  previewLocalImage(file: File, attachment: Attachment) {
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      attachment.previewUrl = reader.result!;
+    };
+
+    reader.readAsDataURL(file);
   }
 
   removeInitUrl(attachment: Attachment, i: number) {

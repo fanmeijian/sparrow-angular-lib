@@ -9,6 +9,15 @@
     "types": [],
     "preserveSymlinks": true,
     "allowSyntheticDefaultImports": true,
+    "paths": {
+      "@shared/*": ["app/shared/*"],
+      "rxjs": [
+        "node_modules/rxjs"
+      ],
+      "rxjs/*": [
+        "node_modules/rxjs/*"
+      ]
+    },
   },
   "exclude": [
     "src/test.ts",

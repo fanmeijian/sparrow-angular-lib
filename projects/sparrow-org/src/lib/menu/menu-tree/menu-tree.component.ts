@@ -27,7 +27,6 @@ interface ExampleFlatNode {
 export class MenuTreeComponent implements OnInit {
   isInit: boolean = true;
   userInfo: any = JSON.parse(localStorage.getItem('userInfo'));
-
   selectedNode = '';
 
   dragging = false;
