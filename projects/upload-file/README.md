@@ -8,9 +8,19 @@ import {
 } from '@sparrowmini/tx-upload-file';
 
 config provider
-
-    { provide: UploadFileBasePath, useValue: environment.fileServiceApi },
-    { provide: UploadFileConfig, useValue: { bucket: 'sportunione-1252583813', region: 'ap-guangzhou' } },
+    { provide: UploadFileConfig, useClass: TxcosUploadService },
+    { provide: TxcosConfig, useValue: environment.cos },
+    
+    env
+   cos: {
+    bucket: 'cos-1252583813',
+    region: 'ap-guangzhou',
+    path: 'upload/',
+    uploadTmpKeyUrl: `${API_BASE_URL}/cos/tx/uploadTmpKeys`,
+    downloadTmpKeyUrl:`${API_BASE_URL}/cos/tx/downloadTmpKeys`,
+    domain: 'web.linkair-tech.cn',
+    apiBase:`${API_BASE_URL}/page-elements/{id}/hasPermission`
+  },
 
 上传模式
 <lib-upload-file [attachments]="attachments" [multiple]="true"></lib-upload-file>
