@@ -12,6 +12,8 @@ config provider
     { provide: TxcosConfig, useValue: environment.cos },
     
     env
+
+  const API_BASE_URL='http://localhost:8601/chnplc-service'
    cos: {
     bucket: 'cos-1252583813',
     region: 'ap-guangzhou',
