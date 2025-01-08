@@ -1,10 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  Router,
-  RoutesRecognized,
-  UrlSegment,
-} from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
 import { Breadcrumb, BreadcrumbService } from './breadcrumb.service';
 
 @Component({

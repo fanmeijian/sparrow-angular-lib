@@ -1,10 +1,10 @@
-在需要的地方加入
+add in your component
 <spr-sparrow-breadcrumb></spr-sparrow-breadcrumb>
 
-在父路由的地方, 如果需要隐藏父路由的内容, 则用一下语句
+and if you want to hide content from your parent route, just add the below condition
 *ngIf="!route.firstChild"
 
-下面为导航的样式
+you can customize your style of breadcrumb
 .spr-breadcrumb {
   display: flex;
   gap: 0.5rem;
