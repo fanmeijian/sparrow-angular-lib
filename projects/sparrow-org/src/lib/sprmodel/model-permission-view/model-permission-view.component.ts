@@ -44,40 +44,68 @@ export class ModelPermissionViewComponent implements OnInit {
   }
 
   view() {
-    this.dialog.open(this.permissionTemplate);
+    this.dialog.open(this.permissionTemplate, { width: '100%' });
   }
+
+
   removeUser(user: UserModel) {
-    this.modelService.removeModelPermissions({
-      usernames: [{
-        username: user.id.username,
-        permission: user.id.permission,
-        permissionType: user.id.permissionType
-      }]
-    }, user.id.modelId).subscribe((res) => {
-      this.ngOnInit()
-    })
+    let permissions = [{
+      username: user?.id?.username,
+      permission: user?.id?.permission,
+      permissionType: user?.id?.permissionType
+    }]
+    if (this.attributeId) {
+      this.modelService.removeAttrPermissions({
+        usernames: permissions
+      }, this.modelId, this.attributeId).subscribe((res) => {
+        this.ngOnInit()
+      })
+    } else {
+      this.modelService.removeModelPermissions({
+        usernames: permissions
+      }, user?.id?.modelId!).subscribe((res) => {
+        this.ngOnInit()
+      })
+    }
+
   }
   remove(a: SysroleModel) {
-    this.modelService.removeModelPermissions({
-      sysroles: [{
-        sysroleId: a.id.sysroleId,
-        permission: a.id.permission,
-        permissionType: a.id.permissionType
-      }]
-    }, a.id.modelId).subscribe((res) => {
-      this.ngOnInit()
-    })
+    let permissions = [{
+      sysroleId: a?.id?.sysroleId,
+      permission: a?.id?.permission,
+      permissionType: a?.id?.permissionType
+    }]
+    if (this.attributeId) {
+      this.modelService.removeAttrPermissions({ sysroles: permissions }, this.modelId, this.attributeId).subscribe(() => {
+        this.ngOnInit()
+      })
+    } else {
+      this.modelService.removeModelPermissions({
+        sysroles: permissions
+      }, a?.id?.modelId!).subscribe((res) => {
+        this.ngOnInit()
+      })
+    }
+
   }
 
   removeRule(a: ModelRule) {
-    this.modelService.removeModelPermissions({
+    let permissions = {
       rules: [{
-        ruleId: a.id.ruleId,
-        permission: a.id.permission,
-        permissionType: a.id.permissionType
+        ruleId: a?.id?.ruleId,
+        permission: a?.id?.permission,
+        permissionType: a?.id?.permissionType
       }]
-    }, a.id.modelId).subscribe((res) => {
-      this.ngOnInit()
-    })
+    }
+    if (this.attributeId) {
+      this.modelService.removeAttrPermissions(permissions, this.modelId, this.attributeId).subscribe(() => {
+        this.ngOnInit()
+      })
+    } else {
+      this.modelService.removeModelPermissions(permissions, a?.id?.modelId!).subscribe((res) => {
+        this.ngOnInit()
+      })
+    }
+
   }
 }

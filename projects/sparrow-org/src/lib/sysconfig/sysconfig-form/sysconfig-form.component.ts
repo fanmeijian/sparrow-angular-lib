@@ -29,8 +29,7 @@ export class SysconfigFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.form=JSON.parse(this.config.form)
-    this.formData = {data:JSON.parse(this.config.configJson||{})}
-    console.log(this.formData, this.config)
+    this.formData = {data:JSON.parse(this.config.configJson||'{}')}
     if(this.config.action!='view'){
       this.viewOnly=false
     }

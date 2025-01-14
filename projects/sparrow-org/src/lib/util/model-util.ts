@@ -1,3 +1,8 @@
+/**
+ * 用于仅展示基本内容, 通常用于FORM表单的展示
+ * @param id
+ * @returns
+ */
 
 export const showId = (id: any) => {
   if (typeof id === 'object') {

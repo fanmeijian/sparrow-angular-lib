@@ -28,9 +28,12 @@
               align-items: flex-start;
             "
           >
-            <a (click)="viewConfig(element)" color="primary">{{
-              element.name
-            }}</a>
+            <span
+              class="spr-link"
+              (click)="viewConfig(element)"
+              color="primary"
+              >{{ element.name }}</span
+            >
             <lib-base-op-log-column
               [element]="element"
             ></lib-base-op-log-column></div

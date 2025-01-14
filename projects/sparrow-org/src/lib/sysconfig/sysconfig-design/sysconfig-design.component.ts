@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormioRefreshValue } from '@formio/angular';
 import { FormService, SysconfigService } from '@sparrowmini/org-api';
 import { Formio } from 'formiojs';
+import { CosFileService } from '../../services/cos-file.service';
 // import Prism from 'prismjs';
 
 @Component({
@@ -20,26 +21,25 @@ export class SysconfigDesignComponent implements OnInit {
     this.formGroup.patchValue({ form: JSON.stringify(this.formJson) });
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
-      if (this.formGroup.value.code) {
+      if (this.formGroup.getRawValue().code) {
         this.formService
-          .updateConfig(this.formGroup.value, this.formGroup.value.code)
+          .updateConfig(this.formGroup.value, this.formGroup.getRawValue().code)
           .subscribe(() => window.history.back());
 
       } else {
-          this.sysconfigService.createConfig([this.formGroup.value]).subscribe()
+        this.sysconfigService.createConfig([this.formGroup.value]).subscribe()
       }
     }
   }
   formJson: any;
   formOptions = {
-    // fileService: this.formioFileService,
+    fileService: this.formioFileService,
   }
   formGroup: FormGroup = this.formBuilder.group({
     name: [null, Validators.required],
     code: [null, Validators.required],
-    // id: [null],
     form: [{ components: [] }, Validators.required],
-    // displayColumns: [null],
+    displayColumns: [null],
   });
 
   @ViewChild('json', { static: true }) jsonElement?: ElementRef;
@@ -54,8 +54,8 @@ export class SysconfigDesignComponent implements OnInit {
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
     private router: Router,
-    private sysconfigService: SysconfigService
-    // private formioFileService: CosFileService,
+    private sysconfigService: SysconfigService,
+    private formioFileService: CosFileService,
 
   ) {
     this.form = { components: [] };
@@ -68,35 +68,22 @@ export class SysconfigDesignComponent implements OnInit {
         this.formService.getConfig(params.code).subscribe((res) => {
           this.form = JSON.parse(res.form!);
           this.formJson = this.form;
-          this.formGroup.patchValue({code: res.code, name: res.name, remark: res.remark,form: res.form});
-          console.log(res, this.formGroup.value);
-          console.log('-------', Formio.providers)
-
-
-
-
-          let a: any[] = this.form.components.filter(f => f.widget && f.widget.type == 'input').map(m => Object.assign({}, { name: m.label, code: m.key }))
+          this.formGroup.patchValue({ code: res.code, name: res.name, remark: res.remark, form: res.form });
+          let a: any[] = this.form.components.filter((f: any) => f.widget && f.widget.type == 'input').map((m: any) => Object.assign({}, { name: m.label, code: m.key }))
           this.columns = a
+          this.formGroup.get('code')?.disable()
         });
       }
     });
   }
 
   onChange(event: any) {
-    // this.formJson = event.form;
-    console.log("888888888", this.formJson)
-    let a: any[] = this.formJson.components.filter(f => f.widget && f.widget.type == 'input').map(m => Object.assign({}, { name: m.label, code: m.key }))
+    let a: any[] = this.formJson.components.filter((f: any) => f.widget && f.widget.type == 'input').map((m: any) => Object.assign({}, { name: m.label, code: m.key }))
     this.columns = a
-    console.log(this.columns)
-    // this.refreshForm.emit({
-    //   property: 'form',
-    //   value: event.form,
-    // });
   }
 
   @ViewChild('formbuilder') formbuilder: any
   ngAfterViewInit() {
-    // Prism.highlightAll();
 
   }
 

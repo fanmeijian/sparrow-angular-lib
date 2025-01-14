@@ -29,7 +29,7 @@ export class EmployeeUserAddComponent implements OnInit {
     // console.log(this.selectedUsers)
     this.employeeService
       .addEmpolyeeUsers(
-        this.selectedUsers.map((m) => m.username),
+        this.selectedUsers.map((m:any) => m.username),
         this.data.id
       )
       .subscribe(() => {

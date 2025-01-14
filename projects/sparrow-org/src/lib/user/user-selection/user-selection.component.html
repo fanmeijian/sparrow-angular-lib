@@ -1,16 +1,18 @@
-<div>授权用户：</div>
-<mat-chip-list #chipList aria-label="Fruit selection">
-  <mat-chip *ngFor="let item of selected" (removed)="remove(item)">
-    {{
-      item.lastName !== undefined && item.lastName !== ""
-        ? item.lastName + item.firstName
-        : item.username
-    }}
-    <button matChipRemove>
-      <mat-icon>cancel</mat-icon>
-    </button>
-  </mat-chip>
-</mat-chip-list>
+<div style="margin-bottom: 10px">
+  授权用户
+  <mat-chip-list #chipList aria-label="Fruit selection">
+    <mat-chip *ngFor="let item of selected" (removed)="remove(item)">
+      {{
+        item.lastName + item.firstName
+          ? item.lastName + item.firstName + "(" + item.username + ")"
+          : item.username
+      }}
+      <button matChipRemove>
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-chip>
+  </mat-chip-list>
+</div>
 
 <div>
   <div>用户列表</div>
@@ -20,7 +22,12 @@
       [value]="item"
       (click)="select(item)"
     >
-      {{ i + 1 }}. {{ item.lastName }}{{ item.firstName }} ({{ item.username }})
+      {{ i + 1 }}.
+      {{
+        item.lastName + item.firstName
+          ? item.lastName + item.firstName + "(" + item.username + ")"
+          : item.username
+      }}
     </mat-list-option>
   </mat-selection-list>
 </div>

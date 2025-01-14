@@ -2,82 +2,72 @@
   <mat-icon>lock</mat-icon>
 </button>
 <ng-template #permissionDialog>
-  <h1 mat-dialog-title>模型/属性权限</h1>
+  <h3 mat-dialog-title>模型/属性权限</h3>
   <mat-dialog-content>
     <mat-tab-group>
-      <mat-tab label="用户">
+      <mat-tab label="用户({{ permission?.usernames?.length }})">
         <div
-        *ngFor="let user of permission?.usernames"
-        style="display: flex; flex-direction: row; align-items: center"
-      >
-        <span
-          class="material-icons"
-          style="color: red; cursor: pointer"
-          (click)="removeUser(user)"
+          class="spr-model-psermission-list"
+          *ngFor="let user of permission?.usernames"
         >
-          close </span
-        ><span>{{ user.id?.username }} {{ user.id?.permission }} </span
-        ><span
-          [style]="
-            user.id?.permissionType === 'DENY'
-              ? 'color:red'
-              : 'color:green'
-          "
-          >{{ user.id?.permissionType }}</span
+          <span
+            class="material-icons"
+            style="color: red; cursor: pointer"
+            (click)="removeUser(user)"
+          >
+            close </span
+          ><span>{{ user.id?.username }} {{ user.id?.permission }} </span
+          ><span
+            [style]="
+              user.id?.permissionType === 'DENY' ? 'color:red' : 'color:green'
+            "
+            >{{ user.id?.permissionType }}</span
+          >
+        </div>
+      </mat-tab>
+      <mat-tab label="角色({{ permission?.sysroles?.length }})">
+        <div
+          *ngFor="let sysrole of permission?.sysroles"
+          class="spr-model-psermission-list"
         >
-      </div>
+          <span
+            class="material-icons"
+            style="color: red; cursor: pointer"
+            (click)="remove(sysrole)"
+          >
+            close </span
+          ><span>{{ sysrole.id?.sysroleId }} {{ sysrole.id?.permission }} </span
+          ><span
+            [style]="
+              sysrole.id?.permissionType === 'DENY'
+                ? 'color:red'
+                : 'color:green'
+            "
+            >{{ sysrole.id?.permissionType }}</span
+          >
+        </div>
       </mat-tab>
-      <mat-tab label="角色">
+      <mat-tab label="规则({{ permission?.rules?.length }})">
         <div
-                  *ngFor="let sysrole of permission?.sysroles"
-                  style="
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                  "
-                >
-                  <span
-                    class="material-icons"
-                    style="color: red; cursor: pointer"
-                    (click)="remove(sysrole)"
-                  >
-                    close </span
-                  ><span
-                    >{{ sysrole.id?.sysroleId }}
-                    {{ sysrole.id?.permission }} </span
-                  ><span
-                    [style]="
-                      sysrole.id?.permissionType === 'DENY'
-                        ? 'color:red'
-                        : 'color:green'
-                    "
-                    >{{ sysrole.id?.permissionType }}</span
-                  >
-                </div>
-      </mat-tab>
-      <mat-tab label="规则">
-        <div
-                *ngFor="let rule of permission?.rules"
-                style="display: flex; flex-direction: row; align-items: center"
-              >
-                <span
-                  class="material-icons"
-                  style="color: red; cursor: pointer"
-                  (click)="removeRule(rule)"
-                >
-                  close </span
-                ><span
-                  >{{ rule.rule?.name }} {{ rule.rule?.ruleCondition }}
-                  {{ rule.id?.permission }} </span
-                ><span
-                  [style]="
-                    rule.id?.permissionType === 'DENY'
-                      ? 'color:red'
-                      : 'color:green'
-                  "
-                  >{{ rule.id?.permissionType }}</span
-                >
-              </div>
+          *ngFor="let rule of permission?.rules"
+          class="spr-model-psermission-list"
+        >
+          <span
+            class="material-icons"
+            style="color: red; cursor: pointer"
+            (click)="removeRule(rule)"
+          >
+            close </span
+          ><span
+            >{{ rule.rule?.name }} {{ rule.rule?.ruleCondition }}
+            {{ rule.id?.permission }} </span
+          ><span
+            [style]="
+              rule.id?.permissionType === 'DENY' ? 'color:red' : 'color:green'
+            "
+            >{{ rule.id?.permissionType }}</span
+          >
+        </div>
       </mat-tab>
     </mat-tab-group>
   </mat-dialog-content>

@@ -46,7 +46,7 @@ export class SysconfigListComponent implements OnInit {
     this.pageable.pageSize = page.pageSize
     this.sysconfigService.getInitConfigs(this.pageable.pageIndex, this.pageable.pageSize, this.pageable.sort).subscribe(res => {
       this.dataSource = new MatTableDataSource<Sysconfig>(res.content);
-      this.pageable.length = res.totalElements
+      this.pageable.length = res.totalElements!
     })
   }
 

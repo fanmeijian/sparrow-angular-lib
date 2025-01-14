@@ -7,19 +7,19 @@ import { BehaviorSubject } from 'rxjs';
  * Node for to-do item
  */
 export class TodoItemNode {
-  children: TodoItemNode[];
-  id: string;
-  name: string;
-  code: string;
+  children!: TodoItemNode[];
+  id!: string;
+  name!: string;
+  code!: string;
 }
 
 /** Flat to-do item node with expandable and level information */
 export class TodoItemFlatNode {
-  id: string;
-  name: string;
-  code: string;
-  level: number;
-  expandable: boolean;
+  id!: string;
+  name!: string;
+  code!: string;
+  level!: number;
+  expandable!: boolean;
 }
 
 /**
@@ -150,7 +150,7 @@ export class ChecklistDatabase {
   styleUrls: ['./filter-tree.component.css']
 })
 export class FilterTreeComponent implements OnInit, OnChanges {
-  @Input() checklistSelection: SelectionModel<TodoItemFlatNode>;
+  @Input() checklistSelection!: SelectionModel<TodoItemFlatNode>;
   @Input() treeData: any;
   @Input() checkedIds?: string[];
   @Input() disabled?: boolean;
@@ -197,7 +197,7 @@ export class FilterTreeComponent implements OnInit, OnChanges {
       if (this.checkedIds) {
         this.checkedIds.forEach(id => {
           const node = this.treeControl.dataNodes.find(m => m.id === id)
-          this.checklistSelection.select(node)
+          this.checklistSelection.select(node!)
         })
       }
     }

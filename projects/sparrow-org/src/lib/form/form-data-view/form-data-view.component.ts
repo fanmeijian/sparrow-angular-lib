@@ -27,7 +27,7 @@ export class FormDataViewComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params: any) => {
       if (params.id) {
-        this.formService.formData(params.id).subscribe((res) => {
+        this.formService.formData1(params.id).subscribe((res) => {
           this.sparrowFormData = res
           this.form = JSON.parse(res.form?.form!);
           this.formData = { data: JSON.parse(res.data!) };

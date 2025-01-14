@@ -71,7 +71,7 @@ export class UserSelectionComponent implements OnInit {
       .users(this.filters, this.pageable.pageIndex, this.pageable.pageSize)
       .subscribe((res) => {
         // this.dataSource = new MatTableDataSource<any>(res.content);
-        this.datas = res.content;
+        this.datas = res.content!;
         this.pageable.length = res.totalElements!;
       });
   }

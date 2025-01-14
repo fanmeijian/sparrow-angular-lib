@@ -12,7 +12,7 @@ import { switchMap, zip, combineLatest, map } from 'rxjs';
   styleUrls: ['./employee-role-select.component.css'],
 })
 export class EmployeeRoleSelectComponent implements OnInit {
-  roles: any[];
+  roles: any[]=[];
   organizationRoleId: any;
 
   constructor(
@@ -27,7 +27,7 @@ export class EmployeeRoleSelectComponent implements OnInit {
       .pipe(
         switchMap((m) =>
           zip(
-            ...m.map((r) => {
+            ...m.map((r:any) => {
               const $org = this.orgService.org(
                 r?.id?.organizationRoleId.organizationId
               );
@@ -44,7 +44,7 @@ export class EmployeeRoleSelectComponent implements OnInit {
       .subscribe((b) => {
         // console.log(b);
         this.roles = b;
-        let orgRoleId = JSON.parse(sessionStorage.getItem('organizationId'));
+        let orgRoleId = JSON.parse(sessionStorage.getItem('organizationId')!);
         this.organizationRoleId = b.filter(
           (f) =>
             f.id.organizationRoleId.organizationId ===

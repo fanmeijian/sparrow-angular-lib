@@ -18,7 +18,7 @@ import { MatSort, SortDirection } from '@angular/material/sort';
   styleUrls: ['./sysroles.component.css'],
 })
 export class SysrolesComponent implements OnInit, AfterViewInit {
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort) sort?: MatSort;
   users: any[] = [];
   dataSource = new MatTableDataSource<any>();
   pageable = {
@@ -57,26 +57,10 @@ export class SysrolesComponent implements OnInit, AfterViewInit {
     this.pageable.pageSize = event.pageSize;
     this.sysroleService
       .sysroles(this.filters, this.pageable.pageIndex, this.pageable.pageSize)
-      .pipe(
-        tap((res) => (this.pageable.length = res.totalElements!)),
-        map((res: any) => res.content),
-        switchMap((sysroles: any[]) =>
-          zip(
-            ...sysroles.map((sysrole) =>
-              this.sysroleService.sysroleUsers(sysrole.id).pipe(
-                map((m) =>
-                  Object.assign({}, sysrole, {
-                    users: m.content?.map((u) => u.id?.username),
-                  })
-                )
-              )
-            )
-          )
-        )
-      )
       .subscribe((res) => {
-        this.dataSource = new MatTableDataSource<any>(res);
-        this.dataSource.sort = this.sort;
+        this.dataSource = new MatTableDataSource<any>(res.content);
+        this.dataSource.sort = this.sort!;
+        this.pageable.length = res.totalElements!
       });
   }
 
@@ -105,9 +89,9 @@ export class SysrolesComponent implements OnInit, AfterViewInit {
   }
 
   remove(user: any, sysrole: any) {
-    this.sysroleService.removeSysroleUsers([user], sysrole.id).subscribe(() => {
+    this.sysroleService.removeSysroleUsers([user.id.username], sysrole.id).subscribe(() => {
       this.snack.open('移除成功！', '关闭');
-      this.ngOnInit();
+      this.onPageChange(this.pageable)
     });
   }
 
@@ -117,7 +101,7 @@ export class SysrolesComponent implements OnInit, AfterViewInit {
       .afterClosed()
       .subscribe((result) => {
         if (result) {
-          this.ngOnInit();
+          this.onPageChange(this.pageable)
         }
       });
   }
@@ -140,24 +124,4 @@ export class SysrolesComponent implements OnInit, AfterViewInit {
     this.dialog.open(ReportTemplateCreateComponent);
   }
 
-  hhh: any
-  exportReport() {
-    // this.http
-    //   .get(
-    //     'http://localhost:4421/org-service/reports/ff8080818f320131018f320f03b30002/export?type=HTML',
-    //     { responseType: 'blob' }
-    //   )
-    //   .subscribe((res) => {
-    //     // var downloadURL = URL.createObjectURL(res);
-    //     // window.open(downloadURL);
-    //     // var reader = new FileReader();
-    //     // reader.onload = function () {
-    //     //   alert(reader.result);
-    //     // };
-    //     // reader.readAsText(res);
-    //     res.text().then(text=>{
-    //       this.hhh=this.sanitizer.bypassSecurityTrustHtml(text);
-    //     })
-    //   });
-  }
 }

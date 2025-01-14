@@ -33,7 +33,7 @@ export class SprmodesComponent implements OnInit {
     private sysroleService: SysroleService,
     private http: HttpClient, // private monacoEditorService: MonacoEditorService
     private snack: MatSnackBar
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.onPageChange(this.pageable);
@@ -45,117 +45,11 @@ export class SprmodesComponent implements OnInit {
   onPageChange(event: any) {
     this.modelService
       .models()
-      .pipe(
-        tap((t: any) => (this.pageable.length = t.totalElements)),
-        map((m) => m.content),
-        switchMap((s: any[]) =>
-          zip(
-            ...s.map((model) => {
-              let modelPermissions: any;
-              const $modelPermissions = this.modelService
-                .modelPermissions(model.id)
-                .pipe(
-                  switchMap((permissions: any) => {
-                    const $sysroles =
-                      permissions.sysroles!.length > 0
-                        ? zip(
-                            ...permissions.sysroles!.map((sysrole: any) =>
-                              this.sysroleService
-                                .sysrole(sysrole.id.sysroleId)
-                                .pipe(
-                                  map((mm) =>
-                                    Object.assign({}, sysrole, { sysrole: mm })
-                                  )
-                                )
-                            )
-                          )
-                        : of([]);
-                    const $users = of(permissions.usernames);
-                    const $rules = of(permissions.rules);
-                    return combineLatest($sysroles, $users, $rules).pipe(
-                      map((m) =>
-                        Object.assign({}, model, {
-                          sysroles: m[0],
-                          users: m[1],
-                          rules: m[2],
-                        })
-                      )
-                    );
-                  }),
-                  tap((t) => (modelPermissions = t)),
-                  map((res) => res.modelAttributes),
-                  switchMap((mmp: any[]) =>
-                    mmp.length > 0
-                      ? zip(
-                          ...mmp.map((attribute: any) =>
-                            this.modelService
-                              .attrPermissions(
-                                attribute.id.modelId,
-                                attribute.id.attributeId
-                              )
-                              .pipe(
-                                switchMap((attrPermissions) => {
-                                  const $sysroles =
-                                    attrPermissions.sysroles!.length > 0
-                                      ? zip(
-                                          ...attrPermissions.sysroles!.map(
-                                            (sysrole: any) =>
-                                              this.sysroleService
-                                                .sysrole(sysrole.id.sysroleId)
-                                                .pipe(
-                                                  map((mm) =>
-                                                    Object.assign({}, sysrole, {
-                                                      sysrole: mm,
-                                                    })
-                                                  )
-                                                )
-                                          )
-                                        )
-                                      : of([]);
-                                  const $users = of(attrPermissions.usernames);
-                                  const $rules = of(attrPermissions.rules);
-                                  return combineLatest(
-                                    $sysroles,
-                                    $users,
-                                    $rules
-                                  ).pipe(
-                                    map((m) =>
-                                      Object.assign({}, attribute, {
-                                        sysroles: m[0],
-                                        users: m[1],
-                                        rules: m[2],
-                                      })
-                                    )
-                                  );
-                                })
-                              )
-                          )
-                        )
-                      : of([])
-                  ),
-                  map((mmm) =>
-                    Object.assign({}, modelPermissions, {
-                      modelAttributes: mmm,
-                    })
-                  )
-                );
-
-              return $modelPermissions;
-            })
-          )
-        )
-      )
       .subscribe((res: any) => {
-        // console.log(res);
-        this.dataSource = new MatTableDataSource<any>(res);
+        this.dataSource = new MatTableDataSource<any>(res.content);
       });
   }
 
-  new() {}
-
-  delete(sysrole: any) {}
-
-  edit(sysrole: any) {}
 
   remove(user: any, sysrole: any) {
     // console.log(user, sysrole);

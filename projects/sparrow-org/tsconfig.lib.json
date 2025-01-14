@@ -9,6 +9,7 @@
     "types": [],
     "preserveSymlinks": true,
     "skipLibCheck": true,
+    "strict": false,
     "paths": {
       "@shared/*": ["app/shared/*"],
       "rxjs": [

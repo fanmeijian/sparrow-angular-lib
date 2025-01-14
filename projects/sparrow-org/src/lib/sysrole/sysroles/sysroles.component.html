@@ -40,12 +40,12 @@
       <mat-cell *matCellDef="let element">
         <mat-chip-list #chipList>
           <mat-chip
-            *ngFor="let user of element.users"
+            *ngFor="let user of element.userSysroles"
             (removed)="remove(user, element)"
-            [matTooltip]="user"
+            [matTooltip]="user.id.username"
           >
             <span>{{
-              user.substring(0, 6) + (user.length > 6 ? "..." : "")
+              user.id.username.substring(0, 6) + (user.id.username.length > 6 ? "..." : "")
             }}</span>
             <button matChipRemove>
               <mat-icon>cancel</mat-icon>

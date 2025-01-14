@@ -1,6 +1,7 @@
 /*
  * Public API Surface of sparrow-org
  */
+export * from './index';
 
 export * from './lib/sparrow-org.service';
 export * from './lib/sparrow-org.component';
