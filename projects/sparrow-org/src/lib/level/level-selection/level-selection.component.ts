@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialog } from '@angular/material/dialog';
 import { RoleService, OrganizationService } from '@sparrowmini/org-api';
-import { DynamicDataSource } from '../../../model/dynamic-datasource';
-import { DynamicFlatNode } from '../../../model/dynamic-flat-node';
-import { LevelDynamicDatabase } from '../../../model/level-database';
+import { DynamicDataSource } from '../../model/dynamic-datasource';
+import { DynamicFlatNode } from '../../model/dynamic-flat-node';
+import { LevelDynamicDatabase } from '../../model/level-database';
 import { FlatTreeControl } from "@angular/cdk/tree";
 
 

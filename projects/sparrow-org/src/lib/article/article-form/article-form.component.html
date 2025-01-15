@@ -1,15 +1,40 @@
 <form [formGroup]="fg" (ngSubmit)="onSubmit()">
   <div class="spr-toolbar-container">
-    <button type="button" mat-raised-button color="warn" (click)="window.history.back()">返回</button>
+    <button
+      type="button"
+      mat-raised-button
+      color="warn"
+      (click)="window.history.back()"
+    >
+      返回
+    </button>
     <button mat-raised-button color="primary" *ngIf="!fg.disabled">提交</button>
-    <button mat-raised-button color="primary" *ngIf="fg.disabled" (click)="fg.enable()">编辑</button>
+    <button
+      mat-raised-button
+      color="primary"
+      *ngIf="fg.disabled"
+      (click)="fg.enable()"
+    >
+      编辑
+    </button>
   </div>
   <mat-form-field appearance="fill" style="width: 100%">
     <mat-label>标题</mat-label>
     <input matInput formControlName="title" />
   </mat-form-field>
 
-  <mat-accordion>
+  <mat-form-field appearance="fill" style="width: 100%">
+    <mat-label>下载金币</mat-label>
+    <input type="number" matInput formControlName="requiredCoins" />
+  </mat-form-field>
+
+  <lib-tree-view
+    [checklistSelection]="checklistSelection"
+    [checkedIds]="checkedIds"
+    [disabled]="fg.disabled"
+  ></lib-tree-view>
+
+  <!-- <mat-accordion>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title> 分类 </mat-panel-title>
@@ -21,12 +46,16 @@
         [disabled]="fg.disabled"
       ></lib-filter-tree>
     </mat-expansion-panel>
-  </mat-accordion>
+  </mat-accordion> -->
   <div>附件</div>
-  <lib-upload-file [attachments]="attachments" [multiple]="true" [disableUpload]="fg.disabled"> </lib-upload-file>
+  <lib-upload-file
+    [attachments]="attachments"
+    [multiple]="true"
+    [disableUpload]="fg.disabled"
+  >
+  </lib-upload-file>
   <lib-ckeditor-control
     [formGroup]="fg"
     [name]="'content'"
   ></lib-ckeditor-control>
-
 </form>

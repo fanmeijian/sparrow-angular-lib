@@ -1,11 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { FlatTreeControl } from "@angular/cdk/tree";
-import { LevelDynamicDatabase } from "../../../model/level-database";
-import { DynamicFlatNode } from "../../../model/dynamic-flat-node";
-import { DynamicDataSource } from "../../../model/dynamic-datasource";
+import { LevelDynamicDatabase } from "../../model/level-database";
+import { DynamicFlatNode } from "../../model/dynamic-flat-node";
+import { DynamicDataSource } from "../../model/dynamic-datasource";
 import { OrggroupCreateComponent } from "../orggroup-create/orggroup-create.component";
-import { GroupDynamicDatabase } from "../../../model/group-database";
+import { GroupDynamicDatabase } from "../../model/group-database";
 import { GroupService, OrganizationService } from "@sparrowmini/org-api";
 import { map, switchMap, zip } from "rxjs";
 import { OrggroupMemberAddComponent } from "../orggroup-member-add/orggroup-member-add.component";

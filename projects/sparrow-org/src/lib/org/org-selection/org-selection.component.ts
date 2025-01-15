@@ -24,9 +24,9 @@ import {
   SelectionChange,
   DataSource,
 } from "@angular/cdk/collections";
-import { DynamicFlatNode } from "../../../model/dynamic-flat-node";
-import { DynamicDataSource } from "../../../model/dynamic-datasource";
-import { OrgDynamicDatabase } from "../../../model/org-database";
+import { DynamicFlatNode } from "../../model/dynamic-flat-node";
+import { DynamicDataSource } from "../../model/dynamic-datasource";
+import { OrgDynamicDatabase } from "../../model/org-database";
 import { MatChipInputEvent } from "@angular/material/chips";
 
 @Component({

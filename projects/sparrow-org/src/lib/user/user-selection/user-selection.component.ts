@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { SysroleService, UserService } from '@sparrowmini/org-api';
+import { UserService } from '@sparrowmini/org-api';
 
 @Component({
   selector: 'lib-user-selection',

@@ -3,13 +3,15 @@
  * Food data with nested structure.
  * Each node has a name and an optional list of children.
  */
-interface TreeNode {
-  id: string;
+export interface TreeNode {
+  expandable: boolean;
   name: string;
-  code: string;
-  disabled: boolean;
-  hidden: boolean;
-  children?: TreeNode[];
+  code?:string;
+  id: string;
+  childCount: number,
+  index?: number,
+  children: TreeNode[];
+  parentId?: string
 }
 
 

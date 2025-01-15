@@ -9,10 +9,10 @@ import { FlatTreeControl } from "@angular/cdk/tree";
 import { BehaviorSubject, combineLatest, merge, Observable, zip } from "rxjs";
 import { map, switchMap } from "rxjs/operators";
 import { OrganizationService, RoleService } from "@sparrowmini/org-api";
-import { DynamicFlatNode } from "../../../model/dynamic-flat-node";
-import { DynamicDataSource } from "../../../model/dynamic-datasource";
+import { DynamicFlatNode } from "../../model/dynamic-flat-node";
+import { DynamicDataSource } from "../../model/dynamic-datasource";
 import { MatDialog } from "@angular/material/dialog";
-import { RoleDynamicDatabase } from "../../../model/role-database";
+import { RoleDynamicDatabase } from "../../model/role-database";
 import { MatChipInputEvent } from '@angular/material/chips';
 
 @Component({

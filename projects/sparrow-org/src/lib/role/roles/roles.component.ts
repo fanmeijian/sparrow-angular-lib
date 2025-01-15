@@ -1,21 +1,14 @@
-import { Injectable } from "@angular/core";
-import { Component, OnInit } from "@angular/core";
-import {
-  CollectionViewer,
-  SelectionChange,
-  DataSource,
-} from "@angular/cdk/collections";
 import { FlatTreeControl } from "@angular/cdk/tree";
-import { BehaviorSubject, combineLatest, merge, Observable, zip } from "rxjs";
-import { map, switchMap } from "rxjs/operators";
-import { OrganizationService, RoleService } from "@sparrowmini/org-api";
-import { OrgDynamicDatabase } from "../../../model/org-database";
-import { DynamicFlatNode } from "../../../model/dynamic-flat-node";
-import { DynamicDataSource } from "../../../model/dynamic-datasource";
-import { RoleCreateComponent } from "../role-create/role-create.component";
+import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { RoleDynamicDatabase } from "../../../model/role-database";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { OrganizationService, RoleService } from "@sparrowmini/org-api";
+import { zip } from "rxjs";
+import { switchMap } from "rxjs/operators";
+import { DynamicDataSource } from "../../model/dynamic-datasource";
+import { DynamicFlatNode } from "../../model/dynamic-flat-node";
+import { RoleDynamicDatabase } from "../../model/role-database";
+import { RoleCreateComponent } from "../role-create/role-create.component";
 
 @Component({
   selector: "lib-roles",

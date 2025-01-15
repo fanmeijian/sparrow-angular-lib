@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { DecoupledEditor, type EditorConfig, } from 'ckeditor5';
-import { ckeditorConfig } from '../../../model/constant';
+import { ckeditorConfig } from './constant';
 import { FormGroup } from '@angular/forms';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular';
 import { DomSanitizer } from '@angular/platform-browser';

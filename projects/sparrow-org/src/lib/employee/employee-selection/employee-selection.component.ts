@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DynamicDataSource } from '../../../model/dynamic-datasource';
-import { DynamicFlatNode } from '../../../model/dynamic-flat-node';
-import { EmployeeDynamicDatabase } from '../../../model/employee-database';
+import { DynamicDataSource } from '../../model/dynamic-datasource';
+import { DynamicFlatNode } from '../../model/dynamic-flat-node';
+import { EmployeeDynamicDatabase } from '../../model/employee-database';
 import { FlatTreeControl } from "@angular/cdk/tree";
 import { MatChipInputEvent } from '@angular/material/chips';
 

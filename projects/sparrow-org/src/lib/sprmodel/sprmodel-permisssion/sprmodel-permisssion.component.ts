@@ -9,7 +9,7 @@ import {
   SysroleService,
 } from '@sparrowmini/org-api';
 
-import { PermissionEnum } from '../../../model/constant';
+import { PermissionEnum } from '../../common/ckeditor-control/constant';
 import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';

@@ -7,7 +7,7 @@ import {
   DatamodelService,
   RuleService,
 } from '@sparrowmini/org-api';
-import { PermissionEnum } from '../../../model/constant';
+import { PermissionEnum } from '../../common/ckeditor-control/constant';
 import { showId } from '../../util/model-util';
 
 @Component({

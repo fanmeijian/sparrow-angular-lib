@@ -63,3 +63,5 @@ export * from './lib/angular-material.module'
 
 import { DynamicMenuComponent } from './lib/common/dynamic-menu/dynamic-menu.component';
 export * from './lib/common/dynamic-menu/dynamic-menu.component';
+export * from './lib/common/loading-dialog/loading-dialog.component';
+export * from './lib/common/error-dialog/error-dialog.component';

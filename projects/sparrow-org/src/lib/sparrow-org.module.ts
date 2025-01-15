@@ -113,6 +113,7 @@ import { UserSelectionComponent } from './user/user-selection/user-selection.com
 import { ForumCatalogComponent } from './forum/forum-catalog/forum-catalog.component';
 import { ForumFormComponent } from './forum/forum-form/forum-form.component';
 import { DynamicTreeViewComponent } from './common/dynamic-tree-view/dynamic-tree-view.component';
+import { TreeViewComponent } from './common/tree-view/tree-view.component';
 // import { EmployeeRouteComponent } from './employee/employee-route/employee-route.component';
 
 @NgModule({
@@ -221,9 +222,17 @@ import { DynamicTreeViewComponent } from './common/dynamic-tree-view/dynamic-tre
     ForumListComponent,
     ForumCatalogComponent,
     ForumFormComponent,
-    DynamicTreeViewComponent
+    DynamicTreeViewComponent,
+    TreeViewComponent
   ],
-  imports: [CommonModule, RouterModule, AngularMaterialModule, OrgRoutingModule, FormioModule, UploadFileModule,CKEditorModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    AngularMaterialModule,
+    OrgRoutingModule,
+    FormioModule,
+    UploadFileModule,
+    CKEditorModule],
   exports: [
     SparrowOrgComponent,
     OrgApiModule,
@@ -245,6 +254,8 @@ import { DynamicTreeViewComponent } from './common/dynamic-tree-view/dynamic-tre
     BreadcrumpComponent,
     AngularMaterialModule,
     DynamicMenuComponent,
+    ErrorDialogComponent,
+    LoadingDialogComponent,
   ],
   // providers: [
   //   GlobalErrorHandlerService,

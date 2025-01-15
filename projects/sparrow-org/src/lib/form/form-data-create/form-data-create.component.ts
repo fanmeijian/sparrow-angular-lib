@@ -1,8 +1,8 @@
 import { Component, ElementRef, Inject, OnInit, Optional, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BASE_PATH, FormService } from '@sparrowmini/org-api';
-import { CosFileService } from '../../services/cos-file.service';
 import { HttpClient } from '@angular/common/http';
+import { CosFileService } from '../../services/cos-file.service';
 
 @Component({
   selector: 'lib-form-data-create',

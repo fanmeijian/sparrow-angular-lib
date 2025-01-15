@@ -46,6 +46,7 @@ export class ArticleFormComponent implements OnInit {
     title: [null, Validators.required],
     content: [null, Validators.required],
     catalogs: [[], Validators.required],
+    requiredCoins: [0, Validators.required],
     attachments: [null],
   })
   constructor(
