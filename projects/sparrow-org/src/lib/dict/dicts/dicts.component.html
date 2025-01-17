@@ -51,7 +51,7 @@
               : 'tree-node-name'
           "
           (click)="selectedMenu = node"
-          >[{{ node.me.code }}]{{ node.me.name }}</span
+          >[{{ node.me.code }}]{{ node.me.name }} ({{node.me.childCount}})</span
         >
       </mat-tree-node>
     </mat-tree>

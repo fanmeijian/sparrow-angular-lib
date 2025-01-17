@@ -4,6 +4,7 @@ import { DictService } from '@sparrowmini/org-api';
 import { DictCatalog } from '@sparrowmini/org-api/model/dictCatalog';
 import { DynamicFlatNode } from '../dicts/dict-tree-datasource';
 import { Dict } from '@sparrowmini/org-api/model/dict';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'lib-dict-create',
@@ -19,12 +20,14 @@ export class DictCreateComponent implements OnInit {
     parentId: [null],
   });
 
-  constructor(private dictService: DictService, private fb: FormBuilder) {}
+  constructor(private dictService: DictService, private fb: FormBuilder,
+    private dialogRef: MatDialogRef<DictCreateComponent>,
+  ) {}
 
   ngOnInit(): void {}
 
   submit() {
-    console.log(this.selectedItems, this.formGroup.value);
+    // console.log(this.selectedItems, this.formGroup.value);
     if (this.selectedItems[0].type === 'CATALOG') {
       this.formGroup.patchValue({ catalogId: this.selectedItems[0].id });
 
@@ -37,7 +40,9 @@ export class DictCreateComponent implements OnInit {
     }
     // console.log(this.formGroup.value)
     if (this.formGroup.valid) {
-      this.dictService.newDict([this.formGroup.value]).subscribe();
+      this.dictService.newDict([this.formGroup.value]).subscribe(()=>{
+        this.dialogRef.close(true)
+      });
     }
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { DictService } from '@sparrowmini/org-api';
 
 @Component({
@@ -13,11 +14,13 @@ export class DictCatalogCreateComponent implements OnInit {
     name: [null, Validators.required],
   });
 
-  constructor(private dictService: DictService, private fb: FormBuilder) {}
+  constructor(private dictService: DictService, private fb: FormBuilder,
+    private dialogRef:MatDialogRef<DictCatalogCreateComponent>
+  ) {}
 
   ngOnInit(): void {}
 
   submit() {
-    this.dictService.newCatalog([this.formGroup.value]).subscribe();
+    this.dictService.newCatalog([this.formGroup.value]).subscribe(()=>this.dialogRef.close(true));
   }
 }

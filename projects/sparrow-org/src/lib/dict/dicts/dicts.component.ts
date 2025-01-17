@@ -21,7 +21,7 @@ import { DictCreateComponent } from '../dict-create/dict-create.component';
 @Component({
   selector: 'lib-dicts',
   templateUrl: './dicts.component.html',
-  styleUrls: ['./dicts.component.css','../../org.css'],
+  styleUrls: ['./dicts.component.css', '../../org.css'],
 })
 export class DictsComponent implements OnInit {
   selectedMenu: any;
@@ -30,7 +30,7 @@ export class DictsComponent implements OnInit {
     private dialog: MatDialog,
     private snack: MatSnackBar,
     private dictService: DictService,
-    database: DynamicDatabase
+    private database: DynamicDatabase
   ) {
     this.treeControl = new FlatTreeControl<DynamicFlatNode>(
       this.getLevel,
@@ -38,30 +38,37 @@ export class DictsComponent implements OnInit {
     );
     this.dataSource = new DynamicDataSource(this.treeControl, database);
 
-    database.initialData().subscribe(res=>{
-      // console.log(res)
-      this.dataSource.data=res
-    });
+
   }
   ngOnInit(): void {
-    this.dictService.catalogs().subscribe((res) => {
-      this.catalogs = res.content;
+    this.database.initialData().subscribe(res => {
+      // console.log(res)
+      this.dataSource.data = res
+      console.log(res)
     });
   }
 
   newCatalog() {
-    this.dialog.open(DictCatalogCreateComponent, { width: '80%' });
+    this.dialog.open(DictCatalogCreateComponent, { width: '80%' }).afterClosed().subscribe(res => {
+      if (res) {
+        this.ngOnInit()
+      }
+    });
   }
 
   newDict() {
-    this.dialog.open(DictCreateComponent, { width: '80%' });
+    this.dialog.open(DictCreateComponent, { width: '80%' }).afterClosed().subscribe(res => {
+      if (res) {
+        this.ngOnInit()
+      }
+    });
   }
 
-  edit(selectedMenu:any){
+  edit(selectedMenu: any) {
 
   }
-  deleteMenu(selectedMenu:any){
-
+  deleteMenu(selectedMenu: any) {
+    console.log(selectedMenu)
   }
 
   // tree config
@@ -71,8 +78,8 @@ export class DictsComponent implements OnInit {
 
   getLevel = (node: DynamicFlatNode) => node.level;
 
-  isExpandable = (node: DynamicFlatNode) => (node.type ==='DICT' && node.childCount > 0)||node.type ==='CATALOG';
+  isExpandable = (node: DynamicFlatNode) => node.childCount > 0;
 
-  hasChild = (_: number, _nodeData: DynamicFlatNode) => (_nodeData.type ==='DICT' && _nodeData.childCount > 0)||_nodeData.type ==='CATALOG';
+  hasChild = (_: number, _nodeData: DynamicFlatNode) => _nodeData.me.childCount > 0;
 
 }

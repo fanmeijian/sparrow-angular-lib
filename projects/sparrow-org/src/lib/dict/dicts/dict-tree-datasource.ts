@@ -16,7 +16,7 @@ export class DynamicFlatNode {
     public item: string,
     public id: string,
     public type: 'CATALOG' | 'DICT',
-    public me: DictCatalog| Dict,
+    public me: DictCatalog| Dict | any,
     public level = 1,
     public expandable = false,
     public isLoading = false,
@@ -31,17 +31,12 @@ export class DynamicFlatNode {
 @Injectable({ providedIn: 'root' })
 export class DynamicDatabase {
   constructor(private dictService: DictService) {}
-
-  /** Initial data from database */
   initialData(): Observable<DynamicFlatNode[]> {
-    // this.dictService.catalogs().subscribe(res=>{
-    //   return this.rootLevelNodes.map(name => new DynamicFlatNode(name, 0, true));
-    // })
     return this.dictService.catalogs().pipe(
       map((m) => m.content),
       map((m: any) =>
         m?.map(
-          (c: any) => new DynamicFlatNode(c.name!, c.id, 'CATALOG', c, 0, true)
+          (c: any) => new DynamicFlatNode(c.name!, c.id, 'CATALOG', c, 0,true, true,m.childCount)
         )
       )
     );
@@ -126,7 +121,7 @@ export class DynamicDataSource implements DataSource<DynamicFlatNode> {
 
       children.subscribe((res:any) => {
         const nodes = res.map(
-          (name) =>
+          (name:any) =>
             new DynamicFlatNode(
               name.name!,
               name.id!,

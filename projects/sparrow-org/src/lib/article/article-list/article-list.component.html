@@ -40,9 +40,16 @@
   <ng-container matColumnDef="attachment">
     <mat-header-cell *matHeaderCellDef>附件</mat-header-cell>
     <mat-cell *matCellDef="let element">
-      <div *ngFor="let item of element.attachments">
+      <!-- <div *ngFor="let item of element.attachments">
         <a [href]="item.url" target="_blank">{{ item.name }}</a>
-      </div>
+      </div> -->
+
+      <lib-upload-file
+        [attachments]="element.attachments"
+        [multiple]="true"
+        [disableUpload]="true"
+      >
+      </lib-upload-file>
     </mat-cell>
   </ng-container>
 

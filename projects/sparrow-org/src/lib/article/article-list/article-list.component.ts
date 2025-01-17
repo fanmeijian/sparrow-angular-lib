@@ -18,7 +18,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ArticleListComponent implements OnInit {
 
   deleteArticle(_t123: any) {
-    this.cmsService.deleteArticle(_t123.id).subscribe(res => {
+    this.cmsService.deleteArticle([_t123.id]).subscribe(res => {
       this.onPageChange(this.pageable)
     })
 
