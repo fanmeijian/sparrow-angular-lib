@@ -38,7 +38,8 @@ export class DynamicDataSource implements DataSource<DynamicFlatNode> {
   constructor(
     private _treeControl: FlatTreeControl<DynamicFlatNode>,
     private treeService: TreeService,
-  ) { }
+  ) {
+  }
 
   connect(collectionViewer: CollectionViewer): Observable<DynamicFlatNode[]> {
     this._treeControl.expansionModel.changed.subscribe((change) => {

@@ -7,6 +7,7 @@ import { TodoItemFlatNode } from '../../common/filter-tree/filter-tree.component
 import { SelectionModel } from '@angular/cdk/collections';
 import { ActivatedRoute } from '@angular/router';
 import { J, O } from '@angular/cdk/keycodes';
+import { TreeViewOption } from '../../common/tree-view/tree-view.component';
 
 @Component({
   selector: 'lib-article-form',
@@ -16,13 +17,19 @@ import { J, O } from '@angular/cdk/keycodes';
 export class ArticleFormComponent implements OnInit {
   window = window
 
+  treeViewOption: TreeViewOption ={
+    checklistSelection: new SelectionModel<TodoItemFlatNode>(true /* multiple */),
+    treeData: undefined,
+    parentSelectable: false
+  }
+
   attachments: any[] = []
-  checklistSelection: SelectionModel<TodoItemFlatNode> = new SelectionModel<TodoItemFlatNode>(true /* multiple */);
-  treeData: any;
-  checkedIds: string[];
+  // checklistSelection: SelectionModel<TodoItemFlatNode> = new SelectionModel<TodoItemFlatNode>(true /* multiple */);
+  // treeData: any;
+  // checkedIds: string[];
 
   onSubmit() {
-    this.fg.patchValue({ attachments: this.attachments, catalogs: this.checklistSelection.selected.map(m => m.id) })
+    this.fg.patchValue({ attachments: this.attachments, catalogs: this.treeViewOption.checklistSelection.selected.map(m => m.id) })
     console.log(this.fg.value, this.fg.valid)
     Object.keys(this.fg.controls).forEach((key) => { console.log(key, this.fg.controls[key].errors) })
 
@@ -65,14 +72,13 @@ export class ArticleFormComponent implements OnInit {
           this.fg.patchValue(res)
           this.attachments = res.attachments
           this.fg.disable()
-          console.log(this.fg.value)
-          this.checkedIds = res.catalogs
+          this.treeViewOption.checkedIds = res.catalogs
         })
       } else {
         this.fg.enable()
       }
     })
-    this.treeData = JSON.parse(localStorage.getItem('article-catalog-tree'))
+    this.treeViewOption.treeData = JSON.parse(localStorage.getItem('article-catalog-tree')!)
     // this.http.get(this.apiBase + '/cms/article-catalog/tree').subscribe((res: any) => {
     //   this.treeData = res
     // })

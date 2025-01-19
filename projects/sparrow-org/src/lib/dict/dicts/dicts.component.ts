@@ -17,6 +17,8 @@ import {
   DynamicFlatNode,
 } from './dict-tree-datasource';
 import { DictCreateComponent } from '../dict-create/dict-create.component';
+import { TreeNode } from '../../common/dynamic-tree-view/dynamic-tree-constant';
+import { DictTreeService } from './dict-tree.service';
 
 @Component({
   selector: 'lib-dicts',
@@ -30,7 +32,8 @@ export class DictsComponent implements OnInit {
     private dialog: MatDialog,
     private snack: MatSnackBar,
     private dictService: DictService,
-    private database: DynamicDatabase
+    private database: DynamicDatabase,
+    public dictTreeService: DictTreeService,
   ) {
     this.treeControl = new FlatTreeControl<DynamicFlatNode>(
       this.getLevel,
@@ -44,7 +47,6 @@ export class DictsComponent implements OnInit {
     this.database.initialData().subscribe(res => {
       // console.log(res)
       this.dataSource.data = res
-      console.log(res)
     });
   }
 
@@ -82,4 +84,7 @@ export class DictsComponent implements OnInit {
 
   hasChild = (_: number, _nodeData: DynamicFlatNode) => _nodeData.me.childCount > 0;
 
+
+  onNodeClick($event: TreeNode) {
+  }
 }

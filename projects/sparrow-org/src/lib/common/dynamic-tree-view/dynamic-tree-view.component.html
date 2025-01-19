@@ -2,12 +2,22 @@
   class="spr-mat-tree"
   [dataSource]="dataSource"
   [treeControl]="treeControl"
+  cdkDropList
+  [cdkDropListDisabled]="!dragAndDropEnabled"
+  (cdkDropListDropped)="drop($event)"
 >
   <!-- This is the tree node template for leaf nodes -->
   <mat-tree-node
     class="spr-mat-tree-leaf-node"
     *matTreeNodeDef="let node"
     matTreeNodePadding
+    [cdkDragDisabled]="!dragAndDropEnabled"
+    cdkDrag
+    [cdkDragData]="node"
+    (mouseenter)="dragHover(node)"
+    (mouseleave)="dragHoverEnd()"
+    (cdkDragStarted)="dragStart()"
+    (cdkDragReleased)="dragEnd()"
   >
     <!-- use a disabled button to provide padding for tree leaf -->
     <button mat-icon-button disabled></button>
@@ -16,14 +26,34 @@
       (click)="onNodeClick.emit(node)"
       [routerLink]="[node.id]"
       routerLinkActive="spr-mat-tree-leaf-node-link-active"
-      >{{ node.name }} {{ node.index }}</span
+      >[{{ node.code }}]{{ node.name }}</span
     >
+    <button
+      mat-icon-button
+      (touchstart)="dragAndDropEnabled = true"
+      (touchend)="dragAndDropEnabled = false"
+      (touchcancel)="dragAndDropEnabled = false"
+      (mousedown)="dragAndDropEnabled = true"
+      (mouseup)="dragAndDropEnabled = false"
+      (mouseleave)="dragAndDropEnabled = false"
+    >
+      <span class="material-icons" style="font-size: 18px">
+        drag_indicator
+      </span>
+    </button>
   </mat-tree-node>
   <!-- This is the tree node template for expandable nodes -->
   <mat-tree-node
     class="spr-mat-tree-parent-node"
     *matTreeNodeDef="let node; let i = index; when: hasChild"
     matTreeNodePadding
+    [cdkDragDisabled]="!dragAndDropEnabled"
+    cdkDrag
+    [cdkDragData]="node"
+    (mouseenter)="dragHover(node)"
+    (mouseleave)="dragHoverEnd()"
+    (cdkDragStarted)="dragStart()"
+    (cdkDragReleased)="dragEnd()"
   >
     <button
       mat-icon-button
@@ -34,10 +64,30 @@
         {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
       </mat-icon>
     </button>
-    <span
-      class="spr-mat-tree-parent-node-link"
-      (click)="onNodeClick.emit(node)"
-      >{{ node.name }} ({{ node.childCount }})</span
+    <span class="spr-mat-tree-parent-node-link" (click)="onNodeClick.emit(node)"
+      >[{{ node.code }}]{{ node.name }} ({{ node.childCount }})</span
     >
+    <!-- <button
+      mat-icon-button
+      cdkDrag
+      cdkDragHandle
+      (cdkDragStarted)="dragStart()"
+      (cdkDragReleased)="dragEnd()"
+    >
+      <mat-icon>swap_vert</mat-icon>
+    </button> -->
+    <button
+      mat-icon-button
+      (touchstart)="dragAndDropEnabled = true"
+      (touchend)="dragAndDropEnabled = false"
+      (touchcancel)="dragAndDropEnabled = false"
+      (mousedown)="dragAndDropEnabled = true"
+      (mouseup)="dragAndDropEnabled = false"
+      (mouseleave)="dragAndDropEnabled = false"
+    >
+      <span class="material-icons" style="font-size: 18px">
+        drag_indicator
+      </span>
+    </button>
   </mat-tree-node>
 </mat-tree>

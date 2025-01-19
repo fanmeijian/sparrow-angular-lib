@@ -45,6 +45,7 @@ import { SysrolesComponent } from "./sysrole/sysroles/sysroles.component";
 import { UserListComponent } from "./user/user-list/user-list.component";
 import { ForumListComponent } from "./forum/forum-list/forum-list.component";
 import { ForumCatalogComponent } from "./forum/forum-catalog/forum-catalog.component";
+import { DictFormComponent } from "./dict/dict-form/dict-form.component";
 export const ADMIN_ROUTES: Route[] = [
   {
     path: "admin",
@@ -182,6 +183,16 @@ export const ADMIN_ROUTES: Route[] = [
             path: 'dicts',
             data: { title: '数据字典' },
             component: DictsComponent,
+            children:[
+              {
+                path: ':id',
+                component: DictFormComponent
+              },
+              {
+                path: 'dict-form/new',
+                component: DictFormComponent
+              }
+            ]
           },
           {
             path: 'sysconfig',

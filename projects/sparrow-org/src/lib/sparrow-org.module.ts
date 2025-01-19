@@ -114,6 +114,7 @@ import { ForumCatalogComponent } from './forum/forum-catalog/forum-catalog.compo
 import { ForumFormComponent } from './forum/forum-form/forum-form.component';
 import { DynamicTreeViewComponent } from './common/dynamic-tree-view/dynamic-tree-view.component';
 import { TreeViewComponent } from './common/tree-view/tree-view.component';
+import { DictFormComponent } from "./dict/dict-form/dict-form.component";
 // import { EmployeeRouteComponent } from './employee/employee-route/employee-route.component';
 
 @NgModule({
@@ -223,7 +224,8 @@ import { TreeViewComponent } from './common/tree-view/tree-view.component';
     ForumCatalogComponent,
     ForumFormComponent,
     DynamicTreeViewComponent,
-    TreeViewComponent
+    TreeViewComponent,
+    DictFormComponent
   ],
   imports: [
     CommonModule,
