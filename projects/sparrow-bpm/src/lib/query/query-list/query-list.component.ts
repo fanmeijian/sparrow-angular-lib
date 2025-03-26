@@ -63,13 +63,13 @@ export class QueryListComponent implements OnInit {
     this.dialog.open(QueryCreateComponent, { width: '80%' })
   }
 
-  deleteQuery(element) {
+  deleteQuery(element:any) {
     this.customQueryService.dropQueryDefinition(element['query-name']).subscribe(() => {
       this.ngOnInit()
     })
   }
 
-  openExecute(element) {
+  openExecute(element:any) {
     this.dialog.open(QueryExecuteComponent, { data: element, width: '80%' })
   }
 

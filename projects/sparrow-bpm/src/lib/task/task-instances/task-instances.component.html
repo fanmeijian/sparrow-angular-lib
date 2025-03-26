@@ -28,7 +28,7 @@
           {{ element.proc["process-name"] }}</span
         >
         <div style="color: grey; font-size: 10px">
-          {{ element.proc.initiatorInfo.friendlyName }}
+          {{ element.proc.initiatorInfo?.friendlyName }}
           {{ element.proc["start-date"] | date : "short" }}
         </div>
       </div>

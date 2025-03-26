@@ -1,6 +1,6 @@
 {
   "name": "@sparrowmini/sparrow-bpm",
-  "version": "0.4.6",
+  "version": "0.4.8",
   "peerDependencies": {
     "@angular/animations": "^13.3.0",
     "@angular/cdk": "^13.3.9",

@@ -124,7 +124,7 @@ export class ProcessDefinitionsComponent implements OnInit {
     this.processQueriesService
       .getProcessesByDeploymentId1(container['container-id'])
       .pipe(
-        map((ps) => ps.processes),
+        map((ps:any) => ps.processes),
         switchMap((processes: any[]) =>
           zip(
             ...processes.map((process) => {

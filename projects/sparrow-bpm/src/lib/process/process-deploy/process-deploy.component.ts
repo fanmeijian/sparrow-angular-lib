@@ -21,7 +21,7 @@ export class ProcessDeployComponent implements OnInit {
   showProgress = false;
   loaded = 0;
   uploadedFiles: string[] = [];
-  progress: number;
+  progress?: number;
 
   form: FormGroup = this.fb.group({
     'container-id': [null, Validators.required],
@@ -44,8 +44,8 @@ export class ProcessDeployComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.form.get('container-id').disable();
-    this.form.get('release-id').disable();
+    this.form?.get('container-id')?.disable();
+    this.form?.get('release-id')?.disable();
   }
 
   selectFile(event: any) {
