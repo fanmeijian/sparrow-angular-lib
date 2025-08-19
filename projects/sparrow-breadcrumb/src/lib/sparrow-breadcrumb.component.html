@@ -1,7 +1,0 @@
-<div class="spr-breadcrumb">
-  <ng-container *ngFor="let breadcrumb of breadcrumbs; let last = last">
-    <div class="spr-breadcrumb-link" *ngIf="!last" [routerLink]="breadcrumb.url">{{ breadcrumb.label }}</div>
-    <div class="spr-breadcrumb-splitor" *ngIf="!last" class="material-symbols-outlined"> chevron_right </div>
-    <div class=spr-breadcrumb-last *ngIf="last">{{ breadcrumb.label }}</div>
-  </ng-container>
-</div>

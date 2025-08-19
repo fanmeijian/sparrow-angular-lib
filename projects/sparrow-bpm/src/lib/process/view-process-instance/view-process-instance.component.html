@@ -1,9 +1,0 @@
-<h3 mat-dialog-title>流程详情</h3>
-<mat-dialog-content class="mat-typography" style="height: 80%;">
-  <formio #formIo [form]="form" [viewOnly]="true" [readOnly]="true" [submission]='formData' [options]="{ fileService: formioFileService }"></formio>
-</mat-dialog-content>
-
-<mat-dialog-actions>
-  <!-- <button mat-button color="primary" (click)="submit()" cdkFocusInitial>提交</button> -->
-  <button mat-button color="error" mat-dialog-close>返回</button>
-</mat-dialog-actions>
