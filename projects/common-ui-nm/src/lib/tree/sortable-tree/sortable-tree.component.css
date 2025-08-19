@@ -1,0 +1,13 @@
+.node{
+  cursor: pointer;
+  color: -webkit-link;
+}
+
+.node:hover{
+  background-color: #e5e5e5;
+}
+
+
+.node-selected{
+  background-color: #e5e5e5;
+}

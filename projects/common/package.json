@@ -1,0 +1,13 @@
+{
+  "name": "@sparrowmini/common",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^16.2.0",
+    "@angular/core": "^16.2.0"
+  },
+  "dependencies": {
+    "jsonpath-plus": "^10.3.0",
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

@@ -1,0 +1,27 @@
+<h6 mat-dialog-title>用户/角色</h6>
+<mat-dialog-content class="mat-typography">
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+    <mat-tab label="用户">
+      <div style="height: 400px; overflow-y: scroll">
+        <spr-user-selection
+          [multiple]="true"
+          (onSelect)="onUserSelect($event)"
+        ></spr-user-selection>
+      </div>
+    </mat-tab>
+    <mat-tab label="角色">
+      <div style="height: 400px; overflow-y: scroll">
+        <spr-sysrole-selection
+          [multiple]="true"
+          (onSelect)="onSysroleSelect($event)"
+        ></spr-sysrole-selection>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button type="button" mat-button color="primary" (click)="close()">
+    确定
+  </button>
+  <button type="button" mat-button color="accent" mat-dialog-close>取消</button>
+</mat-dialog-actions>

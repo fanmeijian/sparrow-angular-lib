@@ -1,0 +1,24 @@
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+      <button mat-icon-button disabled></button>
+      <span [class]="
+          selectedNode === node.url
+            ? 'norml-tree-node selected-norml-tree-node'
+            : 'norml-tree-node'
+        " [routerLink]="node.url" (click)="selectedNode = node.url">{{ node.name }}</span>
+    </mat-tree-node>
+
+    <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+      <button type="button" mat-icon-button matTreeNodeToggle [disabled]="node.isLoading">
+        <mat-icon>
+          {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+        </mat-icon>
+      </button>
+      <span class="s-link">{{ node.name }}</span>
+
+      <mat-spinner *ngIf="node.isLoading" [diameter]="18"></mat-spinner>
+            <div [class.example-tree-invisible]="!treeControl.isExpanded(node)" role="group">
+        <ng-container matTreeNodeOutlet></ng-container>
+      </div>
+    </mat-tree-node>
+  </mat-tree>
