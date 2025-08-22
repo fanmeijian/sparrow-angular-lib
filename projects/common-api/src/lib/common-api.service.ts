@@ -8,9 +8,7 @@ import { PageImpl } from './model/pageimpl';
  */
 export const BASE_PATH = new InjectionToken<string>('apiBase')
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class CommonApiService {
   constructor(
     private http: HttpClient,
