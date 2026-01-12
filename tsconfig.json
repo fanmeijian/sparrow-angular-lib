@@ -32,6 +32,9 @@
       ],
       "entiy-list": [
         "dist/entiy-list"
+      ],
+      "sparrow-bpm-api": [
+        "dist/sparrow-bpm-api"
       ]
     },
     "module": "ES2022",

@@ -167,6 +167,39 @@
           }
         }
       }
+    },
+    "sparrow-bpm-api": {
+      "projectType": "library",
+      "root": "projects/sparrow-bpm-api",
+      "sourceRoot": "projects/sparrow-bpm-api/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/sparrow-bpm-api/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/sparrow-bpm-api/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/sparrow-bpm-api/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/sparrow-bpm-api/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {
