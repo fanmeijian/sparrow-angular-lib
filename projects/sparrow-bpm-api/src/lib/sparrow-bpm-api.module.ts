@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SparrowBpmApiComponent } from './sparrow-bpm-api.component';
+import { BpmApi } from './BpmApi';
 
 
 
@@ -10,7 +11,7 @@ import { SparrowBpmApiComponent } from './sparrow-bpm-api.component';
   imports: [
   ],
   exports: [
-    SparrowBpmApiComponent
+    SparrowBpmApiComponent,
   ]
 })
 export class SparrowBpmApiModule { }

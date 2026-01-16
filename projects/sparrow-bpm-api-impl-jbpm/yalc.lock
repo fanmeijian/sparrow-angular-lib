@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "packages": {
+    "@sparrowmini/bpm-api": {
+      "version": "0.0.1",
+      "signature": "28897d8e737e3828ca089c3cf8dce66d",
+      "file": true
+    }
+  }
+}

@@ -9,8 +9,7 @@ import { ProcessDefinition } from '../model/ProcessDefinition';
 import { PublishedProcess } from '../model/PublishedProcess';
 import { Comment } from '../model/comment';
 import { Attachment } from '../model/attachment';
-
-export const BASE_PATH = new InjectionToken<string>('basePath')
+import { BASE_PATH } from './BpmApi';
 
 @Injectable({
   providedIn: 'root'

@@ -35,6 +35,12 @@
       ],
       "sparrow-bpm-api": [
         "dist/sparrow-bpm-api"
+      ],
+      "sparrow-bpm-api-impl-jbpm": [
+        "dist/sparrow-bpm-api-impl-jbpm"
+      ],
+      "sparrow-bpm-api-impl-kogito": [
+        "dist/sparrow-bpm-api-impl-kogito"
       ]
     },
     "module": "ES2022",
