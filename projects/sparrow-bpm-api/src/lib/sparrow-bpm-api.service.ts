@@ -8,6 +8,7 @@ import { ProcessInstance } from '../model/ProcessInstance';
 import { ProcessDefinition } from '../model/ProcessDefinition';
 import { PublishedProcess } from '../model/PublishedProcess';
 import { Comment } from '../model/comment';
+import { Attachment } from '../model/attachment';
 
 export const BASE_PATH = new InjectionToken<string>('basePath')
 
@@ -41,7 +42,7 @@ export class SparrowBpmApiService {
    * @returns 
    */
   todoTasks() {
-    const apiPath = `${this.basePath}/usertasks`
+    const apiPath = `${this.basePath}/usertasks/instance`
     return this.http.get<UserTaskInstance[]>(`${apiPath}`)
   }
 
@@ -72,20 +73,24 @@ export class SparrowBpmApiService {
   }
 
   startProcess(processId: string, variables: any) {
-    const apiPath = `${this.basePath}/processes/start`
+    const apiPath = `${this.basePath}/${processId}`
     return this.http.post(`${apiPath}`, variables)
   }
 
-  abortProcessInstance(processInstanceId: string) {
-    const apiPath = `${this.basePath}/processes/abort`
+  abortProcessInstance(processInstanceId: string, processId?: string) {
+    const apiPath = `${this.basePath}/management/processes/${processId}/instances/${processInstanceId}`
     return this.http.delete(`${apiPath}`)
   }
 
-  updateProcessVariables(processInstanceId: string, variables: any) {
+  updateProcessVariables(processInstanceId: string, variables: any, processId?: string) {
+    const apiPath = `${this.basePath}/${processId}/${processInstanceId}`
+    return this.http.patch(`${apiPath}`, variables)
 
   }
 
   updateTaskOutput(taskInstanceId: string, output: any) {
+    const apiPath = `${this.basePath}/usertasks/instance/${taskInstanceId}/outputs`
+    return this.http.put(`${apiPath}`, output)
 
   }
 
@@ -93,43 +98,57 @@ export class SparrowBpmApiService {
 
   }
 
-  transitTask(taskInstanceId: string, taskState: string, output: any) {
+  transitTask(taskInstanceId: string, taskState: string, output: any, taskName?: string, processId?: string, processInstanceId?: string) {
+    const apiPath = `${this.basePath}/${processId}/${processInstanceId}/${taskName}/${taskInstanceId}/phases/${taskState}`
+    return this.http.post(`${apiPath}`, output)
+  }
+
+  addAttachment(taskInstanceId: string, attachment: { uri: string, name: string }) {
+
+    const apiPath = `${this.basePath}/usertasks/instance/${taskInstanceId}/attachments`
+    return this.http.post<Attachment>(`${apiPath}`, attachment)
 
   }
 
-  addAttachment(taskInstanceId: string, comment: {uri: string,name: string}) {
-
-  }
-
-  deleteAttachment(taskInstanceId: string, attachmentId: string){
-
+  deleteAttachment(taskInstanceId: string, attachmentId: string) {
+    const apiPath = `${this.basePath}/usertasks/instance/${taskInstanceId}/attachments/${attachmentId}`
+    return this.http.delete(`${apiPath}`)
   }
 
   attachment(taskInstanceId: string, attachmentId: string) {
-
+    const apiPath = `${this.basePath}/usertasks/instance/${taskInstanceId}/attachments/${attachmentId}`
+    return this.http.get<Attachment>(`${apiPath}`)
   }
 
   attachments(taskInstanceId: string) {
-    const apiPath = `${this.basePath}/published-processes`
-    return this.http.get<Comment[]>(`${apiPath}` )
+    const apiPath = `${this.basePath}/usertasks/instance/${taskInstanceId}/attachments`
+    return this.http.get<Attachment[]>(`${apiPath}`)
   }
 
 
-  addComment(taskInstanceId: string, comment: {comment: string}) {
-
+  addComment(taskInstanceId: string, comment: { comment: string }) {
+    const apiPath = `${this.basePath}/usertasks/instance/${taskInstanceId}/comments`
+    return this.http.post<Comment>(`${apiPath}`, comment)
   }
 
-  deleteComment(taskInstanceId: string, commentId: string){
-
+  deleteComment(taskInstanceId: string, commentId: string) {
+    const apiPath = `${this.basePath}/usertasks/instance/${taskInstanceId}/comments/${commentId}`
+    return this.http.delete(`${apiPath}`)
   }
 
   comment(taskInstanceId: string, commentId: string) {
-
+    const apiPath = `${this.basePath}/usertasks/instance/${taskInstanceId}/comments/${commentId}`
+    return this.http.get<Comment>(`${apiPath}`)
   }
 
   comments(taskInstanceId: string) {
-    const apiPath = `${this.basePath}/published-processes`
-    return this.http.get<Comment[]>(`${apiPath}` )
+    const apiPath = `${this.basePath}/usertasks/instance/${taskInstanceId}/attachments`
+    return this.http.get<Comment[]>(`${apiPath}`)
+  }
+
+  triggerNode(processId: string, processInstanceId: string, nodeId: string) {
+    const apiPath = `${this.basePath}/management/processes/${processId}/instances/${processInstanceId}/nodes/${nodeId}`
+    return this.http.post(apiPath, {})
   }
 
 }
