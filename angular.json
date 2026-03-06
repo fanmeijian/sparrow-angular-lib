@@ -36,6 +36,37 @@
         }
       }
     },
+    "sparrow-breadcrumb": {
+      "projectType": "library",
+      "root": "projects/sparrow-breadcrumb",
+      "sourceRoot": "projects/sparrow-breadcrumb/src",
+      "prefix": "spr",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/sparrow-breadcrumb/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/sparrow-breadcrumb/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/sparrow-breadcrumb/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/sparrow-breadcrumb/src/test.ts",
+            "tsConfig": "projects/sparrow-breadcrumb/tsconfig.spec.json",
+            "karmaConfig": "projects/sparrow-breadcrumb/karma.conf.js"
+          }
+        }
+      }
+    },
     "common-api": {
       "projectType": "library",
       "root": "projects/common-api",
@@ -259,6 +290,39 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/sparrow-bpm-api-impl-kogito/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
+    },
+    "upload-file": {
+      "projectType": "library",
+      "root": "projects/upload-file",
+      "sourceRoot": "projects/upload-file/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/upload-file/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/upload-file/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/upload-file/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/upload-file/tsconfig.spec.json",
             "polyfills": [
               "zone.js",
               "zone.js/testing"

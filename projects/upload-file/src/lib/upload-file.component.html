@@ -1,0 +1,38 @@
+<div class="uploader-wrapper">
+  <label class="upload-btn">
+    <input type="file" (change)="onFilesSelected($event)" [multiple]="multiple">
+    <span>{{label}}</span>
+  </label>
+
+  <div class="file-list">
+    <div class="file-card" *ngFor="let item of uploadQueue; let i = index">
+      <div class="preview-box">
+        <img *ngIf="item.previewUrl" [src]="item.previewUrl" class="img-preview">
+        <div *ngIf="!item.previewUrl" class="file-icon">📄</div>
+      </div>
+
+      <div class="content">
+        <div class="file-meta">
+          <!-- <div style="display:flex; flex-direction: column;">
+            <div>下载豆:<input type="number" style="width: 120px;" [(ngModel)]="item.amount" (change)="updateAmount(item)"></div>
+            <span class="name" [title]="item.file.name">{{ item.file.name }}</span>
+          </div> -->
+          
+          <span class="name" [title]="item.file.name">{{ item.file.name }}</span>
+          <button class="cancel-btn" *ngIf="item.status === 'uploading'" (click)="cancelUpload(item)">取消</button>
+          <button class="remove-btn" *ngIf="item.status !== 'uploading'" (click)="removeFromQueue(i)">移除</button>
+        </div>
+
+        <progress [value]="item.progress" max="100" [class]="item.status"></progress>
+
+        <div class="status-bar">
+          <span>{{ item.progress }}%</span>
+          <span class="speed" *ngIf="item.status === 'uploading'">{{ item.speed }}</span>
+          <span [class]="'status-text ' + item.status">
+            {{ item.status === 'done' ? '完成' : item.status === 'error' ? '失败' : item.status === 'cancelled' ? '已取消' : '' }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

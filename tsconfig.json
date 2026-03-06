@@ -41,6 +41,12 @@
       ],
       "sparrow-bpm-api-impl-kogito": [
         "dist/sparrow-bpm-api-impl-kogito"
+      ],
+      "sparrow-upload-file": [
+        "dist/sparrow-upload-file"
+      ],
+      "upload-file": [
+        "dist/upload-file"
       ]
     },
     "module": "ES2022",
