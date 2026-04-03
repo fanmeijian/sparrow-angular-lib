@@ -1,0 +1,12 @@
+<div class="s-row" (click)="openDlg()">
+  <!-- <h3>已选：({{checklistSelection.selected.length}})</h3> -->
+  <!-- <label>{{label}}</label> -->
+  <mat-chip-listbox aria-label="Fish selection">
+    <mat-chip *ngFor="let item of checklistSelection.selected">{{item?.name}}
+      <button type="button" matChipRemove (click)="onToggle(item)">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-chip>
+  </mat-chip-listbox>
+  <!-- <button mat-button color="primary" (click)="openDlg()">选择</button> -->
+</div>
