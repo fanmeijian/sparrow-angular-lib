@@ -10,6 +10,7 @@ import { SortableTreeComponent } from './sortable-tree/sortable-tree.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MenuComponent } from './menu/menu.component';
 import { MatMenuModule } from '@angular/material/menu';
+import {MatChipsModule} from '@angular/material/chips';
 
 
 
@@ -28,6 +29,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatButtonModule,
     DragDropModule,
     MatMenuModule,
+    MatChipsModule,
   ],
   exports: [SortableTreeComponent, MenuComponent]
 })

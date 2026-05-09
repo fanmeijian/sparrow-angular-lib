@@ -16,21 +16,36 @@ import { ChecklistSelectionService } from '../checklist-selection.service';
   styleUrls: ['./sortable-tree.component.css']
 })
 export class SortableTreeComponent implements OnChanges, OnInit {
+  remove(node: any) {
+    this.checklistSelectionService.selected.toggle(node);
+  }
   onNodeClick_(node: any) {
     this.selectedNode = node;
     this.onNodeClick.next(node)
   }
-  @Input() multiple: boolean = false
-  @Input() clickable: boolean = false
-  @Input() sortable: boolean = false
-  @Input() initSelected: any[] = []
+
+  /**
+   * 显示已选择的chips
+   */
+  @Input() showChips?: boolean = false
+  /**
+   * 是否显示选择框
+   */
+  @Input() showCheckBox?: boolean = true
+  @Input() multiple?: boolean = false
+  @Input() clickable?: boolean = false
+  @Input() sortable?: boolean = false
+  @Input() initSelected?: any[] = []
   @Output() onTreeSelect: EventEmitter<any[]> = new EventEmitter<any[]>()
   @Output() onNodeClick: EventEmitter<any> = new EventEmitter<any>()
+  @Output() onTaggle: EventEmitter<SelectionModel<any>> = new EventEmitter<SelectionModel<any>>()
 
   public checklistSelectionService!: ChecklistSelectionService
   onToggle(node: any) {
     this.checklistSelectionService.toggleSelection(node, this.dataSource.nodeCache)
     this.onTreeSelect?.emit(this.checklistSelectionService.selected.selected.map(m => m.id))
+
+    this.onTaggle.next(this.checklistSelectionService.selected)
   }
 
   dataSource!: TreeDataSource;

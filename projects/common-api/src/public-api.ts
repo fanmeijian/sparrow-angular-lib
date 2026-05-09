@@ -7,5 +7,6 @@ export * from './lib/common-api.component';
 export * from './lib/common-api.module';
 export * from './lib/app-config.service';
 export * from './lib/common-tree.service'
+export * from './lib/dict.service'
 export * from './lib/directives/pgel-permission.directive'
 export * from './lib/directives/component-registry.service'

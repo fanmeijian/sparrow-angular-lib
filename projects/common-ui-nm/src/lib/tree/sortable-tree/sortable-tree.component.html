@@ -1,59 +1,38 @@
-<mat-tree
-  [dataSource]="dataSource"
-  [treeControl]="treeControl"
-  [cdkDropListData]="dataSource.data"
-  cdkDropList
-  (cdkDropListDropped)="drop($event)"
->
-  <mat-tree-node
-    *matTreeNodeDef="let node"
-    matTreeNodePadding
-    [cdkDragData]="node"
-    cdkDragLockAxis="y"
-    cdkDrag
-  >
+<ng-container *ngIf="showChips">
+  <mat-chip-row class="mat-mdc-chip-set-stacked" *ngFor="let fruit of checklistSelectionService.selected.selected" (removed)="remove(fruit)"
+    [editable]="false">
+    {{fruit.name}}
+    <button matChipRemove>
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </mat-chip-row>
+</ng-container>
+
+
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" [cdkDropListData]="dataSource.data" cdkDropList
+  (cdkDropListDropped)="drop($event)">
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding [cdkDragData]="node" cdkDragLockAxis="y" cdkDrag>
     <button mat-icon-button disabled></button>
-    <mat-checkbox
-      [checked]="checklistSelectionService.isSelected(node)"
-      (change)="onToggle(node)"
-    ></mat-checkbox>
-    <span
-      [ngClass]="{ 'node-selected': node === selectedNode, 'node': clickable }"
-      (click)="onNodeClick_(node)"
-      >{{ node.name }}</span
-    >
+    <mat-checkbox [checked]="checklistSelectionService.isSelected(node)" (change)="onToggle(node)"></mat-checkbox>
+    <span [ngClass]="{ 'node-selected': node === selectedNode, 'node': clickable }" (click)="onNodeClick_(node)">{{
+      node.name }}</span>
     <button *ngIf="sortable" mat-icon-button cdkDragLockAxis="y" cdkDragHandle>
       <mat-icon>drag_indicator</mat-icon>
     </button>
   </mat-tree-node>
 
-  <mat-tree-node
-    *matTreeNodeDef="let node; when: hasChild"
-    matTreeNodePadding
-    [cdkDragData]="node"
-    cdkDragLockAxis="y"
-    cdkDrag
-  >
-    <button
-      type="button"
-      mat-icon-button
-      matTreeNodeToggle
-      [disabled]="node.isLoading"
-      (click)="expansionModel.toggle(node.id)"
-    >
+  <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding [cdkDragData]="node" cdkDragLockAxis="y"
+    cdkDrag>
+    <button type="button" mat-icon-button matTreeNodeToggle [disabled]="node.isLoading"
+      (click)="expansionModel.toggle(node.id)">
       <mat-icon>
         {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
       </mat-icon>
     </button>
-    <mat-checkbox
-      [checked]="checklistSelectionService.isSelected(node)"
-      [indeterminate]="node.indeterminate"
-      (change)="onToggle(node)"
-    ></mat-checkbox>
-    <span
-      [ngClass]="{ 'node-selected': node === selectedNode, 'node': clickable }"
-      (click)="onNodeClick_(node)"
-      >{{ node.name }}
+    <mat-checkbox [checked]="checklistSelectionService.isSelected(node)" [indeterminate]="node.indeterminate"
+      (change)="onToggle(node)"></mat-checkbox>
+    <span [ngClass]="{ 'node-selected': node === selectedNode, 'node': clickable }" (click)="onNodeClick_(node)">{{
+      node.name }}
     </span>
     <button *ngIf="sortable" mat-icon-button cdkDragLockAxis="y" cdkDragHandle>
       <mat-icon>drag_indicator</mat-icon>
