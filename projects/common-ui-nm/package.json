@@ -10,7 +10,6 @@
     "@sparrowmini/common-api": "^0.0.1"
   },
   "dependencies": {
-    "@sparrowmini/common-api": "file:.yalc/@sparrowmini/common-api",
     "tslib": "^2.3.0"
   },
   "sideEffects": false

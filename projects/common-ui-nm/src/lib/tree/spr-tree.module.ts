@@ -11,6 +11,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MenuComponent } from './menu/menu.component';
 import { MatMenuModule } from '@angular/material/menu';
 import {MatChipsModule} from '@angular/material/chips';
+import { TreeSelectComponent } from './tree-select/tree-select.component';
 
 
 
@@ -18,6 +19,7 @@ import {MatChipsModule} from '@angular/material/chips';
   declarations: [
     SortableTreeComponent,
     MenuComponent,
+    TreeSelectComponent,
   ],
   imports: [
     CommonModule,
@@ -31,6 +33,6 @@ import {MatChipsModule} from '@angular/material/chips';
     MatMenuModule,
     MatChipsModule,
   ],
-  exports: [SortableTreeComponent, MenuComponent]
+  exports: [SortableTreeComponent, TreeSelectComponent, MenuComponent]
 })
 export class SprTreeModule { }

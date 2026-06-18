@@ -1,0 +1,39 @@
+<div class="dialog-select-grid">
+    <div style="height: 450px; overflow-y: auto;">
+      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+          <button type="button" mat-icon-button disabled></button>
+          <span class="s-link menu-about-left-item"
+            [ngClass]="{ 'node-selected': node === selectedNode, 'node': clickable }" (click)="onNodeClick_(node)">{{
+            node.name || node.label}} </span>
+        </mat-tree-node>
+
+        <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+          <button type="button" mat-icon-button matTreeNodeToggle [disabled]="node.isLoading"
+            (click)="expansionModel.toggle(node.id)">
+            <mat-icon>
+              {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
+            </mat-icon>
+          </button>
+          <span class="s-link menu-about-left-item menu-level-2"
+            [ngClass]="{ 'node-selected': node === selectedNode, 'node': clickable }" (click)="onNodeClick_(node)">{{
+            node.name||node.label }}
+          </span>
+          <mat-spinner *ngIf="node.isLoading" [diameter]="18"></mat-spinner>
+        </mat-tree-node>
+      </mat-tree>
+    </div>
+
+    <div style="padding: 0px 20px; width: 200px;">
+      <div>
+        <button mat-button color="warn"
+          (click)="selectedDicts_.clear()">清除所有({{selectedDicts_.selected.length}})</button>
+      </div>
+      <div style="display: flex; flex-direction: column;gap: 1rem ;height: calc(450px - 24px); overflow-y: auto;">
+        <div *ngFor="let dict of selectedDicts_.selected" style="display: grid;grid-template-columns: 1fr 40px;">
+          <span style="max-width: 160px;">{{dict.name}}</span>
+          <mat-icon (click)="remove(dict)">cancel</mat-icon>
+        </div>
+      </div>
+    </div>
+  </div>
